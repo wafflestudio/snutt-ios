@@ -26,7 +26,7 @@ public struct TimetableAPIRepository: TimetableRepository {
     }
 
     public func fetchTimetableMetadataList() async throws -> [TimetableMetadata] {
-        try await apiClient.getBrief().ok.body.json.map { try $0.toTimetableMetadata() }
+        try await apiClient.getTimetableBriefs().ok.body.json.map { try $0.toTimetableMetadata() }
     }
 
     public func updateTimetableTitle(timetableID: String, title: String) async throws -> [TimetableMetadata] {
@@ -73,7 +73,7 @@ public struct TimetableAPIRepository: TimetableRepository {
     ) async throws -> Timetable {
         try await apiClient.addLecture(
             path: .init(timetableId: timetableID, lectureId: lectureID),
-            query: .init(isForced: overrideOnConflict.description)
+            query: .init(isForced: overrideOnConflict)
         ).ok.body.json.toTimetable()
     }
 

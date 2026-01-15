@@ -126,25 +126,6 @@
         ],
         "type" : "object"
       },
-      "BuildingsResponse" : {
-        "properties" : {
-          "content" : {
-            "items" : {
-              "$ref" : "#/components/schemas/LectureBuilding"
-            },
-            "type" : "array"
-          },
-          "totalCount" : {
-            "format" : "int32",
-            "type" : "integer"
-          }
-        },
-        "required" : [
-          "content",
-          "totalCount"
-        ],
-        "type" : "object"
-      },
       "ClassPlaceAndTimeDto" : {
         "properties" : {
           "day" : {
@@ -379,6 +360,50 @@
         ],
         "type" : "object"
       },
+      "Credential" : {
+        "properties" : {
+          "appleEmail" : {
+            "type" : "string"
+          },
+          "appleSub" : {
+            "type" : "string"
+          },
+          "appleTransferSub" : {
+            "type" : "string"
+          },
+          "fbId" : {
+            "type" : "string"
+          },
+          "fbName" : {
+            "type" : "string"
+          },
+          "googleEmail" : {
+            "type" : "string"
+          },
+          "googleSub" : {
+            "type" : "string"
+          },
+          "kakaoEmail" : {
+            "type" : "string"
+          },
+          "kakaoSub" : {
+            "type" : "string"
+          },
+          "localId" : {
+            "type" : "string"
+          },
+          "localPw" : {
+            "type" : "string"
+          },
+          "tempDate" : {
+            "type" : "string"
+          },
+          "tempSeed" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
       "CustomTimetableLectureAddLegacyRequestDto" : {
         "properties" : {
           "class_time_json" : {
@@ -458,6 +483,24 @@
         ],
         "type" : "object"
       },
+      "DiaryDailyClassType" : {
+        "properties" : {
+          "active" : {
+            "type" : "boolean"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        },
+        "required" : [
+          "active",
+          "name"
+        ],
+        "type" : "object"
+      },
       "DiaryDailyClassTypeDto" : {
         "properties" : {
           "id" : {
@@ -470,6 +513,49 @@
         "required" : [
           "id",
           "name"
+        ],
+        "type" : "object"
+      },
+      "DiaryQuestion" : {
+        "properties" : {
+          "active" : {
+            "type" : "boolean"
+          },
+          "answers" : {
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "question" : {
+            "type" : "string"
+          },
+          "shortAnswers" : {
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
+          },
+          "shortQuestion" : {
+            "type" : "string"
+          },
+          "targetDailyClassTypeIds" : {
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
+          }
+        },
+        "required" : [
+          "active",
+          "answers",
+          "question",
+          "shortAnswers",
+          "shortQuestion",
+          "targetDailyClassTypeIds"
         ],
         "type" : "object"
       },
@@ -721,6 +807,56 @@
         ],
         "type" : "object"
       },
+      "ForcedReq" : {
+        "properties" : {
+          "is_forced" : {
+            "type" : "boolean"
+          }
+        },
+        "type" : "object"
+      },
+      "Friend" : {
+        "properties" : {
+          "accepted" : {
+            "type" : "boolean",
+            "writeOnly" : true
+          },
+          "createdAt" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "fromUserDisplayName" : {
+            "type" : "string"
+          },
+          "fromUserId" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "isAccepted" : {
+            "type" : "boolean"
+          },
+          "toUserDisplayName" : {
+            "type" : "string"
+          },
+          "toUserId" : {
+            "type" : "string"
+          },
+          "updatedAt" : {
+            "format" : "date-time",
+            "type" : "string"
+          }
+        },
+        "required" : [
+          "createdAt",
+          "fromUserId",
+          "isAccepted",
+          "toUserId",
+          "updatedAt"
+        ],
+        "type" : "object"
+      },
       "FriendRequest" : {
         "properties" : {
           "nickname" : {
@@ -767,25 +903,6 @@
           "id",
           "nickname",
           "userId"
-        ],
-        "type" : "object"
-      },
-      "FriendsResponse" : {
-        "properties" : {
-          "content" : {
-            "items" : {
-              "$ref" : "#/components/schemas/FriendResponse"
-            },
-            "type" : "array"
-          },
-          "totalCount" : {
-            "format" : "int32",
-            "type" : "integer"
-          }
-        },
-        "required" : [
-          "content",
-          "totalCount"
         ],
         "type" : "object"
       },
@@ -880,7 +997,93 @@
         "type" : "object"
       },
       "JsonNode" : {
-
+        "properties" : {
+          "array" : {
+            "type" : "boolean"
+          },
+          "bigDecimal" : {
+            "type" : "boolean"
+          },
+          "bigInteger" : {
+            "type" : "boolean"
+          },
+          "binary" : {
+            "type" : "boolean"
+          },
+          "boolean" : {
+            "type" : "boolean"
+          },
+          "container" : {
+            "type" : "boolean"
+          },
+          "double" : {
+            "type" : "boolean"
+          },
+          "embeddedValue" : {
+            "type" : "boolean"
+          },
+          "empty" : {
+            "type" : "boolean"
+          },
+          "float" : {
+            "type" : "boolean"
+          },
+          "floatingPointNumber" : {
+            "type" : "boolean"
+          },
+          "int" : {
+            "type" : "boolean"
+          },
+          "integralNumber" : {
+            "type" : "boolean"
+          },
+          "long" : {
+            "type" : "boolean"
+          },
+          "missingNode" : {
+            "type" : "boolean"
+          },
+          "nodeType" : {
+            "enum" : [
+              "ARRAY",
+              "BINARY",
+              "BOOLEAN",
+              "MISSING",
+              "NULL",
+              "NUMBER",
+              "OBJECT",
+              "POJO",
+              "STRING"
+            ],
+            "type" : "string"
+          },
+          "null" : {
+            "type" : "boolean"
+          },
+          "number" : {
+            "type" : "boolean"
+          },
+          "object" : {
+            "type" : "boolean"
+          },
+          "pojo" : {
+            "type" : "boolean"
+          },
+          "short" : {
+            "type" : "boolean"
+          },
+          "string" : {
+            "type" : "boolean"
+          },
+          "textual" : {
+            "deprecated" : true,
+            "type" : "boolean"
+          },
+          "valueNode" : {
+            "type" : "boolean"
+          }
+        },
+        "type" : "object"
       },
       "LectureBuilding" : {
         "properties" : {
@@ -1010,6 +1213,82 @@
         ],
         "type" : "object"
       },
+      "ListResponseFriendResponse" : {
+        "properties" : {
+          "content" : {
+            "items" : {
+              "$ref" : "#/components/schemas/FriendResponse"
+            },
+            "type" : "array"
+          },
+          "totalCount" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "required" : [
+          "content",
+          "totalCount"
+        ],
+        "type" : "object"
+      },
+      "ListResponseLectureBuilding" : {
+        "properties" : {
+          "content" : {
+            "items" : {
+              "$ref" : "#/components/schemas/LectureBuilding"
+            },
+            "type" : "array"
+          },
+          "totalCount" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "required" : [
+          "content",
+          "totalCount"
+        ],
+        "type" : "object"
+      },
+      "ListResponsePopupResponse" : {
+        "properties" : {
+          "content" : {
+            "items" : {
+              "$ref" : "#/components/schemas/PopupResponse"
+            },
+            "type" : "array"
+          },
+          "totalCount" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "required" : [
+          "content",
+          "totalCount"
+        ],
+        "type" : "object"
+      },
+      "ListResponseTimetableThemeDto" : {
+        "properties" : {
+          "content" : {
+            "items" : {
+              "$ref" : "#/components/schemas/TimetableThemeDto"
+            },
+            "type" : "array"
+          },
+          "totalCount" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "required" : [
+          "content",
+          "totalCount"
+        ],
+        "type" : "object"
+      },
       "LocalLoginRequest" : {
         "properties" : {
           "id" : {
@@ -1071,6 +1350,20 @@
         "required" : [
           "registration_id"
         ],
+        "type" : "object"
+      },
+      "MultiValueMapStringString" : {
+        "additionalProperties" : {
+          "items" : {
+            "type" : "string"
+          },
+          "type" : "array"
+        },
+        "properties" : {
+          "empty" : {
+            "type" : "boolean"
+          }
+        },
         "type" : "object"
       },
       "NicknameDto" : {
@@ -1152,6 +1445,21 @@
         },
         "required" : [
           "message"
+        ],
+        "type" : "object"
+      },
+      "PairFriendUser" : {
+        "properties" : {
+          "first" : {
+            "$ref" : "#/components/schemas/Friend"
+          },
+          "second" : {
+            "$ref" : "#/components/schemas/User"
+          }
+        },
+        "required" : [
+          "first",
+          "second"
         ],
         "type" : "object"
       },
@@ -1238,42 +1546,6 @@
           "imageUri",
           "image_url",
           "key"
-        ],
-        "type" : "object"
-      },
-      "PopupsResponse" : {
-        "properties" : {
-          "content" : {
-            "items" : {
-              "$ref" : "#/components/schemas/PopupResponse"
-            },
-            "type" : "array"
-          },
-          "totalCount" : {
-            "format" : "int32",
-            "type" : "integer"
-          }
-        },
-        "required" : [
-          "content",
-          "totalCount"
-        ],
-        "type" : "object"
-      },
-      "PostConfigRequest" : {
-        "properties" : {
-          "data" : {
-            "$ref" : "#/components/schemas/JsonNode"
-          },
-          "maxVersion" : {
-            "$ref" : "#/components/schemas/ConfigVersionDto"
-          },
-          "minVersion" : {
-            "$ref" : "#/components/schemas/ConfigVersionDto"
-          }
-        },
-        "required" : [
-          "data"
         ],
         "type" : "object"
       },
@@ -1661,25 +1933,6 @@
         "required" : [
           "authorId",
           "originId"
-        ],
-        "type" : "object"
-      },
-      "ThemesResponse" : {
-        "properties" : {
-          "content" : {
-            "items" : {
-              "$ref" : "#/components/schemas/TimetableThemeDto"
-            },
-            "type" : "array"
-          },
-          "totalCount" : {
-            "format" : "int32",
-            "type" : "integer"
-          }
-        },
-        "required" : [
-          "content",
-          "totalCount"
         ],
         "type" : "object"
       },
@@ -2241,6 +2494,20 @@
         ],
         "type" : "object"
       },
+      "TimetableThemeModifyRequestDto" : {
+        "properties" : {
+          "colors" : {
+            "items" : {
+              "$ref" : "#/components/schemas/ColorSet"
+            },
+            "type" : "array"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
       "TimetableThemePublishRequestDto" : {
         "properties" : {
           "isAnonymous" : {
@@ -2275,6 +2542,77 @@
         },
         "required" : [
           "displayName"
+        ],
+        "type" : "object"
+      },
+      "User" : {
+        "properties" : {
+          "active" : {
+            "type" : "boolean"
+          },
+          "admin" : {
+            "type" : "boolean",
+            "writeOnly" : true
+          },
+          "credential" : {
+            "$ref" : "#/components/schemas/Credential"
+          },
+          "credentialHash" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "emailVerified" : {
+            "type" : "boolean",
+            "writeOnly" : true
+          },
+          "fcmKey" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "isAdmin" : {
+            "type" : "boolean"
+          },
+          "isEmailVerified" : {
+            "type" : "boolean"
+          },
+          "lastLoginTimestamp" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "nickname" : {
+            "type" : "string"
+          },
+          "nicknameTag" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "nicknameWithoutTag" : {
+            "type" : "string"
+          },
+          "notificationCheckedAt" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "regDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          }
+        },
+        "required" : [
+          "active",
+          "credential",
+          "credentialHash",
+          "isAdmin",
+          "lastLoginTimestamp",
+          "nickname",
+          "nicknameTag",
+          "nicknameWithoutTag",
+          "notificationCheckedAt",
+          "regDate"
         ],
         "type" : "object"
       },
@@ -2452,7 +2790,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "admin-controller"
+        ]
       },
       "post" : {
         "operationId" : "postConfig",
@@ -2469,9 +2810,7 @@
         "requestBody" : {
           "content" : {
             "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/PostConfigRequest"
-              }
+
             }
           },
           "required" : true
@@ -2487,7 +2826,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "admin-controller"
+        ]
       }
     },
     "/v1/admin/configs/{name}/{id}" : {
@@ -2513,9 +2855,15 @@
         ],
         "responses" : {
           "200" : {
+            "content" : {
+
+            },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "admin-controller"
+        ]
       },
       "patch" : {
         "operationId" : "patchConfig",
@@ -2558,7 +2906,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "admin-controller"
+        ]
       }
     },
     "/v1/admin/diary/dailyClassTypes" : {
@@ -2585,7 +2936,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "admin-controller"
+        ]
       },
       "get" : {
         "operationId" : "getAllDiaryDailyClassTypes",
@@ -2595,7 +2949,7 @@
               "application/json" : {
                 "schema" : {
                   "items" : {
-                    "$ref" : "#/components/schemas/DiaryDailyClassTypeDto"
+                    "$ref" : "#/components/schemas/DiaryDailyClassType"
                   },
                   "type" : "array"
                 }
@@ -2603,7 +2957,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "admin-controller"
+        ]
       },
       "post" : {
         "operationId" : "insertDiaryDailyClassType",
@@ -2628,7 +2985,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "admin-controller"
+        ]
       }
     },
     "/v1/admin/diary/questions" : {
@@ -2640,7 +3000,7 @@
               "application/json" : {
                 "schema" : {
                   "items" : {
-                    "$ref" : "#/components/schemas/DiaryQuestionDto"
+                    "$ref" : "#/components/schemas/DiaryQuestion"
                   },
                   "type" : "array"
                 }
@@ -2648,7 +3008,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "admin-controller"
+        ]
       },
       "post" : {
         "operationId" : "insertDiaryQuestion",
@@ -2673,7 +3036,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "admin-controller"
+        ]
       }
     },
     "/v1/admin/diary/questions/{id}" : {
@@ -2700,7 +3066,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "admin-controller"
+        ]
       }
     },
     "/v1/admin/images/{source}/upload-uris" : {
@@ -2718,8 +3087,11 @@
           {
             "in" : "query",
             "name" : "count",
+            "required" : false,
             "schema" : {
-              "type" : "string"
+              "default" : 1,
+              "format" : "int32",
+              "type" : "integer"
             }
           }
         ],
@@ -2737,12 +3109,14 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "admin-controller"
+        ]
       }
     },
     "/v1/admin/insert_noti" : {
       "post" : {
-        "description" : "어드민 권한으로 알림 보내기",
         "operationId" : "insertNotification",
         "requestBody" : {
           "content" : {
@@ -2752,7 +3126,6 @@
               }
             }
           },
-          "description" : "userId == null이면 모든 유저에게 보냄\ninsertFcm == true && shouldSendAsDataMessage == true이면 FCM data message(클라에서 직접 대응 필요한 메시지)로 보냄",
           "required" : true
         },
         "responses" : {
@@ -2766,7 +3139,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "admin-controller"
+        ]
       }
     },
     "/v1/admin/popups" : {
@@ -2793,7 +3169,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "admin-controller"
+        ]
       }
     },
     "/v1/admin/popups/{id}" : {
@@ -2811,12 +3190,18 @@
         ],
         "responses" : {
           "200" : {
+            "content" : {
+
+            },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "admin-controller"
+        ]
       }
     },
-    "/v1/auth/find_id" : {
+    "/v1/auth/id/find" : {
       "post" : {
         "operationId" : "findId",
         "requestBody" : {
@@ -2826,7 +3211,8 @@
                 "$ref" : "#/components/schemas/SendEmailRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -2839,7 +3225,40 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "auth-controller"
+        ]
+      }
+    },
+    "/v1/auth/login_apple" : {
+      "post" : {
+        "operationId" : "loginAppleLegacy",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SocialLoginRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LoginResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "auth-controller"
+        ]
       }
     },
     "/v1/auth/login_fb" : {
@@ -2852,7 +3271,8 @@
                 "$ref" : "#/components/schemas/FacebookLoginRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -2865,7 +3285,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "auth-controller"
+        ]
       }
     },
     "/v1/auth/login_local" : {
@@ -2878,7 +3301,8 @@
                 "$ref" : "#/components/schemas/LocalLoginRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -2891,7 +3315,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "auth-controller"
+        ]
       }
     },
     "/v1/auth/login/apple" : {
@@ -2904,7 +3331,8 @@
                 "$ref" : "#/components/schemas/SocialLoginRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -2917,7 +3345,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "auth-controller"
+        ]
       }
     },
     "/v1/auth/login/facebook" : {
@@ -2930,7 +3361,8 @@
                 "$ref" : "#/components/schemas/SocialLoginRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -2943,7 +3375,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "auth-controller"
+        ]
       }
     },
     "/v1/auth/login/google" : {
@@ -2956,7 +3391,8 @@
                 "$ref" : "#/components/schemas/SocialLoginRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -2969,7 +3405,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "auth-controller"
+        ]
       }
     },
     "/v1/auth/login/kakao" : {
@@ -2982,7 +3421,8 @@
                 "$ref" : "#/components/schemas/SocialLoginRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -2995,7 +3435,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "auth-controller"
+        ]
       }
     },
     "/v1/auth/logout" : {
@@ -3008,7 +3451,8 @@
                 "$ref" : "#/components/schemas/LogoutRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -3021,7 +3465,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "auth-controller"
+        ]
       }
     },
     "/v1/auth/password/reset" : {
@@ -3034,7 +3481,8 @@
                 "$ref" : "#/components/schemas/PasswordResetRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -3047,7 +3495,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "auth-controller"
+        ]
       }
     },
     "/v1/auth/password/reset/email/check" : {
@@ -3060,7 +3511,8 @@
                 "$ref" : "#/components/schemas/GetMaskedEmailRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -3073,7 +3525,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "auth-controller"
+        ]
       }
     },
     "/v1/auth/password/reset/email/send" : {
@@ -3086,7 +3541,8 @@
                 "$ref" : "#/components/schemas/SendEmailRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -3099,7 +3555,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "auth-controller"
+        ]
       }
     },
     "/v1/auth/password/reset/verification/code" : {
@@ -3112,7 +3571,8 @@
                 "$ref" : "#/components/schemas/VerificationCodeRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -3125,7 +3585,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "auth-controller"
+        ]
       }
     },
     "/v1/auth/register_local" : {
@@ -3138,7 +3601,8 @@
                 "$ref" : "#/components/schemas/LocalRegisterRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -3151,19 +3615,23 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "auth-controller"
+        ]
       }
     },
     "/v1/bookmarks" : {
       "get" : {
-        "operationId" : "getBookmark",
+        "operationId" : "getBookmarks",
         "parameters" : [
           {
             "in" : "query",
             "name" : "year",
             "required" : true,
             "schema" : {
-              "type" : "string"
+              "format" : "int32",
+              "type" : "integer"
             }
           },
           {
@@ -3171,7 +3639,14 @@
             "name" : "semester",
             "required" : true,
             "schema" : {
-              "type" : "string"
+              "enum" : [
+                1,
+                2,
+                3,
+                4
+              ],
+              "format" : "int32",
+              "type" : "integer"
             }
           }
         ],
@@ -3186,7 +3661,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "bookmark-controller"
+        ]
       }
     },
     "/v1/bookmarks/lecture" : {
@@ -3199,7 +3677,8 @@
                 "$ref" : "#/components/schemas/BookmarkLectureModifyRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -3208,7 +3687,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "bookmark-controller"
+        ]
       },
       "post" : {
         "operationId" : "addLecture_1",
@@ -3219,7 +3701,8 @@
                 "$ref" : "#/components/schemas/BookmarkLectureModifyRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -3228,7 +3711,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "bookmark-controller"
+        ]
       }
     },
     "/v1/bookmarks/lectures/{lectureId}/state" : {
@@ -3255,7 +3741,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "bookmark-controller"
+        ]
       }
     },
     "/v1/buildings" : {
@@ -3263,7 +3752,6 @@
         "operationId" : "searchBuildings",
         "parameters" : [
           {
-            "description" : "\n                    Comma separated list of place codes.\n                    custom 강의 제외하는 것을 추천\n                ",
             "in" : "query",
             "name" : "places",
             "required" : true,
@@ -3277,13 +3765,16 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/BuildingsResponse"
+                  "$ref" : "#/components/schemas/ListResponseLectureBuilding"
                 }
               }
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "building-controller"
+        ]
       }
     },
     "/v1/configs" : {
@@ -3301,12 +3792,15 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "config-controller"
+        ]
       }
     },
     "/v1/course_books" : {
       "get" : {
-        "operationId" : "getAllCoursebooks",
+        "operationId" : "getCoursebooks_1",
         "responses" : {
           "200" : {
             "content" : {
@@ -3321,33 +3815,41 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "coursebook-controller"
+        ]
       }
     },
     "/v1/course_books/official" : {
       "get" : {
-        "operationId" : "getSyllabusUrl",
+        "operationId" : "getCoursebookOfficial",
         "parameters" : [
           {
-            "example" : 2024,
             "in" : "query",
             "name" : "year",
             "required" : true,
             "schema" : {
-              "type" : "string"
+              "format" : "int32",
+              "type" : "integer"
             }
           },
           {
-            "example" : 3,
             "in" : "query",
             "name" : "semester",
             "required" : true,
             "schema" : {
-              "type" : "string"
+              "enum" : [
+                1,
+                2,
+                3,
+                4
+              ],
+              "format" : "int32",
+              "type" : "integer"
             }
           },
           {
-            "example" : "M1522.001400",
             "in" : "query",
             "name" : "course_number",
             "required" : true,
@@ -3356,7 +3858,6 @@
             }
           },
           {
-            "example" : "001",
             "in" : "query",
             "name" : "lecture_number",
             "required" : true,
@@ -3376,12 +3877,15 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "coursebook-controller"
+        ]
       }
     },
     "/v1/course_books/recent" : {
       "get" : {
-        "operationId" : "getMostRecentCoursebook",
+        "operationId" : "getLatestCoursebook",
         "responses" : {
           "200" : {
             "content" : {
@@ -3393,7 +3897,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "coursebook-controller"
+        ]
       }
     },
     "/v1/diary" : {
@@ -3420,7 +3927,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "diary-controller"
+        ]
       }
     },
     "/v1/diary/{id}" : {
@@ -3447,7 +3957,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "diary-controller"
+        ]
       }
     },
     "/v1/diary/dailyClassTypes" : {
@@ -3467,7 +3980,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "diary-controller"
+        ]
       }
     },
     "/v1/diary/my" : {
@@ -3487,12 +4003,15 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "diary-controller"
+        ]
       }
     },
     "/v1/diary/questionnaire" : {
       "post" : {
-        "operationId" : "getQuestionnaireFromActivities",
+        "operationId" : "getQuestionnaireFromDailyClassTypes",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -3514,7 +4033,247 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "diary-controller"
+        ]
+      }
+    },
+    "/v1/ev-service/{requestPath}" : {
+      "delete" : {
+        "operationId" : "handleDelete",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "requestPath",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            }
+          },
+          {
+            "in" : "query",
+            "name" : "queryParams",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/components/schemas/MultiValueMapStringString"
+            }
+          }
+        ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "additionalProperties" : {
+
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "ev-service-controller"
+        ]
+      },
+      "get" : {
+        "operationId" : "handleGet",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "requestPath",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            }
+          },
+          {
+            "in" : "query",
+            "name" : "queryParams",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/components/schemas/MultiValueMapStringString"
+            }
+          }
+        ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "additionalProperties" : {
+
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "ev-service-controller"
+        ]
+      },
+      "patch" : {
+        "operationId" : "handlePatch",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "requestPath",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            }
+          },
+          {
+            "in" : "query",
+            "name" : "queryParams",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/components/schemas/MultiValueMapStringString"
+            }
+          }
+        ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "additionalProperties" : {
+
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "ev-service-controller"
+        ]
+      },
+      "post" : {
+        "operationId" : "handlePost",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "requestPath",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            }
+          },
+          {
+            "in" : "query",
+            "name" : "queryParams",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/components/schemas/MultiValueMapStringString"
+            }
+          }
+        ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "additionalProperties" : {
+
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "ev-service-controller"
+        ]
+      }
+    },
+    "/v1/ev-service/v1/users/me/lectures/latest" : {
+      "get" : {
+        "operationId" : "getMyLatestLectures",
+        "parameters" : [
+          {
+            "in" : "query",
+            "name" : "queryParams",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/components/schemas/MultiValueMapStringString"
+            }
+          },
+          {
+            "in" : "query",
+            "name" : "limit",
+            "required" : false,
+            "schema" : {
+              "default" : 100,
+              "format" : "int32",
+              "type" : "integer"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "additionalProperties" : {
+
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "ev-service-controller"
+        ]
       }
     },
     "/v1/ev/lectures/{lectureId}/summary" : {
@@ -3522,7 +4281,6 @@
         "operationId" : "getLectureEvaluationSummary",
         "parameters" : [
           {
-            "description" : "snutt lecture id",
             "in" : "path",
             "name" : "lectureId",
             "required" : true,
@@ -3542,7 +4300,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "ev-controller"
+        ]
       }
     },
     "/v1/feedback" : {
@@ -3555,7 +4316,8 @@
                 "$ref" : "#/components/schemas/FeedbackPostRequestDto"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -3568,7 +4330,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "feedback-controller"
+        ]
       }
     },
     "/v1/friends" : {
@@ -3589,13 +4354,16 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/FriendsResponse"
+                  "$ref" : "#/components/schemas/ListResponseFriendResponse"
                 }
               }
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "friend-controller"
+        ]
       },
       "post" : {
         "operationId" : "requestFriend",
@@ -3612,15 +4380,14 @@
         "responses" : {
           "200" : {
             "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/FriendsResponse"
-                }
-              }
+
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "friend-controller"
+        ]
       }
     },
     "/v1/friends/{friendId}" : {
@@ -3643,7 +4410,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "friend-controller"
+        ]
       }
     },
     "/v1/friends/{friendId}/accept" : {
@@ -3666,7 +4436,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "friend-controller"
+        ]
       }
     },
     "/v1/friends/{friendId}/coursebooks" : {
@@ -3696,7 +4469,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "friend-table-controller"
+        ]
       }
     },
     "/v1/friends/{friendId}/decline" : {
@@ -3719,7 +4495,46 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "friend-controller"
+        ]
+      }
+    },
+    "/v1/friends/{friendId}/display-name" : {
+      "patch" : {
+        "operationId" : "updateFriendDisplayName",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "friendId",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateFriendDisplayNameRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "friend-controller"
+        ]
       }
     },
     "/v1/friends/{friendId}/primary-table" : {
@@ -3739,7 +4554,14 @@
             "name" : "semester",
             "required" : true,
             "schema" : {
-              "type" : "string"
+              "enum" : [
+                1,
+                2,
+                3,
+                4
+              ],
+              "format" : "int32",
+              "type" : "integer"
             }
           },
           {
@@ -3763,7 +4585,43 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "friend-table-controller"
+        ]
+      }
+    },
+    "/v1/friends/{friendId}/registered-course-books" : {
+      "get" : {
+        "operationId" : "getCoursebooksLegacy",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "friendId",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/CoursebookDto"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "friend-table-controller"
+        ]
       }
     },
     "/v1/friends/accept-link/{requestToken}" : {
@@ -3784,13 +4642,16 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/FriendResponse"
+                  "$ref" : "#/components/schemas/PairFriendUser"
                 }
               }
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "friend-controller"
+        ]
       }
     },
     "/v1/friends/generate-link" : {
@@ -3807,32 +4668,44 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "friend-controller"
+        ]
       }
     },
     "/v1/notification" : {
       "get" : {
-        "operationId" : "getNotification",
+        "operationId" : "getNotifications",
         "parameters" : [
           {
             "in" : "query",
             "name" : "offset",
+            "required" : false,
             "schema" : {
-              "type" : "string"
+              "default" : 0,
+              "format" : "int64",
+              "type" : "integer"
             }
           },
           {
             "in" : "query",
             "name" : "limit",
+            "required" : false,
             "schema" : {
-              "type" : "string"
+              "default" : 20,
+              "format" : "int32",
+              "type" : "integer"
             }
           },
           {
             "in" : "query",
             "name" : "explicit",
+            "required" : false,
             "schema" : {
-              "type" : "string"
+              "default" : 0,
+              "format" : "int32",
+              "type" : "integer"
             }
           }
         ],
@@ -3850,7 +4723,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "notification-controller"
+        ]
       }
     },
     "/v1/notification/count" : {
@@ -3867,7 +4743,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "notification-controller"
+        ]
       }
     },
     "/v1/popups" : {
@@ -3878,13 +4757,16 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/PopupsResponse"
+                  "$ref" : "#/components/schemas/ListResponsePopupResponse"
                 }
               }
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "popup-controller"
+        ]
       }
     },
     "/v1/push/preferences" : {
@@ -3894,18 +4776,6 @@
           "200" : {
             "content" : {
               "application/json" : {
-                "example" : {
-                  "pushPreferences" : [
-                    {
-                      "isEnabled" : "true",
-                      "type" : "LECTURE_UPDATE"
-                    },
-                    {
-                      "isEnabled" : "true",
-                      "type" : "VACANCY_NOTIFICATION"
-                    }
-                  ]
-                },
                 "schema" : {
                   "$ref" : "#/components/schemas/PushPreferenceDto"
                 }
@@ -3913,41 +4783,39 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "push-preference-controller"
+        ]
       },
       "post" : {
         "operationId" : "savePushPreferences",
         "requestBody" : {
           "content" : {
             "application/json" : {
-              "example" : {
-                "pushPreferences" : [
-                  {
-                    "isEnabled" : false,
-                    "type" : "LECTURE_UPDATE"
-                  },
-                  {
-                    "isEnabled" : false,
-                    "type" : "VACANCY_NOTIFICATION"
-                  }
-                ]
-              },
               "schema" : {
                 "$ref" : "#/components/schemas/PushPreferenceDto"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
+            "content" : {
+
+            },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "push-preference-controller"
+        ]
       }
     },
     "/v1/search_query" : {
       "post" : {
-        "operationId" : "searchLecture",
+        "operationId" : "searchLectures",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -3955,7 +4823,8 @@
                 "$ref" : "#/components/schemas/SearchQueryLegacy"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -3971,7 +4840,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "lecture-search-controller"
+        ]
       }
     },
     "/v1/semesters/status" : {
@@ -3988,12 +4860,15 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "semester-controller"
+        ]
       }
     },
     "/v1/tables" : {
       "get" : {
-        "operationId" : "getBrief",
+        "operationId" : "getTimetableBriefs",
         "responses" : {
           "200" : {
             "content" : {
@@ -4008,10 +4883,23 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-controller"
+        ]
       },
       "post" : {
         "operationId" : "addTimetable",
+        "parameters" : [
+          {
+            "in" : "query",
+            "name" : "source",
+            "required" : false,
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        ],
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -4019,7 +4907,8 @@
                 "$ref" : "#/components/schemas/TimetableAddRequestDto"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -4035,7 +4924,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-controller"
+        ]
       }
     },
     "/v1/tables/{timetableId}" : {
@@ -4065,7 +4957,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-controller"
+        ]
       },
       "get" : {
         "operationId" : "getTimetable",
@@ -4090,7 +4985,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-controller"
+        ]
       },
       "put" : {
         "operationId" : "modifyTimetable",
@@ -4111,7 +5009,8 @@
                 "$ref" : "#/components/schemas/TimetableModifyRequestDto"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -4127,7 +5026,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-controller"
+        ]
       }
     },
     "/v1/tables/{timetableId}/copy" : {
@@ -4157,7 +5059,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-controller"
+        ]
       }
     },
     "/v1/tables/{timetableId}/lecture" : {
@@ -4165,19 +5070,19 @@
         "operationId" : "addCustomLecture",
         "parameters" : [
           {
-            "description" : "시간 겹치는 강의 강제로 삭제 후 실행",
-            "in" : "query",
-            "name" : "isForced",
-            "schema" : {
-              "type" : "string"
-            }
-          },
-          {
             "in" : "path",
             "name" : "timetableId",
             "required" : true,
             "schema" : {
               "type" : "string"
+            }
+          },
+          {
+            "in" : "query",
+            "name" : "isForced",
+            "required" : false,
+            "schema" : {
+              "type" : "boolean"
             }
           }
         ],
@@ -4188,7 +5093,8 @@
                 "$ref" : "#/components/schemas/CustomTimetableLectureAddLegacyRequestDto"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -4201,21 +5107,16 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-lecture-controller"
+        ]
       }
     },
     "/v1/tables/{timetableId}/lecture/{lectureId}" : {
       "post" : {
         "operationId" : "addLecture",
         "parameters" : [
-          {
-            "description" : "시간 겹치는 강의 강제로 삭제 후 실행",
-            "in" : "query",
-            "name" : "isForced",
-            "schema" : {
-              "type" : "string"
-            }
-          },
           {
             "in" : "path",
             "name" : "timetableId",
@@ -4231,8 +5132,25 @@
             "schema" : {
               "type" : "string"
             }
+          },
+          {
+            "in" : "query",
+            "name" : "isForced",
+            "required" : false,
+            "schema" : {
+              "type" : "boolean"
+            }
           }
         ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ForcedReq"
+              }
+            }
+          }
+        },
         "responses" : {
           "200" : {
             "content" : {
@@ -4244,7 +5162,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-lecture-controller"
+        ]
       }
     },
     "/v1/tables/{timetableId}/lecture/{timetableLectureId}" : {
@@ -4279,19 +5200,14 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-lecture-controller"
+        ]
       },
       "put" : {
         "operationId" : "modifyTimetableLecture",
         "parameters" : [
-          {
-            "description" : "시간 겹치는 강의 강제로 삭제 후 실행",
-            "in" : "query",
-            "name" : "isForced",
-            "schema" : {
-              "type" : "string"
-            }
-          },
           {
             "in" : "path",
             "name" : "timetableId",
@@ -4307,6 +5223,14 @@
             "schema" : {
               "type" : "string"
             }
+          },
+          {
+            "in" : "query",
+            "name" : "isForced",
+            "required" : false,
+            "schema" : {
+              "type" : "boolean"
+            }
           }
         ],
         "requestBody" : {
@@ -4316,7 +5240,8 @@
                 "$ref" : "#/components/schemas/TimetableLectureModifyLegacyRequestDto"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -4329,7 +5254,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-lecture-controller"
+        ]
       }
     },
     "/v1/tables/{timetableId}/lecture/{timetableLectureId}/reminder" : {
@@ -4364,7 +5292,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-lecture-reminder-controller"
+        ]
       },
       "put" : {
         "operationId" : "modifyReminder",
@@ -4394,7 +5325,6 @@
               }
             }
           },
-          "description" : "강의 리마인더 설정 옵션 (NONE, TEN_MINUTES_BEFORE, ZERO_MINUTE, TEN_MINUTES_AFTER)",
           "required" : true
         },
         "responses" : {
@@ -4408,21 +5338,16 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-lecture-reminder-controller"
+        ]
       }
     },
     "/v1/tables/{timetableId}/lecture/{timetableLectureId}/reset" : {
       "put" : {
         "operationId" : "resetTimetableLecture",
         "parameters" : [
-          {
-            "description" : "시간 겹치는 강의 강제로 삭제 후 실행",
-            "in" : "query",
-            "name" : "isForced",
-            "schema" : {
-              "type" : "string"
-            }
-          },
           {
             "in" : "path",
             "name" : "timetableId",
@@ -4438,8 +5363,25 @@
             "schema" : {
               "type" : "string"
             }
+          },
+          {
+            "in" : "query",
+            "name" : "isForced",
+            "required" : false,
+            "schema" : {
+              "type" : "boolean"
+            }
           }
         ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ForcedReq"
+              }
+            }
+          }
+        },
         "responses" : {
           "200" : {
             "content" : {
@@ -4451,7 +5393,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-lecture-controller"
+        ]
       }
     },
     "/v1/tables/{timetableId}/lecture/reminders" : {
@@ -4481,7 +5426,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-lecture-reminder-controller"
+        ]
       }
     },
     "/v1/tables/{timetableId}/primary" : {
@@ -4500,15 +5448,14 @@
         "responses" : {
           "200" : {
             "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "string"
-                }
-              }
+
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-controller"
+        ]
       },
       "post" : {
         "operationId" : "setPrimary",
@@ -4525,15 +5472,14 @@
         "responses" : {
           "200" : {
             "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "string"
-                }
-              }
+
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-controller"
+        ]
       }
     },
     "/v1/tables/{timetableId}/theme" : {
@@ -4556,7 +5502,8 @@
                 "$ref" : "#/components/schemas/TimetableModifyThemeRequestDto"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -4569,7 +5516,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-controller"
+        ]
       }
     },
     "/v1/tables/{year}/{semester}" : {
@@ -4581,7 +5531,8 @@
             "name" : "year",
             "required" : true,
             "schema" : {
-              "type" : "string"
+              "format" : "int32",
+              "type" : "integer"
             }
           },
           {
@@ -4589,7 +5540,14 @@
             "name" : "semester",
             "required" : true,
             "schema" : {
-              "type" : "string"
+              "enum" : [
+                1,
+                2,
+                3,
+                4
+              ],
+              "format" : "int32",
+              "type" : "integer"
             }
           }
         ],
@@ -4607,7 +5565,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-controller"
+        ]
       }
     },
     "/v1/tables/recent" : {
@@ -4624,7 +5585,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-controller"
+        ]
       }
     },
     "/v1/tags/{year}/{semester}" : {
@@ -4636,7 +5600,8 @@
             "name" : "year",
             "required" : true,
             "schema" : {
-              "type" : "string"
+              "format" : "int32",
+              "type" : "integer"
             }
           },
           {
@@ -4644,7 +5609,14 @@
             "name" : "semester",
             "required" : true,
             "schema" : {
-              "type" : "string"
+              "enum" : [
+                1,
+                2,
+                3,
+                4
+              ],
+              "format" : "int32",
+              "type" : "integer"
             }
           }
         ],
@@ -4659,7 +5631,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "tag-controller"
+        ]
       }
     },
     "/v1/tags/{year}/{semester}/update_time" : {
@@ -4671,7 +5646,8 @@
             "name" : "year",
             "required" : true,
             "schema" : {
-              "type" : "string"
+              "format" : "int32",
+              "type" : "integer"
             }
           },
           {
@@ -4679,7 +5655,14 @@
             "name" : "semester",
             "required" : true,
             "schema" : {
-              "type" : "string"
+              "enum" : [
+                1,
+                2,
+                3,
+                4
+              ],
+              "format" : "int32",
+              "type" : "integer"
             }
           }
         ],
@@ -4694,22 +5677,15 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "tag-controller"
+        ]
       }
     },
     "/v1/themes" : {
       "get" : {
         "operationId" : "getThemes",
-        "parameters" : [
-          {
-            "in" : "query",
-            "name" : "state",
-            "required" : true,
-            "schema" : {
-              "type" : "string"
-            }
-          }
-        ],
         "responses" : {
           "200" : {
             "content" : {
@@ -4724,7 +5700,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-theme-controller"
+        ]
       },
       "post" : {
         "operationId" : "addTheme",
@@ -4749,7 +5728,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-theme-controller"
+        ]
       }
     },
     "/v1/themes/{themeId}" : {
@@ -4772,7 +5754,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-theme-controller"
+        ]
       },
       "get" : {
         "operationId" : "getTheme",
@@ -4789,11 +5774,18 @@
         "responses" : {
           "200" : {
             "content" : {
-
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TimetableThemeDto"
+                }
+              }
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-theme-controller"
+        ]
       },
       "patch" : {
         "operationId" : "modifyTheme",
@@ -4811,7 +5803,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/TimetableThemeAddRequestDto"
+                "$ref" : "#/components/schemas/TimetableThemeModifyRequestDto"
               }
             }
           },
@@ -4828,7 +5820,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-theme-controller"
+        ]
       }
     },
     "/v1/themes/{themeId}/copy" : {
@@ -4855,7 +5850,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-theme-controller"
+        ]
       }
     },
     "/v1/themes/{themeId}/default" : {
@@ -4882,7 +5880,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-theme-controller"
+        ]
       },
       "post" : {
         "operationId" : "setDefault",
@@ -4907,7 +5908,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-theme-controller"
+        ]
       }
     },
     "/v1/themes/{themeId}/download" : {
@@ -4925,7 +5929,7 @@
         ],
         "requestBody" : {
           "content" : {
-            "*/*" : {
+            "application/json" : {
               "schema" : {
                 "$ref" : "#/components/schemas/TimetableThemeDownloadRequestDto"
               }
@@ -4944,7 +5948,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-theme-controller"
+        ]
       }
     },
     "/v1/themes/{themeId}/publish" : {
@@ -4967,7 +5974,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-theme-controller"
+        ]
       },
       "post" : {
         "operationId" : "publishTheme",
@@ -4983,7 +5993,7 @@
         ],
         "requestBody" : {
           "content" : {
-            "*/*" : {
+            "application/json" : {
               "schema" : {
                 "$ref" : "#/components/schemas/TimetableThemePublishRequestDto"
               }
@@ -4994,11 +6004,18 @@
         "responses" : {
           "200" : {
             "content" : {
-
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OkResponse"
+                }
+              }
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-theme-controller"
+        ]
       }
     },
     "/v1/themes/basic/{basicThemeTypeValue}/default" : {
@@ -5010,7 +6027,8 @@
             "name" : "basicThemeTypeValue",
             "required" : true,
             "schema" : {
-              "type" : "string"
+              "format" : "int32",
+              "type" : "integer"
             }
           }
         ],
@@ -5025,7 +6043,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-theme-controller"
+        ]
       },
       "post" : {
         "operationId" : "setBasicThemeTypeDefault",
@@ -5035,7 +6056,8 @@
             "name" : "basicThemeTypeValue",
             "required" : true,
             "schema" : {
-              "type" : "string"
+              "format" : "int32",
+              "type" : "integer"
             }
           }
         ],
@@ -5050,7 +6072,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-theme-controller"
+        ]
       }
     },
     "/v1/themes/best" : {
@@ -5062,7 +6087,8 @@
             "name" : "page",
             "required" : true,
             "schema" : {
-              "type" : "string"
+              "format" : "int32",
+              "type" : "integer"
             }
           }
         ],
@@ -5071,34 +6097,51 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/ThemesResponse"
+                  "$ref" : "#/components/schemas/ListResponseTimetableThemeDto"
                 }
               }
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-theme-controller"
+        ]
       }
     },
     "/v1/themes/friends" : {
       "get" : {
         "operationId" : "getFriendsThemes",
+        "parameters" : [
+          {
+            "in" : "query",
+            "name" : "page",
+            "required" : true,
+            "schema" : {
+              "format" : "int32",
+              "type" : "integer"
+            }
+          }
+        ],
         "responses" : {
           "200" : {
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/ThemesResponse"
+                  "$ref" : "#/components/schemas/ListResponseTimetableThemeDto"
                 }
               }
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-theme-controller"
+        ]
       }
     },
     "/v1/themes/search" : {
-      "get" : {
+      "post" : {
         "operationId" : "searchThemes",
         "parameters" : [
           {
@@ -5115,13 +6158,16 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/ThemesResponse"
+                  "$ref" : "#/components/schemas/ListResponseTimetableThemeDto"
                 }
               }
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "timetable-theme-controller"
+        ]
       }
     },
     "/v1/user/account" : {
@@ -5138,7 +6184,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "user-controller"
+        ]
       }
     },
     "/v1/user/apple" : {
@@ -5155,7 +6204,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "user-controller"
+        ]
       },
       "post" : {
         "operationId" : "attachApple",
@@ -5166,7 +6218,8 @@
                 "$ref" : "#/components/schemas/SocialLoginRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -5179,12 +6232,15 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "user-controller"
+        ]
       }
     },
     "/v1/user/device/{id}" : {
       "delete" : {
-        "operationId" : "registerLocal_2",
+        "operationId" : "removeRegistrationId",
         "parameters" : [
           {
             "in" : "path",
@@ -5206,10 +6262,13 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "device-controller"
+        ]
       },
       "post" : {
-        "operationId" : "registerLocal_1",
+        "operationId" : "addRegistrationId",
         "parameters" : [
           {
             "in" : "path",
@@ -5231,7 +6290,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "device-controller"
+        ]
       }
     },
     "/v1/user/email/verification" : {
@@ -5248,7 +6310,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "user-controller"
+        ]
       },
       "get" : {
         "operationId" : "getEmailVerification",
@@ -5263,7 +6328,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "user-controller"
+        ]
       },
       "post" : {
         "operationId" : "sendVerificationEmail",
@@ -5274,7 +6342,8 @@
                 "$ref" : "#/components/schemas/SendEmailRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -5287,7 +6356,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "user-controller"
+        ]
       }
     },
     "/v1/user/email/verification/code" : {
@@ -5300,7 +6372,8 @@
                 "$ref" : "#/components/schemas/VerificationCodeRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -5313,7 +6386,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "user-controller"
+        ]
       }
     },
     "/v1/user/facebook" : {
@@ -5330,7 +6406,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "user-controller"
+        ]
       },
       "post" : {
         "operationId" : "attachFacebook",
@@ -5341,7 +6420,8 @@
                 "$ref" : "#/components/schemas/SocialLoginRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -5354,7 +6434,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "user-controller"
+        ]
       }
     },
     "/v1/user/google" : {
@@ -5371,7 +6454,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "user-controller"
+        ]
       },
       "post" : {
         "operationId" : "attachGoogle",
@@ -5382,7 +6468,8 @@
                 "$ref" : "#/components/schemas/SocialLoginRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -5395,12 +6482,14 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "user-controller"
+        ]
       }
     },
     "/v1/user/info" : {
       "get" : {
-        "description" : "GET /v1/users/me 사용을 권장",
         "operationId" : "getUserInfo",
         "responses" : {
           "200" : {
@@ -5413,7 +6502,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "user-controller"
+        ]
       }
     },
     "/v1/user/kakao" : {
@@ -5430,7 +6522,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "user-controller"
+        ]
       },
       "post" : {
         "operationId" : "attachKakao",
@@ -5441,7 +6536,8 @@
                 "$ref" : "#/components/schemas/SocialLoginRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -5454,7 +6550,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "user-controller"
+        ]
       }
     },
     "/v1/user/password" : {
@@ -5467,7 +6566,8 @@
                 "$ref" : "#/components/schemas/LocalLoginRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -5480,7 +6580,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "user-controller"
+        ]
       },
       "put" : {
         "operationId" : "changePassword",
@@ -5491,7 +6594,8 @@
                 "$ref" : "#/components/schemas/PasswordChangeRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -5504,7 +6608,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "user-controller"
+        ]
       }
     },
     "/v1/users/me" : {
@@ -5521,7 +6628,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "users-controller"
+        ]
       },
       "patch" : {
         "operationId" : "patchUserInfo",
@@ -5532,7 +6642,8 @@
                 "$ref" : "#/components/schemas/UserPatchRequest"
               }
             }
-          }
+          },
+          "required" : true
         },
         "responses" : {
           "200" : {
@@ -5545,12 +6656,15 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "users-controller"
+        ]
       }
     },
     "/v1/users/me/auth-providers" : {
       "get" : {
-        "operationId" : "getAuthProviders",
+        "operationId" : "checkAuthProviders_1",
         "responses" : {
           "200" : {
             "content" : {
@@ -5562,7 +6676,30 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "users-controller"
+        ]
+      }
+    },
+    "/v1/users/me/social_providers" : {
+      "get" : {
+        "operationId" : "checkAuthProviders",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AuthProvidersCheckDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "users-controller"
+        ]
       }
     },
     "/v1/vacancy-notifications/lectures" : {
@@ -5579,7 +6716,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "vacancy-notification-controller"
+        ]
       }
     },
     "/v1/vacancy-notifications/lectures/{lectureId}" : {
@@ -5602,7 +6742,10 @@
             },
             "description" : "OK"
           }
-        }
+        },
+        "tags" : [
+          "vacancy-notification-controller"
+        ]
       },
       "post" : {
         "operationId" : "addVacancyNotification",
@@ -5622,44 +6765,11 @@
 
             },
             "description" : "OK"
-          },
-          "400" : {
-            "content" : {
-              "application/json" : {
-                "example" : {
-                  "displayMessage" : "이전 학기에는 빈자리 알림을 등록할 수 없습니다.",
-                  "errcode" : 40005,
-                  "message" : "이전 학기에는 빈자리 알림을 등록할 수 없습니다."
-                }
-              }
-            },
-            "description" : "이전 학기 강의 등록 시"
-          },
-          "402" : {
-            "content" : {
-              "application/json" : {
-                "example" : {
-                  "displayMessage" : "빈자리 알림 중복",
-                  "errcode" : 40900,
-                  "message" : "빈자리 알림 중복"
-                }
-              }
-            },
-            "description" : "빈자리 알림 중복"
-          },
-          "404" : {
-            "content" : {
-              "application/json" : {
-                "example" : {
-                  "displayMessage" : "lecture가 없습니다.",
-                  "errcode" : 16387,
-                  "message" : "lecture가 없습니다."
-                }
-              }
-            },
-            "description" : "존재하지 않는 강의 id"
           }
-        }
+        },
+        "tags" : [
+          "vacancy-notification-controller"
+        ]
       }
     },
     "/v1/vacancy-notifications/lectures/{lectureId}/state" : {
@@ -5686,40 +6796,10 @@
             },
             "description" : "OK"
           }
-        }
-      }
-    },
-    "v1/friends/{friendId}/display-name" : {
-      "patch" : {
-        "operationId" : "updateFriendDisplayName",
-        "parameters" : [
-          {
-            "in" : "path",
-            "name" : "friendId",
-            "required" : true,
-            "schema" : {
-              "type" : "string"
-            }
-          }
-        ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/UpdateFriendDisplayNameRequest"
-              }
-            }
-          },
-          "required" : true
         },
-        "responses" : {
-          "200" : {
-            "content" : {
-
-            },
-            "description" : "OK"
-          }
-        }
+        "tags" : [
+          "vacancy-notification-controller"
+        ]
       }
     }
   },

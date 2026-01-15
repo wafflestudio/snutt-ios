@@ -13,7 +13,6 @@ public struct Friend: Sendable, Equatable, Identifiable {
     public let nickname: String
     public let tag: String
     public let displayName: String?
-    public let createdAt: Date
 
     public var effectiveDisplayName: String {
         displayName ?? "\(nickname)#\(tag)"
@@ -25,14 +24,12 @@ public struct Friend: Sendable, Equatable, Identifiable {
         nickname: String,
         tag: String,
         displayName: String? = nil,
-        createdAt: Date
     ) {
         self.id = id
         self.userId = userId
         self.nickname = nickname
         self.tag = tag
         self.displayName = displayName
-        self.createdAt = createdAt
     }
 }
 
@@ -63,7 +60,6 @@ public enum FriendState: String, Sendable {
             nickname: "김철수",
             tag: "1234",
             displayName: "철수",
-            createdAt: Date()
         )
 
         public static let preview2 = Friend(
@@ -72,7 +68,6 @@ public enum FriendState: String, Sendable {
             nickname: "이영희",
             tag: "5678",
             displayName: nil,
-            createdAt: Date()
         )
 
         public static let preview3 = Friend(
@@ -81,7 +76,6 @@ public enum FriendState: String, Sendable {
             nickname: "박민수",
             tag: "9012",
             displayName: "민수님",
-            createdAt: Date().addingTimeInterval(-86400)
         )
 
         public static let preview4 = Friend(
@@ -90,7 +84,6 @@ public enum FriendState: String, Sendable {
             nickname: "최지현",
             tag: "3456",
             displayName: nil,
-            createdAt: Date().addingTimeInterval(-172800)
         )
 
         public static let previewRequested = [
@@ -100,7 +93,6 @@ public enum FriendState: String, Sendable {
                 nickname: "정수빈",
                 tag: "7890",
                 displayName: nil,
-                createdAt: Date()
             ),
             Friend(
                 id: "friend5b",
@@ -108,7 +100,6 @@ public enum FriendState: String, Sendable {
                 nickname: "김민수",
                 tag: "7891",
                 displayName: nil,
-                createdAt: Date()
             ),
         ]
 
@@ -118,7 +109,6 @@ public enum FriendState: String, Sendable {
             nickname: "강예진",
             tag: "2345",
             displayName: nil,
-            createdAt: Date()
         )
 
         public static var previews: [Friend] {

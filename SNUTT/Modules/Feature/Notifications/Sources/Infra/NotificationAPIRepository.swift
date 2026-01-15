@@ -14,11 +14,11 @@ struct NotificationAPIRepository: NotificationRepository {
 
     func fetchNotifications(offset: Int, limit: Int, markAsRead: Bool) async throws -> [NotificationModel] {
         let explicit = markAsRead ? 1 : 0
-        return try await apiClient.getNotification(
+        return try await apiClient.getNotifications(
             query: .init(
-                offset: String(offset),
-                limit: String(limit),
-                explicit: String(explicit)
+                offset: Int64(offset),
+                limit: Int32(limit),
+                explicit: Int32(explicit)
             )
         ).ok.body.json.compactMap {
             try NotificationModel(

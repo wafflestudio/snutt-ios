@@ -122,7 +122,6 @@ extension ManageOptionButton {
                 nickname: "홍길동",
                 tag: "1234",
                 displayName: nil,
-                createdAt: Date()
             ),
             viewModel: .init(friendsViewModel: .init())
         )
