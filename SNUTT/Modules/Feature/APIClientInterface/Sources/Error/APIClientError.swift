@@ -5,6 +5,7 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
+import Foundation
 import OpenAPIRuntime
 
 public enum APIClientError: Error {
@@ -51,6 +52,16 @@ extension Error {
             true
         default:
             false
+        }
+    }
+
+    public var isTimeoutError: Bool {
+        switch self {
+        case let error as ClientError:
+            let nsError = error.underlyingError as NSError
+            return nsError.domain == NSURLErrorDomain && nsError.code == NSURLErrorTimedOut
+        default:
+            return false
         }
     }
 }
