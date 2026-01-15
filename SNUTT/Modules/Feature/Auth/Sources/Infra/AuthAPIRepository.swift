@@ -92,7 +92,7 @@ public struct AuthAPIRepository: AuthRepository {
     }
 
     public func addDevice(fcmToken: String) async throws {
-        _ = try await apiClient.registerLocal_1(path: .init(id: fcmToken))
+        _ = try await apiClient.addRegistrationId(path: .init(id: fcmToken))
     }
 
     public func logout(fcmToken: String) async throws {
@@ -104,7 +104,7 @@ public struct AuthAPIRepository: AuthRepository {
     }
 
     public func fetchSocialAuthProviderState() async throws -> SocialAuthProviderState {
-        let result = try await apiClient.getAuthProviders()
+        let result = try await apiClient.checkAuthProviders()
         let json: Components.Schemas.AuthProvidersCheckDto = try result.ok.body.json
         return .init(
             apple: json.apple ? .linked : .unlinked,
@@ -120,7 +120,7 @@ public struct AuthAPIRepository: AuthRepository {
 
 extension AuthAPIRepository {
     public func getLinkedEmail(localID: String) async throws -> String {
-        let result = try await apiClient.getMaskedEmail()
+        let result = try await apiClient.getMaskedEmail(body: .json(.init(user_id: localID)))
         let json = try result.ok.body.json
         return json.email
     }

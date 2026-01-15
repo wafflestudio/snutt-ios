@@ -34,7 +34,7 @@
             }
         }
 
-        func requestFriend(nickname: String) async throws -> [Friend] {
+        func requestFriend(nickname: String) async throws {
             try await Task.sleep(for: .seconds(1))
             let newFriend = Friend(
                 id: UUID().uuidString,
@@ -42,10 +42,8 @@
                 nickname: nickname,
                 tag: String(Int.random(in: 1000...9999)),
                 displayName: nil,
-                createdAt: Date()
             )
             requestingFriends.append(newFriend)
-            return requestingFriends
         }
 
         func acceptFriend(friendID: String) async throws {
@@ -74,7 +72,6 @@
                     nickname: friend.nickname,
                     tag: friend.tag,
                     displayName: displayName,
-                    createdAt: friend.createdAt
                 )
             }
         }
@@ -111,7 +108,6 @@
                 nickname: "카카오친구",
                 tag: String(Int.random(in: 1000...9999)),
                 displayName: nil,
-                createdAt: Date()
             )
             activeFriends.append(newFriend)
             return newFriend

@@ -94,15 +94,15 @@ struct LectureSearchAPIRepository: LectureSearchRepository {
             title: query,
             year: Int32(quarter.year)
         )
-        let response = try await apiClient.searchLecture(body: .json(query))
+        let response = try await apiClient.searchLectures(body: .json(query))
         return try response.ok.body.json.map { try $0.toLecture() }
     }
 
     func fetchSearchPredicates(quarter: Quarter) async throws -> [SearchPredicate] {
         let response = try await apiClient.getTagList(
             path: .init(
-                year: String(quarter.year),
-                semester: String(quarter.semester.rawValue)
+                year: Int32(quarter.year),
+                semester: require(.init(rawValue: quarter.semester.rawValue))
             )
         )
         let json = try response.ok.body.json

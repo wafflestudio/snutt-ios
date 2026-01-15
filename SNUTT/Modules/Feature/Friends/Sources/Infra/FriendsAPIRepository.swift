@@ -26,24 +26,13 @@ struct FriendsAPIRepository: FriendsRepository {
                 nickname: dto.nickname.nickname,
                 tag: dto.nickname.tag,
                 displayName: dto.displayName,
-                createdAt: dto.createdAt
             )
         }
     }
 
-    func requestFriend(nickname: String) async throws -> [Friend] {
+    func requestFriend(nickname: String) async throws {
         let request = Components.Schemas.FriendRequest(nickname: nickname)
-        let response = try await apiClient.requestFriend(body: .json(request)).ok.body.json
-        return response.content.map { dto in
-            Friend(
-                id: dto.id,
-                userId: dto.userId,
-                nickname: dto.nickname.nickname,
-                tag: dto.nickname.tag,
-                displayName: dto.displayName,
-                createdAt: dto.createdAt
-            )
-        }
+        _ = try await apiClient.requestFriend(body: .json(request))
     }
 
     func acceptFriend(friendID: String) async throws {
@@ -80,7 +69,7 @@ struct FriendsAPIRepository: FriendsRepository {
         let timetableDto = try await apiClient.getPrimaryTable(
             path: .init(friendId: friendID),
             query: .init(
-                semester: String(quarter.semester.rawValue),
+                semester: require(.init(rawValue: quarter.semester.rawValue)),
                 year: Int32(quarter.year)
             )
         ).ok.body.json
@@ -100,12 +89,11 @@ struct FriendsAPIRepository: FriendsRepository {
             path: .init(requestToken: requestToken)
         ).ok.body.json
         return Friend(
-            id: response.id,
-            userId: response.userId,
-            nickname: response.nickname.nickname,
-            tag: response.nickname.tag,
+            id: response.first.id ?? "",
+            userId: response.second.id ?? "",
+            nickname: response.second.nicknameWithoutTag,
+            tag: String(response.second.nicknameTag),
             displayName: nil,
-            createdAt: Date()
         )
     }
 }

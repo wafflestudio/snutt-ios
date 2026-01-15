@@ -15,8 +15,7 @@ public struct ThemeAPIRepository: ThemeRepository {
     public init() {}
 
     public func fetchThemes() async throws -> [Theme] {
-        try await Task.sleep(for: .seconds(3))
-        return try await apiClient.getThemes(query: .init(state: "")).ok.body.json
+        return try await apiClient.getThemes().ok.body.json
             .compactMap { dto in
                 try? dto.toTheme()
             }
@@ -26,7 +25,7 @@ public struct ThemeAPIRepository: ThemeRepository {
         try await apiClient.modifyTheme(
             path: .init(themeId: theme.id),
             body: .json(
-                theme.toPayload()
+                theme.toModifyPayload()
             )
         ).ok.body.json.toTheme()
     }
@@ -34,17 +33,24 @@ public struct ThemeAPIRepository: ThemeRepository {
     public func createTheme(theme: Theme) async throws -> Theme {
         try await apiClient.addTheme(
             body: .json(
-                theme.toPayload()
+                theme.toAddPayload()
             )
         ).ok.body.json.toTheme()
     }
 }
 
 extension Theme {
-    fileprivate func toPayload() -> Components.Schemas.TimetableThemeAddRequestDto {
+    fileprivate func toAddPayload() -> Components.Schemas.TimetableThemeAddRequestDto {
         .init(
             colors: colors.map { .init(bg: $0.bgHex, fg: $0.fgHex) },
-            name: name,
+            name: name
+        )
+    }
+
+    fileprivate func toModifyPayload() -> Components.Schemas.TimetableThemeModifyRequestDto {
+        .init(
+            colors: colors.map { .init(bg: $0.bgHex, fg: $0.fgHex) },
+            name: name
         )
     }
 }

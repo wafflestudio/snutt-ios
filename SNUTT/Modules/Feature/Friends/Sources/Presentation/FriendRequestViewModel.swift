@@ -32,7 +32,7 @@ final class FriendRequestViewModel {
 
     /// Request friend by nickname#tag format
     func requestFriend(nickname: String) async throws {
-        _ = try await friendsRepository.requestFriend(nickname: nickname)
+        try await friendsRepository.requestFriend(nickname: nickname)
         // Refresh requested friends list after successful request
         try await friendsViewModel.refreshRequestedFriends()
     }

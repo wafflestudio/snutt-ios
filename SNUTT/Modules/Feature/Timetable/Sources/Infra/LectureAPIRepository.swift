@@ -52,7 +52,7 @@ public struct LectureAPIRepository: LectureRepository {
         )
         return try await apiClient.modifyTimetableLecture(
             path: .init(timetableId: timetableID, timetableLectureId: lectureID),
-            query: .init(isForced: overrideOnConflict.description),
+            query: .init(isForced: overrideOnConflict),
             body: .json(requestDto)
         ).ok.body.json.toTimetable()
     }
@@ -114,8 +114,11 @@ public struct LectureAPIRepository: LectureRepository {
     }
 
     public func fetchBookmarks(quarter: Quarter) async throws -> [Lecture] {
-        let response = try await apiClient.getBookmark(
-            query: .init(year: String(quarter.year), semester: String(quarter.semester.rawValue))
+        let response = try await apiClient.getBookmarks(
+            query: .init(
+                year: Int32(quarter.year),
+                semester: require(.init(rawValue: quarter.semester.rawValue))
+            )
         ).ok.body.json
         return try response.lectures.map { try $0.toLecture() }
     }

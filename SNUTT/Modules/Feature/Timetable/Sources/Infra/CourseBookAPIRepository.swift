@@ -15,22 +15,22 @@ struct CourseBookAPIRepository: CourseBookRepository {
     @Dependency(\.apiClient) private var apiClient
 
     func fetchCourseBookList() async throws -> [CourseBook] {
-        let response = try await apiClient.getAllCoursebooks()
+        let response = try await apiClient.getCoursebooks_1()
         let courseBooks = try response.ok.body.json
         return courseBooks.map { CourseBook(from: $0) }
     }
 
     func fetchRecentCourseBook() async throws -> CourseBook {
-        let response = try await apiClient.getMostRecentCoursebook()
+        let response = try await apiClient.getLatestCoursebook()
         let courseBook = try response.ok.body.json
         return .init(from: courseBook)
     }
 
     func fetchSyllabusURL(year: Int, semester: Int, lecture: Lecture) async throws -> Syllabus {
-        let response = try await apiClient.getSyllabusUrl(
+        let response = try await apiClient.getCoursebookOfficial(
             query: .init(
-                year: String(year),
-                semester: String(semester),
+                year: Int32(year),
+                semester: try require(.init(rawValue: semester)),
                 course_number: try require(lecture.courseNumber),
                 lecture_number: try require(lecture.lectureNumber)
             )
