@@ -40,18 +40,16 @@ public struct ThemeAPIRepository: ThemeRepository {
 }
 
 extension Theme {
+    private var colorPayloads: [Components.Schemas.ColorSet] {
+        colors.map { .init(bg: $0.bgHex, fg: $0.fgHex) }
+    }
+
     fileprivate func toAddPayload() -> Components.Schemas.TimetableThemeAddRequestDto {
-        .init(
-            colors: colors.map { .init(bg: $0.bgHex, fg: $0.fgHex) },
-            name: name
-        )
+        .init(colors: colorPayloads, name: name)
     }
 
     fileprivate func toModifyPayload() -> Components.Schemas.TimetableThemeModifyRequestDto {
-        .init(
-            colors: colors.map { .init(bg: $0.bgHex, fg: $0.fgHex) },
-            name: name
-        )
+        .init(colors: colorPayloads, name: name)
     }
 }
 
