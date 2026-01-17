@@ -62,7 +62,7 @@
 "friend_requested_empty_description" = "친구가 나에게 요청을 보내면\n여기에서 수락 또는 거절할 수 있어요.";
 "friend_empty_guide" = "자세히 보기";
 "friend_empty_main_title" = "추가한 친구가 없습니다";
-"friend_empty_main_description" = "우측 상단 [person.badge.plus]을 눌러\n시간표를 공유하고 싶은 친구에게 친구 요청을 보내보세요!\n친구가 수락하면 사이드바 [line.3.horizontal] 친구 목록에 추가됩니다.";
+"friend_empty_main_description" = "우측 상단 친구 추가 버튼(+)을 눌러\n시간표를 공유하고 싶은 친구에게 친구 요청을 보내보세요!\n친구가 수락하면 사이드바 메뉴(≡) 친구 목록에 추가됩니다.";
 
 /* Friend Request Actions */
 "friend_request_accept" = "수락";

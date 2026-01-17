@@ -62,7 +62,7 @@
 "friend_requested_empty_description" = "When someone sends you a friend request,\nyou can accept or decline it here.";
 "friend_empty_guide" = "Learn More";
 "friend_empty_main_title" = "No Friends Added";
-"friend_empty_main_description" = "Tap [person.badge.plus] in the top right corner\nto send friend requests!\nOnce accepted, they will appear in [line.3.horizontal] friend list.";
+"friend_empty_main_description" = "Tap the Add Friend button (+) in the top right corner\nto send friend requests!\nOnce accepted, they will appear in the Menu (≡) friend list.";
 
 /* Friend Request Actions */
 "friend_request_accept" = "Accept";
