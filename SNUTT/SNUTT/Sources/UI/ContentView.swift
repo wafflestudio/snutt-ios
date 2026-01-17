@@ -19,6 +19,7 @@ import Vacancy
 struct ContentView: View {
     @State private var viewModel = ContentViewModel()
     @AppStorage(AppStorageKeys.preferredColorScheme) private var selectedColorScheme: ColorSchemeSelection = .system
+    @Environment(\.errorAlertHandler) private var errorAlertHandler
 
     var body: some View {
         VStack {
@@ -34,6 +35,12 @@ struct ContentView: View {
         .animation(.easeInOut, value: viewModel.isAuthenticated)
         .tint(.label)
         .preferredColorScheme(selectedColorScheme.colorScheme)
+        .environment(\.configs, viewModel.configs)
+        .task {
+            errorAlertHandler.withAlert {
+                try await viewModel.loadConfigs()
+            }
+        }
         #if DEBUG
             .observeNetworkLogsGesture()
         #endif

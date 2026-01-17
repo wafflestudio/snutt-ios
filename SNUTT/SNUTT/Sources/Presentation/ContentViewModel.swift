@@ -7,6 +7,7 @@
 
 import AuthInterface
 import Combine
+import ConfigsInterface
 import Dependencies
 import Foundation
 import Observation
@@ -21,6 +22,10 @@ final class ContentViewModel {
 
     var isAuthenticated: Bool = false
 
+    @ObservationIgnored
+    @Dependency(\.configsRepository) private var configsRepository
+    private(set) var configs: ConfigsModel = .empty
+
     init() {
         isAuthenticated = authState.isAuthenticated
         authState.isAuthenticatedPublisher
@@ -28,5 +33,9 @@ final class ContentViewModel {
                 self?.isAuthenticated = isAuthenticated
             }
             .store(in: &cancellables)
+    }
+
+    func loadConfigs() async throws {
+        configs = try await configsRepository.fetchConfigs()
     }
 }
