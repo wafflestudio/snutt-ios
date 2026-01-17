@@ -47,11 +47,14 @@ extension Error {
     public var isCancellationError: Bool {
         switch self {
         case is CancellationError:
-            true
+            return true
         case let error as ClientError where error.underlyingError is CancellationError:
-            true
+            return true
+        case let error as ClientError:
+            let nsError = error.underlyingError as NSError
+            return nsError.domain == NSURLErrorDomain && nsError.code == NSURLErrorCancelled
         default:
-            false
+            return false
         }
     }
 
