@@ -71,7 +71,7 @@ public struct SocialLoginSettingsScene: View {
                     }
                 } label: {
                     Text(AuthStrings.socialLinkUnlinkButton)
-                        .foregroundColor(provider == .kakao ? .red : .blue)
+                        .foregroundColor(.red)
                 }
             } else {
                 Button {
