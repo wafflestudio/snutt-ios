@@ -7,3 +7,6 @@
 
 /* Photo Library */
 "NSPhotoLibraryAddUsageDescription" = "Save timetable images to your photo library.";
+
+/* Location */
+"NSLocationWhenInUseUsageDescription" = "Your location is used to show your current position on the map.";

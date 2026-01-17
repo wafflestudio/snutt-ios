@@ -50,6 +50,7 @@ public struct InfoPlist {
             "FirebaseAppDelegateProxyEnabled": false,
             "ITSAppUsesNonExemptEncryption": false,
             "NSPhotoLibraryAddUsageDescription": "사진 앱에 시간표 이미지를 저장할 수 있습니다.",
+            "NSLocationWhenInUseUsageDescription": "지도에서 현재 위치를 표시하기 위해 필요합니다.",
         ]
     }
 }

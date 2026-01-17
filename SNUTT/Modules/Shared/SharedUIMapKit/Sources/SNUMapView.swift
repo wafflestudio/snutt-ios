@@ -14,6 +14,7 @@ public struct SNUMapView: View {
 
     @State private var position: MapCameraPosition
     @State private var selectedLocation: MapLocation?
+    @State private var locationManager = CLLocationManager()
 
     public init(
         locations: [MapLocation],
@@ -26,6 +27,8 @@ public struct SNUMapView: View {
 
     public var body: some View {
         Map(position: $position, selection: $selectedLocation) {
+            UserAnnotation()
+
             MapPolygon(coordinates: Self.campusBoundary)
                 .foregroundStyle(.blue.opacity(0.1))
                 .stroke(.blue, lineWidth: 1)
@@ -56,6 +59,9 @@ public struct SNUMapView: View {
             MapUserLocationButton()
             MapCompass()
             MapScaleView()
+        }
+        .onAppear {
+            locationManager.requestWhenInUseAuthorization()
         }
     }
 
