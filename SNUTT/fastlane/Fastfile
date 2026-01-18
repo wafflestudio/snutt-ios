@@ -1,13 +1,134 @@
 # Disable automatic documentation generation (README.md)
 ENV["FASTLANE_SKIP_DOCS"] = "1"
 
-# Constants
-XCODEPROJ_PATH = "SNUTT.xcodeproj"
-BASE_XCCONFIG_PATH = "XCConfigs/Base.xcconfig"
-BUNDLE_ID_PROD = "com.wafflestudio.snutt"
-BUNDLE_ID_DEV = "com.wafflestudio.snutt.dev"
-BUNDLE_ID_PROD_WIDGET = "#{BUNDLE_ID_PROD}.widget"
-BUNDLE_ID_DEV_WIDGET = "#{BUNDLE_ID_DEV}.widget"
+# ============================================================================
+# Configuration Classes
+# ============================================================================
+
+# AppConfiguration - Represents dev/prod environments
+class AppConfiguration
+  attr_reader :type
+
+  def initialize(type)
+    @type = type
+  end
+
+  DEV = new(:dev)
+  PROD = new(:prod)
+
+  # Computed properties (like Swift)
+  def scheme
+    case type
+    when :dev then "SNUTT Dev"
+    when :prod then "SNUTT Prod"
+    end
+  end
+
+  def configuration
+    type.to_s.capitalize  # "Dev" or "Prod"
+  end
+
+  def bundle_id
+    case type
+    when :dev then "com.wafflestudio.snutt.dev"
+    when :prod then "com.wafflestudio.snutt"
+    end
+  end
+
+  def widget_bundle_id
+    "#{bundle_id}.widget"
+  end
+
+  def all_bundle_ids
+    [bundle_id, widget_bundle_id]
+  end
+
+  def openapi_env
+    type.to_s  # "dev" or "prod"
+  end
+
+  def add_badge?
+    type == :dev
+  end
+
+  def to_s
+    configuration
+  end
+end
+
+# UploadTarget - Represents testflight/appstore
+class UploadTarget
+  attr_reader :type
+
+  def initialize(type)
+    @type = type
+  end
+
+  TESTFLIGHT = new(:testflight)
+  APPSTORE = new(:appstore)
+
+  def to_s
+    type.to_s
+  end
+
+  def display_name
+    type.to_s.capitalize
+  end
+
+  def testflight?
+    type == :testflight
+  end
+
+  def appstore?
+    type == :appstore
+  end
+end
+
+# CodeSigningType - Represents development/distribution code signing
+class CodeSigningType
+  attr_reader :type, :identity
+
+  def initialize(type, identity)
+    @type = type
+    @identity = identity
+  end
+
+  DEVELOPMENT = new(:development, "iPhone Developer")
+  DISTRIBUTION = new(:distribution, "iPhone Distribution")
+
+  def to_s
+    type.to_s
+  end
+end
+
+# ============================================================================
+# Constants Module
+# ============================================================================
+
+module Constants
+  # File paths
+  XCODEPROJ_PATH = "SNUTT.xcodeproj"
+  WORKSPACE_PATH = "SNUTT.xcworkspace"
+  BASE_XCCONFIG_PATH = "XCConfigs/Base.xcconfig"
+
+  # Version keys
+  MARKETING_VERSION_KEY = "MARKETING_VERSION"
+  BUILD_NUMBER_KEY = "CURRENT_PROJECT_VERSION"
+
+  # Xcode targets
+  module Targets
+    MAIN_APP = "SNUTT"
+    WIDGET_EXTENSION = "SNUTTWidgetExtension"
+  end
+
+  # Slack
+  module Slack
+    CHANNEL = "#team-snutt-deploy"
+  end
+
+  # Export method
+  EXPORT_METHOD_APPSTORE = "app-store"
+end
 
 default_platform(:ios)
 
@@ -16,8 +137,8 @@ platform :ios do
   lane :check_version do |options|
     tag_version = options[:version]
     current_version = get_xcconfig_value(
-      path: BASE_XCCONFIG_PATH,
-      name: "MARKETING_VERSION"
+      path: Constants::BASE_XCCONFIG_PATH,
+      name: Constants::MARKETING_VERSION_KEY
     )
 
     UI.message("Current version in xcconfig: #{current_version}")
@@ -32,32 +153,28 @@ platform :ios do
     end
   end
 
-  desc "Update version in #{BASE_XCCONFIG_PATH}"
+  desc "Update version in #{Constants::BASE_XCCONFIG_PATH}"
   lane :update_version do |options|
     new_version = options[:version]
 
-    # Validate version format
     unless new_version.match?(/^\d+\.\d+\.\d+$/)
       UI.user_error!("Invalid version format: #{new_version}. Must be X.Y.Z (e.g., 4.0.0)")
     end
 
-    # Update MARKETING_VERSION
     set_xcconfig_value(
-      path: BASE_XCCONFIG_PATH,
-      name: "MARKETING_VERSION",
+      path: Constants::BASE_XCCONFIG_PATH,
+      name: Constants::MARKETING_VERSION_KEY,
       value: new_version
     )
 
-    UI.success("Updated MARKETING_VERSION to #{new_version} in #{BASE_XCCONFIG_PATH}")
+    UI.success("Updated #{Constants::MARKETING_VERSION_KEY} to #{new_version} in #{Constants::BASE_XCCONFIG_PATH}")
   end
 
   desc "Register a new device and regenerate development provisioning profiles"
   lane :add_device do
-    # Prompt for device name and UDID
     device_name = UI.input("Enter device name (e.g., 'John's iPhone'): ")
     device_udid = UI.input("Enter device UDID: ")
 
-    # Register device with Apple Developer Portal
     register_devices(
       devices: {
         device_name => device_udid
@@ -66,326 +183,281 @@ platform :ios do
 
     UI.success("Device '#{device_name}' registered successfully!")
 
-    # Regenerate development provisioning profiles to include the new device
-    UI.message("Regenerating development provisioning profiles...")
+    UI.message("Regenerating development provisioning profiles")
     match(
-      type: "development",
+      type: CodeSigningType::DEVELOPMENT.to_s,
       readonly: false,
       force_for_new_devices: true
     )
 
-    UI.success("✅ Device registered and provisioning profiles updated!")
+    UI.success("Device registered and provisioning profiles updated!")
     UI.important("Please run 'just generate' to apply the updated provisioning profiles.")
   end
 
   desc "Sync development certificates and profiles for local development"
   lane :sync_dev_certificates do
-    # Sync development certificates (readonly for team members)
+    UI.message("Syncing development certificates for all bundle identifiers")
+
+    all_bundle_ids = [
+      AppConfiguration::DEV.all_bundle_ids,
+      AppConfiguration::PROD.all_bundle_ids
+    ].flatten
+
     match(
-      type: "development",
-      app_identifier: [BUNDLE_ID_DEV, BUNDLE_ID_DEV_WIDGET, BUNDLE_ID_PROD, BUNDLE_ID_PROD_WIDGET],
+      type: CodeSigningType::DEVELOPMENT.to_s,
+      app_identifier: all_bundle_ids,
       readonly: true
     )
 
-    # Update code signing for Dev configuration
     update_all_code_signing_settings(
-      type: "development",
-      app_identifier: BUNDLE_ID_DEV,
-      configuration: "Dev"
+      signing_type: CodeSigningType::DEVELOPMENT,
+      app_config: AppConfiguration::DEV
     )
 
-    # Update code signing for Prod configuration
     update_all_code_signing_settings(
-      type: "development",
-      app_identifier: BUNDLE_ID_PROD,
-      configuration: "Prod"
+      signing_type: CodeSigningType::DEVELOPMENT,
+      app_config: AppConfiguration::PROD
     )
 
-    UI.success("✅ Development certificates synced and code signing configured!")
+    UI.success("Development certificates synced and code signing configured!")
   end
 
   desc "[Requires Permissions] Sync production (App Store) certificates and profiles"
   lane :sync_prod_certificates do
-    # Sync production certificates (readonly: false to allow updates)
-    UI.important("Note: This command requires admin permissions to modify certificates.")
+    UI.important("Note: This requires admin permissions to modify certificates")
+
+    all_bundle_ids = [
+      AppConfiguration::DEV.all_bundle_ids,
+      AppConfiguration::PROD.all_bundle_ids
+    ].flatten
+
     match(
-      type: "appstore",
-      app_identifier: [BUNDLE_ID_DEV, BUNDLE_ID_DEV_WIDGET, BUNDLE_ID_PROD, BUNDLE_ID_PROD_WIDGET],
+      type: CodeSigningType::DISTRIBUTION.to_s,
+      app_identifier: all_bundle_ids,
       readonly: false
     )
   end
 
-  desc "Deploy to TestFlight or App Store"
-  lane :deploy do |options|
-    scheme = options[:scheme]
-    configuration = options[:configuration]
-    app_identifier = options[:app_identifier]
-    deploy_target = options[:deploy_target] # "testflight" or "appstore"
-    add_badge = options[:add_badge] || false
-    git_tag_name = ENV["GIT_TAG_NAME"] || last_git_tag
+  # ============================================================================
+  # Deploy Lanes
+  # ============================================================================
 
-    # Get marketing version from xcconfig
+  desc "Deploy Dev build to TestFlight"
+  lane :deploy_dev_testflight do
+    deploy_app(AppConfiguration::DEV, UploadTarget::TESTFLIGHT)
+  end
+
+  desc "Deploy Prod build to TestFlight"
+  lane :deploy_prod_testflight do
+    deploy_app(AppConfiguration::PROD, UploadTarget::TESTFLIGHT)
+  end
+
+  desc "Deploy Prod build to App Store"
+  lane :deploy_prod_appstore do
+    deploy_app(AppConfiguration::PROD, UploadTarget::APPSTORE)
+  end
+
+  # ============================================================================
+  # Helper Methods
+  # ============================================================================
+
+  def deploy_app(app_config, upload_target)
+    git_tag_name = ENV["GIT_TAG_NAME"] || last_git_tag
     marketing_version = get_xcconfig_value(
-      path: BASE_XCCONFIG_PATH,
-      name: "MARKETING_VERSION"
+      path: Constants::BASE_XCCONFIG_PATH,
+      name: Constants::MARKETING_VERSION_KEY
     )
 
     begin
-      # Get API key for App Store Connect
       api_key = app_store_connect_api_key(
         key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
         issuer_id: ENV["APP_STORE_CONNECT_KEY_ISSUER"],
         key_content: ENV["APP_STORE_CONNECT_KEY_CONTENT"]
       )
-
-      # Setup CI environment
       setup_ci if ENV["CI"]
 
-      # Sync certificates and provisioning profiles using Match
-      # Explicitly specify only the required app identifiers for this deployment
-      widget_bundle_id = "#{app_identifier}.widget"
-      UI.important("🔍 Matching certificates for: #{app_identifier}, #{widget_bundle_id}")
+      UI.message("Syncing certificates and provisioning profiles for #{app_config}")
+      UI.important("App: #{app_config.bundle_id}, Widget: #{app_config.widget_bundle_id}")
       match(
-        type: "appstore",
-        app_identifier: [app_identifier, widget_bundle_id],
+        type: CodeSigningType::DISTRIBUTION.to_s,
+        app_identifier: app_config.all_bundle_ids,
         readonly: is_ci
       )
 
-      # Get the latest build number from App Store Connect for this version
-      UI.important("🔍 Querying latest build for app: #{app_identifier}, version: #{marketing_version}")
-      latest_build_number = latest_testflight_build_number(
-        app_identifier: app_identifier,
-        api_key: api_key,
-        version: marketing_version
-      )
-
-      new_build_number = latest_build_number + 1
-      UI.message("Latest build number for version #{marketing_version}: #{latest_build_number}")
-      UI.message("New build number: #{new_build_number}")
-
-      # Update build number in Base.xcconfig
-      set_xcconfig_value(
-        path: BASE_XCCONFIG_PATH,
-        name: "CURRENT_PROJECT_VERSION",
-        value: new_build_number.to_s
-      )
-
-      # Generate OpenAPI client based on configuration
-      openapi_env = configuration == "Dev" ? "dev" : "prod"
-      UI.message("Generating OpenAPI client for #{openapi_env} environment...")
-      sh("cd .. && just openapi-#{openapi_env}")
-
-      # Install dependencies and generate Xcode project using Tuist
-      UI.message("Installing dependencies and generating Xcode project with Tuist...")
-      sh("cd .. && mise exec -- tuist install && mise exec -- tuist generate --no-open")
-
-      # Update code signing settings after syncing certificates
+      build_number = increment_build_number(app_config, api_key, marketing_version)
+      generate_project_with_dependencies(app_config)
       update_all_code_signing_settings(
-        type: "appstore",
-        app_identifier: app_identifier,
-        configuration: configuration
+        signing_type: CodeSigningType::DISTRIBUTION,
+        app_config: app_config
       )
+      add_beta_badge_if_needed(app_config)
 
-      # Add beta badge if requested (for dev builds)
-      if add_badge
-        UI.message("Adding beta badge to app icon...")
-        add_badge(dark: true)
-      end
-
-      # Build the app
+      UI.message("Building app: #{app_config.scheme}")
       build_app(
-        workspace: "SNUTT.xcworkspace",
-        scheme: scheme,
-        configuration: configuration,
-        export_method: "app-store",
+        workspace: Constants::WORKSPACE_PATH,
+        scheme: app_config.scheme,
+        configuration: app_config.configuration,
+        export_method: Constants::EXPORT_METHOD_APPSTORE
       )
 
-      # Upload to App Store Connect
-      if deploy_target == "appstore"
-        # Get release notes from environment (extracted by GitHub Actions)
-        release_notes = ENV["RELEASE_NOTES"]
+      upload_build(app_config, upload_target, api_key, marketing_version, build_number)
 
-        # Validate release notes are not empty
-        if release_notes.nil? || release_notes.strip.empty?
-          UI.user_error!("Release notes are empty. Please add release notes to the GitHub Release before deploying to App Store.")
-        end
-
-        upload_to_app_store(
-          api_key: api_key,
-          app_identifier: app_identifier,
-          skip_screenshots: true,
-          skip_metadata: true,
-          precheck_include_in_app_purchases: false,
-          submit_for_review: true,
-          release_notes: {
-            'default' => release_notes,
-            'ko' => release_notes
-          },
-          submission_information: {
-            add_id_info_uses_idfa: false,
-            export_compliance_uses_encryption: false
-          }
-        )
-      else
-        UI.important("🔍 Uploading to TestFlight for app: #{app_identifier}, version: #{marketing_version}, build: #{new_build_number}")
-        upload_to_testflight(
-          api_key: api_key,
-          app_identifier: app_identifier,
-          app_version: marketing_version,
-          skip_waiting_for_build_processing: true
-        )
-      end
-
-      # Notify success
-      UI.success("Successfully deployed #{scheme} (build #{new_build_number}) to #{deploy_target}!")
-
-      # Send success notification to Slack
+      UI.success("Successfully deployed #{app_config.scheme} (build #{build_number}) to #{upload_target.display_name}!")
       send_slack_notification(
         success: true,
-        deploy_target: deploy_target,
-        configuration: configuration,
-        marketing_version: marketing_version,
-        build_number: new_build_number,
-        git_tag_name: git_tag_name
+        config: app_config,
+        target: upload_target,
+        version: marketing_version,
+        build: build_number,
+        tag: git_tag_name
       )
     rescue => exception
-      # Send failure notification to Slack
       send_slack_notification(
         success: false,
-        deploy_target: deploy_target,
-        configuration: configuration,
-        marketing_version: marketing_version,
-        build_number: nil,
-        git_tag_name: git_tag_name,
-        error_message: exception.message
+        config: app_config,
+        target: upload_target,
+        version: marketing_version,
+        tag: git_tag_name,
+        error: exception.message
       )
       raise exception
     end
   end
 
-  desc "Deploy Dev build to TestFlight"
-  lane :deploy_dev_testflight do
-    deploy(
-      scheme: "SNUTT Dev",
-      configuration: "Dev",
-      app_identifier: BUNDLE_ID_DEV,
-      deploy_target: "testflight",
-      add_badge: true
+  def increment_build_number(app_config, api_key, marketing_version)
+    UI.message("Querying latest build number from App Store Connect")
+    UI.important("App: #{app_config.bundle_id}, Version: #{marketing_version}")
+
+    latest = latest_testflight_build_number(
+      app_identifier: app_config.bundle_id,
+      api_key: api_key,
+      version: marketing_version
     )
+
+    new_build = latest + 1
+    UI.message("Latest build: #{latest}, New build: #{new_build}")
+
+    set_xcconfig_value(
+      path: Constants::BASE_XCCONFIG_PATH,
+      name: Constants::BUILD_NUMBER_KEY,
+      value: new_build.to_s
+    )
+
+    new_build
   end
 
-  desc "Deploy Prod build to TestFlight"
-  lane :deploy_prod_testflight do
-    deploy(
-      scheme: "SNUTT Prod",
-      configuration: "Prod",
-      app_identifier: BUNDLE_ID_PROD,
-      deploy_target: "testflight"
-    )
+  def generate_project_with_dependencies(app_config)
+    UI.message("Generating OpenAPI client for #{app_config.openapi_env} environment")
+    sh("cd .. && just openapi-#{app_config.openapi_env}")
+
+    UI.message("Installing dependencies and generating Xcode project with Tuist")
+    sh("cd .. && mise exec -- tuist install && mise exec -- tuist generate --no-open")
   end
 
-  desc "Deploy Prod build to App Store"
-  lane :deploy_prod_appstore do
-    deploy(
-      scheme: "SNUTT Prod",
-      configuration: "Prod",
-      app_identifier: BUNDLE_ID_PROD,
-      deploy_target: "appstore"
-    )
+  def add_beta_badge_if_needed(app_config)
+    return unless app_config.add_badge?
+
+    UI.message("Adding beta badge to app icon")
+    add_badge(dark: true)
+  end
+
+  def upload_build(app_config, upload_target, api_key, marketing_version, build_number)
+    UI.message("Uploading build to #{upload_target.display_name}")
+    UI.important("App: #{app_config.bundle_id}, Version: #{marketing_version}, Build: #{build_number}")
+
+    if upload_target.appstore?
+      release_notes = ENV["RELEASE_NOTES"]
+
+      if release_notes.nil? || release_notes.strip.empty?
+        UI.user_error!("Release notes are empty. Add notes to GitHub Release before deploying.")
+      end
+
+      upload_to_app_store(
+        api_key: api_key,
+        app_identifier: app_config.bundle_id,
+        app_version: marketing_version,
+        build_number: build_number,
+        skip_screenshots: true,
+        skip_metadata: true,
+        precheck_include_in_app_purchases: false,
+        submit_for_review: true,
+        release_notes: {
+          'default' => release_notes,
+          'ko' => release_notes
+        },
+        submission_information: {
+          add_id_info_uses_idfa: false,
+          export_compliance_uses_encryption: false
+        }
+      )
+    else
+      upload_to_testflight(
+        api_key: api_key,
+        app_identifier: app_config.bundle_id,
+        app_version: marketing_version,
+        build_number: build_number,
+        skip_waiting_for_build_processing: true
+      )
+    end
   end
 
   error do |lane, exception, options|
     UI.error("Error in lane #{lane}: #{exception.message}")
   end
 
-  # Helper function to send Slack notifications
-  def send_slack_notification(success:, deploy_target:, configuration:, marketing_version:, build_number:, git_tag_name:, error_message: nil)
-    slack_webhook = ENV["SLACK_WEBHOOK"]
-    return if slack_webhook.nil? || slack_webhook.empty?
+  def send_slack_notification(success:, config:, target:, version:, tag:, build: nil, error: nil)
+    webhook = ENV["SLACK_WEBHOOK"]
+    return if webhook.nil? || webhook.empty?
 
     message = success ?
-      "iOS app successfully uploaded to #{deploy_target.capitalize} 🎉" :
-      "iOS deployment to #{deploy_target.capitalize} failed 😢"
+      "iOS app successfully uploaded to #{target.display_name} 🎉" :
+      "iOS deployment to #{target.display_name} failed 😢"
 
-    fields = [
-      {
-        title: "Target",
-        value: deploy_target.capitalize,
-        short: true
-      },
-      {
-        title: "Environment",
-        value: configuration,
-        short: true
-      },
-      {
-        title: "Version",
-        value: marketing_version,
-        short: true
-      }
-    ]
-
-    if success
-      fields << {
-        title: "Build Number",
-        value: build_number.to_s,
-        short: true
-      }
-    end
-
-    fields << {
-      title: "Tag",
-      value: git_tag_name,
-      short: false
-    }
-
-    if error_message
-      fields << {
-        title: "Error",
-        value: error_message,
-        short: false
-      }
-    end
+    fields = build_slack_fields(config, target, version, build, tag, error)
 
     slack(
       message: message,
-      channel: "#team-snutt-deploy",
-      slack_url: slack_webhook,
+      channel: Constants::Slack::CHANNEL,
+      slack_url: webhook,
       success: success,
-      attachment_properties: {
-        fields: fields
-      },
+      attachment_properties: { fields: fields },
       default_payloads: [:git_author, :last_git_commit]
     )
   end
 
-  # Helper function to update code signing settings for both app and widget
-  def update_all_code_signing_settings(type:, app_identifier:, configuration:)
-    widget_bundle_id = "#{app_identifier}.widget"
+  def build_slack_fields(config, target, version, build, tag, error)
+    fields = [
+      { title: "Target", value: target.display_name, short: true },
+      { title: "Environment", value: config.to_s, short: true },
+      { title: "Version", value: version, short: true }
+    ]
 
-    # Determine code sign identity based on type
-    code_sign_identity = type == "development" ? "iPhone Developer" : "iPhone Distribution"
+    fields << { title: "Build Number", value: build.to_s, short: true } if build
+    fields << { title: "Tag", value: tag, short: false }
+    fields << { title: "Error", value: error, short: false } if error
 
-    # Update code signing for main app
+    fields
+  end
+
+  def update_all_code_signing_settings(signing_type:, app_config:)
     update_code_signing_settings(
       use_automatic_signing: false,
-      path: XCODEPROJ_PATH,
-      targets: ["SNUTT"],
-      build_configurations: configuration,
-      bundle_identifier: app_identifier,
-      code_sign_identity: code_sign_identity,
-      profile_name: ENV["sigh_#{app_identifier}_#{type}_profile-name"]
+      path: Constants::XCODEPROJ_PATH,
+      targets: [Constants::Targets::MAIN_APP],
+      build_configurations: app_config.configuration,
+      bundle_identifier: app_config.bundle_id,
+      code_sign_identity: signing_type.identity,
+      profile_name: ENV["sigh_#{app_config.bundle_id}_#{signing_type}_profile-name"]
     )
 
-    # Update code signing for widget extension
     update_code_signing_settings(
       use_automatic_signing: false,
-      path: XCODEPROJ_PATH,
-      targets: ["SNUTTWidgetExtension"],
-      build_configurations: configuration,
-      bundle_identifier: widget_bundle_id,
-      code_sign_identity: code_sign_identity,
-      profile_name: ENV["sigh_#{widget_bundle_id}_#{type}_profile-name"]
+      path: Constants::XCODEPROJ_PATH,
+      targets: [Constants::Targets::WIDGET_EXTENSION],
+      build_configurations: app_config.configuration,
+      bundle_identifier: app_config.widget_bundle_id,
+      code_sign_identity: signing_type.identity,
+      profile_name: ENV["sigh_#{app_config.widget_bundle_id}_#{signing_type}_profile-name"]
     )
   end
 end
