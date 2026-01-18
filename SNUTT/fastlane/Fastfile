@@ -454,7 +454,7 @@ platform :ios do
       build_configurations: app_config.configuration,
       bundle_identifier: app_config.bundle_id,
       code_sign_identity: signing_type.identity,
-      profile_name: ENV["sigh_#{app_config.bundle_id}_#{signing_type}_profile-name"]
+      profile_name: ENV["sigh_#{app_config.bundle_id}_#{signing_type.match_type}_profile-name"]
     )
 
     update_code_signing_settings(
@@ -464,7 +464,7 @@ platform :ios do
       build_configurations: app_config.configuration,
       bundle_identifier: app_config.widget_bundle_id,
       code_sign_identity: signing_type.identity,
-      profile_name: ENV["sigh_#{app_config.widget_bundle_id}_#{signing_type}_profile-name"]
+      profile_name: ENV["sigh_#{app_config.widget_bundle_id}_#{signing_type.match_type}_profile-name"]
     )
   end
 end
