@@ -81,9 +81,9 @@ platform :ios do
   desc "Sync development certificates and profiles for local development"
   lane :sync_dev_certificates do
     # Sync development certificates (readonly for team members)
-    # app_identifier and team_id are inherited from Matchfile and Appfile
     match(
       type: "development",
+      app_identifier: [BUNDLE_ID_DEV, BUNDLE_ID_DEV_WIDGET, BUNDLE_ID_PROD, BUNDLE_ID_PROD_WIDGET],
       readonly: true
     )
 
@@ -107,10 +107,10 @@ platform :ios do
   desc "[Requires Permissions] Sync production (App Store) certificates and profiles"
   lane :sync_prod_certificates do
     # Sync production certificates (readonly: false to allow updates)
-    # app_identifier and team_id are inherited from Matchfile and Appfile
     UI.important("Note: This command requires admin permissions to modify certificates.")
     match(
       type: "appstore",
+      app_identifier: [BUNDLE_ID_DEV, BUNDLE_ID_DEV_WIDGET, BUNDLE_ID_PROD, BUNDLE_ID_PROD_WIDGET],
       readonly: false
     )
   end
@@ -142,7 +142,9 @@ platform :ios do
       setup_ci if ENV["CI"]
 
       # Sync certificates and provisioning profiles using Match
+      # Explicitly specify only the required app identifiers for this deployment
       widget_bundle_id = "#{app_identifier}.widget"
+      UI.important("🔍 Matching certificates for: #{app_identifier}, #{widget_bundle_id}")
       match(
         type: "appstore",
         app_identifier: [app_identifier, widget_bundle_id],
@@ -150,6 +152,7 @@ platform :ios do
       )
 
       # Get the latest build number from App Store Connect for this version
+      UI.important("🔍 Querying latest build for app: #{app_identifier}, version: #{marketing_version}")
       latest_build_number = latest_testflight_build_number(
         app_identifier: app_identifier,
         api_key: api_key,
@@ -224,6 +227,7 @@ platform :ios do
           }
         )
       else
+        UI.important("🔍 Uploading to TestFlight for app: #{app_identifier}, version: #{marketing_version}, build: #{new_build_number}")
         upload_to_testflight(
           api_key: api_key,
           app_identifier: app_identifier,
