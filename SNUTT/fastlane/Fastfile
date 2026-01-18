@@ -383,7 +383,7 @@ platform :ios do
         api_key: api_key,
         app_identifier: app_config.bundle_id,
         app_version: marketing_version,
-        build_number: build_number,
+        build_number: build_number.to_s,
         skip_screenshots: true,
         skip_metadata: true,
         precheck_include_in_app_purchases: false,
@@ -402,7 +402,7 @@ platform :ios do
         api_key: api_key,
         app_identifier: app_config.bundle_id,
         app_version: marketing_version,
-        build_number: build_number,
+        build_number: build_number.to_s,
         skip_waiting_for_build_processing: true
       )
     end
