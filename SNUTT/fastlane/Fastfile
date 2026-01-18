@@ -99,6 +99,13 @@ class CodeSigningType
   def to_s
     type.to_s
   end
+
+  def match_type
+    case type
+    when :development then "development"
+    when :distribution then "appstore"
+    end
+  end
 end
 
 # ============================================================================
@@ -185,7 +192,7 @@ platform :ios do
 
     UI.message("Regenerating development provisioning profiles")
     match(
-      type: CodeSigningType::DEVELOPMENT.to_s,
+      type: CodeSigningType::DEVELOPMENT.match_type,
       readonly: false,
       force_for_new_devices: true
     )
@@ -204,7 +211,7 @@ platform :ios do
     ].flatten
 
     match(
-      type: CodeSigningType::DEVELOPMENT.to_s,
+      type: CodeSigningType::DEVELOPMENT.match_type,
       app_identifier: all_bundle_ids,
       readonly: true
     )
@@ -232,7 +239,7 @@ platform :ios do
     ].flatten
 
     match(
-      type: CodeSigningType::DISTRIBUTION.to_s,
+      type: CodeSigningType::DISTRIBUTION.match_type,
       app_identifier: all_bundle_ids,
       readonly: false
     )
@@ -279,7 +286,7 @@ platform :ios do
       UI.message("Syncing certificates and provisioning profiles for #{app_config}")
       UI.important("App: #{app_config.bundle_id}, Widget: #{app_config.widget_bundle_id}")
       match(
-        type: CodeSigningType::DISTRIBUTION.to_s,
+        type: CodeSigningType::DISTRIBUTION.match_type,
         app_identifier: app_config.all_bundle_ids,
         readonly: is_ci
       )
