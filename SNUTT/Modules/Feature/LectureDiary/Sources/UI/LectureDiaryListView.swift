@@ -36,7 +36,7 @@ public struct LectureDiaryListView: View {
         }
         .fullScreenCover(isPresented: $showEditDiary) {
             // TODO: Pass actual lecture data
-            EditLectureDiaryScene(lectureID: "temp", lectureTitle: "임시 강의")
+            EditLectureDiaryScene(lectureID: "temp", lectureTitle: "컴퓨터의 개념 및 실습")
         }
     }
 
@@ -90,7 +90,7 @@ public struct LectureDiaryListView: View {
         //        }
     }
 
-    private func filledStateView(diaries: [DiarySummary]) -> some View {
+    private func filledStateView(diaries: [DiarySubmissionsOfYearSemester]) -> some View {
         ScrollView {
             VStack(spacing: 0) {
                 // Quarter chips
@@ -113,22 +113,23 @@ public struct LectureDiaryListView: View {
                 }
 
                 // Group diaries by date
-                let groupedDiaries = Dictionary(grouping: diaries) { diary in
-                    Calendar.current.startOfDay(for: diary.date)
+                let groupedDiaries = Dictionary(grouping: diaries.map(\.diaryList)) { diary in
+                    //Calendar.current.startOfDay(for: diary.date)
+                    diary.count
                 }
-
-                ForEach(groupedDiaries.keys.sorted(by: >), id: \.self) { date in
-                    if let diariesForDate = groupedDiaries[date] {
-                        ExpandableDiarySummaryCell(
-                            diaryList: diariesForDate,
-                            onDelete: { diaryID in
-                                Task {
-                                    await viewModel.deleteDiary(id: diaryID)
-                                }
-                            }
-                        )
-                    }
-                }
+                //
+                //                ForEach(groupedDiaries.keys.sorted(by: >), id: \.self) { date in
+                //                    if let diariesForDate = groupedDiaries[date] {
+                //                        ExpandableDiarySummaryCell(
+                //                            diaryList: diariesForDate,
+                //                            onDelete: { diaryID in
+                //                                Task {
+                //                                    await viewModel.deleteDiary(id: diaryID)
+                //                                }
+                //                            }
+                //                        )
+                //                    }
+                //                }
             }
         }
     }

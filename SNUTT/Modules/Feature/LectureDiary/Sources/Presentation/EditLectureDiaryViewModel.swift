@@ -16,6 +16,7 @@ public final class EditLectureDiaryViewModel {
     @Dependency(\.lectureDiaryRepository) private var repository
 
     private(set) var questionnaireState: QuestionnaireState = .loading
+    var classTypes: [AnswerOption] = []
     var selectedClassTypes: [String] = []
     private(set) var selectedAnswers: [String: Int] = [:]  // questionID -> answerIndex
     var extraComment: String = ""
@@ -28,11 +29,19 @@ public final class EditLectureDiaryViewModel {
         self.lectureTitle = lectureTitle
     }
 
+    func getClassTypes() async {
+        do {
+            classTypes = try await repository.fetchClassTypeList()
+        } catch {
+
+        }
+    }
+
     func loadQuestionnaire() async {
         questionnaireState = .loading
 
         do {
-            let questions = try await repository.fetchQuestionnaire()
+            let questions = try await repository.fetchQuestionnaire(for: lectureID, with: selectedClassTypes)
             questionnaireState = .loaded(questions)
         } catch {
             questionnaireState = .failed
@@ -56,7 +65,7 @@ public final class EditLectureDiaryViewModel {
     }
 
     private var allQuestionsAnswered: Bool {
-        guard case let .loaded(questions) = questionnaireState else {
+        guard case .loaded(let questions) = questionnaireState else {
             return false
         }
         return questions.allSatisfy { selectedAnswers[$0.id] != nil }

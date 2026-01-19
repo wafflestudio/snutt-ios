@@ -60,16 +60,14 @@ public struct LectureDiaryConfirmView: View {
                 .padding(.bottom, 20)
             }
             Spacer()
-            Button(
-                LectureDiaryStrings.lectureDiaryConfirmHome
+            RoundedRectButton(
+                label: LectureDiaryStrings.lectureDiaryConfirmHome,
+                type: .medium,
+                disabled: false
             ) {
                 // TODO: Navigate to home
                 dismiss()
             }
-            .buttonStyle(.borderedProminent)
-            .frame(maxWidth: .infinity)
-            .padding(.horizontal, 32)
-            .padding(.bottom, 40)
         }
         .padding(.top, 204)
         .padding(.bottom, 40)
