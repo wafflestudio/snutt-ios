@@ -24,6 +24,9 @@ public final class EditLectureDiaryViewModel {
     let lectureID: String
     let lectureTitle: String
 
+    var nextLectureID: String = ""
+    var nextLectureTitle: String = ""
+
     public init(lectureID: String, lectureTitle: String) {
         self.lectureID = lectureID
         self.lectureTitle = lectureTitle
@@ -41,8 +44,10 @@ public final class EditLectureDiaryViewModel {
         questionnaireState = .loading
 
         do {
-            let questions = try await repository.fetchQuestionnaire(for: lectureID, with: selectedClassTypes)
-            questionnaireState = .loaded(questions)
+            let questionnaire = try await repository.fetchQuestionnaire(for: lectureID, with: selectedClassTypes)
+            nextLectureID = questionnaire.nextLectureID
+            nextLectureTitle = questionnaire.nextLectureTitle
+            questionnaireState = .loaded(questionnaire.questions)
         } catch {
             questionnaireState = .failed
         }

@@ -25,7 +25,6 @@ struct ExtraReviewSection: View {
                         light: SharedUIComponentsAsset.lightLine.swiftUIColor,
                         dark: SharedUIComponentsAsset.gray30.swiftUIColor.opacity(0.4)
                     )
-
                 textEditorView
             }
         }
