@@ -158,6 +158,9 @@ struct EditLectureDiaryScene: View {
                     Task {
                         await viewModel.loadQuestionnaire()
                     }
+                    withAnimation {
+                        showNextSection = true
+                    }
                     showNextSection = true
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         detailQuestionPosition = 1

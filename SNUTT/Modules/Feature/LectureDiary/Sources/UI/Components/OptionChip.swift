@@ -18,23 +18,15 @@ struct OptionChip: View {
             Text(label)
                 .font(isSelected ? .system(size: 14, weight: .bold) : .system(size: 14))
                 .foregroundStyle(
-                    light: isSelected
-                        ? SharedUIComponentsAsset.darkMint3.swiftUIColor
-                        : .black,
-                    dark: isSelected
-                        ? SharedUIComponentsAsset.darkMint1.swiftUIColor
-                        : SharedUIComponentsAsset.assistive.swiftUIColor
+                    light: lightLabelColor,
+                    dark: darkLabelColor
                 )
                 .foregroundStyle(isSelected ? Color.cyan : .primary)
                 .padding(.vertical, 8)
                 .padding(.horizontal, 24)
                 .backgroundStyle(
-                    light: isSelected
-                        ? SharedUIComponentsAsset.cyan.swiftUIColor.opacity(0.06)
-                        : .clear,
-                    dark: isSelected
-                        ? SharedUIComponentsAsset.darkMint2.swiftUIColor.opacity(0.08)
-                        : .clear
+                    light: lightBackgroundColor,
+                    dark: darkBackgroundColor
                 )
                 .clipShape(Capsule())
                 .overlay(
