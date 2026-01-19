@@ -21,7 +21,10 @@ struct ExtraReviewSection: View {
             if isExpanded {
                 Divider()
                     .frame(height: 0.8)
-                    .foregroundStyle(Color.gray.opacity(0.3))
+                    .foregroundStyle(
+                        light: SharedUIComponentsAsset.lightLine.swiftUIColor,
+                        dark: SharedUIComponentsAsset.gray30.swiftUIColor.opacity(0.4)
+                    )
 
                 textEditorView
             }
@@ -36,25 +39,22 @@ struct ExtraReviewSection: View {
     }
 
     private var headerView: some View {
-        HStack {
-            HStack(spacing: 6) {
-                Text(LectureDiaryStrings.lectureDiaryEditExtraCommentTitle)
-                    .font(.system(size: 15, weight: .semibold))
-                    .foregroundStyle(.primary)
+        HStack(spacing: 6) {
+            Text(LectureDiaryStrings.lectureDiaryEditExtraCommentTitle)
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundStyle(.primary)
 
-                Text(LectureDiaryStrings.lectureDiaryEditExtraCommentOptional)
-                    .font(.system(size: 13))
-                    .foregroundStyle(
-                        light: SharedUIComponentsAsset.alternative.swiftUIColor,
-                        dark: SharedUIComponentsAsset.gray30.swiftUIColor
-                    )
-            }
+            Text(LectureDiaryStrings.lectureDiaryEditExtraCommentOptional)
+                .font(.system(size: 13))
+                .foregroundStyle(
+                    light: SharedUIComponentsAsset.alternative.swiftUIColor,
+                    dark: SharedUIComponentsAsset.gray30.swiftUIColor
+                )
 
             Spacer()
 
-            Image(systemName: "chevron.down")
-                .rotationEffect(.degrees(isExpanded ? 180 : 0))
-                .foregroundStyle(.secondary)
+            LectureDiaryAsset.chevronRight.swiftUIImage
+                .rotationEffect(.degrees(isExpanded ? -90 : 90))
         }
         .contentShape(Rectangle())
         .onTapGesture {
@@ -68,18 +68,17 @@ struct ExtraReviewSection: View {
         VStack(spacing: 0) {
             TextEditor(text: $extraReview)
                 .font(.system(size: 14))
-                .frame(height: 120)
                 .scrollContentBackground(.hidden)
+                .padding(.top, 8)
                 .overlay(alignment: .topLeading) {
                     if extraReview.isEmpty {
                         Text(LectureDiaryStrings.lectureDiaryEditExtraCommentPlaceholder)
                             .font(.system(size: 14))
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(SharedUIComponentsAsset.alternative.swiftUIColor)
                             .allowsHitTesting(false)
                             .padding(.top, 8)
                     }
                 }
-                .padding(.top, 8)
 
             HStack(spacing: 0) {
                 Spacer()
@@ -94,6 +93,7 @@ struct ExtraReviewSection: View {
                     )
             }
         }
+        .frame(height: 120)
         .onChange(of: extraReview) { _, newValue in
             if newValue.count > maxCharacters {
                 extraReview = String(newValue.prefix(maxCharacters))

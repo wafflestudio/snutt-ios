@@ -12,8 +12,6 @@ struct LectureDiaryRepositoryKey: DependencyKey {
 
     static let previewValue: any LectureDiaryRepository = {
         let spy = LectureDiaryRepositorySpy()
-        spy.fetchDiaryListQuarterReturnValue = []
-        spy.fetchQuestionnaireReturnValue = []
         return spy
     }()
 }
