@@ -22,12 +22,18 @@ struct LectureDiaryAPIRepository: LectureDiaryRepository {
 
     public func fetchDiaryList() async throws -> [DiarySubmissionsOfYearSemester] {
         let response = try await apiClient.getMySubmissions().ok.body.json
-        return []
+        return response.map {
+            $0.toDiarySubmissionsOfYearSemester()
+        }
     }
 
-    func fetchQuestionnaire(for lectureID: String, with classTypes: [String]) async throws -> [QuestionItem] {
-
-        return []
+    func fetchQuestionnaire(for lectureID: String, with classTypes: [String]) async throws -> QuestionnaireItem {
+        let requestDto = Components.Schemas.DiaryQuestionnaireRequestDto(
+            dailyClassTypes: classTypes,
+            lectureId: lectureID
+        )
+        let response = try await apiClient.getQuestionnaireFromActivities(body: .json(requestDto)).ok.body.json
+        return .init(dto: response)
     }
 
     public func submitDiary(_ submission: DiarySubmission) async throws {
@@ -48,6 +54,26 @@ struct LectureDiaryAPIRepository: LectureDiaryRepository {
 }
 
 // MARK: - DTO Conversion (Infra layer only)
+
+extension QuestionnaireItem {
+    init(dto: Components.Schemas.DiaryQuestionnaireDto) {
+        self.init(
+            lectureTitle: dto.lectureTitle,
+            questions: dto.questions.map {
+                .init(
+                    id: $0.id,
+                    question: $0.question,
+                    subQuestion: nil,
+                    options: $0.answers.enumerated().map { (index, answer) in
+                        .init(id: "\(index)", content: answer)
+                    }
+                )
+            },
+            nextLectureID: dto.nextLectureId ?? "",
+            nextLectureTitle: dto.nextLectureTitle ?? ""
+        )
+    }
+}
 
 extension DiarySummary {
     init(dto: Components.Schemas.DiarySubmissionSummaryDto) {

@@ -7,6 +7,13 @@
 
 import Foundation
 
+public struct QuestionnaireItem: Sendable {
+    public let lectureTitle: String
+    public let questions: [QuestionItem]
+    public let nextLectureID: String
+    public let nextLectureTitle: String
+}
+
 public struct QuestionItem: Sendable, Identifiable, Equatable {
     public let id: String
     public let question: String

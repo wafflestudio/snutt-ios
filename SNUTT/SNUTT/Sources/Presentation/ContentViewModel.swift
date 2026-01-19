@@ -33,7 +33,7 @@ final class ContentViewModel {
     var selectedTab: TabItem = .timetable
     var showDiaryEditScene: Bool = true
     //    var showDiaryEditScene: Bool = false
-    var diaryLectureID: String = "6867c3225ef235136624b760"
+    var diaryLectureID: String = "68ef8d2912cd9c927b32a36c"
     var diaryLectureTitle: String = "디자인 스튜디오"
     private var cancellables: Set<AnyCancellable> = []
 

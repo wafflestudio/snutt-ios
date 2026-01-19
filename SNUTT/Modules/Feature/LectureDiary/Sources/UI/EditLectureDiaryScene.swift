@@ -22,6 +22,7 @@ struct EditLectureDiaryScene: View {
     @State private var showCancelAlert = false
     @State private var showConfirmView = false
     @State private var showNextSection = false
+    @State private var detailQuestionPosition: Int?
 
     public init(lectureID: String, lectureTitle: String) {
         _viewModel = State(
@@ -51,9 +52,11 @@ struct EditLectureDiaryScene: View {
                 ScrollView {
                     VStack(spacing: 16) {
                         step1ClassTypeSelection
+                            .id(0)
 
                         if showNextSection {
                             step2QuestionAnswers
+                                .id(1)
                             extraCommentSection
                             submitButton
                         }
@@ -61,6 +64,8 @@ struct EditLectureDiaryScene: View {
                     .padding(.horizontal, 20)
                     .padding(.vertical, 24)
                 }
+                .scrollPosition(id: $detailQuestionPosition, anchor: .top)
+                .animation(.easeInOut(duration: 0.3), value: detailQuestionPosition)
             }
         }
         .task {
@@ -153,12 +158,9 @@ struct EditLectureDiaryScene: View {
                     Task {
                         await viewModel.loadQuestionnaire()
                     }
-                    withAnimation {
-                        showNextSection = true
-                    }
-                    // Scroll to next section
+                    showNextSection = true
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        // TODO: Scroll to step 2
+                        detailQuestionPosition = 1
                     }
                 } label: {
                     Text(LectureDiaryStrings.lectureDiaryEditDone)
@@ -187,7 +189,7 @@ struct EditLectureDiaryScene: View {
     private var step2QuestionAnswers: some View {
         if case .loaded(let questions) = viewModel.questionnaireState {
             VStack(spacing: 20) {
-                ForEach(Array(questions.enumerated()), id: \.element.id) { index, question in
+                ForEach(questions, id: \.id) { question in
                     QuestionAnswerSection(
                         questionItem: question,
                         allowMultipleAnswers: false,
@@ -200,10 +202,13 @@ struct EditLectureDiaryScene: View {
                         }
                     )
 
-                    if index < questions.count - 1 {
+                    if question.id != questions.last?.id {
                         Divider()
                             .frame(height: 0.8)
-                            .foregroundStyle(Color.gray.opacity(0.2))
+                            .foregroundStyle(
+                                light: SharedUIComponentsAsset.lightLine.swiftUIColor,
+                                dark: SharedUIComponentsAsset.alternative.swiftUIColor.opacity(0.4)
+                            )
                     }
                 }
             }
