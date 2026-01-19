@@ -28,9 +28,7 @@ public final class LectureDiaryListViewModel {
         diaryListState = .loading
 
         do {
-            // TODO: Get current quarter from somewhere
-            let currentQuarter = Quarter(year: 2025, semester: .first)
-            let diaries = try await repository.fetchDiaryList(quarter: currentQuarter)
+            let diaries = try await repository.fetchDiaryList()
 
             if diaries.isEmpty {
                 diaryListState = .empty
@@ -70,7 +68,7 @@ public final class LectureDiaryListViewModel {
         //        }
     }
 
-    private func extractQuarters(from diaries: [DiarySummary]) -> [Quarter] {
+    private func extractQuarters(from diaries: [DiarySubmissionsOfYearSemester]) -> [Quarter] {
         let uniqueQuarters = Set(diaries.map(\.quarter))
         return uniqueQuarters.sorted()
     }
@@ -80,7 +78,7 @@ extension LectureDiaryListViewModel {
     enum DiaryListState {
         case loading
         case empty
-        case loaded([DiarySummary])
+        case loaded([DiarySubmissionsOfYearSemester])
         case failed
     }
 }

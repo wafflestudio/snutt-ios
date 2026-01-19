@@ -137,9 +137,9 @@ struct ExpandableDiarySummaryCell: View {
 #Preview("Single Diary") {
     let diary = DiarySummary(
         id: "1",
-        lectureTitle: "시각디자인기초",
+        lectureID: "123",
         date: Date(),
-        quarter: Quarter(year: 2025, semester: .first),
+        lectureTitle: "시각디자인기초",
         shortQuestionReplies: [
             QuestionReply(question: "수강신청", answer: "널널해요"),
             QuestionReply(question: "드랍여부", answer: "모르겠어요"),
@@ -156,9 +156,9 @@ struct ExpandableDiarySummaryCell: View {
     let diaries = [
         DiarySummary(
             id: "1",
-            lectureTitle: "시각디자인기초",
+            lectureID: "123",
             date: Date(),
-            quarter: Quarter(year: 2025, semester: .first),
+            lectureTitle: "시각디자인기초",
             shortQuestionReplies: [
                 QuestionReply(question: "수강신청", answer: "널널해요"),
                 QuestionReply(question: "드랍여부", answer: "모르겠어요"),
@@ -167,9 +167,9 @@ struct ExpandableDiarySummaryCell: View {
         ),
         DiarySummary(
             id: "2",
-            lectureTitle: "배구",
+            lectureID: "456",
             date: Date(),
-            quarter: Quarter(year: 2025, semester: .first),
+            lectureTitle: "배구",
             shortQuestionReplies: [
                 QuestionReply(question: "수강신청", answer: "무난해요"),
                 QuestionReply(question: "수업 첫인상", answer: "기대돼요"),

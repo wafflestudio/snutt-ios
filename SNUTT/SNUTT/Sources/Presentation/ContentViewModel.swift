@@ -19,6 +19,22 @@ final class ContentViewModel {
     @ObservationIgnored
     @Dependency(\.authState) private var authState
 
+    @ObservationIgnored
+    @Dependency(\.configsRepository) var configsRepository
+
+    @ObservationIgnored
+    @Dependency(\.analyticsLogger) var analyticsLogger
+
+    @ObservationIgnored
+    @Dependency(\.notificationCenter) var notificationCenter
+
+    private let authState: any AuthState
+    private(set) var isAuthenticated: Bool
+    var selectedTab: TabItem = .timetable
+    var showDiaryEditScene: Bool = true
+    //    var showDiaryEditScene: Bool = false
+    var diaryLectureID: String = "6867c3225ef235136624b760"
+    var diaryLectureTitle: String = "디자인 스튜디오"
     private var cancellables: Set<AnyCancellable> = []
 
     var isAuthenticated: Bool = false

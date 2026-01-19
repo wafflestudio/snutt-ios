@@ -69,3 +69,15 @@ public struct NavigateToLectureRemindersMessage: NotificationCenter.TypedMessage
 
     public init() {}
 }
+
+public struct NavigateToLectureDiaryMessage: NotificationCenter.TypedMessage {
+    public static let name = Notification.Name("navigateToLectureDiary")
+
+    public let lectureID: String
+    public let lectureTitle: String
+
+    public init(lectureID: String, lectureTitle: String) {
+        self.lectureID = lectureID
+        self.lectureTitle = lectureTitle
+    }
+}

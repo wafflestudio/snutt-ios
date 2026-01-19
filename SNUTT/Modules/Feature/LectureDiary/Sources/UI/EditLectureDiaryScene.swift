@@ -8,7 +8,15 @@
 import SharedUIComponents
 import SwiftUI
 
-public struct EditLectureDiaryScene: View {
+extension View {
+    public func overlayLectureDiarySheet(lectureId: String, lectureTitle: String) -> some View {
+        overlay {
+            EditLectureDiaryScene(lectureID: lectureId, lectureTitle: lectureTitle)
+        }
+    }
+}
+
+struct EditLectureDiaryScene: View {
     @Environment(\.dismiss) private var dismiss
     @State private var viewModel: EditLectureDiaryViewModel
     @State private var showCancelAlert = false
@@ -16,11 +24,27 @@ public struct EditLectureDiaryScene: View {
     @State private var showNextSection = false
 
     public init(lectureID: String, lectureTitle: String) {
-        _viewModel = State(initialValue: EditLectureDiaryViewModel(lectureID: lectureID, lectureTitle: lectureTitle))
+        _viewModel = State(
+            initialValue: EditLectureDiaryViewModel(
+                lectureID: lectureID,
+                lectureTitle: lectureTitle
+            )
+        )
+    }
+
+    private var isClassTypeConfirmEnabled: Bool {
+        !viewModel.selectedClassTypes.isEmpty
     }
 
     public var body: some View {
         ZStack(alignment: .top) {
+            Rectangle()
+                .foregroundStyle(
+                    light: SharedUIComponentsAsset.lightField.swiftUIColor,
+                    dark: .black
+                )
+                .ignoresSafeArea()
+
             VStack(spacing: 0) {
                 headerView
 
@@ -40,7 +64,7 @@ public struct EditLectureDiaryScene: View {
             }
         }
         .task {
-            await viewModel.loadQuestionnaire()
+            await viewModel.getClassTypes()
         }
         .fullScreenCover(isPresented: $showConfirmView) {
             LectureDiaryConfirmView(displayMode: .reviewDone)
@@ -94,32 +118,41 @@ public struct EditLectureDiaryScene: View {
 
     private var step1ClassTypeSelection: some View {
         VStack(alignment: .leading, spacing: 16) {
+            var lightLabelColor: Color {
+                isClassTypeConfirmEnabled
+                    ? SharedUIComponentsAsset.darkMint2.swiftUIColor
+                    : SharedUIComponentsAsset.gray30.swiftUIColor
+            }
+
+            var darkLabelColor: Color {
+                isClassTypeConfirmEnabled
+                    ? SharedUIComponentsAsset.darkMint1.swiftUIColor
+                    : SharedUIComponentsAsset.gray30.swiftUIColor
+            }
+
             HStack {
                 Text(LectureDiaryStrings.lectureDiaryEditClassTypeQuestion)
                     .font(.system(size: 15, weight: .semibold))
                 Text(LectureDiaryStrings.lectureDiaryEditClassTypeMultiple)
                     .font(.system(size: 13))
-                    .foregroundStyle(.secondary)
-            }
-
-            // TODO: Load actual class types from API
-            let classTypes = ["이론수업", "토론수업", "발표수업", "실습수업", "과제발표", "퀴즈"]
-            let options = classTypes.enumerated().map { index, type in
-                AnswerOption(id: "\(index)", content: type)
+                    .foregroundStyle(SharedUIComponentsAsset.alternative.swiftUIColor)
             }
 
             WrappedOptionChipList(
                 selectedOptions: Binding(
-                    get: { options.filter { viewModel.selectedClassTypes.contains($0.content) } },
+                    get: { viewModel.classTypes.filter { viewModel.selectedClassTypes.contains($0.content) } },
                     set: { viewModel.selectedClassTypes = $0.map(\.content) }
                 ),
-                answerOptions: options,
+                answerOptions: viewModel.classTypes,
                 allowMultiple: true
             )
 
             HStack {
                 Spacer()
-                Button(LectureDiaryStrings.lectureDiaryEditDone) {
+                Button {
+                    Task {
+                        await viewModel.loadQuestionnaire()
+                    }
                     withAnimation {
                         showNextSection = true
                     }
@@ -127,17 +160,27 @@ public struct EditLectureDiaryScene: View {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         // TODO: Scroll to step 2
                     }
+                } label: {
+                    Text(LectureDiaryStrings.lectureDiaryEditDone)
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(
+                            light: lightLabelColor,
+                            dark: darkLabelColor
+                        )
                 }
-                .buttonStyle(.borderedProminent)
-                .disabled(viewModel.selectedClassTypes.isEmpty)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 4)
+                .disabled(!isClassTypeConfirmEnabled)
             }
         }
-        .padding(20)
+        .padding([.horizontal, .bottom], 20)
+        .padding(.top, 24)
         .backgroundStyle(
-            light: SharedUIComponentsAsset.lightField.swiftUIColor,
-            dark: .black
+            light: .white,
+            dark: SharedUIComponentsAsset.groupBackground.swiftUIColor
         )
         .clipShape(RoundedRectangle(cornerRadius: 12))
+        .shadow(color: .black.opacity(0.04), radius: 20, x: 12, y: 6)
     }
 
     @ViewBuilder
@@ -177,7 +220,11 @@ public struct EditLectureDiaryScene: View {
     private var submitButton: some View {
         HStack {
             Spacer()
-            Button(LectureDiaryStrings.lectureDiaryEditNext) {
+            RoundedRectButton(
+                label: LectureDiaryStrings.lectureDiaryEditNext,
+                type: .medium,
+                disabled: !viewModel.canSubmit
+            ) {
                 Task {
                     do {
                         try await viewModel.submitDiary()
@@ -188,8 +235,6 @@ public struct EditLectureDiaryScene: View {
                     }
                 }
             }
-            .buttonStyle(.borderedProminent)
-            .disabled(!viewModel.canSubmit)
             .frame(width: 122)
         }
         .padding(.top, 4)
@@ -198,5 +243,5 @@ public struct EditLectureDiaryScene: View {
 }
 
 #Preview {
-    EditLectureDiaryScene(lectureID: "1", lectureTitle: "시각디자인기초")
+    EditLectureDiaryScene(lectureID: "1", lectureTitle: "컴퓨터의 개념 및 실습")
 }

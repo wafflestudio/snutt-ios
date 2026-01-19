@@ -15,43 +15,51 @@ struct LectureDiaryAPIRepository: LectureDiaryRepository {
 
     init() {}
 
-    public func fetchDiaryList(quarter: Quarter) async throws -> [DiarySummary] {
-        // TODO: Implement with OpenAPI client
-        // Example: let response = try await apiClient.getDiaryList(year: quarter.year, semester: quarter.semester.rawValue)
-        // Convert OpenAPI DTO to DiarySummary here
+    func fetchClassTypeList() async throws -> [AnswerOption] {
+        let response = try await apiClient.getDailyClassTypes().ok.body.json
+        return response.map { .init(id: $0.id, content: $0.name) }
+    }
+
+    public func fetchDiaryList() async throws -> [DiarySubmissionsOfYearSemester] {
+        let response = try await apiClient.getMySubmissions().ok.body.json
         return []
     }
 
-    public func fetchQuestionnaire() async throws -> [QuestionItem] {
-        // TODO: Implement with OpenAPI client
-        // Example: let response = try await apiClient.getQuestionnaire(...)
-        // Convert OpenAPI DTO to QuestionItem here
+    func fetchQuestionnaire(for lectureID: String, with classTypes: [String]) async throws -> [QuestionItem] {
+
         return []
     }
 
     public func submitDiary(_ submission: DiarySubmission) async throws {
-        // TODO: Implement with OpenAPI client
-        // Convert DiarySubmission to OpenAPI DTO here
-        // Example: let dto = convertToDTO(submission)
-        // _ = try await apiClient.submitDiary(dto)
+        let requestDto = Components.Schemas.DiarySubmissionRequestDto(
+            comment: submission.comment ?? "",
+            dailyClassTypes: submission.dailyClassTypes,
+            lectureId: submission.lectureID,
+            questionAnswers: submission.questionAnswers.map {
+                .init(answerIndex: Int32($0.answerIndex), questionId: $0.questionID)
+            }
+        )
+        let _ = try await apiClient.submitDiary(body: .json(requestDto))
     }
 
     public func deleteDiary(diaryID: String) async throws {
-        // TODO: Implement with OpenAPI client
-        // Example: _ = try await apiClient.deleteDiary(id: diaryID)
+        let _ = try await apiClient.removeDiarySubmission(path: .init(id: diaryID))
     }
 }
 
 // MARK: - DTO Conversion (Infra layer only)
 
-// TODO: Add conversion functions when OpenAPI spec is available
-// Example:
-// private extension DiarySummary {
-//     init(dto: Components.Schemas.DiaryDto) {
-//         self.init(
-//             id: dto.id,
-//             lectureTitle: dto.lectureTitle,
-//             ...
-//         )
-//     }
-// }
+extension DiarySummary {
+    init(dto: Components.Schemas.DiarySubmissionSummaryDto) {
+        self.init(
+            id: dto.id,
+            lectureID: dto.lectureId,
+            date: dto.date,
+            lectureTitle: dto.lectureTitle,
+            shortQuestionReplies: dto.shortQuestionReplies.map {
+                .init(question: $0.question, answer: $0.answer)
+            },
+            comment: dto.comment
+        )
+    }
+}
