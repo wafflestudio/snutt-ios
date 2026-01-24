@@ -20,9 +20,11 @@ public struct LectureSearchScene: View {
 
     public init(timetableViewModel: TimetableViewModel) {
         self.timetableViewModel = timetableViewModel
-        _searchViewModel = State(initialValue: LectureSearchViewModel(
-            timetableViewModel: timetableViewModel
-        ))
+        _searchViewModel = State(
+            initialValue: LectureSearchViewModel(
+                timetableViewModel: timetableViewModel
+            )
+        )
     }
 
     public var body: some View {
@@ -101,24 +103,6 @@ public struct LectureSearchScene: View {
                 .navigationTitle(navigationTitle)
                 .searchPresentationToolbarBehavior(.avoidHidingContent)
                 .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        Menu {
-                            ForEach(timetableViewModel.availableQuarters.prefix(12), id: \.self) { quarter in
-                                Button {
-                                    searchViewModel.searchingQuarter = quarter
-                                } label: {
-                                    HStack {
-                                        Text(quarter.localizedDescription)
-                                        if searchViewModel.searchingQuarter == quarter {
-                                            Image(systemName: "checkmark")
-                                        }
-                                    }
-                                }
-                            }
-                        } label: {
-                            Text(searchViewModel.searchingQuarter?.localizedDescription ?? "-")
-                        }
-                    }
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
                             searchViewModel.isSearchFilterOpen = true
