@@ -6,6 +6,7 @@
 //
 
 import FoundationUtility
+import SharedUIComponents
 import SwiftUI
 import ThemesInterface
 import TimetableInterface
@@ -98,6 +99,7 @@ struct TimetableSettingView: View {
         .navigationTitle(SettingsStrings.displayTable)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear { viewModel.loadInitialTimetable() }
+        .tint(SharedUIComponentsAsset.cyan.swiftUIColor)
     }
 }
 
