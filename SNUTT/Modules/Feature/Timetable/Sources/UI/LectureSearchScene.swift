@@ -16,7 +16,6 @@ public struct LectureSearchScene: View {
     @State private var searchViewModel: LectureSearchViewModel
     @Environment(\.themeViewModel) private var themeViewModel
     @Environment(\.errorAlertHandler) private var errorAlertHandler
-    @FocusState private var searchFocus
 
     public init(timetableViewModel: TimetableViewModel) {
         self.timetableViewModel = timetableViewModel
@@ -93,13 +92,11 @@ public struct LectureSearchScene: View {
                     searchViewModel.searchingQuarter = newValue
                 }
                 .searchable(text: $searchViewModel.searchQuery, prompt: TimetableStrings.searchInputPlaceholder)
-                .searchFocused($searchFocus)
                 .onSubmit(of: .search) {
                     errorAlertHandler.withAlert {
                         try await searchViewModel.fetchInitialSearchResult()
                     }
                 }
-                .onAppear { searchFocus = true }
                 .navigationTitle(navigationTitle)
                 .searchPresentationToolbarBehavior(.avoidHidingContent)
                 .toolbar {
