@@ -13,7 +13,7 @@ extension TimetablePainter {
     public func resolveColor(for lecture: Lecture) -> LectureColor {
         guard let lectures = currentTimetable?.lectures,
             let lectureIndex = lectures.firstIndex(where: { $0.lectureID == lecture.lectureID })
-        else { return Theme.snutt.colors.first ?? .temporary }
+        else { return lecture.customColor ?? Theme.snutt.colors.first ?? .temporary }
         if let preferredTheme {
             return preferredTheme.color(at: lectureIndex)
         }

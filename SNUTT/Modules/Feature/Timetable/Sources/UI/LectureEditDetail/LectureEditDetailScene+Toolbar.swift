@@ -161,12 +161,14 @@ extension LectureEditDetailScene {
                 Button(TimetableStrings.editEdit, systemImage: "pencil") {
                     editMode = .active
                 }
+                .tint(SharedUIComponentsAsset.cyan.swiftUIColor)
             }
         } else if toolbarOptions.contains(.saveButton) {
             ToolbarItem(placement: .confirmationAction) {
                 Button(TimetableStrings.editSave, systemImage: "checkmark") {
                     handleSaveAction()
                 }
+                .tint(SharedUIComponentsAsset.cyan.swiftUIColor)
             }
         }
     }
