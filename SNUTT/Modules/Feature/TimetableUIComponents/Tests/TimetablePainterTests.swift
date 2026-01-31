@@ -170,4 +170,62 @@ struct TimetablePainterTests {
         #expect(painter.endingHour == 17)
         #expect(painter.visibleWeeks == [.mon, .tue, .wed, .thu, .fri])
     }
+
+    // MARK: - Display Grid Metrics Tests
+
+    @Test("geometry.size 기준으로 hourHeight를 계산하고, extendedContainerSize 기준으로 displayHourCount를 계산해야 한다")
+    func displayGridMetricsWithSafeAreaInsets() {
+        // 9-18시 (10시간)
+        let configuration = TimetableConfiguration(minHour: 9, maxHour: 18, autoFit: false)
+        let painter = TimetablePainter.stub(configuration: configuration)
+        let geometry = TimetableGeometry(
+            size: CGSize(width: 320, height: 500),
+            safeAreaInsets: .init(top: 0, leading: 0, bottom: 50, trailing: 0)
+        )
+
+        let metrics = painter.getDisplayGridMetrics(in: geometry)
+
+        // hourHeight는 geometry.size 기준: (500 - 25) / 10 = 47.5
+        #expect(metrics.hourHeight == 47.5)
+        // displayHourCount는 extendedContainerSize 기준: (550 - 25) / 47.5 = 11
+        #expect(metrics.displayHourCount == 11)
+    }
+
+    @Test("18시간 이상 범위에서 weekdayHeight를 제외하고 계산하여 헤더가 잘리지 않아야 한다")
+    func displayGridMetrics18PlusHours() {
+        // 2-20시 (19시간), 원래 이슈 재현
+        let configuration = TimetableConfiguration(minHour: 2, maxHour: 20, autoFit: false)
+        let painter = TimetablePainter.stub(configuration: configuration)
+        let geometry = TimetableGeometry(
+            size: CGSize(width: 320, height: 500),
+            safeAreaInsets: .init(top: 0, leading: 0, bottom: 50, trailing: 0)
+        )
+
+        let metrics = painter.getDisplayGridMetrics(in: geometry)
+
+        // hourHeight는 geometry.size 기준: (500 - 25) / 19 = 25
+        #expect(metrics.hourHeight == 25)
+        // displayHourCount는 extendedContainerSize 기준: (550 - 25) / 25 = 21
+        #expect(metrics.displayHourCount == 21)
+        // weekdayHeight + displayHourCount * hourHeight <= extendedContainerSize.height
+        let totalHeight = painter.weekdayHeight + CGFloat(metrics.displayHourCount) * metrics.hourHeight
+        #expect(totalHeight <= geometry.extendedContainerSize.height)
+    }
+
+    @Test("hourHeight가 10pt 미만인 경우 최소값 10pt로 제한해야 한다")
+    func displayGridMetricsMinimumHourHeight() {
+        let configuration = TimetableConfiguration(minHour: 0, maxHour: 23, autoFit: false)
+        let painter = TimetablePainter.stub(configuration: configuration)
+        let geometry = TimetableGeometry(
+            size: CGSize(width: 320, height: 200),
+            safeAreaInsets: .init(top: 0, leading: 0, bottom: 20, trailing: 0)
+        )
+
+        let metrics = painter.getDisplayGridMetrics(in: geometry)
+
+        // hourHeight = (200 - 25) / 24 = 7.29... → 10pt로 제한
+        #expect(metrics.hourHeight == 10)
+        // displayHourCount = (220 - 25) / 10 = 19
+        #expect(metrics.displayHourCount == 19)
+    }
 }
