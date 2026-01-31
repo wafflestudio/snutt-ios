@@ -40,6 +40,19 @@ extension TimetablePainter {
         return max((containerSize.height - weekdayHeight) / CGFloat(hourCount), 0)
     }
 
+    /// 시간표 그리드의 시간 행 렌더링을 위한 높이와 개수를 계산한다..
+    ///
+    /// 1. `geometry.size`를 기준으로 이상적인 한 시간의 높이(`hourHeight`)를 계산한다.
+    /// 2. `geometry.extendedContainerSize`의 가용 높이(weekdayHeight 제외)를 `hourHeight`로 나누어
+    ///    실제 화면에 표시할 시간 행의 개수(`displayHourCount`)를 계산한다.
+    func getDisplayGridMetrics(in geometry: TimetableGeometry) -> (hourHeight: CGFloat, displayHourCount: Int) {
+        let calculatedHourHeight = getHourHeight(in: geometry.size)
+        let effectiveHourHeight = max(10, calculatedHourHeight)
+        let availableHeight = max(0, geometry.extendedContainerSize.height - weekdayHeight)
+        let displayHourCount = Int(availableHeight / effectiveHourHeight)
+        return (hourHeight: effectiveHourHeight, displayHourCount: displayHourCount)
+    }
+
     /// 주어진 `TimePlace` 블록의 좌표(오프셋)를 구한다.
     ///
     /// 주어진 `TimePlace`를 시간표에 표시할 수 없는 경우(e.g. 시간이나 요일 범위에서 벗어난 경우 등)에는 `nil`을 리턴한다.

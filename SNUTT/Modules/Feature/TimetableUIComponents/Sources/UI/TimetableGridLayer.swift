@@ -46,11 +46,10 @@ public struct TimetableGridLayer: View {
 
     /// 한 시간 간격의 수평선
     var horizontalHourlyPaths: Path {
-        let hourHeight = painter.getHourHeight(in: geometry.size)
-        let hourCount = Int(geometry.extendedContainerSize.height / max(10, hourHeight))
+        let metrics = painter.getDisplayGridMetrics(in: geometry)
         return Path { path in
-            for i in 0...hourCount {
-                let y = painter.weekdayHeight + CGFloat(i) * hourHeight
+            for i in 0...metrics.displayHourCount {
+                let y = painter.weekdayHeight + CGFloat(i) * metrics.hourHeight
                 guard y <= geometry.extendedContainerSize.height else { break }
                 path.move(to: CGPoint(x: 0, y: y))
                 path.addLine(to: CGPoint(x: geometry.size.width, y: y))
@@ -60,11 +59,10 @@ public struct TimetableGridLayer: View {
 
     /// 30분 간격의 수평선
     var horizontalHalfHourlyPaths: Path {
-        let hourHeight = painter.getHourHeight(in: geometry.size)
-        let hourCount = Int(geometry.extendedContainerSize.height / max(10, hourHeight))
+        let metrics = painter.getDisplayGridMetrics(in: geometry)
         return Path { path in
-            for i in 0...hourCount {
-                let y = painter.weekdayHeight + CGFloat(i) * hourHeight + hourHeight / 2
+            for i in 0...metrics.displayHourCount {
+                let y = painter.weekdayHeight + CGFloat(i) * metrics.hourHeight + metrics.hourHeight / 2
                 guard y <= geometry.extendedContainerSize.height else { break }
                 path.move(to: CGPoint(x: 0 + painter.hourWidth, y: y))
                 path.addLine(to: CGPoint(x: geometry.size.width, y: y))
@@ -92,15 +90,15 @@ public struct TimetableGridLayer: View {
     /// 시간표 맨 왼쪽, 시간들을 나타내는 행
     var hoursVStack: some View {
         let minHour = painter.startingHour
-        let hourHeight = painter.getHourHeight(in: geometry.size)
-        let hourCount = Int(geometry.extendedContainerSize.height / max(10, hourHeight))
+        let metrics = painter.getDisplayGridMetrics(in: geometry)
         return VStack(spacing: 0) {
-            ForEach(0..<hourCount, id: \.self) { hour in
+            ForEach(0..<metrics.displayHourCount, id: \.self) { hour in
                 Text(String(minHour + hour))
                     .font(.system(size: 12))
+                    .minimumScaleFactor(0.1)
                     .foregroundColor(Color(UIColor.secondaryLabel))
                     .padding(.top, 5)
-                    .frame(width: painter.hourWidth, height: hourHeight, alignment: .top)
+                    .frame(width: painter.hourWidth, height: metrics.hourHeight, alignment: .top)
             }
         }
         .padding(.top, painter.weekdayHeight)
