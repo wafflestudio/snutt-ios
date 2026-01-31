@@ -73,6 +73,7 @@ public struct SheetTopBar: View {
         }
         .padding(.top, 15)
         .padding(.horizontal, 15)
+        .tint(SharedUIComponentsAsset.cyan.swiftUIColor)
     }
 }
 
@@ -84,5 +85,4 @@ public struct SheetTopBar: View {
         }
     )
     .border(.gray, width: 1)
-    .tint(.label)
 }
