@@ -95,37 +95,6 @@ public struct TimetableScene: View {
     }
 }
 
-struct CircleBadge: View {
-    let color: Color
-
-    var body: some View {
-        Circle()
-            .fill(color)
-            .frame(width: 4, height: 4)
-    }
-}
-
-struct CircleBadgeModifier: ViewModifier {
-    let condition: Bool
-    let color: Color
-
-    func body(content: Content) -> some View {
-        ZStack(alignment: .topTrailing) {
-            content
-
-            if condition {
-                CircleBadge(color: .red)
-            }
-        }
-    }
-}
-
-extension View {
-    func circleBadge(condition: Bool, color: Color = .red) -> some View {
-        modifier(CircleBadgeModifier(condition: condition, color: color))
-    }
-}
-
 @available(iOS 26, *)
 #Preview("Default") {
     TabView {
