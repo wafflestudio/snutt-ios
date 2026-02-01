@@ -41,6 +41,7 @@ public struct TimetableScene: View {
                 }
             }
             .ignoresSafeArea(.keyboard)
+            .background(TimetableAsset.timetableBackground.swiftUIColor)
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: TimetableDetailSceneTypes.self) {
                 TimetableDetails(pathType: $0, timetableViewModel: timetableViewModel)
@@ -69,9 +70,7 @@ public struct TimetableScene: View {
 
     private var timetable: some View {
         VStack(spacing: 0) {
-            Rectangle()
-                .fill(Color(UIColor.quaternaryLabel.withAlphaComponent(0.1)))
-                .frame(height: 1)
+            TimetableGridLayer.Divider()
             TimetableZStack(
                 painter: timetableViewModel.makePainter(
                     selectedLecture: nil,

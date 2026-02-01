@@ -60,6 +60,7 @@ public struct FriendsScene: View {
                     timetableView(friendContent: nil).opacity(0.5)
                 }
             }
+            .background(FriendsAsset.timetableBackground.swiftUIColor)
             .animation(.defaultSpring, value: viewModel.selectedFriend?.id)
             .customPopup(
                 isPresented: Binding(
@@ -142,21 +143,24 @@ public struct FriendsScene: View {
     }
 
     private func timetableView(friendContent: FriendContent?) -> some View {
-        timetableUIProvider.timetableView(
-            timetable: friendContent?.timetableLoadState.timetable,
-            configuration: viewModel.timetableConfiguration,
-            preferredTheme: themeViewModel.selectedTheme,
-            availableThemes: themeViewModel.availableThemes
-        )
-        .environment(
-            \.lectureTapAction,
-            LectureTapAction(action: { lecture in
-                guard let quarter = friendContent?.selectedQuarter else { return }
-                selectedLecture = SelectedLecture(lecture: lecture, quarter: quarter)
-            })
-        )
-        .id(friendContent?.friend.id)
-        .ignoresSafeArea(.keyboard)
+        VStack(spacing: 0) {
+            Divider()
+            timetableUIProvider.timetableView(
+                timetable: friendContent?.timetableLoadState.timetable,
+                configuration: viewModel.timetableConfiguration,
+                preferredTheme: themeViewModel.selectedTheme,
+                availableThemes: themeViewModel.availableThemes
+            )
+            .environment(
+                \.lectureTapAction,
+                LectureTapAction(action: { lecture in
+                    guard let quarter = friendContent?.selectedQuarter else { return }
+                    selectedLecture = SelectedLecture(lecture: lecture, quarter: quarter)
+                })
+            )
+            .id(friendContent?.friend.id)
+            .ignoresSafeArea(.keyboard)
+        }
     }
 
     @ToolbarContentBuilder

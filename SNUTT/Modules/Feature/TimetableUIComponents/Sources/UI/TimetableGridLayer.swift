@@ -11,6 +11,12 @@ import TimetableInterface
 public struct TimetableGridLayer: View {
     public let painter: TimetablePainter
     let geometry: TimetableGeometry
+    @Environment(\.displayScale) private var displayScale
+
+    enum Design {
+        static let dividerColor = Color(UIColor.tertiaryLabel).opacity(0.8)
+        static let dividerHalfColor = Color(UIColor.quaternaryLabel).opacity(0.7)
+    }
 
     public init(painter: TimetablePainter, geometry: TimetableGeometry) {
         self.painter = painter
@@ -22,12 +28,16 @@ public struct TimetableGridLayer: View {
             weeksHStack
             hoursVStack
             verticalPaths
-                .stroke(Color(UIColor.quaternaryLabel.withAlphaComponent(0.1)))
+                .stroke(Design.dividerColor, lineWidth: hairlineWidth)
             horizontalHourlyPaths
-                .stroke(Color(UIColor.quaternaryLabel.withAlphaComponent(0.1)))
+                .stroke(Design.dividerColor, lineWidth: hairlineWidth)
             horizontalHalfHourlyPaths
-                .stroke(Color(UIColor.quaternaryLabel.withAlphaComponent(0.05)))
+                .stroke(Design.dividerHalfColor, lineWidth: hairlineWidth)
         }
+    }
+
+    private var hairlineWidth: CGFloat {
+        1.0 / displayScale
     }
 
     // MARK: Grid Paths
@@ -102,5 +112,17 @@ public struct TimetableGridLayer: View {
             }
         }
         .padding(.top, painter.weekdayHeight)
+    }
+}
+
+extension TimetableGridLayer {
+    public struct Divider: View {
+        @Environment(\.displayScale) private var displayScale
+        public init() {}
+        public var body: some View {
+            Rectangle()
+                .fill(Design.dividerColor)
+                .frame(height: 1.0 / displayScale)
+        }
     }
 }
