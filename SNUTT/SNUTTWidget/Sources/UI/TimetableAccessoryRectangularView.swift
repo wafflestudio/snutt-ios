@@ -14,10 +14,11 @@ struct TimetableAccessoryRectangularView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Spacer()
+            let painter = entry.makeTimetablePainter()
             if let lectureTimes = entry.currentTimetable?.getRemainingLectureTimes(on: entry.date, by: .startTime),
                 let firstLectureTime = lectureTimes.get(at: 0)
             {
-                TimePlaceListItem(items: [firstLectureTime], showTime: true, showPlace: true)
+                TimePlaceListItem(items: [firstLectureTime], painter: painter, showTime: true, showPlace: true)
             } else if isLoginRequired {
                 loginRequiredView
             } else if isTimetableEmpty {

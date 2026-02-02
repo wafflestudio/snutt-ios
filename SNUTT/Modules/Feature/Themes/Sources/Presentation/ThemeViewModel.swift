@@ -21,6 +21,9 @@ public final class ThemeViewModel: ThemeViewModelProtocol {
     @ObservationIgnored
     @Dependency(\.notificationCenter) private var notificationCenter
 
+    @ObservationIgnored
+    @Dependency(\.themeLocalRepository) private var themeLocalRepository
+
     public private(set) var themes: [Theme] = []
     public var availableThemes: [Theme] {
         themes
@@ -48,6 +51,7 @@ public final class ThemeViewModel: ThemeViewModelProtocol {
 
     public func fetchThemes() async throws {
         themes = try await themeRepository.fetchThemes()
+        themeLocalRepository.storeAvailableThemes(themes)
     }
 
     public func selectTheme(_ theme: Theme?) {

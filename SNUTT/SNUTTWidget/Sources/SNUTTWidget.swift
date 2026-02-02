@@ -78,27 +78,14 @@ struct TimetableEntry: TimelineEntry {
     }
 
     func makeTimetablePainter() -> TimetablePainter {
-        fatalError()
-        //        TimetablePainter(
-        //            currentTimetable: currentTimetable,
-        //            selectedLecture: nil,
-        //            resolvedTheme: .snutt,
-        //            configuration: timetableConfiguration
-        //        )
-    }
-}
-
-struct SNUTTWidgetEntryView: View {
-    var entry: TimelineProvider.Entry
-
-    var body: some View {
-        VStack {
-            Text("Time:")
-            Text(entry.date, style: .time)
-
-            Text("Favorite Emoji:")
-            Text(entry.configuration.favoriteEmoji)
-        }
+        let dataSource = SNUTTWidgetDataSource()
+        return TimetablePainter(
+            currentTimetable: currentTimetable,
+            selectedLecture: nil,
+            preferredTheme: nil,
+            availableThemes: dataSource.availableThemes,
+            configuration: timetableConfiguration
+        )
     }
 }
 

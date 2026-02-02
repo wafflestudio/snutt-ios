@@ -26,7 +26,6 @@ struct TimetableCompactWidgetView: View {
             }
         }
         .padding(.horizontal, 16)
-        //        .background(STColor.systemBackground)
     }
 }
 
@@ -60,11 +59,12 @@ struct TimetableCompactLeftView: View {
 
     @MainActor private var timetableBody: some View {
         GeometryReader { reader in
+            let painter = entry.makeTimetablePainter()
             let lectureTimes = entry.currentTimetable?.getRemainingLectureTimes(on: entry.date, by: .endTime)
             if let lectureTimes, !lectureTimes.isEmpty {
                 VStack(alignment: .leading, spacing: 5) {
                     if let item = lectureTimes.get(at: 0) {
-                        TimePlaceListItem(items: [item])
+                        TimePlaceListItem(items: [item], painter: painter)
                     }
 
                     if let item = lectureTimes.get(at: 1) {
@@ -74,6 +74,7 @@ struct TimetableCompactLeftView: View {
                                 .isEmpty == true
                         TimePlaceListItem(
                             items: [item],
+                            painter: painter,
                             showPlace: hasEnoughSpace
                         )
                     }
@@ -84,6 +85,7 @@ struct TimetableCompactLeftView: View {
                         }
                         TimePlaceListItem(
                             items: Array(lectureTimes.dropFirst(2)),
+                            painter: painter,
                             showTime: hasEnoughSpace,
                             showPlace: false
                         )
@@ -162,6 +164,7 @@ struct TimetableCompactRightView: View {
     var body: some View {
         VStack {
             GeometryReader { _ in
+                let painter = entry.makeTimetablePainter()
                 if let upcomingLectureTimesResult = entry.currentTimetable?.getUpcomingLectureTimes() {
                     VStack(alignment: .leading, spacing: 5) {
                         Text(upcomingLectureTimesResult.date.localizedDateString(dateStyle: .long, timeStyle: .none))
@@ -171,12 +174,12 @@ struct TimetableCompactRightView: View {
                             .lineLimit(1)
 
                         ForEach(upcomingLectureTimesResult.lectureTimes.prefix(2), id: \.timePlace.id) { item in
-                            TimePlaceListItem(items: [item], showPlace: false)
+                            TimePlaceListItem(items: [item], painter: painter, showPlace: false)
                         }
 
                         let remainingItems = Array(upcomingLectureTimesResult.lectureTimes.dropFirst(2))
                         if !remainingItems.isEmpty {
-                            TimePlaceListItem(items: remainingItems, showPlace: false)
+                            TimePlaceListItem(items: remainingItems, painter: painter, showPlace: false)
                         }
                     }
                 }
@@ -188,6 +191,7 @@ struct TimetableCompactRightView: View {
 
 struct TimePlaceListItem: View {
     let items: [Timetable.LectureTime]
+    let painter: TimetablePainter?
 
     var showTime: Bool = true
     var showPlace: Bool = true
@@ -239,13 +243,14 @@ struct TimePlaceListItem: View {
         HStack(alignment: .firstTextBaseline, spacing: 0) {
             ZStack {
                 ForEach(0..<numberOfCircles, id: \.self) { index in
-                    if items.get(at: index) != nil {
+                    if let item = items.get(at: index) {
+                        let lectureColor = painter?.resolveColor(for: item.lecture) ?? .temporary
                         Circle()
-                            //                            .fill(item.lecture.getColor().bg)
+                            .fill(lectureColor.bg)
                             .frame(width: 8, height: 8)
                             .overlay(
                                 Circle()
-                                    //                                    .stroke(STColor.systemBackground, lineWidth: 1)
+                                    .stroke(Color(uiColor: .systemBackground), lineWidth: 1)
                                     .opacity(isAccessoryWidget ? 0 : 1)
                             )
                             .offset(x: 5 * CGFloat(index))
