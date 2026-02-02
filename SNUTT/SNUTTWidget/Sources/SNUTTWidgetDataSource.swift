@@ -9,6 +9,7 @@ import Dependencies
 import DependenciesAdditions
 import DependenciesUtility
 import Foundation
+import ThemesInterface
 import TimetableInterface
 import TimetableUIComponents
 
@@ -32,5 +33,12 @@ final class SNUTTWidgetDataSource {
             let configuration = try? JSONDecoder().decode(TimetableConfiguration.self, from: data)
         else { return .init() }
         return configuration
+    }
+
+    var availableThemes: [Theme] {
+        guard let data = userDefaults.data(forKey: "availableThemes"),
+            let themes = try? JSONDecoder().decode([Theme].self, from: data)
+        else { return [] }
+        return themes
     }
 }
