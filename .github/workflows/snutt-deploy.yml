@@ -7,6 +7,9 @@ on:
       - "testflight/v*"
       - "testflight/dev/v*"
 
+env:
+  XCODE_VERSION: "26.2"
+
 jobs:
   deploy:
     runs-on: macos-latest
@@ -57,7 +60,7 @@ jobs:
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: "26.0.1"
+          xcode-version: ${{ env.XCODE_VERSION }}
 
       - name: Setup mise (Tuist)
         uses: jdx/mise-action@v2
