@@ -22,21 +22,21 @@ final class SNUTTWidgetDataSource {
     }
 
     var currentTimetable: Timetable? {
-        guard let data = userDefaults.data(forKey: "currentTimetable"),
+        guard let data = userDefaults.data(forKey: TimetableUserDefaultsKeys.currentTimetable.rawValue),
             let timetable = try? JSONDecoder().decode(Timetable.self, from: data)
         else { return nil }
         return timetable
     }
 
     var timetableConfiguration: TimetableConfiguration {
-        guard let data = userDefaults.data(forKey: "timetableConfiguration"),
+        guard let data = userDefaults.data(forKey: TimetableUserDefaultsKeys.timetableConfiguration.rawValue),
             let configuration = try? JSONDecoder().decode(TimetableConfiguration.self, from: data)
         else { return .init() }
         return configuration
     }
 
     var availableThemes: [Theme] {
-        guard let data = userDefaults.data(forKey: "availableThemes"),
+        guard let data = userDefaults.data(forKey: ThemeUserDefaultsKeys.availableThemes.rawValue),
             let themes = try? JSONDecoder().decode([Theme].self, from: data)
         else { return [] }
         return themes

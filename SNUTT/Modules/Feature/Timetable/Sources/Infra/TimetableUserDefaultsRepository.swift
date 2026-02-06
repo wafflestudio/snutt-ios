@@ -16,12 +16,12 @@ struct TimetableUserDefaultsRepository: TimetableLocalRepository {
     @Dependency(\.widgetReloader) private var widgetReloader
 
     func loadSelectedTimetable() throws -> Timetable {
-        try userDefaults.object(forKey: Keys.currentTimetable.rawValue, type: Timetable.self)
+        try userDefaults.object(forKey: TimetableUserDefaultsKeys.currentTimetable.rawValue, type: Timetable.self)
     }
 
     func storeSelectedTimetable(_ timetable: Timetable) throws {
         let data = try JSONEncoder().encode(timetable)
-        userDefaults.set(data, forKey: Keys.currentTimetable.rawValue)
+        userDefaults.set(data, forKey: TimetableUserDefaultsKeys.currentTimetable.rawValue)
         widgetReloader.reloadAll()
     }
 
@@ -35,19 +35,18 @@ struct TimetableUserDefaultsRepository: TimetableLocalRepository {
     }
 
     func configurationValues() -> AsyncStream<TimetableConfiguration> {
-        userDefaults.dataValues(forKey: "timetableConfiguration").compactMap {
+        userDefaults.dataValues(forKey: TimetableUserDefaultsKeys.timetableConfiguration.rawValue).compactMap {
             guard let data = $0 else { return nil }
             return try? JSONDecoder().decode(TimetableConfiguration.self, from: data)
         }.eraseToStream()
-    }
-
-    private enum Keys: String {
-        case currentTimetable
     }
 }
 
 extension UserDefaultsEntryDefinitions {
     var timetableConfiguration: UserDefaultsEntry<TimetableConfiguration> {
-        UserDefaultsEntry(key: "timetableConfiguration", defaultValue: TimetableConfiguration())
+        UserDefaultsEntry(
+            key: TimetableUserDefaultsKeys.timetableConfiguration.rawValue,
+            defaultValue: TimetableConfiguration()
+        )
     }
 }

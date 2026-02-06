@@ -40,7 +40,7 @@ extension TimetablePainter {
         return max((containerSize.height - weekdayHeight) / CGFloat(hourCount), 0)
     }
 
-    /// 시간표 그리드의 시간 행 렌더링을 위한 높이와 개수를 계산한다..
+    /// 시간표 그리드의 시간 행 렌더링을 위한 높이와 개수를 계산한다.
     ///
     /// 1. `geometry.size`를 기준으로 이상적인 한 시간의 높이(`hourHeight`)를 계산한다.
     /// 2. `geometry.extendedContainerSize`의 가용 높이(weekdayHeight 제외)를 `hourHeight`로 나누어
