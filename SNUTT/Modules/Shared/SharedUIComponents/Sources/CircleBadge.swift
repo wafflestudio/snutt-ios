@@ -30,7 +30,7 @@ struct CircleBadgeModifier: ViewModifier {
             content
 
             if condition {
-                CircleBadge(color: .red)
+                CircleBadge(color: color)
             }
         }
     }

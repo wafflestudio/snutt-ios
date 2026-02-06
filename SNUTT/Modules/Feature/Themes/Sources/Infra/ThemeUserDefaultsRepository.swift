@@ -15,7 +15,7 @@ struct ThemeUserDefaultsRepository: ThemeLocalRepository {
     @Dependency(\.widgetReloader) private var widgetReloader
 
     func loadAvailableThemes() -> [Theme] {
-        guard let data = userDefaults.data(forKey: Keys.availableThemes.rawValue),
+        guard let data = userDefaults.data(forKey: ThemeUserDefaultsKeys.availableThemes.rawValue),
             let themes = try? JSONDecoder().decode([Theme].self, from: data)
         else { return [] }
         return themes
@@ -23,11 +23,7 @@ struct ThemeUserDefaultsRepository: ThemeLocalRepository {
 
     func storeAvailableThemes(_ themes: [Theme]) {
         guard let data = try? JSONEncoder().encode(themes) else { return }
-        userDefaults.set(data, forKey: Keys.availableThemes.rawValue)
+        userDefaults.set(data, forKey: ThemeUserDefaultsKeys.availableThemes.rawValue)
         widgetReloader.reloadAll()
-    }
-
-    private enum Keys: String {
-        case availableThemes
     }
 }
