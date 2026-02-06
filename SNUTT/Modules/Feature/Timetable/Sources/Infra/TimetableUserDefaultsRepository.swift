@@ -13,6 +13,7 @@ import TimetableUIComponents
 
 struct TimetableUserDefaultsRepository: TimetableLocalRepository {
     @Dependency(\.userDefaults) private var userDefaults
+    @Dependency(\.widgetReloader) private var widgetReloader
 
     func loadSelectedTimetable() throws -> Timetable {
         try userDefaults.object(forKey: Keys.currentTimetable.rawValue, type: Timetable.self)
@@ -21,6 +22,7 @@ struct TimetableUserDefaultsRepository: TimetableLocalRepository {
     func storeSelectedTimetable(_ timetable: Timetable) throws {
         let data = try JSONEncoder().encode(timetable)
         userDefaults.set(data, forKey: Keys.currentTimetable.rawValue)
+        widgetReloader.reloadAll()
     }
 
     func loadTimetableConfiguration() -> TimetableConfiguration {
@@ -29,6 +31,7 @@ struct TimetableUserDefaultsRepository: TimetableLocalRepository {
 
     func storeTimetableConfiguration(_ configuration: TimetableConfiguration) {
         userDefaults[\.timetableConfiguration] = configuration
+        widgetReloader.reloadAll()
     }
 
     func configurationValues() -> AsyncStream<TimetableConfiguration> {
