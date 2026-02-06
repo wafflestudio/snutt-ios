@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import TimetableInterface
 import TimetableUIComponents
 
-/// Just a simple wrapper of `TimetableZStack` for consistency.
+/// Just a simple wrapper of `TimetableWidgetView` for consistency.
 struct TimetableFullWidgetView: View {
     var entry: TimelineProvider.Entry
     var body: some View {
-        TimetableZStack(painter: entry.makeTimetablePainter())
+        TimetableWidgetView(painter: entry.makeTimetablePainter())
     }
 }
