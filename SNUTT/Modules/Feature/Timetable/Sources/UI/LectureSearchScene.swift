@@ -40,7 +40,7 @@ public struct LectureSearchScene: View {
                 Rectangle()
                     .fill(Color(UIColor.quaternaryLabel.withAlphaComponent(0.1)))
                     .frame(height: 1)
-                TimetableZStack(
+                TimetableView(
                     painter: timetableViewModel.makePainter(
                         selectedLecture: searchViewModel.isSearchingDifferentQuarter
                             ? nil

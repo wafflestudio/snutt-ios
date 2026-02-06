@@ -26,7 +26,7 @@ public struct TimetableUIProvider: TimetableUIProvidable {
         availableThemes: [Theme]
     ) -> AnyView {
         AnyView(
-            TimetableZStack(
+            TimetableView(
                 painter: TimetablePainter(
                     currentTimetable: timetable,
                     selectedLecture: nil,

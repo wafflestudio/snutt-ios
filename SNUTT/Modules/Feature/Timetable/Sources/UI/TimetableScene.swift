@@ -71,7 +71,7 @@ public struct TimetableScene: View {
     private var timetable: some View {
         VStack(spacing: 0) {
             TimetableGridLayer.Divider()
-            TimetableZStack(
+            TimetableView(
                 painter: timetableViewModel.makePainter(
                     selectedLecture: nil,
                     selectedTheme: themeViewModel.selectedTheme,

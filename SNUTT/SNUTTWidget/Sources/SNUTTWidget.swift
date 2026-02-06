@@ -8,6 +8,7 @@
 import DependenciesAdditions
 import MemberwiseInit
 import SwiftUI
+import ThemesInterface
 import TimetableInterface
 import TimetableUIComponents
 import WidgetKit
@@ -21,7 +22,8 @@ struct TimelineProvider: AppIntentTimelineProvider {
             date: Date(),
             configuration: ConfigurationAppIntent(),
             currentTimetable: dataSource.currentTimetable,
-            timetableConfiguration: dataSource.timetableConfiguration
+            timetableConfiguration: dataSource.timetableConfiguration,
+            availableThemes: dataSource.availableThemes
         )
     }
 
@@ -30,7 +32,8 @@ struct TimelineProvider: AppIntentTimelineProvider {
             date: Date(),
             configuration: configuration,
             currentTimetable: dataSource.currentTimetable,
-            timetableConfiguration: dataSource.timetableConfiguration
+            timetableConfiguration: dataSource.timetableConfiguration,
+            availableThemes: dataSource.availableThemes
         )
     }
 
@@ -39,6 +42,7 @@ struct TimelineProvider: AppIntentTimelineProvider {
         var dates: [Date] = [now]
         let currentTimetable = dataSource.currentTimetable
         let timetableConfiguration = dataSource.timetableConfiguration
+        let availableThemes = dataSource.availableThemes
 
         if let remainingLectureTimes = currentTimetable?.getRemainingLectureTimes(on: now, by: .startTime) {
             dates.append(contentsOf: remainingLectureTimes.map { $0.timePlace.toDates() }.flatMap { $0 })
@@ -51,7 +55,8 @@ struct TimelineProvider: AppIntentTimelineProvider {
                 date: $0,
                 configuration: configuration,
                 currentTimetable: currentTimetable,
-                timetableConfiguration: timetableConfiguration
+                timetableConfiguration: timetableConfiguration,
+                availableThemes: availableThemes
             )
         }
 
@@ -64,26 +69,28 @@ struct TimetableEntry: TimelineEntry {
     let configuration: ConfigurationAppIntent
     let currentTimetable: Timetable?
     let timetableConfiguration: TimetableConfiguration
+    let availableThemes: [Theme]
 
     init(
         date: Date,
         configuration: ConfigurationAppIntent,
         currentTimetable: Timetable?,
-        timetableConfiguration: TimetableConfiguration
+        timetableConfiguration: TimetableConfiguration,
+        availableThemes: [Theme]
     ) {
         self.date = date
         self.configuration = configuration
         self.currentTimetable = currentTimetable
         self.timetableConfiguration = timetableConfiguration
+        self.availableThemes = availableThemes
     }
 
     func makeTimetablePainter() -> TimetablePainter {
-        let dataSource = SNUTTWidgetDataSource()
-        return TimetablePainter(
+        TimetablePainter(
             currentTimetable: currentTimetable,
             selectedLecture: nil,
             preferredTheme: nil,
-            availableThemes: dataSource.availableThemes,
+            availableThemes: availableThemes,
             configuration: timetableConfiguration
         )
     }
@@ -124,13 +131,15 @@ func makePreviewTimeline() -> [TimetableEntry] {
             date: .now,
             configuration: ConfigurationAppIntent(),
             currentTimetable: nil,
-            timetableConfiguration: .init()
+            timetableConfiguration: .init(),
+            availableThemes: []
         ),
         TimetableEntry(
             date: .now,
             configuration: ConfigurationAppIntent(),
             currentTimetable: PreviewHelpers.preview(id: "1"),
-            timetableConfiguration: .init()
+            timetableConfiguration: .init(),
+            availableThemes: []
         ),
     ]
 }
@@ -151,7 +160,7 @@ func makePreviewTimeline() -> [TimetableEntry] {
     }
 }
 
-#Preview("SystemExtraLarge", as: .systemExtraLarge) {
+#Preview("SystemLarge", as: .systemLarge) {
     SNUTTWidget()
 } timeline: {
     for timeline in makePreviewTimeline() {

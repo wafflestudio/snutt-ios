@@ -1,5 +1,5 @@
 //
-//  TimetableZStack.swift
+//  TimetableView.swift
 //  SNUTT
 //
 //  Copyright © 2024 wafflestudio.com. All rights reserved.
@@ -11,7 +11,7 @@ import SwiftUI
 import ThemesInterface
 import TimetableInterface
 
-public struct TimetableZStack: View {
+public struct TimetableView: View {
     let painter: TimetablePainter
 
     public init(painter: TimetablePainter) {
@@ -53,5 +53,5 @@ public struct TimetableZStack: View {
 }
 
 #Preview {
-    TimetableZStack(painter: makePreviewPainter())
+    TimetableView(painter: makePreviewPainter())
 }
