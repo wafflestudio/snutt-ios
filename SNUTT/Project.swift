@@ -23,6 +23,7 @@ let project = Project.app(
                 .target(name: "SwiftUIUtility"),
                 .target(name: "SwiftUtility"),
                 .target(name: "FoundationUtility"),
+                .target(name: "DependenciesUtility"),
                 .target(name: "SharedUIComponents"),
                 .target(name: "SharedUIMapKit"),
                 .external(name: "Dependencies"),
@@ -337,6 +338,7 @@ let project = Project.app(
             dependencies: [
                 .external(name: "Dependencies"),
                 .external(name: "DependenciesAdditions"),
+                .sdk(name: "WidgetKit", type: .framework),
             ]
         ),
         .module(
