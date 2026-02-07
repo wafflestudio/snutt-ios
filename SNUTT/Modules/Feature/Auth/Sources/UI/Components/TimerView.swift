@@ -13,8 +13,9 @@ struct TimerView: View {
     let onRestart: (() async -> Void)?
     let onTimeout: (() -> Void)?
 
-    @State private var remainingTime: Int
     @State private var timeOut = false
+    @State private var endDate: Date
+    @State private var didTimeout = false
     @State private var restartTrigger = 0
 
     init(
@@ -25,46 +26,54 @@ struct TimerView: View {
         self.initialRemainingTime = initialRemainingTime
         self.onRestart = onRestart
         self.onTimeout = onTimeout
-        self._remainingTime = State(initialValue: initialRemainingTime)
+        self._endDate = State(initialValue: Date().addingTimeInterval(TimeInterval(initialRemainingTime)))
     }
 
     var body: some View {
-        HStack(spacing: 4) {
-            if onRestart != nil && timeOut {
-                Button {
-                    Task {
-                        await onRestart?()
-                        restartTrigger += 1
+        TimelineView(.periodic(from: .now, by: 1)) { context in
+            let remaining = remainingTime(now: context.date)
+
+            HStack(spacing: 4) {
+                if onRestart != nil && timeOut {
+                    Button {
+                        Task {
+                            await onRestart?()
+                            restartTrigger += 1
+                        }
+                    } label: {
+                        Text(AuthStrings.alertResend)
+                            .font(.system(size: 13, weight: .regular))
+                            .foregroundColor(SharedUIComponentsAsset.cyan.swiftUIColor)
                     }
-                } label: {
-                    Text(AuthStrings.alertResend)
+                } else {
+                    Text(timeString(remaining: remaining))
                         .font(.system(size: 13, weight: .regular))
                         .foregroundColor(SharedUIComponentsAsset.assistive.swiftUIColor)
+                        .monospacedDigit()
                 }
-            } else {
-                Text(timeString)
-                    .font(.system(size: 13, weight: .regular))
-                    .foregroundColor(SharedUIComponentsAsset.assistive.swiftUIColor)
-                    .monospacedDigit()
+            }
+            .onChange(of: remaining) { newValue in
+                if newValue == 0, !didTimeout {
+                    didTimeout = true
+                    timeOut = true
+                    onTimeout?()
+                }
             }
         }
         .task(id: restartTrigger) {
-            remainingTime = initialRemainingTime
+            endDate = Date().addingTimeInterval(TimeInterval(initialRemainingTime))
             timeOut = false
-
-            while remainingTime > 0, !Task.isCancelled {
-                try? await Task.sleep(for: .seconds(1))
-                remainingTime -= 1
-            }
-
-            timeOut = true
-            onTimeout?()
+            didTimeout = false
         }
     }
 
-    private var timeString: String {
-        let minutes = remainingTime / 60
-        let seconds = remainingTime % 60
+    private func remainingTime(now: Date) -> Int {
+        max(0, Int(ceil(endDate.timeIntervalSince(now))))
+    }
+
+    private func timeString(remaining: Int) -> String {
+        let minutes = remaining / 60
+        let seconds = remaining % 60
         return String(format: "%02d:%02d", minutes, seconds)
     }
 }
