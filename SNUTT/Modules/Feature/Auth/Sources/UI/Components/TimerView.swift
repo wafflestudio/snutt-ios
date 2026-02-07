@@ -13,7 +13,7 @@ struct TimerView: View {
     let onRestart: (() async -> Void)?
     let onTimeout: (() -> Void)?
 
-    @State private var timeOut = false
+    @State private var isTimedOut = false
     @State private var endDate: Date
     @State private var didTimeout = false
     @State private var restartTrigger = 0
@@ -34,7 +34,7 @@ struct TimerView: View {
             let remaining = remainingTime(now: context.date)
 
             HStack(spacing: 4) {
-                if onRestart != nil && timeOut {
+                if onRestart != nil && isTimedOut {
                     Button {
                         Task {
                             await onRestart?()
@@ -55,14 +55,14 @@ struct TimerView: View {
             .onChange(of: remaining) { newValue in
                 if newValue == 0, !didTimeout {
                     didTimeout = true
-                    timeOut = true
+                    isTimedOut = true
                     onTimeout?()
                 }
             }
         }
         .task(id: restartTrigger) {
             endDate = Date().addingTimeInterval(TimeInterval(initialRemainingTime))
-            timeOut = false
+            isTimedOut = false
             didTimeout = false
         }
     }

@@ -16,7 +16,7 @@ struct VerificationCodeScene: View {
 
     @State private var verificationCode = ""
     @State private var showHelpAlert = false
-    @State private var timeOut = false
+    @State private var isTimedOut = false
     @State private var isLoading = false
 
     @FocusState private var isFocused: Bool
@@ -60,6 +60,7 @@ struct VerificationCodeScene: View {
                         initialRemainingTime: 180,
                         onRestart: {
                             errorAlertHandler.withAlert {
+                                isTimedOut = false
                                 if mode == .resetPassword {
                                     try await viewModel.sendResetPasswordCode(email: email)
                                 } else {
@@ -68,12 +69,12 @@ struct VerificationCodeScene: View {
                             }
                         },
                         onTimeout: {
-                            timeOut = true
+                            isTimedOut = true
                         }
                     )
                 }
 
-                if timeOut {
+                if isTimedOut {
                     Text(AuthStrings.verificationCodeTimeout)
                         .font(.system(size: 13))
                         .foregroundColor(SharedUIComponentsAsset.red.swiftUIColor)
@@ -83,7 +84,7 @@ struct VerificationCodeScene: View {
             VStack(spacing: 20) {
                 ProminentButton(
                     label: AuthStrings.verificationCodeButton,
-                    isEnabled: verificationCode.count == codeLength && !timeOut && !isLoading
+                    isEnabled: verificationCode.count == codeLength && !isTimedOut && !isLoading
                 ) {
                     submit()
                 }
