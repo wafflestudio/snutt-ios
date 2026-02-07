@@ -130,8 +130,15 @@ extension AuthAPIRepository {
         _ = try result.ok.body.json
     }
 
+    public func sendResetPasswordCode(email: String) async throws {
+        let result = try await apiClient.sendResetPasswordCode(body: .json(.init(email: email)))
+        _ = try result.ok.body.json
+    }
+
     public func checkVerificationCode(localID: String, code: String) async throws {
-        let result = try await apiClient.confirmEmailVerification(body: .json(.init(code: code)))
+        let result = try await apiClient.verifyResetPasswordCode(
+            body: .json(.init(code: code, user_id: localID))
+        )
         _ = try result.ok.body.json
     }
 

@@ -60,7 +60,11 @@ struct VerificationCodeScene: View {
                         initialRemainingTime: 180,
                         onRestart: {
                             errorAlertHandler.withAlert {
-                                try await viewModel.sendVerificationCode(email: email)
+                                if mode == .resetPassword {
+                                    try await viewModel.sendResetPasswordCode(email: email)
+                                } else {
+                                    try await viewModel.sendVerificationCode(email: email)
+                                }
                             }
                         },
                         onTimeout: {

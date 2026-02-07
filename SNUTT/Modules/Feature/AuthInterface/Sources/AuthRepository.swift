@@ -30,6 +30,7 @@ public protocol AuthRepository: Sendable {
     // Password reset & ID recovery
     func getLinkedEmail(localID: String) async throws -> String
     func sendVerificationCode(email: String) async throws
+    func sendResetPasswordCode(email: String) async throws
     func checkVerificationCode(localID: String, code: String) async throws
     func resetPassword(localID: String, password: String, code: String) async throws
     func findLocalID(email: String) async throws

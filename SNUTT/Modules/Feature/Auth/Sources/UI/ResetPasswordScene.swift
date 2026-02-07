@@ -152,7 +152,7 @@ struct ResetPasswordScene: View {
                     focusedField = .email
                 }
             } else {
-                try await viewModel.sendVerificationCode(email: email)
+                try await viewModel.sendResetPasswordCode(email: email)
                 viewModel.paths.append(.verificationCode(email: email, mode: .resetPassword, localID: localID))
             }
         }

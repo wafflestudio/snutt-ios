@@ -64,6 +64,10 @@ final class OnboardViewModel {
         try await authRepository.sendVerificationCode(email: email)
     }
 
+    func sendResetPasswordCode(email: String) async throws {
+        try await authRepository.sendResetPasswordCode(email: email)
+    }
+
     func checkVerificationCode(code: String, localID: String? = nil) async throws {
         if let localID {
             try await authRepository.checkVerificationCode(localID: localID, code: code)
