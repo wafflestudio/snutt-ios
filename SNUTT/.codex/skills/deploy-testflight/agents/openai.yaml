@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deploy TestFlight"
+  short_description: "Create/push SNUTT TestFlight tags"
+  default_prompt: "Use $deploy-testflight to tag and push a SNUTT iOS TestFlight release."
