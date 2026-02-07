@@ -12,6 +12,8 @@ import Spyable
 public protocol AuthUseCaseProtocol: Sendable {
     /// Syncs the auth state from the local storage to the in-memory store
     func syncAuthState()
+    /// Migrates legacy v3 auth storage into v4 storage if needed.
+    func migrateV3AuthIfNeeded()
     func loginWithLocalID(localID: String, localPassword: String) async throws
     func logout() async throws
     func registerFCMToken(_ token: String) async throws

@@ -87,3 +87,39 @@ public struct AuthUseCase: AuthUseCaseProtocol {
         defaults.synchronize()
     }
 }
+
+extension AuthUseCase {
+    public func migrateV3AuthIfNeeded() {
+        guard let suiteName = legacySuiteName(),
+            let legacyDefaults = UserDefaults(suiteName: suiteName)
+        else { return }
+
+        let accessToken = legacyDefaults.decodedString(forKey: "accessToken")
+        let userID = legacyDefaults.decodedString(forKey: "userId")
+        let fcmToken = legacyDefaults.decodedString(forKey: "fcmToken")
+
+        guard let accessToken, let userID else { return }
+
+        authState.set(.userID, value: userID)
+        authState.set(.accessToken, value: accessToken)
+        if let fcmToken {
+            authState.set(.fcmToken, value: fcmToken)
+        }
+
+        legacyDefaults.removeObject(forKey: "accessToken")
+        legacyDefaults.removeObject(forKey: "userId")
+        legacyDefaults.removeObject(forKey: "fcmToken")
+    }
+
+    private func legacySuiteName() -> String? {
+        guard let bundleIdentifier = Bundle.main.bundleIdentifier else { return nil }
+        return "group.\(bundleIdentifier)"
+    }
+}
+
+extension UserDefaults {
+    fileprivate func decodedString(forKey key: String) -> String? {
+        guard let data = data(forKey: key) else { return nil }
+        return try? JSONDecoder().decode(String.self, from: data)
+    }
+}

@@ -26,6 +26,7 @@ struct SNUTTApp: App {
 extension SNUTTApp {
     private func bootstrap() {
         initializeSocialSDKs()
+        MigrationManager().run()
         authUseCase.syncAuthState()
         setFCMToken()
     }
