@@ -17,7 +17,6 @@ struct EnterNewPasswordScene: View {
     @State private var confirmPassword = ""
     @State private var showAlert = false
     @State private var alertType: AlertType = .success
-    @State private var timeOut = false
     @State private var isLoading = false
 
     @FocusState private var focusedField: Field?
@@ -34,16 +33,12 @@ struct EnterNewPasswordScene: View {
         case backConfirm
         case passwordMismatch
         case passwordInvalid
-        case timeOut
-
         var title: String {
             switch self {
             case .success:
                 return AuthStrings.findidButton
             case .backConfirm, .passwordMismatch, .passwordInvalid:
                 return ""
-            case .timeOut:
-                return AuthStrings.newPasswordTimeoutTitle
             }
         }
 
@@ -57,14 +52,12 @@ struct EnterNewPasswordScene: View {
                 return AuthStrings.newPasswordNotEqual
             case .passwordInvalid:
                 return AuthStrings.newPasswordNotValid
-            case .timeOut:
-                return AuthStrings.newPasswordTimeoutMessage
             }
         }
     }
 
     var isButtonEnabled: Bool {
-        !password.isEmpty && !confirmPassword.isEmpty && !isLoading
+        !password.isEmpty && password == confirmPassword && !isLoading
     }
 
     var body: some View {
@@ -75,26 +68,15 @@ struct EnterNewPasswordScene: View {
                     .fixedSize(horizontal: false, vertical: true)
 
                 VStack(spacing: 24) {
-                    HStack {
-                        AnimatableTextField(
-                            label: "",
-                            placeholder: AuthStrings.newPasswordPlaceholder,
-                            secure: true,
-                            text: $password
-                        )
-                        .focused($focusedField, equals: .password)
-                        .onSubmit {
-                            focusedField = .confirmPassword
-                        }
-
-                        Spacer().frame(width: 8)
-
-                        TimerView(
-                            initialRemainingTime: 180,
-                            onTimeout: {
-                                timeOut = true
-                            }
-                        )
+                    AnimatableTextField(
+                        label: "",
+                        placeholder: AuthStrings.newPasswordPlaceholder,
+                        secure: true,
+                        text: $password
+                    )
+                    .focused($focusedField, equals: .password)
+                    .onSubmit {
+                        focusedField = .confirmPassword
                     }
 
                     AnimatableTextField(
@@ -151,25 +133,11 @@ struct EnterNewPasswordScene: View {
                     if alertType == .success {
                         // Pop to root
                         viewModel.paths.removeAll()
-                    } else if alertType == .timeOut {
-                        // Go back to verification code
-                        if let index = viewModel.paths.lastIndex(where: {
-                            if case .verificationCode = $0 { return true }
-                            return false
-                        }) {
-                            viewModel.paths.removeLast(viewModel.paths.count - index - 1)
-                        }
                     }
                 }
             }
         } message: {
             Text(alertType.message)
-        }
-        .onChange(of: timeOut) { _, newValue in
-            if newValue {
-                alertType = .timeOut
-                showAlert = true
-            }
         }
     }
 
