@@ -26,8 +26,8 @@ struct GoogleAuthService: SocialAuthService {
                     case .some(let error):
                         continuation.resume(throwing: SocialAuthError(provider: .google, reason: .sdkError(error)))
                     case .none:
-                        if let idToken = result?.user.idToken?.tokenString {
-                            continuation.resume(returning: idToken)
+                        if let accessToken = result?.user.accessToken.tokenString {
+                            continuation.resume(returning: accessToken)
                         } else {
                             continuation.resume(throwing: SocialAuthError(provider: .google, reason: .tokenNotFound))
                         }
