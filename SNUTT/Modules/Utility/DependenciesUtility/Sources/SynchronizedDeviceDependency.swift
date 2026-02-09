@@ -1,5 +1,6 @@
 import Dependencies
 import DependenciesAdditions
+import Foundation
 import UIKit.UIDevice
 
 extension DependencyValues {
@@ -28,6 +29,7 @@ public struct SynchronizedDevice: Sendable, ConfigurableProxy {
 
     public struct Implementation: Sendable {
         @ReadOnlyProxy public var name: String
+        @ReadOnlyProxy public var modelName: String
         @ReadOnlyProxy public var systemName: String
         @ReadOnlyProxy public var systemVersion: String
         @ReadOnlyProxy public var identifierForVendor: String?
@@ -35,6 +37,10 @@ public struct SynchronizedDevice: Sendable, ConfigurableProxy {
 
     public var name: String {
         _implementation.name
+    }
+
+    public var modelName: String {
+        _implementation.modelName
     }
 
     public var systemName: String {
@@ -46,7 +52,7 @@ public struct SynchronizedDevice: Sendable, ConfigurableProxy {
     }
 
     public var identifierForVendor: String? {
-        _implementation.systemVersion
+        _implementation.identifierForVendor
     }
 
     public nonisolated static var current: SynchronizedDevice {
@@ -54,6 +60,9 @@ public struct SynchronizedDevice: Sendable, ConfigurableProxy {
             _implementation: .init(
                 name: .init {
                     runOnMain { UIDevice.current.name }
+                },
+                modelName: .init {
+                    runOnMain { deviceModelName() }
                 },
                 systemName: .init {
                     runOnMain { UIDevice.current.systemName }
@@ -72,6 +81,7 @@ public struct SynchronizedDevice: Sendable, ConfigurableProxy {
         .init(
             _implementation: .init(
                 name: .unimplemented(#"@Dependency(\.syncDevice.name)"#, placeholder: ""),
+                modelName: .unimplemented(#"@Dependency(\.syncDevice.modelName)"#, placeholder: ""),
                 systemName: .unimplemented(#"@Dependency(\.syncDevice.systemName)"#, placeholder: ""),
                 systemVersion: .unimplemented(#"@Dependency(\.syncDevice.systemVersion)"#, placeholder: ""),
                 identifierForVendor: .unimplemented(#"@Dependency(\.syncDevice.identifierForVendor)"#, placeholder: "")
@@ -81,6 +91,17 @@ public struct SynchronizedDevice: Sendable, ConfigurableProxy {
 }
 
 extension SynchronizedDevice {
+    private static func deviceModelName() -> String {
+        var systemInfo = utsname()
+        uname(&systemInfo)
+
+        let data = Data(bytes: &systemInfo.machine, count: MemoryLayout.size(ofValue: systemInfo.machine))
+        guard let identifier = String(bytes: data, encoding: .ascii) else {
+            return "Unknown"
+        }
+        return identifier.trimmingCharacters(in: .controlCharacters)
+    }
+
     private static func runOnMain<T>(_ block: @escaping @MainActor () -> T) -> T where T: Sendable {
         if Thread.isMainThread {
             MainActor.assumeIsolated {
