@@ -16,6 +16,7 @@ public struct AuthUseCase: AuthUseCaseProtocol {
     @Dependency(\.authState) private var authState
     @Dependency(\.authSecureRepository) private var secureRepository
     @Dependency(\.analyticsLogger) private var analyticsLogger
+    @Dependency(\.socialAuthServiceProvider) private var socialAuthServiceProvider
 
     public init() {}
 
@@ -39,6 +40,28 @@ public struct AuthUseCase: AuthUseCaseProtocol {
         try secureRepository.saveAccessToken(response.accessToken)
         authState.set(.accessToken, value: response.accessToken)
         authState.set(.userID, value: response.userID)
+        try await registerPendingFCMTokenIfNeeded()
+    }
+
+    public func registerWithLocalID(localID: String, localPassword: String, email: String) async throws {
+        let response = try await authRepository.registerWithLocalID(
+            localID: localID,
+            localPassword: localPassword,
+            email: email
+        )
+        try secureRepository.saveAccessToken(response.accessToken)
+        authState.set(.accessToken, value: response.accessToken)
+        authState.set(.userID, value: response.userID)
+        try await registerPendingFCMTokenIfNeeded()
+    }
+
+    public func loginWithSocialProvider(_ provider: SocialAuthProvider) async throws {
+        let providerToken = try await socialAuthServiceProvider.provider(for: provider).authenticate()
+        let response = try await authRepository.loginWithSocial(provider: provider, providerToken: providerToken)
+        try secureRepository.saveAccessToken(response.accessToken)
+        authState.set(.accessToken, value: response.accessToken)
+        authState.set(.userID, value: response.userID)
+        try await registerPendingFCMTokenIfNeeded()
     }
 
     public func logout() async throws {
@@ -85,6 +108,12 @@ public struct AuthUseCase: AuthUseCaseProtocol {
         }
 
         defaults.synchronize()
+    }
+
+    private func registerPendingFCMTokenIfNeeded() async throws {
+        guard authState.get(.accessToken) != nil else { return }
+        guard let fcmToken = authState.get(.fcmToken) else { return }
+        try await authRepository.addDevice(fcmToken: fcmToken)
     }
 }
 

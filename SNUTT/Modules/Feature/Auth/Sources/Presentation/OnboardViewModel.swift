@@ -22,15 +22,16 @@ final class OnboardViewModel {
     @Dependency(\.authRepository) private var authRepository
 
     @ObservationIgnored
-    @Dependency(\.authState) var authState
-
-    @ObservationIgnored
-    @Dependency(\.socialAuthServiceProvider) private var socialAuthServiceProvider
+    @Dependency(\.authState) private var authState
 
     @ObservationIgnored
     @Dependency(\.analyticsLogger) private var analyticsLogger
 
     var paths = [OnboardDetailSceneTypes]()
+
+    var isAuthenticated: Bool {
+        authState.isAuthenticated
+    }
 
     func loginWithLocalId(localID: String, localPassword: String) async throws {
         analyticsLogger.logEvent(AnalyticsAction.login(.init(provider: .local)))
@@ -39,22 +40,17 @@ final class OnboardViewModel {
 
     func registerWithLocalID(localID: String, localPassword: String, email: String) async throws {
         analyticsLogger.logEvent(AnalyticsAction.signUp)
-        let response = try await authRepository.registerWithLocalID(
+        try await authUseCase.registerWithLocalID(
             localID: localID,
             localPassword: localPassword,
             email: email
         )
-        authState.set(.accessToken, value: response.accessToken)
-        authState.set(.userID, value: response.userID)
     }
 
     func loginWithSocialProvider(provider: SocialAuthProvider) async throws {
         analyticsLogger.logEvent(AnalyticsAction.login(.init(provider: provider.logValue)))
         do {
-            let providerToken = try await socialAuthServiceProvider.provider(for: provider).authenticate()
-            let response = try await authRepository.loginWithSocial(provider: provider, providerToken: providerToken)
-            authState.set(.accessToken, value: response.accessToken)
-            authState.set(.userID, value: response.userID)
+            try await authUseCase.loginWithSocialProvider(provider)
         } catch let error as SocialAuthError where error.reason.isCancelled {
             return
         }

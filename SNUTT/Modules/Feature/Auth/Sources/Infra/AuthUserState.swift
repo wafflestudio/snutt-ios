@@ -55,7 +55,7 @@ public final class AuthUserState: AuthState {
         case .accessToken:
             store.withLock { $0[.accessToken] }
         case .fcmToken:
-            store.withLock { $0[.fcmToken] }
+            store.withLock { $0[.fcmToken] } ?? userDefaults[\.fcmToken]
         }
     }
 

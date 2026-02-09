@@ -159,7 +159,7 @@ extension AppDelegate: @MainActor Firebase.MessagingDelegate {
         _ messaging: Messaging,
         didReceiveRegistrationToken fcmToken: String?
     ) {
-        guard let fcmToken = fcmToken else {
+        guard let fcmToken else {
             logger.warning("FCM token is nil")
             return
         }

@@ -15,6 +15,8 @@ public protocol AuthUseCaseProtocol: Sendable {
     /// Migrates legacy v3 auth storage into v4 storage if needed.
     func migrateV3AuthIfNeeded()
     func loginWithLocalID(localID: String, localPassword: String) async throws
+    func registerWithLocalID(localID: String, localPassword: String, email: String) async throws
+    func loginWithSocialProvider(_ provider: SocialAuthProvider) async throws
     func logout() async throws
     func registerFCMToken(_ token: String) async throws
     func deleteAccount() async throws
