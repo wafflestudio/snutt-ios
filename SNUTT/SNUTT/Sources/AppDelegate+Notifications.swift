@@ -167,7 +167,7 @@ extension AppDelegate: @MainActor Firebase.MessagingDelegate {
         logger.info("FCM token received")
 
         NotificationCenter.default.post(
-            name: Notification.Name("FCMToken"),
+            name: .fcmToken,
             object: nil,
             userInfo: ["token": fcmToken]
         )

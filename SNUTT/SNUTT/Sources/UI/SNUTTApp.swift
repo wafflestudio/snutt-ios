@@ -42,8 +42,7 @@ extension SNUTTApp {
         Task.detached {
             for await notification in NotificationCenter.default.publisher(for: .fcmToken).values {
                 guard let fcmToken = notification.userInfo?["token"] as? String else { continue }
-                try await self.authUseCase.registerFCMToken(fcmToken)
-                break
+                try? await self.authUseCase.registerFCMToken(fcmToken)
             }
         }
     }
