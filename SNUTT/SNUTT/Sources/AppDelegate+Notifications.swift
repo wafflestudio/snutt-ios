@@ -24,12 +24,16 @@ extension AppDelegate {
     /// - Firebase Messaging delegate
     ///
     /// ## APNs → FCM Token Flow
-    /// 1. User grants permission
-    /// 2. APNs generates device token
+    /// - Permission and token generation are independent:
+    ///   APNs device tokens (and thus FCM tokens) can be generated
+    ///   even before the user grants notification permission.
+    ///
+    /// 1. The app requests permission (UI prompt) and registers for remote notifications
+    /// 2. APNs generates a device token
     /// 3. `didRegisterForRemoteNotificationsWithDeviceToken` forwards to Firebase
     /// 4. Firebase generates FCM token
     /// 5. `messaging(_:didReceiveRegistrationToken:)` receives FCM token
-    /// 6. The app sends FCM token to backend
+    /// 6. The app sends FCM token to backend (display depends on permission)
     func setupNotificationSystem(application: UIApplication) {
         UNUserNotificationCenter.current().delegate = self
         UNUserNotificationCenter.current().requestAuthorization(
@@ -140,6 +144,9 @@ extension AppDelegate: @MainActor UNUserNotificationCenterDelegate {
 /// - Backend uses FCM tokens to send notifications via Firebase
 ///
 /// ## Token Flow
+/// - APNs/FCM token generation can happen regardless of the user's
+///   notification permission choice; permission only affects display.
+///
 /// 1. APNs generates device token
 /// 2. `didRegisterForRemoteNotificationsWithDeviceToken` forwards to Firebase
 /// 3. Firebase generates FCM token
@@ -164,7 +171,7 @@ extension AppDelegate: @MainActor Firebase.MessagingDelegate {
             return
         }
 
-        logger.info("FCM token received")
+        logger.info("FCM token received \(fcmToken)")
 
         NotificationCenter.default.post(
             name: .fcmToken,
@@ -187,7 +194,7 @@ extension AppDelegate: @MainActor Firebase.MessagingDelegate {
         _ application: UIApplication,
         didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
     ) {
-        logger.info("APNs device token received, forwarding to Firebase")
+        logger.info("APNs device token received, forwarding to Firebase: \(deviceToken)")
         Firebase.Messaging.messaging().apnsToken = deviceToken
     }
 }
