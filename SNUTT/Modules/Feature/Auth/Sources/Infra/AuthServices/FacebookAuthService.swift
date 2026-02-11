@@ -6,6 +6,7 @@
 //
 
 import AuthInterface
+import FacebookCore
 import FacebookLogin
 import UIKit
 
@@ -22,9 +23,11 @@ struct FacebookAuthService: SocialAuthService {
                     )
                 ) { result in
                     switch result {
-                    case .success(_, _, let token):
-                        if let token = token {
-                            continuation.resume(returning: token.tokenString)
+                    case .success(_, _, let accessToken):
+                        if let authToken = AuthenticationToken.current?.tokenString {
+                            continuation.resume(returning: authToken)
+                        } else if let accessToken = accessToken {
+                            continuation.resume(returning: accessToken.tokenString)
                         } else {
                             continuation.resume(
                                 throwing: SocialAuthError(provider: .facebook, reason: .tokenNotFound)
