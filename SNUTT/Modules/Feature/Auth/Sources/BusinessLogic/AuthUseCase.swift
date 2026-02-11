@@ -98,10 +98,11 @@ public struct AuthUseCase: AuthUseCaseProtocol {
     private func clearAllUserData() {
         let defaults = UserDefaults.standard
         let dictionary = defaults.dictionaryRepresentation()
+        let fcmTokenKey = UserDefaultsEntryDefinitions().fcmToken.key
 
         dictionary.keys.forEach { key in
             // Preserve only system keys (Apple*)
-            guard !key.hasPrefix("Apple") else { return }
+            guard !key.hasPrefix("Apple"), key != fcmTokenKey else { return }
 
             // Remove everything else
             defaults.removeObject(forKey: key)
