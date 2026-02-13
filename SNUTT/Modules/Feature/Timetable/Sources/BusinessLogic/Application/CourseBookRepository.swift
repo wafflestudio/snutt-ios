@@ -2,7 +2,7 @@
 //  CourseBookRepository.swift
 //  SNUTT
 //
-//  Copyright © 2024 wafflestudio.com. All rights reserved.
+//  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
 import Foundation

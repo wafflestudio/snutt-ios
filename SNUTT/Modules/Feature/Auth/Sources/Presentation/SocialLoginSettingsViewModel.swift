@@ -2,7 +2,7 @@
 //  SocialLoginSettingsViewModel.swift
 //  SNUTT
 //
-//  Copyright © 2025 wafflestudio.com. All rights reserved.
+//  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
 import AuthInterface
