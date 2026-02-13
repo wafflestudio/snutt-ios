@@ -23,7 +23,7 @@ import Vacancy
 import VacancyInterface
 
 extension APIClientKey: @retroactive DependencyKey {
-    public static let liveValue: any APIProtocol = APIClientProvider().apiClient()
+    public static let liveValue: any APIClientInterface.APIProtocol = APIClientProvider().apiClient()
 }
 
 extension TimetableRepositoryKey: @retroactive DependencyKey {

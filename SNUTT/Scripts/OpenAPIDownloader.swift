@@ -5,23 +5,53 @@ enum Configuration: String, CaseIterable {
     case dev
     case prod
 
-    var apiSpecRemoteURL: URL {
-        switch self {
-        case .dev:
-            URL(string: "https://snutt-api-dev.wafflestudio.com/v3/api-docs")!
-        case .prod:
-            URL(string: "https://snutt-api.wafflestudio.com/v3/api-docs")!
-        }
+    var specs: [OpenAPISpec] {
+        [mainSpec, evSpec]
     }
 
-    var jsonFileName: String {
-        switch self {
-        case .dev:
-            "openapi-dev.json"
-        case .prod:
-            "openapi-prod.json"
-        }
+    private var mainSpec: OpenAPISpec {
+        let remoteURL: URL = {
+            switch self {
+            case .dev:
+                URL(string: "https://snutt-api-dev.wafflestudio.com/v3/api-docs")!
+            case .prod:
+                URL(string: "https://snutt-api.wafflestudio.com/v3/api-docs")!
+            }
+        }()
+        let jsonFileName: String = {
+            switch self {
+            case .dev:
+                "openapi-dev.json"
+            case .prod:
+                "openapi-prod.json"
+            }
+        }()
+        return OpenAPISpec(kind: .main, remoteURL: remoteURL, jsonFileName: jsonFileName)
     }
+
+    private var evSpec: OpenAPISpec {
+        let remoteURL = URL(string: "https://snutt-ev-api-dev.wafflestudio.com/v3/api-docs")!
+        let jsonFileName: String = {
+            switch self {
+            case .dev:
+                "openapi-ev-dev.json"
+            case .prod:
+                "openapi-ev-prod.json"
+            }
+        }()
+        return OpenAPISpec(kind: .ev, remoteURL: remoteURL, jsonFileName: jsonFileName)
+    }
+}
+
+enum OpenAPISpecKind: String {
+    case main
+    case ev
+}
+
+struct OpenAPISpec: Sendable {
+    let kind: OpenAPISpecKind
+    let remoteURL: URL
+    let jsonFileName: String
 }
 
 struct OpenAPIDownloader: Sendable {
@@ -29,25 +59,30 @@ struct OpenAPIDownloader: Sendable {
         FileManager.default
     }
 
-    private func openAPISpecPath(for configuration: Configuration) -> URL {
+    private func openAPISpecPath(for spec: OpenAPISpec) -> URL {
         URL(filePath: fileManager.currentDirectoryPath)
             .appending(path: "OpenAPI")
-            .appending(path: configuration.jsonFileName, directoryHint: .notDirectory)
+            .appending(path: spec.jsonFileName, directoryHint: .notDirectory)
     }
 
-    private func downloadOpenAPISpec(for configuration: Configuration) async throws {
-        let fileURL = openAPISpecPath(for: configuration)
-        let specURL = configuration.apiSpecRemoteURL
+    private func downloadOpenAPISpec(for configuration: Configuration, spec: OpenAPISpec) async throws {
+        let fileURL = openAPISpecPath(for: spec)
+        let specURL = spec.remoteURL
+        let rawData: Data
         if fileManager.fileExists(atPath: fileURL.path) {
-            print("🔄 OpenAPI spec for \(configuration.rawValue) already exists.")
-            return
+            print(
+                "🔄 OpenAPI spec [\(spec.kind.rawValue)] for \(configuration.rawValue) already exists. "
+                    + "Revalidating..."
+            )
+            rawData = try Data(contentsOf: fileURL)
+        } else {
+            try fileManager.createDirectory(
+                at: fileURL.deletingLastPathComponent(),
+                withIntermediateDirectories: true
+            )
+            let (downloadedData, _) = try await URLSession.shared.data(from: specURL)
+            rawData = downloadedData
         }
-        try? fileManager.removeItem(at: fileURL)
-        try fileManager.createDirectory(
-            at: fileURL.deletingLastPathComponent(),
-            withIntermediateDirectories: true
-        )
-        let (rawData, _) = try await URLSession.shared.data(from: specURL)
         let specString = String(data: rawData, encoding: .utf8)?
             .replacingOccurrences(of: "\"400 (1)\"", with: "\"400\"")
             .replacingOccurrences(of: "\"400 (2)\"", with: "\"402\"")
@@ -56,21 +91,26 @@ struct OpenAPIDownloader: Sendable {
         else { throw DownloadError("Failed to convert OpenAPI spec to data") }
         let jsonObject =
             try JSONSerialization.jsonObject(with: processedData, options: []) as! [String: Any]
-        let validatedJsonObject = validated(jsonObject: jsonObject)
+        let validatedJsonObject = validated(jsonObject: jsonObject, specKind: spec.kind)
         let prettyPrintedData = try JSONSerialization.data(
             withJSONObject: validatedJsonObject,
             options: [.prettyPrinted, .withoutEscapingSlashes, .sortedKeys]
         )
         try prettyPrintedData.write(to: fileURL, options: .atomic)
-        print("✅ OpenAPI spec for \(configuration.rawValue) downloaded successfully.")
+        print("✅ OpenAPI spec [\(spec.kind.rawValue)] for \(configuration.rawValue) downloaded successfully.")
     }
 
-    private func validated(jsonObject: [String: Any]) -> [String: Any] {
+    private func validated(jsonObject: [String: Any], specKind: OpenAPISpecKind) -> [String: Any] {
         var validatedObject = jsonObject
-        validatedObject.updateValueRecursively(
-            keyPath: "paths./v1/configs.get.responses.200.content.application/json.schema",
-            value: ["type": "object", "additionalProperties": true]
-        )
+        switch specKind {
+        case .main:
+            validatedObject.updateValueRecursively(
+                keyPath: "paths./v1/configs.get.responses.200.content.application/json.schema",
+                value: ["type": "object", "additionalProperties": true]
+            )
+        case .ev:
+            validatedObject.fixEvLectureSummaryParameterSchemaIfNeeded()
+        }
         validatedObject.transformJsonEnumTypesRecursively()
         return validatedObject
     }
@@ -80,8 +120,10 @@ struct OpenAPIDownloader: Sendable {
         print("🚀 Starting OpenAPI spec download process...")
         try await withThrowingTaskGroup(of: Void.self) { group in
             for configuration in configurations {
-                group.addTask {
-                    try await downloadOpenAPISpec(for: configuration)
+                for spec in configuration.specs {
+                    group.addTask {
+                        try await downloadOpenAPISpec(for: configuration, spec: spec)
+                    }
                 }
             }
             try await group.waitForAll()
@@ -99,8 +141,10 @@ struct OpenAPIDownloader: Sendable {
             throw DownloadError("Unknown configuration: \(configName)")
         }
 
-        print("🚀 Downloading OpenAPI spec for \(configuration.rawValue)...")
-        try await downloadOpenAPISpec(for: configuration)
+        print("🚀 Downloading OpenAPI specs for \(configuration.rawValue)...")
+        for spec in configuration.specs {
+            try await downloadOpenAPISpec(for: configuration, spec: spec)
+        }
     }
 
     func main() {
@@ -134,6 +178,32 @@ struct OpenAPIDownloader: Sendable {
 }
 
 extension Dictionary where Key == String, Value == Any {
+    mutating func fixEvLectureSummaryParameterSchemaIfNeeded() {
+        guard var paths = self["paths"] as? [String: Any],
+            var lectureSummary = paths["/v1/lectures/snutt-summary"] as? [String: Any],
+            var get = lectureSummary["get"] as? [String: Any],
+            var parameters = get["parameters"] as? [[String: Any]]
+        else {
+            return
+        }
+
+        for index in parameters.indices {
+            guard let name = parameters[index]["name"] as? String, name == "snuttId" else {
+                continue
+            }
+            let hasSchema = parameters[index]["schema"] != nil
+            let hasContent = parameters[index]["content"] != nil
+            if !hasSchema && !hasContent {
+                parameters[index]["schema"] = ["type": "string"]
+            }
+        }
+
+        get["parameters"] = parameters
+        lectureSummary["get"] = get
+        paths["/v1/lectures/snutt-summary"] = lectureSummary
+        self["paths"] = paths
+    }
+
     mutating func transformJsonEnumTypesRecursively() {
         for key in keys {
             if var nestedDict = self[key] as? [String: Any] {
@@ -169,7 +239,7 @@ extension Dictionary where Key == String, Value == Any {
             self[firstKey] = value
         } else {
             var nestedDict: [String: Any]
-            if let existingValue = self[firstKey], var dict = existingValue as? [String: Any] {
+            if let existingValue = self[firstKey], let dict = existingValue as? [String: Any] {
                 nestedDict = dict
             } else {
                 nestedDict = [String: Any]()
