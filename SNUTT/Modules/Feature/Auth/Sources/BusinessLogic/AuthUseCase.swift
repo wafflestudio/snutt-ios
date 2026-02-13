@@ -72,7 +72,6 @@ public struct AuthUseCase: AuthUseCaseProtocol {
             Logger.auth.warning("FCM token is not found. Check your firebase settings.")
         }
 
-        clearAllUserData()
         try secureRepository.clear()
         authState.clear()
     }
@@ -87,28 +86,8 @@ public struct AuthUseCase: AuthUseCaseProtocol {
     public func deleteAccount() async throws {
         try await authRepository.deleteAccount()
 
-        clearAllUserData()
         try secureRepository.clear()
         authState.clear()
-    }
-
-    // MARK: - UserDefaults Cleanup
-
-    /// Clear ALL UserDefaults data except system keys
-    private func clearAllUserData() {
-        let defaults = UserDefaults.standard
-        let dictionary = defaults.dictionaryRepresentation()
-        let fcmTokenKey = UserDefaultsEntryDefinitions().fcmToken.key
-
-        dictionary.keys.forEach { key in
-            // Preserve only system keys (Apple*)
-            guard !key.hasPrefix("Apple"), key != fcmTokenKey else { return }
-
-            // Remove everything else
-            defaults.removeObject(forKey: key)
-        }
-
-        defaults.synchronize()
     }
 
     private func registerPendingFCMTokenIfNeeded() async throws {

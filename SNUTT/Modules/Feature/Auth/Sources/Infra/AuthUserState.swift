@@ -61,7 +61,15 @@ public final class AuthUserState: AuthState {
 
     public func clear() {
         store.withLock { $0.removeAll() }
-        userDefaults[\.userID] = nil
+        let defaults = UserDefaults.standard
+        let dictionary = defaults.dictionaryRepresentation()
+        let fcmTokenKey = AuthStateType.fcmToken.rawValue
+
+        dictionary.keys.forEach { key in
+            guard !key.hasPrefix("Apple"), key != fcmTokenKey else { return }
+            defaults.removeObject(forKey: key)
+        }
+
         isAuthenticatedLocked.withLock { $0 = false }
         Task { @MainActor in
             isAuthenticatedSubject.send(false)
@@ -71,10 +79,10 @@ public final class AuthUserState: AuthState {
 
 extension UserDefaultsEntryDefinitions {
     var userID: UserDefaultsEntry<String?> {
-        .init(key: "userID", defaultValue: nil)
+        .init(key: AuthStateType.userID.rawValue, defaultValue: nil)
     }
 
     var fcmToken: UserDefaultsEntry<String?> {
-        .init(key: "fcmToken", defaultValue: nil)
+        .init(key: AuthStateType.fcmToken.rawValue, defaultValue: nil)
     }
 }
