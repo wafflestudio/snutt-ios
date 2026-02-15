@@ -2,7 +2,7 @@
 //  MainContentView.swift
 //  SNUTT
 //
-//  Copyright © 2024 wafflestudio.com. All rights reserved.
+//  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
 import AnalyticsInterface
@@ -46,7 +46,7 @@ struct MainContentView: View {
                 )
                 TabScene(
                     tabItem: TabItem.review,
-                    rootView: ReviewsScene()
+                    rootView: ReviewsWebScene()
                         .modifier(AnalyticsScreenModifier(screen: Reviews.AnalyticsScreen.reviewHome))
                 )
                 TabScene(

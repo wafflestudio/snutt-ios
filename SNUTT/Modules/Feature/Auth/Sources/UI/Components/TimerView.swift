@@ -2,7 +2,7 @@
 //  TimerView.swift
 //  SNUTT
 //
-//  Copyright © 2025 wafflestudio.com. All rights reserved.
+//  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
 import SharedUIComponents
@@ -52,7 +52,7 @@ struct TimerView: View {
                         .monospacedDigit()
                 }
             }
-            .onChange(of: remaining) { newValue in
+            .onChange(of: remaining) { _, newValue in
                 if newValue == 0, !didTimeout {
                     didTimeout = true
                     isTimedOut = true

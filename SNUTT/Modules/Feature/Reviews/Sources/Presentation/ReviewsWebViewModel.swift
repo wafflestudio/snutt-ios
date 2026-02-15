@@ -1,8 +1,8 @@
 //
-//  ReviewsViewModel.swift
+//  ReviewsWebViewModel.swift
 //  SNUTT
 //
-//  Copyright © 2025 wafflestudio.com. All rights reserved.
+//  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
 import AuthInterface
@@ -13,7 +13,7 @@ import SharedAppMetadata
 
 @MainActor
 @Observable
-final class ReviewsViewModel {
+final class ReviewsWebViewModel {
     @ObservationIgnored
     @Dependency(\.appMetadata) private var appMetadata
 

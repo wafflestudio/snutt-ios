@@ -2,7 +2,7 @@
 //  LiveDependencies.swift
 //  SNUTT
 //
-//  Copyright © 2024 wafflestudio.com. All rights reserved.
+//  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
 import APIClientInterface
@@ -25,7 +25,7 @@ import Vacancy
 import VacancyInterface
 
 extension APIClientKey: @retroactive DependencyKey {
-    public static let liveValue: any APIProtocol = APIClientProvider().apiClient()
+    public static let liveValue: any APIClientInterface.APIProtocol = APIClientProvider().apiClient()
 }
 
 extension TimetableRepositoryKey: @retroactive DependencyKey {

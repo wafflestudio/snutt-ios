@@ -2,7 +2,7 @@
 //  FriendsAPIRepository.swift
 //  SNUTT
 //
-//  Copyright © 2025 wafflestudio.com. All rights reserved.
+//  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
 import APIClientInterface
@@ -89,11 +89,11 @@ struct FriendsAPIRepository: FriendsRepository {
             path: .init(requestToken: requestToken)
         ).ok.body.json
         return Friend(
-            id: response.first.id ?? "",
-            userId: response.second.id ?? "",
-            nickname: response.second.nicknameWithoutTag,
-            tag: String(response.second.nicknameTag),
-            displayName: nil,
+            id: response.id,
+            userId: response.userId,
+            nickname: response.nickname.nickname,
+            tag: response.nickname.tag,
+            displayName: response.displayName
         )
     }
 }

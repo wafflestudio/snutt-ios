@@ -184,6 +184,8 @@ let project = Project.app(
                 .target(name: "ReviewsInterface"),
                 .target(name: "SharedAppMetadata"),
                 .external(name: "Dependencies"),
+                .external(name: "OpenAPIRuntime"),
+                .external(name: "OpenAPIURLSession"),
             ]
         ),
         .module(

@@ -2,7 +2,7 @@
 //  ScrollView+Extensions.swift
 //  SNUTT
 //
-//  Copyright © 2025 wafflestudio.com. All rights reserved.
+//  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 // This extension enhances UIScrollView by providing customizable behavior
 // for touch event handling. It includes methods to swizzle the default

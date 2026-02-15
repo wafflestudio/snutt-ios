@@ -2,7 +2,7 @@
 //  ThemeType.swift
 //  SNUTT
 //
-//  Copyright © 2025 wafflestudio.com. All rights reserved.
+//  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
 public enum ThemeType: Codable, Sendable, Equatable, Identifiable {

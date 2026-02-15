@@ -360,50 +360,6 @@
         ],
         "type" : "object"
       },
-      "Credential" : {
-        "properties" : {
-          "appleEmail" : {
-            "type" : "string"
-          },
-          "appleSub" : {
-            "type" : "string"
-          },
-          "appleTransferSub" : {
-            "type" : "string"
-          },
-          "fbId" : {
-            "type" : "string"
-          },
-          "fbName" : {
-            "type" : "string"
-          },
-          "googleEmail" : {
-            "type" : "string"
-          },
-          "googleSub" : {
-            "type" : "string"
-          },
-          "kakaoEmail" : {
-            "type" : "string"
-          },
-          "kakaoSub" : {
-            "type" : "string"
-          },
-          "localId" : {
-            "type" : "string"
-          },
-          "localPw" : {
-            "type" : "string"
-          },
-          "tempDate" : {
-            "type" : "string"
-          },
-          "tempSeed" : {
-            "type" : "string"
-          }
-        },
-        "type" : "object"
-      },
       "CustomTimetableLectureAddLegacyRequestDto" : {
         "properties" : {
           "class_time_json" : {
@@ -583,14 +539,11 @@
       },
       "DiaryQuestionnaireDto" : {
         "properties" : {
-          "lectureTitle" : {
+          "courseTitle" : {
             "type" : "string"
           },
-          "nextLectureId" : {
-            "type" : "string"
-          },
-          "nextLectureTitle" : {
-            "type" : "string"
+          "nextLecture" : {
+            "$ref" : "#/components/schemas/DiaryTargetLectureDto"
           },
           "questions" : {
             "items" : {
@@ -600,7 +553,7 @@
           }
         },
         "required" : [
-          "lectureTitle",
+          "courseTitle",
           "questions"
         ],
         "type" : "object"
@@ -696,6 +649,9 @@
           "comment" : {
             "type" : "string"
           },
+          "courseTitle" : {
+            "type" : "string"
+          },
           "date" : {
             "format" : "date-time",
             "type" : "string"
@@ -704,9 +660,6 @@
             "type" : "string"
           },
           "lectureId" : {
-            "type" : "string"
-          },
-          "lectureTitle" : {
             "type" : "string"
           },
           "shortQuestionReplies" : {
@@ -718,11 +671,26 @@
         },
         "required" : [
           "comment",
+          "courseTitle",
           "date",
           "id",
           "lectureId",
-          "lectureTitle",
           "shortQuestionReplies"
+        ],
+        "type" : "object"
+      },
+      "DiaryTargetLectureDto" : {
+        "properties" : {
+          "courseTitle" : {
+            "type" : "string"
+          },
+          "lectureId" : {
+            "type" : "string"
+          }
+        },
+        "required" : [
+          "courseTitle",
+          "lectureId"
         ],
         "type" : "object"
       },
@@ -813,48 +781,6 @@
             "type" : "boolean"
           }
         },
-        "type" : "object"
-      },
-      "Friend" : {
-        "properties" : {
-          "accepted" : {
-            "type" : "boolean",
-            "writeOnly" : true
-          },
-          "createdAt" : {
-            "format" : "date-time",
-            "type" : "string"
-          },
-          "fromUserDisplayName" : {
-            "type" : "string"
-          },
-          "fromUserId" : {
-            "type" : "string"
-          },
-          "id" : {
-            "type" : "string"
-          },
-          "isAccepted" : {
-            "type" : "boolean"
-          },
-          "toUserDisplayName" : {
-            "type" : "string"
-          },
-          "toUserId" : {
-            "type" : "string"
-          },
-          "updatedAt" : {
-            "format" : "date-time",
-            "type" : "string"
-          }
-        },
-        "required" : [
-          "createdAt",
-          "fromUserId",
-          "isAccepted",
-          "toUserId",
-          "updatedAt"
-        ],
         "type" : "object"
       },
       "FriendRequest" : {
@@ -1448,21 +1374,6 @@
         ],
         "type" : "object"
       },
-      "PairFriendUser" : {
-        "properties" : {
-          "first" : {
-            "$ref" : "#/components/schemas/Friend"
-          },
-          "second" : {
-            "$ref" : "#/components/schemas/User"
-          }
-        },
-        "required" : [
-          "first",
-          "second"
-        ],
-        "type" : "object"
-      },
       "PasswordChangeRequest" : {
         "properties" : {
           "new_password" : {
@@ -1622,6 +1533,51 @@
         ],
         "type" : "object"
       },
+      "RegistrationDate" : {
+        "properties" : {
+          "date" : {
+            "format" : "date",
+            "type" : "string"
+          },
+          "phase" : {
+            "enum" : [
+              "CURRENT_STUDENT",
+              "FRESHMAN",
+              "COURSE_CHANGE"
+            ],
+            "type" : "string"
+          },
+          "vacantSeatRegistrationTimes" : {
+            "items" : {
+              "$ref" : "#/components/schemas/RegistrationTimeSlot"
+            },
+            "type" : "array"
+          }
+        },
+        "required" : [
+          "date",
+          "phase",
+          "vacantSeatRegistrationTimes"
+        ],
+        "type" : "object"
+      },
+      "RegistrationTimeSlot" : {
+        "properties" : {
+          "endMinute" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "startMinute" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "required" : [
+          "endMinute",
+          "startMinute"
+        ],
+        "type" : "object"
+      },
       "SearchQueryLegacy" : {
         "properties" : {
           "academic_year" : {
@@ -1755,6 +1711,39 @@
           "day",
           "endMinute",
           "startMinute"
+        ],
+        "type" : "object"
+      },
+      "SemesterRegistrationPeriod" : {
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "registrationPeriods" : {
+            "items" : {
+              "$ref" : "#/components/schemas/RegistrationDate"
+            },
+            "type" : "array"
+          },
+          "semester" : {
+            "enum" : [
+              1,
+              2,
+              3,
+              4
+            ],
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "year" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "required" : [
+          "registrationPeriods",
+          "semester",
+          "year"
         ],
         "type" : "object"
       },
@@ -2545,77 +2534,6 @@
         ],
         "type" : "object"
       },
-      "User" : {
-        "properties" : {
-          "active" : {
-            "type" : "boolean"
-          },
-          "admin" : {
-            "type" : "boolean",
-            "writeOnly" : true
-          },
-          "credential" : {
-            "$ref" : "#/components/schemas/Credential"
-          },
-          "credentialHash" : {
-            "type" : "string"
-          },
-          "email" : {
-            "type" : "string"
-          },
-          "emailVerified" : {
-            "type" : "boolean",
-            "writeOnly" : true
-          },
-          "fcmKey" : {
-            "type" : "string"
-          },
-          "id" : {
-            "type" : "string"
-          },
-          "isAdmin" : {
-            "type" : "boolean"
-          },
-          "isEmailVerified" : {
-            "type" : "boolean"
-          },
-          "lastLoginTimestamp" : {
-            "format" : "int64",
-            "type" : "integer"
-          },
-          "nickname" : {
-            "type" : "string"
-          },
-          "nicknameTag" : {
-            "format" : "int32",
-            "type" : "integer"
-          },
-          "nicknameWithoutTag" : {
-            "type" : "string"
-          },
-          "notificationCheckedAt" : {
-            "format" : "date-time",
-            "type" : "string"
-          },
-          "regDate" : {
-            "format" : "date-time",
-            "type" : "string"
-          }
-        },
-        "required" : [
-          "active",
-          "credential",
-          "credentialHash",
-          "isAdmin",
-          "lastLoginTimestamp",
-          "nickname",
-          "nicknameTag",
-          "nicknameWithoutTag",
-          "notificationCheckedAt",
-          "regDate"
-        ],
-        "type" : "object"
-      },
       "UserDto" : {
         "properties" : {
           "email" : {
@@ -3192,6 +3110,176 @@
           "200" : {
             "content" : {
 
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "admin-controller"
+        ]
+      }
+    },
+    "/v1/admin/registrationPeriods" : {
+      "get" : {
+        "operationId" : "getSemesterRegistrationPeriods",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/SemesterRegistrationPeriod"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "admin-controller"
+        ]
+      }
+    },
+    "/v1/admin/registrationPeriods/{year}/{semester}" : {
+      "delete" : {
+        "operationId" : "deleteSemesterRegistrationPeriod",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "year",
+            "required" : true,
+            "schema" : {
+              "format" : "int32",
+              "type" : "integer"
+            }
+          },
+          {
+            "in" : "path",
+            "name" : "semester",
+            "required" : true,
+            "schema" : {
+              "enum" : [
+                1,
+                2,
+                3,
+                4
+              ],
+              "format" : "int32",
+              "type" : "integer"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OkResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "admin-controller"
+        ]
+      },
+      "get" : {
+        "operationId" : "getSemesterRegistrationPeriod",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "year",
+            "required" : true,
+            "schema" : {
+              "format" : "int32",
+              "type" : "integer"
+            }
+          },
+          {
+            "in" : "path",
+            "name" : "semester",
+            "required" : true,
+            "schema" : {
+              "enum" : [
+                1,
+                2,
+                3,
+                4
+              ],
+              "format" : "int32",
+              "type" : "integer"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SemesterRegistrationPeriod"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "admin-controller"
+        ]
+      },
+      "patch" : {
+        "operationId" : "patchSemesterRegistrationPeriod",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "year",
+            "required" : true,
+            "schema" : {
+              "format" : "int32",
+              "type" : "integer"
+            }
+          },
+          {
+            "in" : "path",
+            "name" : "semester",
+            "required" : true,
+            "schema" : {
+              "enum" : [
+                1,
+                2,
+                3,
+                4
+              ],
+              "format" : "int32",
+              "type" : "integer"
+            }
+          }
+        ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "items" : {
+                  "$ref" : "#/components/schemas/RegistrationDate"
+                },
+                "type" : "array"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OkResponse"
+                }
+              }
             },
             "description" : "OK"
           }
@@ -4039,6 +4127,52 @@
         ]
       }
     },
+    "/v1/diary/target" : {
+      "get" : {
+        "operationId" : "getRandomTargetLecture",
+        "parameters" : [
+          {
+            "in" : "query",
+            "name" : "year",
+            "required" : true,
+            "schema" : {
+              "format" : "int32",
+              "type" : "integer"
+            }
+          },
+          {
+            "in" : "query",
+            "name" : "semester",
+            "required" : true,
+            "schema" : {
+              "enum" : [
+                1,
+                2,
+                3,
+                4
+              ],
+              "format" : "int32",
+              "type" : "integer"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DiaryTargetLectureDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "diary-controller"
+        ]
+      }
+    },
     "/v1/ev-service/{requestPath}" : {
       "delete" : {
         "operationId" : "handleDelete",
@@ -4642,7 +4776,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/PairFriendUser"
+                  "$ref" : "#/components/schemas/FriendResponse"
                 }
               }
             },

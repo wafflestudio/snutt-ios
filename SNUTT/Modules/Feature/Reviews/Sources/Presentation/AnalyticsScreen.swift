@@ -2,13 +2,13 @@
 //  AnalyticsScreen.swift
 //  SNUTT
 //
-//  Copyright © 2025 wafflestudio.com. All rights reserved.
+//  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
 import AnalyticsInterface
 
 public enum AnalyticsScreen: AnalyticsLogEvent {
-    case reviewHome  // done
+    case reviewHome
 
     public var eventName: String {
         switch self {
