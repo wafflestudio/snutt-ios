@@ -11,6 +11,6 @@ import SwiftUI
 public struct ReviewsUIProvider: ReviewsUIProvidable {
     public nonisolated init() {}
     public func makeReviewsScene(for evLectureID: Int) -> AnyView {
-        AnyView(ReviewsScene(evLectureID: evLectureID))
+        AnyView(ReviewsWebScene(evLectureID: evLectureID))
     }
 }

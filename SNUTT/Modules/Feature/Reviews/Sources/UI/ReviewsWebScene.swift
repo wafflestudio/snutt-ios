@@ -1,5 +1,5 @@
 //
-//  ReviewsScene.swift
+//  ReviewsWebScene.swift
 //  SNUTT
 //
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
@@ -9,8 +9,8 @@ import SharedUIWebKit
 import SwiftUI
 import WebKit
 
-public struct ReviewsScene: View {
-    @State private var viewModel = ReviewsViewModel()
+public struct ReviewsWebScene: View {
+    @State private var viewModel = ReviewsWebViewModel()
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
 
