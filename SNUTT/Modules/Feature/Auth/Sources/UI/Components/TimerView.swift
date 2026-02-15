@@ -52,7 +52,7 @@ struct TimerView: View {
                         .monospacedDigit()
                 }
             }
-            .onChange(of: remaining) { newValue in
+            .onChange(of: remaining) { _, newValue in
                 if newValue == 0, !didTimeout {
                     didTimeout = true
                     isTimedOut = true
