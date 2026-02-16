@@ -39,9 +39,7 @@ struct ThemeDetailSheet: View {
                     errorAlertHandler.withAlert {
                         themeViewModel.selectTheme(theme)
                         try await themeViewModel.saveSelectedTheme()
-                        Task {
-                            await appReviewService.requestReviewIfNeeded()
-                        }
+                        await appReviewService.requestReviewIfNeeded()
                     }
                 }
 

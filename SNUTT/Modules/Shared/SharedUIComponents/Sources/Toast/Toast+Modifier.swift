@@ -54,7 +54,7 @@ private struct ToastContainerModifier<Content: View>: View {
             .onPreferenceChange(SafeAreaBottomInsetsPreferenceKey.self) { value in
                 bottomSafeArea = value
             }
-            .overlay(alignment: .bottom, ) {
+            .overlay(alignment: .bottom) {
                 GeometryReader { reader in
                     /// The view inside `.overlay` already respects the safe area.
                     /// Subtracting the default safe area inset gives us the extra bottom inset (for example, from tab bars).

@@ -67,14 +67,6 @@ public struct SettingsScene: View {
                         title: SettingsStrings.infoVersion,
                         detail: viewModel.appVersion
                     )
-                    SettingsMenuButton(
-                        title: SettingsStrings.infoRateApp,
-                        onTap: {
-                            Task {
-                                await appReviewService.openAppStoreReview()
-                            }
-                        }
-                    )
                     SettingsNavigationLink(
                         title: SettingsStrings.infoDevelopers,
                         value: SettingsPathType.developers
@@ -93,6 +85,14 @@ public struct SettingsScene: View {
                     SettingsNavigationLink(
                         title: SettingsStrings.feedback,
                         value: SettingsPathType.userSupport
+                    )
+                    SettingsMenuButton(
+                        title: SettingsStrings.infoRateApp,
+                        onTap: {
+                            Task {
+                                await appReviewService.openAppStoreReview()
+                            }
+                        }
                     )
                 }
 
