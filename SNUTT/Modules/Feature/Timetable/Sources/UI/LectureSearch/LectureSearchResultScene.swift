@@ -63,7 +63,7 @@ struct LectureSearchResultScene: View {
             )
         ) {
             if let entryLecture = viewModel.targetForLectureDetail,
-               let searchingQuarter = viewModel.searchingQuarter
+                let searchingQuarter = viewModel.searchingQuarter
             {
                 let lectureViewModel = LectureEditDetailViewModel(
                     displayMode: .preview(.showDismissButton, quarter: searchingQuarter),

@@ -5,13 +5,13 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AppReviewPromptInterface
 import AuthInterface
 import Combine
 import ConfigsInterface
 import Dependencies
 import Foundation
 import Observation
-import AppReviewPromptInterface
 
 @Observable
 @MainActor

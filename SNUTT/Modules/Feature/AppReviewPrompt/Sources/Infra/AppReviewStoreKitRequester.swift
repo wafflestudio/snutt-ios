@@ -11,8 +11,9 @@ import UIKit
 struct AppReviewStoreKitRequester: AppReviewRequester {
     func requestReview() {
         Task { @MainActor in
-            guard let scene = UIApplication.shared.connectedScenes
-                .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
+            guard
+                let scene = UIApplication.shared.connectedScenes
+                    .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
             else { return }
 
             if #available(iOS 18, *) {

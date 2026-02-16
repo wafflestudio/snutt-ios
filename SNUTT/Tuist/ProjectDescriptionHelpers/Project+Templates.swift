@@ -95,7 +95,7 @@ extension Project {
             infoPlist: .default,
             sources: ["\(directory)/\(name)/Tests/**"],
             resources: [],
-            dependencies: [.target(name: name)] + module.internalDependencies,
+            dependencies: [.target(name: name)] + module.dependencies,
             settings: makeSettings()
         )
         return (sources, tests)

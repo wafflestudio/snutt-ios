@@ -55,9 +55,6 @@ struct MenuEllipsisSheet: View {
                             colorScheme: colorScheme,
                             availableThemes: themeViewModel.availableThemes
                         )
-                        Task {
-                            await appReviewService.requestReviewIfNeeded()
-                        }
                     }
                 }
 
