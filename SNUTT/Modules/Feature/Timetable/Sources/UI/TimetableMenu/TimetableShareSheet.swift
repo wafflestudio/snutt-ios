@@ -5,11 +5,14 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AppReviewPromptInterface
+import Dependencies
 import SwiftUI
 import UIKit
 
 struct TimetableShareSheet: UIViewControllerRepresentable {
     let timetableImage: TimetableImage
+    @Dependency(\.appReviewService) private var appReviewService
 
     func makeCoordinator() -> Coordinator {
         Coordinator()
@@ -22,8 +25,12 @@ struct TimetableShareSheet: UIViewControllerRepresentable {
             activityItems: [fileURL].compactMap { $0 },
             applicationActivities: nil
         )
-        controller.completionWithItemsHandler = { [weak coordinator = context.coordinator] _, _, _, _ in
+        controller.completionWithItemsHandler = { [weak coordinator = context.coordinator] _, completed, _, _ in
             coordinator?.cleanupTempFile()
+            guard completed else { return }
+            Task {
+                await appReviewService.requestReviewIfNeeded()
+            }
         }
         return controller
     }

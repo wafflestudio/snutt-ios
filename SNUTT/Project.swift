@@ -206,6 +206,7 @@ let project = Project.app(
             category: .feature,
             dependencies: [
                 .target(name: "AnalyticsInterface"),
+                .target(name: "AppReviewPromptInterface"),
                 .target(name: "APIClientInterface"),
                 .target(name: "AuthInterface"),
                 .target(name: "FriendsInterface"),

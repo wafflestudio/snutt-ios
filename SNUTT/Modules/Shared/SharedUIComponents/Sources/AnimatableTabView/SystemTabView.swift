@@ -30,11 +30,12 @@ public class SystemUITabBarController<T: TabItem>: UITabBarController, UITabBarC
             }
             let hostingController = UIHostingController(rootView: rootView)
             let tabItem = scene.tabItem
-            let uiTabItem = if tabItem.isSearchRole {
-                UITabBarItem(tabBarSystemItem: .search, tag: tabItem.viewIndex())
-            } else {
-                UITabBarItem()
-            }
+            let uiTabItem =
+                if tabItem.isSearchRole {
+                    UITabBarItem(tabBarSystemItem: .search, tag: tabItem.viewIndex())
+                } else {
+                    UITabBarItem()
+                }
             uiTabItem.image = tabItem.image(isSelected: false)
             uiTabItem.selectedImage = tabItem.image(isSelected: true)
             hostingController.tabBarItem = uiTabItem

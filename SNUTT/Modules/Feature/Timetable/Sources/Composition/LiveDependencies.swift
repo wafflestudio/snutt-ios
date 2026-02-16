@@ -76,7 +76,7 @@ struct CourseBookRepositoryKey: DependencyKey {
             CourseBook(
                 quarter: Quarter(year: 2024, semester: .winter),
                 updatedAt: Date()
-            )
+            ),
         ]
         spy.fetchRecentCourseBookReturnValue = CourseBook(
             quarter: Quarter(year: 2025, semester: .first),

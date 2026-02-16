@@ -5,6 +5,7 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AppReviewPromptInterface
 import Dependencies
 import Foundation
 import Observation
@@ -25,6 +26,8 @@ public class FriendsViewModel {
 
     @ObservationIgnored
     @Dependency(\.notificationCenter) var notificationCenter
+    @ObservationIgnored
+    @Dependency(\.appReviewService) var appReviewService
 
     var isMenuPresented = false
     var isRequestSheetPresented = false

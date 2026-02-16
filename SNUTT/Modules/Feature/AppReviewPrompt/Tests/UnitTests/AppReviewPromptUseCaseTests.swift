@@ -25,7 +25,10 @@ import Testing
         )
 
         await withTestDependencies(now: now, version: "1.0.0", initialState: initialState) {
-            useCase, requester, _, logger in
+            useCase,
+            requester,
+            _,
+            logger in
             await useCase.requestReviewIfNeeded()
             #expect(requester.requestCount == 0)
             #expect(logger.events.isEmpty)
@@ -43,7 +46,10 @@ import Testing
         )
 
         await withTestDependencies(now: now, version: "1.0.0", initialState: initialState) {
-            useCase, requester, _, logger in
+            useCase,
+            requester,
+            _,
+            logger in
             await useCase.requestReviewIfNeeded()
             #expect(requester.requestCount == 1)
             #expect(logger.events.contains("app_review_prompt_requested"))
@@ -63,7 +69,10 @@ import Testing
         )
 
         await withTestDependencies(now: now, version: "1.0.0", initialState: initialState) {
-            useCase, requester, _, logger in
+            useCase,
+            requester,
+            _,
+            logger in
             await useCase.requestReviewIfNeeded()
             #expect(requester.requestCount == 0)
             #expect(logger.events.isEmpty)
@@ -80,7 +89,10 @@ import Testing
         )
 
         await withTestDependencies(now: now, version: "1.0.0", initialState: initialState) {
-            useCase, requester, _, logger in
+            useCase,
+            requester,
+            _,
+            logger in
             await useCase.requestReviewIfNeeded()
             #expect(requester.requestCount == 0)
             #expect(logger.events.isEmpty)
@@ -97,7 +109,10 @@ import Testing
         )
 
         await withTestDependencies(now: now, version: "2.0.0", initialState: initialState) {
-            useCase, _, storeHandler, logger in
+            useCase,
+            _,
+            storeHandler,
+            logger in
             await useCase.openAppStoreReview()
             #expect(storeHandler.openCount == 1)
             #expect(logger.events.contains("app_review_store_link_opened"))
