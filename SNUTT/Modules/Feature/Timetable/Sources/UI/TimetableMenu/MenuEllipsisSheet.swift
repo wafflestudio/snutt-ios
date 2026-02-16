@@ -5,6 +5,8 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AppReviewPromptInterface
+import Dependencies
 import SharedUIComponents
 import SwiftUI
 import SwiftUIUtility
@@ -20,6 +22,7 @@ struct MenuEllipsisSheet: View {
     @Environment(\.sheetDismiss) private var menuSheetDismiss
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.themeViewModel) private var themeViewModel
+    @Dependency(\.appReviewService) private var appReviewService
 
     @State private var isRenameMenuPresented = false
     @State private var timetableImage: TimetableImage?
@@ -52,6 +55,9 @@ struct MenuEllipsisSheet: View {
                             colorScheme: colorScheme,
                             availableThemes: themeViewModel.availableThemes
                         )
+                        Task {
+                            await appReviewService.requestReviewIfNeeded()
+                        }
                     }
                 }
 

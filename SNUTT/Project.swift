@@ -12,6 +12,7 @@ let project = Project.app(
             category: .feature,
             dependencies: [
                 .target(name: "AnalyticsInterface"),
+                .target(name: "AppReviewPromptInterface"),
                 .target(name: "TimetableUIComponents"),
                 .target(name: "TimetableInterface"),
                 .target(name: "ThemesInterface"),
@@ -75,6 +76,16 @@ let project = Project.app(
             ]
         ),
         .module(
+            name: "AppReviewPrompt",
+            category: .feature,
+            dependencies: [
+                .target(name: "AnalyticsInterface"),
+                .target(name: "AppReviewPromptInterface"),
+                .target(name: "DependenciesUtility"),
+                .external(name: "Dependencies"),
+            ]
+        ),
+        .module(
             name: "Popup",
             category: .feature,
             dependencies: [
@@ -107,6 +118,7 @@ let project = Project.app(
             category: .feature,
             dependencies: [
                 .target(name: "AnalyticsInterface"),
+                .target(name: "AppReviewPromptInterface"),
                 .target(name: "APIClientInterface"),
                 .target(name: "TimetableInterface"),
                 .target(name: "ThemesInterface"),
@@ -151,6 +163,7 @@ let project = Project.app(
             category: .feature,
             dependencies: [
                 .target(name: "AnalyticsInterface"),
+                .target(name: "AppReviewPromptInterface"),
                 .target(name: "APIClientInterface"),
                 .target(name: "TimetableInterface"),
                 .target(name: "ThemesInterface"),
@@ -272,6 +285,14 @@ let project = Project.app(
             dependencies: [
                 .external(name: "Dependencies"),
                 .external(name: "MemberwiseInit"),
+                .external(name: "Spyable"),
+            ]
+        ),
+        .module(
+            name: "AppReviewPromptInterface",
+            category: .featureInterface,
+            dependencies: [
+                .external(name: "Dependencies"),
                 .external(name: "Spyable"),
             ]
         ),

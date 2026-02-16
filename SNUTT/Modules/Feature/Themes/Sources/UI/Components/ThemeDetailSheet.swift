@@ -5,6 +5,8 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AppReviewPromptInterface
+import Dependencies
 import SharedUIComponents
 import SwiftUI
 import SwiftUIUtility
@@ -16,6 +18,7 @@ struct ThemeDetailSheet: View {
     @Environment(\.errorAlertHandler) private var errorAlertHandler
     @Environment(\.dismiss) private var dismiss
     @Environment(\.themeViewModel) private var themeViewModel: any ThemeViewModelProtocol
+    @Dependency(\.appReviewService) private var appReviewService
     @State private var isEditDetailPresented = false
 
     var body: some View {
@@ -36,6 +39,9 @@ struct ThemeDetailSheet: View {
                     errorAlertHandler.withAlert {
                         themeViewModel.selectTheme(theme)
                         try await themeViewModel.saveSelectedTheme()
+                        Task {
+                            await appReviewService.requestReviewIfNeeded()
+                        }
                     }
                 }
 

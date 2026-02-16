@@ -87,6 +87,7 @@
 // MARK: 정보 및 제안
 "info" = "정보 및 제안";
 "info.version" = "버전 정보";
+"info.rateApp" = "앱 평가하기";
 "info.developers" = "개발자 정보";
 
 // MARK: 기타
