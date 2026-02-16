@@ -11,6 +11,7 @@ import ConfigsInterface
 import Dependencies
 import Foundation
 import Observation
+import AppReviewPromptInterface
 
 @Observable
 @MainActor
@@ -24,9 +25,12 @@ final class ContentViewModel {
 
     @ObservationIgnored
     @Dependency(\.configsRepository) private var configsRepository
+    @ObservationIgnored
+    @Dependency(\.appReviewService) private var appReviewService
     private(set) var configs: ConfigsModel = .empty
 
     init() {
+        appReviewService.recordAppLaunch()
         isAuthenticated = authState.isAuthenticated
         authState.isAuthenticatedPublisher
             .sink { [weak self] isAuthenticated in

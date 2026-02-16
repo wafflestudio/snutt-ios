@@ -109,6 +109,9 @@ extension LectureEditDetailScene {
                                 )
                             )
                         )
+                        Task {
+                            await appReviewService.requestReviewIfNeeded()
+                        }
                     }
                 }
             } label: {

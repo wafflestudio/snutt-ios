@@ -5,6 +5,7 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AppReviewPromptInterface
 import DependenciesAdditions
 import DependenciesUtility
 import MemberwiseInit
@@ -36,6 +37,7 @@ struct LectureEditDetailScene: View {
     @Environment(\.reviewsUIProvider) private var reviewsUIProvider
     @Environment(\.presentToast) var presentToast
     @Dependency(\.notificationCenter) var notificationCenter
+    @Dependency(\.appReviewService) var appReviewService
 
     let paths: Binding<[TimetableDetailSceneTypes]>
     let belongsToOtherTimetable: Bool
@@ -279,6 +281,7 @@ struct LectureEditDetailScene: View {
                         Task {
                             syllabusURL = await viewModel.fetchSyllabusURL()
                             if syllabusURL != nil {
+                                await appReviewService.requestReviewIfNeeded()
                                 showSyllabusWebView = true
                             }
                         }
