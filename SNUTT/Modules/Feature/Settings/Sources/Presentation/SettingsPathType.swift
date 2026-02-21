@@ -16,6 +16,7 @@ enum SettingsPathType: Hashable {
     case timetableTheme
     case vacancyNotification
     case lectureReminder
+    case lectureDiary
     case themeMarket
     case developers
     case userSupport
