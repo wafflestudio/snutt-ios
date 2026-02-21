@@ -109,6 +109,7 @@ extension LectureEditDetailScene {
                                 )
                             )
                         )
+                        await appReviewService.requestReviewIfNeeded()
                     }
                 }
             } label: {
@@ -140,6 +141,7 @@ extension LectureEditDetailScene {
                                 )
                             )
                         )
+                        await appReviewService.requestReviewIfNeeded()
                     }
                 }
             } label: {

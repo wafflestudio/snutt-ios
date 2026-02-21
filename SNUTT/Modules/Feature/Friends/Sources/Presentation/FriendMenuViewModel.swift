@@ -5,6 +5,7 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AppReviewPromptInterface
 import Dependencies
 import Foundation
 import Observation
@@ -20,6 +21,8 @@ public class FriendMenuViewModel {
 
     @ObservationIgnored
     @Dependency(\.friendsLocalRepository) private var friendsLocalRepository
+    @ObservationIgnored
+    @Dependency(\.appReviewService) private var appReviewService
 
     public init(friendsViewModel: FriendsViewModel) {
         self.friendsViewModel = friendsViewModel
@@ -67,6 +70,7 @@ public class FriendMenuViewModel {
                 try await self.friendsViewModel.refreshRequestedFriends()
             }
         }
+        await appReviewService.requestReviewIfNeeded()
     }
 
     func declineFriend(_ friend: Friend) async throws {

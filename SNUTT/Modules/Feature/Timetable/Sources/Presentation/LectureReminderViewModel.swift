@@ -5,6 +5,7 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AppReviewPromptInterface
 import Dependencies
 import Foundation
 import Observation
@@ -15,6 +16,8 @@ import TimetableInterface
 public final class LectureReminderViewModel {
     @ObservationIgnored
     @Dependency(\.lectureReminderRepository) private var lectureReminderRepository
+    @ObservationIgnored
+    @Dependency(\.appReviewService) private var appReviewService
 
     let lectureReminder: LectureReminder
     private let timetableID: String
@@ -42,6 +45,9 @@ public final class LectureReminderViewModel {
                     option: newOption
                 )
                 option = updatedReminder.option
+                Task {
+                    await appReviewService.requestReviewIfNeeded()
+                }
             } catch {
                 // Propagate error if task was not cancelled
                 if !error.isCancellationError {

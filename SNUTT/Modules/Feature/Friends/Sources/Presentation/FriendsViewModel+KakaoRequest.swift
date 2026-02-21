@@ -22,5 +22,7 @@ extension FriendsViewModel {
 
         // 4. 친구 사이드바 표시
         isMenuPresented = true
+
+        await appReviewService.requestReviewIfNeeded()
     }
 }

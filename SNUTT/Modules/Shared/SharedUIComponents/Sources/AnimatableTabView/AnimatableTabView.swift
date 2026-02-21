@@ -218,9 +218,11 @@ public struct TabScene<T: TabItem> {
 
     public init<Content>(tabItem: T, rootView: Content) where Content: View {
         self.tabItem = tabItem
-        self.rootView = AnyView(GeometryReader(content: { reader in
-            rootView.reportBottomSafeArea(reader.safeAreaInsets.bottom)
-        }))
+        self.rootView = AnyView(
+            GeometryReader(content: { reader in
+                rootView.reportBottomSafeArea(reader.safeAreaInsets.bottom)
+            })
+        )
     }
 
     public init(tabItem: T) {

@@ -5,6 +5,8 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AppReviewPromptInterface
+import Dependencies
 import SharedUIComponents
 import SwiftUI
 import VacancyInterface
@@ -12,6 +14,7 @@ import VacancyInterface
 public struct SettingsScene: View {
     @State private(set) var viewModel: SettingsViewModel = .init()
     @AppStorage(AppStorageKeys.preferredColorScheme) private var selectedColorScheme: ColorSchemeSelection = .system
+    @Dependency(\.appReviewService) private var appReviewService
 
     public init() {}
 
@@ -86,6 +89,14 @@ public struct SettingsScene: View {
                     SettingsNavigationLink(
                         title: SettingsStrings.feedback,
                         value: SettingsPathType.userSupport
+                    )
+                    SettingsMenuButton(
+                        title: SettingsStrings.infoRateApp,
+                        onTap: {
+                            Task {
+                                await appReviewService.openAppStoreReview()
+                            }
+                        }
                     )
                 }
 

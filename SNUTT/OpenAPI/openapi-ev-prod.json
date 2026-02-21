@@ -1,0 +1,1696 @@
+{
+  "components" : {
+    "schemas" : {
+      "CreateEvaluationReportRequest" : {
+        "properties" : {
+          "content" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        },
+        "required" : [
+          "content"
+        ],
+        "type" : "object"
+      },
+      "CreateEvaluationRequest" : {
+        "properties" : {
+          "content" : {
+            "type" : "string"
+          },
+          "gains" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "gradeSatisfaction" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "lifeBalance" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "rating" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "teachingSkill" : {
+            "format" : "double",
+            "type" : "number"
+          }
+        },
+        "required" : [
+          "content",
+          "gains",
+          "gradeSatisfaction",
+          "lifeBalance",
+          "rating",
+          "teachingSkill"
+        ],
+        "type" : "object"
+      },
+      "CursorPaginationResponseEvaluationWithLectureResponse" : {
+        "properties" : {
+          "content" : {
+            "items" : {
+              "$ref" : "#/components/schemas/EvaluationWithLectureResponse"
+            },
+            "type" : "array"
+          },
+          "cursor" : {
+            "type" : "string"
+          },
+          "last" : {
+            "type" : "boolean"
+          },
+          "size" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "totalCount" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        },
+        "required" : [
+          "content",
+          "last",
+          "size"
+        ],
+        "type" : "object"
+      },
+      "CursorPaginationResponseEvaluationWithSemesterResponse" : {
+        "properties" : {
+          "content" : {
+            "items" : {
+              "$ref" : "#/components/schemas/EvaluationWithSemesterResponse"
+            },
+            "type" : "array"
+          },
+          "cursor" : {
+            "type" : "string"
+          },
+          "last" : {
+            "type" : "boolean"
+          },
+          "size" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "totalCount" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        },
+        "required" : [
+          "content",
+          "last",
+          "size"
+        ],
+        "type" : "object"
+      },
+      "ErrorInfo" : {
+        "properties" : {
+          "code" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "message" : {
+            "type" : "string"
+          }
+        },
+        "required" : [
+          "code",
+          "message"
+        ],
+        "type" : "object"
+      },
+      "ErrorResponse" : {
+        "properties" : {
+          "error" : {
+            "$ref" : "#/components/schemas/ErrorInfo"
+          }
+        },
+        "required" : [
+          "error"
+        ],
+        "type" : "object"
+      },
+      "EvaluationReportDto" : {
+        "properties" : {
+          "content" : {
+            "type" : "string"
+          },
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "isHidden" : {
+            "type" : "boolean"
+          },
+          "lectureEvaluationId" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "userId" : {
+            "type" : "string"
+          }
+        },
+        "required" : [
+          "content",
+          "id",
+          "isHidden",
+          "lectureEvaluationId",
+          "userId"
+        ],
+        "type" : "object"
+      },
+      "EvaluationsResponse" : {
+        "properties" : {
+          "evaluations" : {
+            "items" : {
+              "$ref" : "#/components/schemas/EvaluationWithSemesterResponse"
+            },
+            "type" : "array"
+          }
+        },
+        "required" : [
+          "evaluations"
+        ],
+        "type" : "object"
+      },
+      "EvaluationWithLectureResponse" : {
+        "properties" : {
+          "content" : {
+            "type" : "string"
+          },
+          "fromSnuev" : {
+            "type" : "boolean"
+          },
+          "gains" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "gradeSatisfaction" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "isHidden" : {
+            "type" : "boolean"
+          },
+          "isLiked" : {
+            "type" : "boolean"
+          },
+          "isModifiable" : {
+            "type" : "boolean"
+          },
+          "isReportable" : {
+            "type" : "boolean"
+          },
+          "isReported" : {
+            "type" : "boolean"
+          },
+          "lecture" : {
+            "$ref" : "#/components/schemas/SimpleLectureDto"
+          },
+          "lifeBalance" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "likeCount" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "rating" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "semester" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "teachingSkill" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "userId" : {
+            "type" : "string"
+          },
+          "year" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "required" : [
+          "content",
+          "fromSnuev",
+          "id",
+          "isHidden",
+          "isLiked",
+          "isModifiable",
+          "isReportable",
+          "isReported",
+          "lecture",
+          "likeCount",
+          "rating",
+          "semester",
+          "userId",
+          "year"
+        ],
+        "type" : "object"
+      },
+      "EvaluationWithSemesterResponse" : {
+        "properties" : {
+          "content" : {
+            "type" : "string"
+          },
+          "fromSnuev" : {
+            "type" : "boolean"
+          },
+          "gains" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "gradeSatisfaction" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "isHidden" : {
+            "type" : "boolean"
+          },
+          "isLiked" : {
+            "type" : "boolean"
+          },
+          "isModifiable" : {
+            "type" : "boolean"
+          },
+          "isReportable" : {
+            "type" : "boolean"
+          },
+          "isReported" : {
+            "type" : "boolean"
+          },
+          "lectureId" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "lifeBalance" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "likeCount" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "rating" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "semester" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "teachingSkill" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "userId" : {
+            "type" : "string"
+          },
+          "year" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "required" : [
+          "content",
+          "fromSnuev",
+          "id",
+          "isHidden",
+          "isLiked",
+          "isModifiable",
+          "isReportable",
+          "isReported",
+          "lectureId",
+          "likeCount",
+          "rating",
+          "semester",
+          "userId",
+          "year"
+        ],
+        "type" : "object"
+      },
+      "LectureAndSemesterLecturesResponse" : {
+        "properties" : {
+          "academicYear" : {
+            "type" : "string"
+          },
+          "category" : {
+            "type" : "string"
+          },
+          "classification" : {
+            "enum" : [
+              "교양",
+              "전선",
+              "전필",
+              "일선",
+              "논문",
+              "교직",
+              "대학원",
+              "공통"
+            ],
+            "type" : "string"
+          },
+          "courseNumber" : {
+            "type" : "string"
+          },
+          "credit" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "department" : {
+            "type" : "string"
+          },
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "instructor" : {
+            "type" : "string"
+          },
+          "semesterLectures" : {
+            "items" : {
+              "$ref" : "#/components/schemas/SemesterLectureDto"
+            },
+            "type" : "array"
+          },
+          "title" : {
+            "type" : "string"
+          }
+        },
+        "required" : [
+          "id",
+          "semesterLectures"
+        ],
+        "type" : "object"
+      },
+      "LectureDto" : {
+        "properties" : {
+          "academicYear" : {
+            "type" : "string"
+          },
+          "category" : {
+            "type" : "string"
+          },
+          "classification" : {
+            "enum" : [
+              "교양",
+              "전선",
+              "전필",
+              "일선",
+              "논문",
+              "교직",
+              "대학원",
+              "공통"
+            ],
+            "type" : "string"
+          },
+          "courseNumber" : {
+            "type" : "string"
+          },
+          "credit" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "department" : {
+            "type" : "string"
+          },
+          "evaluation" : {
+            "$ref" : "#/components/schemas/LectureEvaluationSimpleSummary"
+          },
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "instructor" : {
+            "type" : "string"
+          },
+          "title" : {
+            "type" : "string"
+          }
+        },
+        "required" : [
+          "evaluation",
+          "id"
+        ],
+        "type" : "object"
+      },
+      "LectureEvaluationDto" : {
+        "properties" : {
+          "content" : {
+            "type" : "string"
+          },
+          "fromSnuev" : {
+            "type" : "boolean"
+          },
+          "gains" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "gradeSatisfaction" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "isHidden" : {
+            "type" : "boolean"
+          },
+          "isReported" : {
+            "type" : "boolean"
+          },
+          "lifeBalance" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "likeCount" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "rating" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "teachingSkill" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "userId" : {
+            "type" : "string"
+          }
+        },
+        "required" : [
+          "content",
+          "fromSnuev",
+          "id",
+          "isHidden",
+          "isReported",
+          "likeCount",
+          "rating",
+          "userId"
+        ],
+        "type" : "object"
+      },
+      "LectureEvaluationSimpleSummary" : {
+        "properties" : {
+          "avgRating" : {
+            "format" : "double",
+            "type" : "number"
+          }
+        },
+        "type" : "object"
+      },
+      "LectureEvaluationSummary" : {
+        "properties" : {
+          "avgGains" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "avgGradeSatisfaction" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "avgLifeBalance" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "avgRating" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "avgTeachingSkill" : {
+            "format" : "double",
+            "type" : "number"
+          }
+        },
+        "type" : "object"
+      },
+      "LectureEvaluationSummaryResponse" : {
+        "properties" : {
+          "academicYear" : {
+            "type" : "string"
+          },
+          "category" : {
+            "type" : "string"
+          },
+          "classification" : {
+            "enum" : [
+              "교양",
+              "전선",
+              "전필",
+              "일선",
+              "논문",
+              "교직",
+              "대학원",
+              "공통"
+            ],
+            "type" : "string"
+          },
+          "courseNumber" : {
+            "type" : "string"
+          },
+          "credit" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "department" : {
+            "type" : "string"
+          },
+          "evaluation" : {
+            "$ref" : "#/components/schemas/LectureEvaluationSummary"
+          },
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "instructor" : {
+            "type" : "string"
+          },
+          "title" : {
+            "type" : "string"
+          }
+        },
+        "required" : [
+          "evaluation",
+          "id"
+        ],
+        "type" : "object"
+      },
+      "LectureIdListResponse" : {
+        "properties" : {
+          "content" : {
+            "items" : {
+              "$ref" : "#/components/schemas/LectureIdResponse"
+            },
+            "type" : "array"
+          },
+          "totalCount" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "required" : [
+          "content",
+          "totalCount"
+        ],
+        "type" : "object"
+      },
+      "LectureIdResponse" : {
+        "properties" : {
+          "evLectureId" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "snuttId" : {
+            "type" : "string"
+          }
+        },
+        "required" : [
+          "evLectureId",
+          "id"
+        ],
+        "type" : "object"
+      },
+      "LectureTakenByUserResponse" : {
+        "properties" : {
+          "academicYear" : {
+            "type" : "string"
+          },
+          "category" : {
+            "type" : "string"
+          },
+          "classification" : {
+            "enum" : [
+              "교양",
+              "전선",
+              "전필",
+              "일선",
+              "논문",
+              "교직",
+              "대학원",
+              "공통"
+            ],
+            "type" : "string"
+          },
+          "courseNumber" : {
+            "type" : "string"
+          },
+          "credit" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "department" : {
+            "type" : "string"
+          },
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "instructor" : {
+            "type" : "string"
+          },
+          "takenSemester" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "takenYear" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "title" : {
+            "type" : "string"
+          }
+        },
+        "required" : [
+          "id",
+          "takenSemester",
+          "takenYear"
+        ],
+        "type" : "object"
+      },
+      "ListResponseLectureTakenByUserResponse" : {
+        "properties" : {
+          "content" : {
+            "items" : {
+              "$ref" : "#/components/schemas/LectureTakenByUserResponse"
+            },
+            "type" : "array"
+          },
+          "totalCount" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "required" : [
+          "content",
+          "totalCount"
+        ],
+        "type" : "object"
+      },
+      "PaginationResponseLectureDto" : {
+        "properties" : {
+          "content" : {
+            "items" : {
+              "$ref" : "#/components/schemas/LectureDto"
+            },
+            "type" : "array"
+          },
+          "last" : {
+            "type" : "boolean"
+          },
+          "page" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "size" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "totalCount" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        },
+        "required" : [
+          "content",
+          "last",
+          "page",
+          "size"
+        ],
+        "type" : "object"
+      },
+      "SearchLectureRequest" : {
+        "properties" : {
+          "page" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "query" : {
+            "type" : "string"
+          },
+          "tags" : {
+            "items" : {
+              "format" : "int64",
+              "type" : "integer"
+            },
+            "type" : "array"
+          }
+        },
+        "required" : [
+          "page",
+          "query",
+          "tags"
+        ],
+        "type" : "object"
+      },
+      "SearchTagResponse" : {
+        "properties" : {
+          "tagGroups" : {
+            "items" : {
+              "$ref" : "#/components/schemas/TagGroupDto"
+            },
+            "type" : "array"
+          }
+        },
+        "required" : [
+          "tagGroups"
+        ],
+        "type" : "object"
+      },
+      "SemesterLectureDto" : {
+        "properties" : {
+          "academicYear" : {
+            "type" : "string"
+          },
+          "category" : {
+            "type" : "string"
+          },
+          "classification" : {
+            "enum" : [
+              "교양",
+              "전선",
+              "전필",
+              "일선",
+              "논문",
+              "교직",
+              "대학원",
+              "공통"
+            ],
+            "type" : "string"
+          },
+          "credit" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "extraInfo" : {
+            "type" : "string"
+          },
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "myEvaluationExists" : {
+            "type" : "boolean"
+          },
+          "semester" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "year" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "required" : [
+          "academicYear",
+          "category",
+          "classification",
+          "credit",
+          "extraInfo",
+          "id",
+          "myEvaluationExists",
+          "semester",
+          "year"
+        ],
+        "type" : "object"
+      },
+      "SimpleLectureDto" : {
+        "properties" : {
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "instructor" : {
+            "type" : "string"
+          },
+          "title" : {
+            "type" : "string"
+          }
+        },
+        "required" : [
+          "id",
+          "instructor",
+          "title"
+        ],
+        "type" : "object"
+      },
+      "TagDto" : {
+        "properties" : {
+          "description" : {
+            "type" : "string"
+          },
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "ordering" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "required" : [
+          "id",
+          "name",
+          "ordering"
+        ],
+        "type" : "object"
+      },
+      "TagGroupDto" : {
+        "properties" : {
+          "color" : {
+            "type" : "string"
+          },
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "ordering" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "tags" : {
+            "items" : {
+              "$ref" : "#/components/schemas/TagDto"
+            },
+            "type" : "array"
+          }
+        },
+        "required" : [
+          "id",
+          "name",
+          "ordering",
+          "tags"
+        ],
+        "type" : "object"
+      },
+      "UpdateEvaluationRequest" : {
+        "properties" : {
+          "content" : {
+            "type" : "string"
+          },
+          "gains" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "gradeSatisfaction" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "lifeBalance" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "rating" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "semesterLectureId" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "teachingSkill" : {
+            "format" : "double",
+            "type" : "number"
+          }
+        },
+        "type" : "object"
+      }
+    }
+  },
+  "info" : {
+    "description" : "\n                    Responses 의 \"user_id\" 는 /ev-service/* 를 routing하는 환경에서 실제로는 아래와 같은 schema로 변환됩니다.\n                    \n                    \"user\": {\n                        \"id\": \"string\",\n                        \"email\": \"string\", (nullable)\n                        \"local_id\": \"string\", (nullable)\n                        \"fb_name\": \"string\" (nullable)\n                    }\n                ",
+    "title" : "Snutt Lecture Evaluation Service API definition",
+    "version" : "v0.0.1"
+  },
+  "openapi" : "3.1.0",
+  "paths" : {
+    "/v1/evaluations/{id}" : {
+      "delete" : {
+        "operationId" : "deleteLectureEvaluation",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "id",
+            "required" : true,
+            "schema" : {
+              "format" : "int64",
+              "type" : "integer"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "evaluation-controller"
+        ]
+      },
+      "get" : {
+        "operationId" : "getLectureEvaluation",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "id",
+            "required" : true,
+            "schema" : {
+              "format" : "int64",
+              "type" : "integer"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EvaluationWithSemesterResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "evaluation-controller"
+        ]
+      },
+      "patch" : {
+        "operationId" : "updateLectureEvaluation",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "id",
+            "required" : true,
+            "schema" : {
+              "format" : "int64",
+              "type" : "integer"
+            }
+          }
+        ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateEvaluationRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EvaluationWithSemesterResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "evaluation-controller"
+        ]
+      }
+    },
+    "/v1/evaluations/{id}/likes" : {
+      "delete" : {
+        "operationId" : "cancelLikeEvaluation",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "id",
+            "required" : true,
+            "schema" : {
+              "format" : "int64",
+              "type" : "integer"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "evaluation-controller"
+        ]
+      },
+      "post" : {
+        "operationId" : "likeEvaluation",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "id",
+            "required" : true,
+            "schema" : {
+              "format" : "int64",
+              "type" : "integer"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "evaluation-controller"
+        ]
+      }
+    },
+    "/v1/evaluations/{id}/report" : {
+      "post" : {
+        "operationId" : "reportLectureEvaluation",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "id",
+            "required" : true,
+            "schema" : {
+              "format" : "int64",
+              "type" : "integer"
+            }
+          }
+        ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateEvaluationReportRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EvaluationReportDto"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "409" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description" : "29003 EVALUATION_REPORT_ALREADY_EXISTS"
+          }
+        },
+        "tags" : [
+          "evaluation-controller"
+        ]
+      }
+    },
+    "/v1/evaluations/users/me" : {
+      "get" : {
+        "operationId" : "getEvaluationsOfMe",
+        "parameters" : [
+          {
+            "in" : "query",
+            "name" : "cursor",
+            "required" : false,
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CursorPaginationResponseEvaluationWithLectureResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "evaluation-controller"
+        ]
+      }
+    },
+    "/v1/lectures" : {
+      "get" : {
+        "operationId" : "getLectures",
+        "parameters" : [
+          {
+            "in" : "query",
+            "name" : "params",
+            "required" : true,
+            "schema" : {
+              "$ref" : "#/components/schemas/SearchLectureRequest"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PaginationResponseLectureDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "lecture-controller"
+        ]
+      }
+    },
+    "/v1/lectures/{id}/evaluation-summary" : {
+      "get" : {
+        "operationId" : "getLectureEvaluationSummary",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "id",
+            "required" : true,
+            "schema" : {
+              "format" : "int64",
+              "type" : "integer"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LectureEvaluationSummaryResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "evaluation-controller"
+        ]
+      }
+    },
+    "/v1/lectures/{id}/evaluations" : {
+      "get" : {
+        "description" : "해당 강의의 강의평 전체 수를 total_count, 자신의 강의평을 제외한 강의평들을 content로 제공",
+        "operationId" : "getLectureEvaluations",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "id",
+            "required" : true,
+            "schema" : {
+              "format" : "int64",
+              "type" : "integer"
+            }
+          },
+          {
+            "in" : "query",
+            "name" : "cursor",
+            "required" : false,
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CursorPaginationResponseEvaluationWithSemesterResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "evaluation-controller"
+        ]
+      }
+    },
+    "/v1/lectures/{id}/evaluations/users/me" : {
+      "get" : {
+        "operationId" : "getLectureEvaluationsOfMe",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "id",
+            "required" : true,
+            "schema" : {
+              "format" : "int64",
+              "type" : "integer"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EvaluationsResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "evaluation-controller"
+        ]
+      }
+    },
+    "/v1/lectures/{id}/semester-lectures" : {
+      "get" : {
+        "operationId" : "getSemesterLectures",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "id",
+            "required" : true,
+            "schema" : {
+              "format" : "int64",
+              "type" : "integer"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LectureAndSemesterLecturesResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "lecture-controller"
+        ]
+      }
+    },
+    "/v1/lectures/id" : {
+      "get" : {
+        "operationId" : "getLectureId_1",
+        "parameters" : [
+          {
+            "description" : "snuttId (mongoId) of the lecture",
+            "in" : "query",
+            "name" : "semesterLectureSnuttId",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            }
+          },
+          {
+            "description" : "course number of the lecture",
+            "in" : "query",
+            "name" : "course_number",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            }
+          },
+          {
+            "description" : "instructor of the lecture",
+            "in" : "query",
+            "name" : "instructor",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LectureIdResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "409" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "oneOf" : [
+                    {
+                      "$ref" : "#/components/schemas/LectureIdResponse"
+                    },
+                    {
+                      "$ref" : "#/components/schemas/ErrorResponse"
+                    }
+                  ]
+                }
+              }
+            },
+            "description" : "24001 LECTURE_NOT_FOUND"
+          }
+        },
+        "tags" : [
+          "lecture-controller"
+        ]
+      }
+    },
+    "/v1/lectures/ids" : {
+      "get" : {
+        "operationId" : "getLectureId",
+        "parameters" : [
+          {
+            "description" : "snuttId (mongoId) of the lecture",
+            "in" : "query",
+            "name" : "semesterLectureSnuttIds",
+            "required" : true,
+            "schema" : {
+              "items" : {
+                "type" : "string"
+              },
+              "type" : "array"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LectureIdListResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "409" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description" : "24001 LECTURE_NOT_FOUND"
+          }
+        },
+        "tags" : [
+          "lecture-controller"
+        ]
+      }
+    },
+    "/v1/lectures/snutt-summary" : {
+      "get" : {
+        "operationId" : "getEvLectureSummaryForSnutt",
+        "parameters" : [
+          {
+            "description" : "snuttId (mongoId) of the lecture",
+            "in" : "query",
+            "name" : "snuttId",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            }
+          },
+          {
+            "in" : "query",
+            "name" : "semesterLectureSnuttIds",
+            "required" : true,
+            "schema" : {
+              "items" : {
+                "type" : "string"
+              },
+              "type" : "array"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LectureIdListResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "409" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description" : "24001 LECTURE_NOT_FOUND"
+          }
+        },
+        "tags" : [
+          "lecture-controller"
+        ]
+      }
+    },
+    "/v1/semester-lectures/{id}/evaluations" : {
+      "post" : {
+        "operationId" : "createEvaluation",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "id",
+            "required" : true,
+            "schema" : {
+              "format" : "int64",
+              "type" : "integer"
+            }
+          }
+        ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateEvaluationRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LectureEvaluationDto"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "409" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description" : "29001 EVALUATION_ALREADY_EXISTS"
+          }
+        },
+        "tags" : [
+          "evaluation-controller"
+        ]
+      }
+    },
+    "/v1/tags/main" : {
+      "get" : {
+        "operationId" : "getMainTags",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TagGroupDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "tag-controller"
+        ]
+      }
+    },
+    "/v1/tags/main/{id}/evaluations" : {
+      "get" : {
+        "operationId" : "getMainTagEvaluations",
+        "parameters" : [
+          {
+            "in" : "path",
+            "name" : "id",
+            "required" : true,
+            "schema" : {
+              "format" : "int64",
+              "type" : "integer"
+            }
+          },
+          {
+            "in" : "query",
+            "name" : "cursor",
+            "required" : false,
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CursorPaginationResponseEvaluationWithLectureResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "evaluation-controller"
+        ]
+      }
+    },
+    "/v1/tags/search" : {
+      "get" : {
+        "operationId" : "getSearchTags",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SearchTagResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "tag-controller"
+        ]
+      }
+    },
+    "/v1/users/me/lectures/latest" : {
+      "get" : {
+        "operationId" : "getLecturesTakenByCurrentUser",
+        "parameters" : [
+          {
+            "in" : "query",
+            "name" : "filter",
+            "required" : false,
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ListResponseLectureTakenByUserResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "lecture-controller"
+        ]
+      },
+      "post" : {
+        "operationId" : "getLecturesTakenByCurrentUser_1",
+        "parameters" : [
+          {
+            "in" : "query",
+            "name" : "filter",
+            "required" : false,
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ListResponseLectureTakenByUserResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "lecture-controller"
+        ]
+      }
+    }
+  },
+  "servers" : [
+    {
+      "description" : "Generated server url",
+      "url" : "https://snutt-ev-api-dev.wafflestudio.com"
+    }
+  ]
+}

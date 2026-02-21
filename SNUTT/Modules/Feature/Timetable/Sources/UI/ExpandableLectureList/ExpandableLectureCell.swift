@@ -5,6 +5,7 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AppReviewPromptInterface
 import Combine
 import Dependencies
 import SharedUIComponents
@@ -86,6 +87,7 @@ private struct LectureActionButton: View {
     @Environment(\.errorAlertHandler) private var errorAlertHandler
     @Environment(\.lectureTimeConflictHandler) private var conflictHandler
     @Environment(\.presentToast) private var presentToast
+    @Dependency(\.appReviewService) private var appReviewService
     @Dependency(\.notificationCenter) private var notificationCenter
 
     var body: some View {
@@ -111,7 +113,9 @@ private struct LectureActionButton: View {
             var config = UIButton.Configuration.plain()
             config.imagePlacement = .top
             config.imagePadding = 2
-            config.image = type.image(isSelected: isSelected).withTintColor(.white).resized(to: .init(width: 19, height: 19))
+            config.image = type.image(isSelected: isSelected).withTintColor(.white).resized(
+                to: .init(width: 19, height: 19)
+            )
             config.attributedTitle = .init(
                 type.text(isSelected: isSelected),
                 attributes: .init([.font: Design.buttonFont])
@@ -138,6 +142,9 @@ private struct LectureActionButton: View {
                     )
                 )
             )
+            Task {
+                await appReviewService.requestReviewIfNeeded()
+            }
 
         case .vacancy:
             guard isSelected else { return }
@@ -157,6 +164,7 @@ private struct LectureActionButton: View {
             break
         }
     }
+
 }
 
 private struct LectureHeaderRow: View {

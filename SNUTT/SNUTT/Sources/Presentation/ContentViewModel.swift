@@ -5,6 +5,7 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AppReviewPromptInterface
 import AuthInterface
 import Combine
 import ConfigsInterface
@@ -33,9 +34,13 @@ final class ContentViewModel {
 
     var isAuthenticated: Bool = false
 
+    @ObservationIgnored
+    @Dependency(\.appReviewService) private var appReviewService
+
     private(set) var configs: ConfigsModel = .empty
 
     init() {
+        appReviewService.recordAppLaunch()
         isAuthenticated = authState.isAuthenticated
         authState.isAuthenticatedPublisher
             .sink { [weak self] isAuthenticated in

@@ -107,7 +107,8 @@ class LectureSearchViewModel {
 
     var isSearchingDifferentQuarter: Bool {
         if let currentTimetable = timetableViewModel.currentTimetable,
-           let searchingQuarter, searchingQuarter != currentTimetable.quarter {
+            let searchingQuarter, searchingQuarter != currentTimetable.quarter
+        {
             true
         } else {
             false
