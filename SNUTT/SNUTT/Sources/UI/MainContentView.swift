@@ -25,7 +25,6 @@ struct MainContentView: View {
     @State private var viewModel = MainContentViewModel()
     @Environment(\.errorAlertHandler) private var errorAlertHandler
     @Environment(\.presentToast) private var presentToast
-    //    @Environment(\.presentEditDiary) private var presentEditDiary
     @AppStorage(AppStorageKeys.preferredColorScheme) private var selectedColorScheme: ColorSchemeSelection = .system
 
     var body: some View {
@@ -68,10 +67,10 @@ struct MainContentView: View {
         .overlaySheet()
         .overlayPopup()
         .overlayADPopup()
-        .overlayLectureDiarySheet(
-            lectureId: viewModel.diaryLectureID,
-            lectureTitle: viewModel.diaryLectureTitle
-        )
+        //        .overlayLectureDiarySheet(
+        //            lectureId: viewModel.diaryLectureID,
+        //            lectureTitle: viewModel.diaryLectureTitle
+        //        )
         .task {
             for await message in viewModel.notificationCenter.messages(of: ToastNotificationMessage.self) {
                 presentToast(message.toast)
