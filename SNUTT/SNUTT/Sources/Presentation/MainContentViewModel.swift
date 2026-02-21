@@ -27,6 +27,10 @@ final class MainContentViewModel {
     var selectedTab: TabItem = .timetable
     private var cancellables: Set<AnyCancellable> = []
 
+    var showDiaryEditScene: Bool = true
+    var diaryLectureID: String = ""
+    var diaryLectureTitle: String = ""
+
     let themeViewModel: ThemeViewModel
     let timetableViewModel: TimetableViewModel
 

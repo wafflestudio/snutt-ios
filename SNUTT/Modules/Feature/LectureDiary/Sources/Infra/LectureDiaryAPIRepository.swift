@@ -32,7 +32,7 @@ struct LectureDiaryAPIRepository: LectureDiaryRepository {
             dailyClassTypes: classTypes,
             lectureId: lectureID
         )
-        let response = try await apiClient.getQuestionnaireFromActivities(body: .json(requestDto)).ok.body.json
+        let response = try await apiClient.getQuestionnaireFromDailyClassTypes(body: .json(requestDto)).ok.body.json
         return .init(dto: response)
     }
 
@@ -67,7 +67,7 @@ struct LectureDiaryAPIRepository: LectureDiaryRepository {
 extension QuestionnaireItem {
     init(dto: Components.Schemas.DiaryQuestionnaireDto) {
         self.init(
-            lectureTitle: dto.lectureTitle,
+            lectureTitle: dto.courseTitle,
             questions: dto.questions.map {
                 .init(
                     id: $0.id,
@@ -78,8 +78,8 @@ extension QuestionnaireItem {
                     }
                 )
             },
-            nextLectureID: dto.nextLectureId ?? "",
-            nextLectureTitle: dto.nextLectureTitle ?? ""
+            nextLectureID: dto.nextLecture?.lectureId ?? "",
+            nextLectureTitle: dto.nextLecture?.courseTitle ?? ""
         )
     }
 }
@@ -90,7 +90,7 @@ extension DiarySummary {
             id: dto.id,
             lectureID: dto.lectureId,
             date: dto.date,
-            lectureTitle: dto.lectureTitle,
+            lectureTitle: dto.courseTitle,
             shortQuestionReplies: dto.shortQuestionReplies.map {
                 .init(question: $0.question, answer: $0.answer)
             },
