@@ -3,7 +3,7 @@
 # Tuist 프로젝트 생성 및 Xcode 열기
 generate:
     @pre-commit install
-    @tuist generate --no-open
+    @mise exec -- tuist generate --no-open
     @just certs
     @xed .
 
@@ -19,15 +19,15 @@ openapi-prod:
 
 # 개발 인증서 및 프로비저닝 프로파일 동기화 (읽기 전용)
 certs:
-    @cd fastlane && bundle exec fastlane sync_dev_certificates
+    @cd fastlane && mise exec -- bundle exec fastlane sync_dev_certificates
 
 # 프로덕션 인증서 및 프로비저닝 프로파일 동기화 (권한 필요)
 deploy-certs:
-    @cd fastlane && bundle exec fastlane sync_prod_certificates
+    @cd fastlane && mise exec -- bundle exec fastlane sync_prod_certificates
 
 # 새 디바이스 등록 및 프로비저닝 프로파일 업데이트 (권한 필요)
 register-device:
-    @cd fastlane && bundle exec fastlane add_device
+    @cd fastlane && mise exec -- bundle exec fastlane add_device
 
 # Swift 코드 자동 포맷팅 (커밋 시 자동 실행)
 format:
@@ -35,16 +35,14 @@ format:
 
 # 코드 품질 검사 (의존성, import, 포맷 등)
 check:
-    @tuist install
-    @tuist inspect implicit-imports
+    @mise exec -- tuist install
+    @mise exec -- tuist inspect implicit-imports
     @just format
 
 # 의존성 검사 및 모듈 테스트 실행
 test:
-    @tuist install
-    @tuist inspect implicit-imports
-    @tuist test ModuleTests
-
-
+    @mise exec -- tuist install
+    @mise exec -- tuist inspect implicit-imports
+    @mise exec -- tuist test ModuleTests
 
 
