@@ -12,7 +12,7 @@ SNUTT is a course timetable management app for Seoul National University student
 ### 1. Install Development Tools
 
 ```bash
-# Install mise (for managing tuist versions)
+# Install mise (for managing tool versions)
 curl https://mise.run | sh
 
 # Install Just (command runner)
@@ -22,24 +22,23 @@ brew install just
 brew install mint pre-commit swift-format
 ```
 
-### 2. Install Ruby with rbenv
+### 2. Install Tools Managed by mise
 
 ```bash
-# Install rbenv
-brew install rbenv
-
-# Install Ruby (version specified in .ruby-version)
-rbenv install
+# Install tools declared in .mise.toml
+# (currently tuist and ruby)
+mise install
 
 # Verify installation
-ruby -v
+mise exec -- ruby -v
+mise exec -- tuist version
 ```
 
 ### 3. Install Ruby Dependencies for Fastlane
 
 ```bash
-# Install Bundler and project dependencies
-bundle install
+# Install project Ruby gems from Gemfile.lock
+mise exec -- bundle install
 ```
 
 ## Getting Started
@@ -47,11 +46,11 @@ bundle install
 Follow these steps to set up your development environment:
 
 ```bash
-# 1. Install Tuist and other dependencies (managed by mise)
+# 1. Install tools managed by mise
 mise install
 
 # 2. Install Swift package dependencies
-tuist install
+mise exec -- tuist install
 
 # 3. Generate API client code (first time only)
 just openapi-dev
@@ -82,10 +81,10 @@ just --list
 ### Tuist Commands
 
 ```bash
-tuist install          # Install dependencies
-tuist generate         # Generate Xcode project
-tuist clean            # Clean Tuist cache
-tuist build "SNUTT Dev"  # Build dev configuration
+mise exec -- tuist install             # Install dependencies
+mise exec -- tuist generate            # Generate Xcode project
+mise exec -- tuist clean               # Clean Tuist cache
+mise exec -- tuist build "SNUTT Dev"  # Build dev configuration
 ```
 
 ## Common Workflows

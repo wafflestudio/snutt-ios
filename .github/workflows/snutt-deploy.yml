@@ -62,20 +62,16 @@ jobs:
         with:
           xcode-version: ${{ env.XCODE_VERSION }}
 
-      - name: Setup mise (Tuist)
-        uses: jdx/mise-action@v2
+      - name: Setup mise (Tuist + Ruby)
+        uses: jdx/mise-action@v3
+        with:
+          working_directory: ./SNUTT
 
       - name: Install brew dependencies
         run: brew install just mint
 
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "3.2"
-          bundler-cache: true
-
       - name: Install dependencies with bundler
-        run: bundle install
+        run: mise exec -- bundle install
 
       - name: Install ImageMagick (for beta badge)
         if: steps.parse_tag.outputs.is_dev == 'true'
@@ -85,11 +81,11 @@ jobs:
       - name: Check and update version if needed
         run: |
           # Check if version matches
-          if ! bundle exec fastlane check_version version:"${{ steps.parse_tag.outputs.version }}"; then
+          if ! mise exec -- bundle exec fastlane check_version version:"${{ steps.parse_tag.outputs.version }}"; then
             echo "Version mismatch detected. Updating version..."
 
             # Update version
-            bundle exec fastlane update_version version:"${{ steps.parse_tag.outputs.version }}"
+            mise exec -- bundle exec fastlane update_version version:"${{ steps.parse_tag.outputs.version }}"
 
             # Configure git
             git config user.name "github-actions[bot]"
@@ -166,4 +162,4 @@ jobs:
           APP_STORE_CONNECT_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_KEY_CONTENT }}
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           GIT_TAG_NAME: ${{ github.ref_name }}
-        run: bundle exec fastlane ${{ steps.determine_lane.outputs.lane }}
+        run: mise exec -- bundle exec fastlane ${{ steps.determine_lane.outputs.lane }}
