@@ -36,15 +36,6 @@ struct LectureDiaryAPIRepository: LectureDiaryRepository {
         return .init(dto: response)
     }
 
-    func fetchQuestionnaire(for lectureID: String, with classTypes: [String]) async throws -> QuestionnaireItem {
-        let requestDto = Components.Schemas.DiaryQuestionnaireRequestDto(
-            dailyClassTypes: classTypes,
-            lectureId: lectureID
-        )
-        let response = try await apiClient.getQuestionnaireFromActivities(body: .json(requestDto)).ok.body.json
-        return .init(dto: response)
-    }
-
     public func submitDiary(_ submission: DiarySubmission) async throws {
         let requestDto = Components.Schemas.DiarySubmissionRequestDto(
             comment: submission.comment ?? "",
@@ -91,21 +82,6 @@ extension DiarySummary {
             lectureID: dto.lectureId,
             date: dto.date,
             lectureTitle: dto.courseTitle,
-            shortQuestionReplies: dto.shortQuestionReplies.map {
-                .init(question: $0.question, answer: $0.answer)
-            },
-            comment: dto.comment
-        )
-    }
-}
-
-extension DiarySummary {
-    init(dto: Components.Schemas.DiarySubmissionSummaryDto) {
-        self.init(
-            id: dto.id,
-            lectureID: dto.lectureId,
-            date: dto.date,
-            lectureTitle: dto.lectureTitle,
             shortQuestionReplies: dto.shortQuestionReplies.map {
                 .init(question: $0.question, answer: $0.answer)
             },

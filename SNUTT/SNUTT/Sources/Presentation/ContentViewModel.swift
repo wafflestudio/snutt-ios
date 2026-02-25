@@ -19,17 +19,6 @@ final class ContentViewModel {
     @ObservationIgnored
     @Dependency(\.authState) private var authState
 
-    @ObservationIgnored
-    @Dependency(\.configsRepository) var configsRepository
-
-    @ObservationIgnored
-    @Dependency(\.analyticsLogger) var analyticsLogger
-
-    @ObservationIgnored
-    @Dependency(\.notificationCenter) var notificationCenter
-
-    var selectedTab: TabItem = .timetable
-
     private var cancellables: Set<AnyCancellable> = []
 
     var isAuthenticated: Bool = false

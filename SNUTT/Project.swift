@@ -120,6 +120,7 @@ let project = Project.app(
                 .target(name: "AnalyticsInterface"),
                 .target(name: "AppReviewPromptInterface"),
                 .target(name: "APIClientInterface"),
+                .target(name: "LectureDiaryInterface"),
                 .target(name: "TimetableInterface"),
                 .target(name: "ThemesInterface"),
                 .target(name: "VacancyInterface"),
