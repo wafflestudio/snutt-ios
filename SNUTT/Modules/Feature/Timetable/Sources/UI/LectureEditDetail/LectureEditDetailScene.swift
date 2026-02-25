@@ -195,7 +195,7 @@ struct LectureEditDetailScene: View {
             )
             .padding(.horizontal, -4)
             Text(TimetableStrings.reminderDescription)
-                .lineHeight(with: .systemFont(ofSize: 13), percentage: 140)
+                .font(.systemFont(ofSize: 13), lineHeightMultiple: 1.4)
                 .foregroundColor(SharedUIComponentsAsset.gray30.swiftUIColor)
         }
     }

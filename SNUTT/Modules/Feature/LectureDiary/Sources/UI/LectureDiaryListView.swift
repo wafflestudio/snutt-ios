@@ -48,7 +48,7 @@ public struct LectureDiaryListView: View {
                     Text(LectureDiaryStrings.lectureDiaryEmptyTitle)
                         .font(.system(size: 15, weight: .semibold))
                     Text(LectureDiaryStrings.lectureDiaryEmptyDescription)
-                        .lineHeight(with: .systemFont(ofSize: 13), percentage: 145)
+                        .font(.systemFont(ofSize: 13), lineHeightMultiple: 1.45)
                         .foregroundStyle(
                             light: .primary.opacity(0.5),
                             dark: SharedUIComponentsAsset.gray30.swiftUIColor

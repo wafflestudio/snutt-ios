@@ -81,7 +81,7 @@ struct EditLectureDiaryScene: View {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 8) {
                     Text(LectureDiaryStrings.lectureDiaryEditHeaderTitle(viewModel.lectureTitle))
-                        .lineHeight(with: .systemFont(ofSize: 17, weight: .bold), percentage: 145)
+                        .font(.systemFont(ofSize: 17, weight: .bold), lineHeightMultiple: 1.45)
 
                     Text(LectureDiaryStrings.lectureDiaryEditHeaderSubtitle)
                         .font(.system(size: 14))
