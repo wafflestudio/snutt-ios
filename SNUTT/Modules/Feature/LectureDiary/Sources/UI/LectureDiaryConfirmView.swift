@@ -28,10 +28,7 @@ public struct LectureDiaryConfirmView: View {
 
                     Text(LectureDiaryStrings.lectureDiaryConfirmSubtitle)
                         .font(.systemFont(ofSize: 13), lineHeightMultiple: 1.45)
-                        .foregroundStyle(
-                            light: .primary.opacity(0.5),
-                            dark: SharedUIComponentsAsset.gray30.swiftUIColor
-                        )
+                        .foregroundStyle(Color.emptyDescriptionForeground)
                 }
                 .multilineTextAlignment(.center)
             }
@@ -52,10 +49,7 @@ public struct LectureDiaryConfirmView: View {
                     .font(.system(size: 15))
                     .padding(.leading, 20)
                     .padding([.vertical, .trailing], 12)
-                    .overlayCapsuleStyle(
-                        light: SharedUIComponentsAsset.border.swiftUIColor,
-                        dark: SharedUIComponentsAsset.gray30.swiftUIColor.opacity(0.4)
-                    )
+                    .overlay(Capsule().stroke(Color.capsuleBorder))
                 }
                 .padding(.bottom, 20)
             }
@@ -72,10 +66,7 @@ public struct LectureDiaryConfirmView: View {
         .padding(.top, 204)
         .padding(.bottom, 40)
         .padding(.horizontal, 32)
-        .backgroundStyle(
-            light: .white,
-            dark: SharedUIComponentsAsset.neutral5.swiftUIColor
-        )
+        .background(Color.confirmBackground)
     }
 }
 

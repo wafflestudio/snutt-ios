@@ -98,10 +98,7 @@ struct ExpandableDiarySummaryCell: View {
             HStack {
                 Text(diary.lectureTitle)
                     .font(.system(size: 14))
-                    .foregroundStyle(
-                        light: SharedUIComponentsAsset.alternative.swiftUIColor,
-                        dark: SharedUIComponentsAsset.assistive.swiftUIColor
-                    )
+                    .foregroundStyle(Color.lectureTitleForeground)
                 Spacer()
                 Button {
                     selectedDiary = diary
@@ -126,10 +123,7 @@ struct ExpandableDiarySummaryCell: View {
         }
         .padding([.horizontal, .top], 16)
         .padding(.bottom, 20)
-        .backgroundStyle(
-            light: SharedUIComponentsAsset.neutral98.swiftUIColor,
-            dark: SharedUIComponentsAsset.groupBackground.swiftUIColor
-        )
+        .background(Color.summaryCardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 4))
     }
 }

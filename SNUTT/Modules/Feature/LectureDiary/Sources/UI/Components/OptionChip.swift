@@ -16,18 +16,19 @@ struct OptionChip: View {
     var body: some View {
         Button(action: onTap) {
             Text(label)
-                .font(isSelected ? .system(size: 14, weight: .bold) : .system(size: 14))
-                .foregroundStyle(
-                    light: lightLabelColor,
-                    dark: darkLabelColor
+                .font(
+                    isSelected
+                        ? .system(size: 14, weight: .bold)
+                        : .system(size: 14)
                 )
-                .foregroundStyle(isSelected ? Color.cyan : .primary)
+                .foregroundStyle(
+                    isSelected
+                        ? Color.selectedOptionChipLabel
+                        : Color.unselectedOptionChipLabel
+                )
                 .padding(.vertical, 8)
                 .padding(.horizontal, 24)
-                .backgroundStyle(
-                    light: lightBackgroundColor,
-                    dark: darkBackgroundColor
-                )
+                .background(isSelected ? Color.optionChipBackground : .clear)
                 .clipShape(Capsule())
                 .overlay(
                     Capsule()
@@ -37,32 +38,6 @@ struct OptionChip: View {
                         )
                 )
         }
-    }
-}
-
-extension OptionChip {
-    private var lightLabelColor: Color {
-        isSelected
-            ? SharedUIComponentsAsset.darkMint2.swiftUIColor
-            : SharedUIComponentsAsset.darkerGray.swiftUIColor
-    }
-
-    private var darkLabelColor: Color {
-        isSelected
-            ? SharedUIComponentsAsset.darkMint1.swiftUIColor
-            : SharedUIComponentsAsset.assistive.swiftUIColor
-    }
-
-    private var lightBackgroundColor: Color {
-        isSelected
-            ? SharedUIComponentsAsset.cyan.swiftUIColor.opacity(0.08)
-            : .clear
-    }
-
-    private var darkBackgroundColor: Color {
-        isSelected
-            ? SharedUIComponentsAsset.darkMint2.swiftUIColor.opacity(0.08)
-            : .clear
     }
 }
 

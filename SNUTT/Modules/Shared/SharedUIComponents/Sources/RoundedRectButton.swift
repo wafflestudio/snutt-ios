@@ -44,12 +44,9 @@ public struct RoundedRectButton: View {
                 .padding(.vertical, type.verticalPadding)
                 .frame(maxWidth: .infinity)
                 .backgroundStyle(
-                    light: disabled
-                        ? SharedUIComponentsAsset.neutral95.swiftUIColor
-                        : SharedUIComponentsAsset.cyan.swiftUIColor,
-                    dark: disabled
-                        ? SharedUIComponentsAsset.darkerGray.swiftUIColor
-                        : SharedUIComponentsAsset.darkMint1.swiftUIColor
+                    disabled
+                        ? Color.disabledRectButtonBackground
+                        : Color.enabledRectButtonBackground
                 )
                 .clipShape(RoundedRectangle(cornerRadius: type.cornerRadius))
         }

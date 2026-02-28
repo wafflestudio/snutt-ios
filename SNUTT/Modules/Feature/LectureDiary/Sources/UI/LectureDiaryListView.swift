@@ -49,10 +49,7 @@ public struct LectureDiaryListView: View {
                         .font(.system(size: 15, weight: .semibold))
                     Text(LectureDiaryStrings.lectureDiaryEmptyDescription)
                         .font(.systemFont(ofSize: 13), lineHeightMultiple: 1.45)
-                        .foregroundStyle(
-                            light: .primary.opacity(0.5),
-                            dark: SharedUIComponentsAsset.gray30.swiftUIColor
-                        )
+                        .foregroundStyle(Color.emptyDescriptionForeground)
                 }
             }
             .multilineTextAlignment(.center)
@@ -72,10 +69,7 @@ public struct LectureDiaryListView: View {
             }
             .buttonBorderShape(.capsule)
             .foregroundStyle(.primary)
-            .overlayCapsuleStyle(
-                light: SharedUIComponentsAsset.border.swiftUIColor,
-                dark: SharedUIComponentsAsset.gray30.swiftUIColor.opacity(0.4)
-            )
+            .overlay(Capsule().stroke(Color.capsuleBorder))
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .alert(

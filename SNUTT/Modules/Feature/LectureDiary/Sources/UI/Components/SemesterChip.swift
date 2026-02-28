@@ -16,24 +16,22 @@ struct SemesterChip: View {
     var body: some View {
         Button(action: onTap) {
             Text(semester)
-                .font(isSelected ? .system(size: 15, weight: .semibold) : .system(size: 15))
+                .font(
+                    isSelected
+                        ? .system(size: 15, weight: .semibold)
+                        : .system(size: 15)
+                )
                 .foregroundStyle(
-                    light: isSelected
+                    isSelected
                         ? .white
-                        : SharedUIComponentsAsset.alternative.swiftUIColor,
-                    dark: isSelected
-                        ? .white
-                        : SharedUIComponentsAsset.assistive.swiftUIColor
+                        : Color.unselectedSemesterChipLabel
                 )
                 .padding(.horizontal, 24)
                 .padding(.vertical, 8)
-                .backgroundStyle(
-                    light: isSelected
-                        ? SharedUIComponentsAsset.cyan.swiftUIColor
-                        : SharedUIComponentsAsset.neutral98.swiftUIColor,
-                    dark: isSelected
-                        ? SharedUIComponentsAsset.darkMint1.swiftUIColor
-                        : SharedUIComponentsAsset.neutral5.swiftUIColor
+                .background(
+                    isSelected
+                        ? Color.selectedSemesterChipBackground
+                        : Color.unselectedSemesterChipBackground
                 )
                 .clipShape(Capsule())
         }

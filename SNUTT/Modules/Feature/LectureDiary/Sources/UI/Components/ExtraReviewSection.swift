@@ -21,19 +21,13 @@ struct ExtraReviewSection: View {
             if isExpanded {
                 Divider()
                     .frame(height: 0.8)
-                    .foregroundStyle(
-                        light: SharedUIComponentsAsset.lightLine.swiftUIColor,
-                        dark: SharedUIComponentsAsset.gray30.swiftUIColor.opacity(0.4)
-                    )
+                    .foregroundStyle(Color.extraSectionDivider)
                 textEditorView
             }
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 16)
-        .backgroundStyle(
-            light: .white,
-            dark: SharedUIComponentsAsset.groupBackground.swiftUIColor
-        )
+        .background(Color.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 
@@ -45,10 +39,7 @@ struct ExtraReviewSection: View {
 
             Text(LectureDiaryStrings.lectureDiaryEditExtraCommentOptional)
                 .font(.system(size: 13))
-                .foregroundStyle(
-                    light: SharedUIComponentsAsset.alternative.swiftUIColor,
-                    dark: SharedUIComponentsAsset.gray30.swiftUIColor
-                )
+                .foregroundStyle(Color.subtitleForeground)
 
             Spacer()
 
@@ -86,10 +77,7 @@ struct ExtraReviewSection: View {
                     .foregroundStyle(SharedUIComponentsAsset.cyan.swiftUIColor)
                 Text("/\(maxCharacters)")
                     .font(.system(size: 14))
-                    .foregroundStyle(
-                        light: SharedUIComponentsAsset.alternative.swiftUIColor,
-                        dark: SharedUIComponentsAsset.darkerGray.swiftUIColor
-                    )
+                    .foregroundStyle(Color.charCountForeground)
             }
         }
         .frame(height: 120)

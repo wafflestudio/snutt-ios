@@ -40,10 +40,7 @@ struct EditLectureDiaryScene: View {
     public var body: some View {
         ZStack(alignment: .top) {
             Rectangle()
-                .foregroundStyle(
-                    light: SharedUIComponentsAsset.lightField.swiftUIColor,
-                    dark: .black
-                )
+                .foregroundStyle(Color.sceneBackground)
                 .ignoresSafeArea()
 
             VStack(spacing: 0) {
@@ -85,10 +82,7 @@ struct EditLectureDiaryScene: View {
 
                     Text(LectureDiaryStrings.lectureDiaryEditHeaderSubtitle)
                         .font(.system(size: 14))
-                        .foregroundStyle(
-                            light: SharedUIComponentsAsset.alternative.swiftUIColor,
-                            dark: SharedUIComponentsAsset.gray30.swiftUIColor
-                        )
+                        .foregroundStyle(Color.subtitleForeground)
                 }
 
                 Spacer()
@@ -102,10 +96,7 @@ struct EditLectureDiaryScene: View {
             .padding(.horizontal, 24)
             .padding(.top, 44)
             .padding(.bottom, 24)
-            .backgroundStyle(
-                light: .white,
-                dark: SharedUIComponentsAsset.groupBackground.swiftUIColor
-            )
+            .background(Color.cardBackground)
 
             Divider().foregroundStyle(SharedUIComponentsAsset.border.swiftUIColor)
         }
@@ -123,18 +114,6 @@ struct EditLectureDiaryScene: View {
 
     private var step1ClassTypeSelection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            var lightLabelColor: Color {
-                isClassTypeConfirmEnabled
-                    ? SharedUIComponentsAsset.darkMint2.swiftUIColor
-                    : SharedUIComponentsAsset.gray30.swiftUIColor
-            }
-
-            var darkLabelColor: Color {
-                isClassTypeConfirmEnabled
-                    ? SharedUIComponentsAsset.darkMint1.swiftUIColor
-                    : SharedUIComponentsAsset.gray30.swiftUIColor
-            }
-
             HStack {
                 Text(LectureDiaryStrings.lectureDiaryEditClassTypeQuestion)
                     .font(.system(size: 15, weight: .semibold))
@@ -166,8 +145,9 @@ struct EditLectureDiaryScene: View {
                     Text(LectureDiaryStrings.lectureDiaryEditDone)
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(
-                            light: lightLabelColor,
-                            dark: darkLabelColor
+                            isClassTypeConfirmEnabled
+                                ? Color.enabledButtonLabel
+                                : Color.disabledButtonLabel
                         )
                 }
                 .padding(.horizontal, 12)
@@ -177,10 +157,7 @@ struct EditLectureDiaryScene: View {
         }
         .padding([.horizontal, .bottom], 20)
         .padding(.top, 24)
-        .backgroundStyle(
-            light: .white,
-            dark: SharedUIComponentsAsset.groupBackground.swiftUIColor
-        )
+        .background(Color.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .shadow(color: .black.opacity(0.04), radius: 20, x: 12, y: 6)
     }
@@ -205,10 +182,7 @@ struct EditLectureDiaryScene: View {
                     if question.id != questions.last?.id {
                         Divider()
                             .frame(height: 0.8)
-                            .foregroundStyle(
-                                light: SharedUIComponentsAsset.lightLine.swiftUIColor,
-                                dark: SharedUIComponentsAsset.alternative.swiftUIColor.opacity(0.4)
-                            )
+                            .foregroundStyle(Color.questionDivider)
                     }
                 }
             }

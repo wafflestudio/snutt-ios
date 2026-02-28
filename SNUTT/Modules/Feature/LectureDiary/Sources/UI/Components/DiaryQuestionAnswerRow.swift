@@ -16,18 +16,12 @@ struct DiaryQuestionAnswerRow: View {
         HStack(alignment: .top, spacing: 16) {
             Text(question)
                 .font(.system(size: 14, weight: .bold))
-                .foregroundStyle(
-                    light: SharedUIComponentsAsset.assistive.swiftUIColor,
-                    dark: SharedUIComponentsAsset.alternative.swiftUIColor
-                )
+                .foregroundStyle(Color.questionLabel)
                 .frame(width: 80, alignment: .leading)
 
             Text(answer)
                 .font(.system(size: 14))
-                .foregroundStyle(
-                    light: SharedUIComponentsAsset.darkerGray.swiftUIColor,
-                    dark: SharedUIComponentsAsset.assistive.swiftUIColor
-                )
+                .foregroundStyle(Color.answerLabel)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .multilineTextAlignment(.leading)
