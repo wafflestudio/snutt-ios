@@ -80,6 +80,9 @@
 
 // MARK: 서비스
 "service" = "서비스";
+"service.pushNotification" = "푸시알림 설정";
+"service.pushNotification.lectureUpdate" = "강의 업데이트";
+"service.pushNotification.vacancy" = "빈자리 알림";
 "service.vacancy" = "빈자리 알림";
 "service.lectureReminder" = "강의 리마인더";
 "service.lectureDiary" = "강의 일기장";

@@ -40,6 +40,8 @@ struct SettingsDetails: View {
             TimetableRangeSelectionView(viewModel: viewModel.timetableSettingsViewModel)
         case .timetableTheme:
             AnyView(themeUIProvider.themeSettingsScene())
+        case .pushNotificationSettings:
+            PushNotificationSettingsView(viewModel: viewModel.pushNotificationSettingsViewModel)
         case .vacancyNotification:
             AnyView(vacancyUIProvider.makeVacancyScene())
                 .analyticsScreen(.vacancy)

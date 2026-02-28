@@ -49,6 +49,10 @@ public struct SettingsScene: View {
 
                 Section(SettingsStrings.service) {
                     SettingsNavigationLink(
+                        title: SettingsStrings.servicePushNotification,
+                        value: SettingsPathType.pushNotificationSettings
+                    )
+                    SettingsNavigationLink(
                         title: SettingsStrings.serviceVacancy,
                         value: SettingsPathType.vacancyNotification
                     )
