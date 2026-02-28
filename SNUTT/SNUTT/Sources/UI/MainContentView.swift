@@ -68,8 +68,8 @@ struct MainContentView: View {
         .overlayPopup()
         .overlayADPopup()
         //        .overlayLectureDiarySheet(
-        //            lectureId: viewModel.diaryLectureID,
-        //            lectureTitle: viewModel.diaryLectureTitle
+        //            lectureId: viewModel.diaryEditContext?.lectureID ?? "",
+        //            lectureTitle: viewModel.diaryEditContext?.lectureTitle ?? ""
         //        )
         .task {
             for await message in viewModel.notificationCenter.messages(of: ToastNotificationMessage.self) {

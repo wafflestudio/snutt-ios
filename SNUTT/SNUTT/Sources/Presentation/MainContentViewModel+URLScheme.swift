@@ -79,9 +79,7 @@ extension MainContentViewModel {
             notificationCenter.post(.toast(.init(message: TimetableStrings.navigationErrorUnknown)))
             return
         }
-        showDiaryEditScene = true
-        diaryLectureID = lectureID
-        diaryLectureTitle = lectureTitle
+        diaryEditContext = DiaryEditContext(lectureID: lectureID, lectureTitle: lectureTitle)
         selectedTab = .timetable
         notificationCenter.post(
             NavigateToLectureDiaryMessage(lectureID: lectureID, lectureTitle: lectureTitle)

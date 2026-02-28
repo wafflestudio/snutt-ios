@@ -34,7 +34,7 @@ struct EditLectureDiaryScene: View {
     }
 
     private var isClassTypeConfirmEnabled: Bool {
-        !viewModel.selectedClassTypes.isEmpty
+        !viewModel.selectedClassTypes.selected.isEmpty
     }
 
     public var body: some View {
@@ -124,8 +124,8 @@ struct EditLectureDiaryScene: View {
 
             WrappedOptionChipList(
                 selectedOptions: Binding(
-                    get: { viewModel.classTypes.filter { viewModel.selectedClassTypes.contains($0.content) } },
-                    set: { viewModel.selectedClassTypes = $0.map(\.content) }
+                    get: { viewModel.classTypes.filter { viewModel.selectedClassTypes.selected.contains($0.content) } },
+                    set: { viewModel.selectedClassTypes = .init(selected: $0.map(\.content)) }
                 ),
                 answerOptions: viewModel.classTypes,
                 allowMultiple: true

@@ -10,8 +10,7 @@ import Foundation
 public struct QuestionnaireItem: Sendable {
     public let lectureTitle: String
     public let questions: [QuestionItem]
-    public let nextLectureID: String
-    public let nextLectureTitle: String
+    public let nextLecture: NextLecture?
 }
 
 public struct QuestionItem: Sendable, Identifiable, Equatable {
@@ -31,4 +30,9 @@ public struct QuestionItem: Sendable, Identifiable, Equatable {
         self.subQuestion = subQuestion
         self.options = options
     }
+}
+
+public struct NextLecture: Sendable {
+    public let id: String
+    public let title: String
 }

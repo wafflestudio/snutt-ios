@@ -17,15 +17,14 @@ public final class EditLectureDiaryViewModel {
 
     private(set) var questionnaireState: QuestionnaireState = .loading
     var classTypes: [AnswerOption] = []
-    var selectedClassTypes: [String] = []
+    var selectedClassTypes: ClassTypeSelection = .init()
     private(set) var selectedAnswers: [String: Int] = [:]  // questionID -> answerIndex
     var extraComment: String = ""
 
     let lectureID: String
     let lectureTitle: String
 
-    var nextLectureID: String = ""
-    var nextLectureTitle: String = ""
+    var nextLecture: NextLecture? = nil
 
     public init(lectureID: String, lectureTitle: String) {
         self.lectureID = lectureID
@@ -44,9 +43,11 @@ public final class EditLectureDiaryViewModel {
         questionnaireState = .loading
 
         do {
-            let questionnaire = try await repository.fetchQuestionnaire(for: lectureID, with: selectedClassTypes)
-            nextLectureID = questionnaire.nextLectureID
-            nextLectureTitle = questionnaire.nextLectureTitle
+            let questionnaire = try await repository.fetchQuestionnaire(
+                for: lectureID,
+                with: selectedClassTypes.selected
+            )
+            nextLecture = questionnaire.nextLecture
             questionnaireState = .loaded(questionnaire.questions)
         } catch {
             questionnaireState = .failed
@@ -54,10 +55,10 @@ public final class EditLectureDiaryViewModel {
     }
 
     func toggleClassType(_ classType: String) {
-        if selectedClassTypes.contains(classType) {
-            selectedClassTypes.removeAll { $0 == classType }
+        if selectedClassTypes.selected.contains(classType) {
+            selectedClassTypes.selected.removeAll { $0 == classType }
         } else {
-            selectedClassTypes.append(classType)
+            selectedClassTypes.selected.append(classType)
         }
     }
 
@@ -66,7 +67,7 @@ public final class EditLectureDiaryViewModel {
     }
 
     var canSubmit: Bool {
-        !selectedClassTypes.isEmpty && allQuestionsAnswered
+        !selectedClassTypes.selected.isEmpty && allQuestionsAnswered
     }
 
     private var allQuestionsAnswered: Bool {
@@ -83,7 +84,7 @@ public final class EditLectureDiaryViewModel {
 
         let submission = DiarySubmission(
             lectureID: lectureID,
-            dailyClassTypes: selectedClassTypes,
+            dailyClassTypes: selectedClassTypes.selected,
             questionAnswers: questionAnswers,
             comment: extraComment.isEmpty ? nil : extraComment
         )

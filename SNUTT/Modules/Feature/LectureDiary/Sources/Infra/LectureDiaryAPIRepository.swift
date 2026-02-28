@@ -21,8 +21,7 @@ struct LectureDiaryAPIRepository: LectureDiaryRepository {
     }
 
     public func fetchDiaryList() async throws -> [DiarySubmissionsOfYearSemester] {
-        let response = try await apiClient.getMySubmissions().ok.body.json
-        return response.map { .init(dto: $0) }
+        try await apiClient.getMySubmissions().ok.body.json.map { try $0.toDiaryList() }
     }
 
     func fetchQuestionnaire(for lectureID: String, with classTypes: [String]) async throws -> QuestionnaireItem {
@@ -67,20 +66,16 @@ extension QuestionnaireItem {
                     }
                 )
             },
-            nextLectureID: dto.nextLecture?.lectureId ?? "",
-            nextLectureTitle: dto.nextLecture?.courseTitle ?? ""
+            nextLecture: dto.nextLecture.map { .init(id: $0.lectureId, title: $0.courseTitle) }
         )
     }
 }
 
-extension DiarySubmissionsOfYearSemester {
-    init(dto: Components.Schemas.DiarySubmissionsOfYearSemesterDto) {
-        self.init(
-            quarter: .init(
-                year: Int(dto.year),
-                semester: .init(rawValue: Int(dto.semester)) ?? .first
-            ),
-            diaryList: dto.submissions.map { .init(dto: $0) }
+extension Components.Schemas.DiarySubmissionsOfYearSemesterDto {
+    func toDiaryList() throws -> DiarySubmissionsOfYearSemester {
+        .init(
+            quarter: .init(year: Int(year), semester: try require(Semester(rawValue: Int(semester)))),
+            diaryList: submissions.map { .init(dto: $0) }
         )
     }
 }
