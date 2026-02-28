@@ -77,7 +77,11 @@ final class MainContentViewModel {
         Task.scoped(
             to: self,
             subscribing: notificationCenter.messages(of: NavigateToLectureDiaryMessage.self)
-        ) { @MainActor viewModel, _ in
+        ) { @MainActor viewModel, nextLecture in
+            viewModel.diaryEditContext = .init(
+                lectureID: nextLecture.lectureID,
+                lectureTitle: nextLecture.lectureTitle
+            )
             viewModel.selectedTab = .timetable
         }
     }
