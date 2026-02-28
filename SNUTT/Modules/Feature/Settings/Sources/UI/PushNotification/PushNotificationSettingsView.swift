@@ -28,3 +28,9 @@ struct PushNotificationSettingsView: View {
         }
     }
 }
+
+#Preview {
+    NavigationStack {
+        PushNotificationSettingsView(viewModel: .init())
+    }
+}
