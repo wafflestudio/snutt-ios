@@ -54,6 +54,36 @@ extension Color {
         )
     }
 
+    // Mark: Foreground - Edit LectureDiary
+
+    static var setNotificationLabel: Color {
+        Color(UIColor { _ in SharedUIComponentsAsset.gray30.color })
+    }
+
+    static var enabledButtonLabel: Color {
+        Color(
+            UIColor {
+                $0.userInterfaceStyle == .dark
+                    ? SharedUIComponentsAsset.darkMint1.color : SharedUIComponentsAsset.darkMint2.color
+            }
+        )
+    }
+
+    static var disabledButtonLabel: Color {
+        Color(UIColor { _ in SharedUIComponentsAsset.gray30.color })
+    }
+
+    static var charCountForeground: Color {
+        Color(
+            UIColor {
+                $0.userInterfaceStyle == .dark
+                    ? SharedUIComponentsAsset.darkerGray.color : SharedUIComponentsAsset.alternative.color
+            }
+        )
+    }
+
+    // Mark: Foreground - LectureDiary Summary
+
     static var lectureTitleForeground: Color {
         Color(
             UIColor {
@@ -77,28 +107,6 @@ extension Color {
             UIColor {
                 $0.userInterfaceStyle == .dark
                     ? SharedUIComponentsAsset.assistive.color : SharedUIComponentsAsset.darkerGray.color
-            }
-        )
-    }
-
-    static var enabledButtonLabel: Color {
-        Color(
-            UIColor {
-                $0.userInterfaceStyle == .dark
-                    ? SharedUIComponentsAsset.darkMint1.color : SharedUIComponentsAsset.darkMint2.color
-            }
-        )
-    }
-
-    static var disabledButtonLabel: Color {
-        Color(UIColor { _ in SharedUIComponentsAsset.gray30.color })
-    }
-
-    static var charCountForeground: Color {
-        Color(
-            UIColor {
-                $0.userInterfaceStyle == .dark
-                    ? SharedUIComponentsAsset.darkerGray.color : SharedUIComponentsAsset.alternative.color
             }
         )
     }

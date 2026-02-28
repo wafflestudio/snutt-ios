@@ -7,6 +7,7 @@
 
 import AnalyticsInterface
 import Friends
+import LectureDiary
 import Notifications
 import NotificationsInterface
 import Reviews
@@ -69,10 +70,7 @@ struct MainContentView: View {
         .overlaySheet()
         .overlayPopup()
         .overlayADPopup()
-        //        .overlayLectureDiarySheet(
-        //            lectureId: viewModel.diaryEditContext?.lectureID ?? "",
-        //            lectureTitle: viewModel.diaryEditContext?.lectureTitle ?? ""
-        //        )
+        .overlayLectureDiarySheet($viewModel.diaryEditContext)
         .task {
             for await message in viewModel.notificationCenter.messages(of: ToastNotificationMessage.self) {
                 presentToast(message.toast)

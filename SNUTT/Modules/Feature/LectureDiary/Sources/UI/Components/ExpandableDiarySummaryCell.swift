@@ -84,6 +84,7 @@ struct ExpandableDiarySummaryCell: View {
                     Text(joinedLectureTitle)
                         .foregroundStyle(.secondary)
                         .font(.system(size: 14))
+                        .multilineTextAlignment(.leading)
                     Spacer()
                     LectureDiaryAsset.chevronRight.swiftUIImage
                         .rotationEffect(.degrees(isExpanded ? -90 : 90))

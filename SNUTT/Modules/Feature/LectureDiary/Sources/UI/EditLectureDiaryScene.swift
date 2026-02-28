@@ -10,9 +10,14 @@ import SharedUIComponents
 import SwiftUI
 
 extension View {
-    public func overlayLectureDiarySheet(lectureId: String, lectureTitle: String) -> some View {
-        overlay {
-            EditLectureDiaryScene(lectureID: lectureId, lectureTitle: lectureTitle)
+    public func overlayLectureDiarySheet(
+        _ item: Binding<DiaryEditContext?>
+    ) -> some View {
+        fullScreenCover(item: item) { context in
+            EditLectureDiaryScene(
+                lectureID: context.lectureID,
+                lectureTitle: context.lectureTitle
+            )
         }
     }
 }
@@ -47,23 +52,30 @@ struct EditLectureDiaryScene: View {
             VStack(spacing: 0) {
                 headerView
 
-                ScrollView {
-                    VStack(spacing: 16) {
-                        step1ClassTypeSelection
-                            .id(0)
+                GeometryReader { proxy in
+                    ScrollView {
+                        VStack(spacing: 16) {
+                            step1ClassTypeSelection
+                                .id(0)
 
-                        if showNextSection {
-                            step2QuestionAnswers
-                                .id(1)
-                            extraCommentSection
-                            submitButton
+                            if showNextSection {
+                                step2QuestionAnswers
+                                    .id(1)
+                                extraCommentSection
+                                submitButton
+                                Spacer()
+                            } else {
+                                Spacer(minLength: 0)
+                                setNotificationButton
+                            }
                         }
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 24)
+                        .frame(minHeight: proxy.size.height)
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 24)
+                    .scrollPosition(id: $detailQuestionPosition, anchor: .top)
+                    .animation(.easeInOut(duration: 0.3), value: detailQuestionPosition)
                 }
-                .scrollPosition(id: $detailQuestionPosition, anchor: .top)
-                .animation(.easeInOut(duration: 0.3), value: detailQuestionPosition)
             }
         }
         .task {
@@ -71,6 +83,9 @@ struct EditLectureDiaryScene: View {
         }
         .fullScreenCover(isPresented: $showConfirmView) {
             LectureDiaryConfirmView(displayMode: .reviewDone)
+        }
+        .onChange(of: showConfirmView) { _, isShowing in
+            if !isShowing { dismiss() }
         }
     }
 
@@ -219,6 +234,28 @@ struct EditLectureDiaryScene: View {
         }
         .padding(.top, 4)
         .padding(.bottom, 40)
+    }
+
+    private var setNotificationButton: some View {
+        VStack(spacing: 2) {
+            Text(LectureDiaryStrings.lectureDiaryEditSetNotificationLabel)
+                .font(.systemFont(ofSize: 13), lineHeightMultiple: 1.45)
+                .multilineTextAlignment(.center)
+            Button {
+                dismiss()
+            } label: {
+                HStack(spacing: 0) {
+                    Text(LectureDiaryStrings.lectureDiaryEditSetNotificationButtonLabel)
+                        .font(.system(size: 14, weight: .medium))
+                    LectureDiaryAsset.chevronRightDark.swiftUIImage
+                }
+            }
+            .padding(.vertical, 6)
+            .padding(.leading, 12)
+            .padding(.trailing, 8)
+        }
+        .foregroundStyle(Color.setNotificationLabel)
+        .padding(.bottom, 16)
     }
 }
 

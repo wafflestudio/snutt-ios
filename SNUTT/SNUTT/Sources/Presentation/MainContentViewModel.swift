@@ -9,6 +9,8 @@ import Combine
 import Dependencies
 import Foundation
 import NotificationsInterface
+import LectureDiary
+import LectureDiaryInterface
 import Observation
 import SwiftUtility
 import Themes
