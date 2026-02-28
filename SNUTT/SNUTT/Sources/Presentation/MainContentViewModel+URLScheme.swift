@@ -8,6 +8,7 @@
 import APIClientInterface
 import Foundation
 import Friends
+import LectureDiaryInterface
 import SharedUIComponents
 import Timetable
 import TimetableInterface

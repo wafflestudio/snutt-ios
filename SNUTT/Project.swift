@@ -344,6 +344,7 @@ let project = Project.app(
             category: .featureInterface,
             dependencies: [
                 .target(name: "APIClientInterface"),
+                .target(name: "DependenciesUtility"),
                 .external(name: "Spyable"),
                 .external(name: "Dependencies"),
                 .external(name: "MemberwiseInit"),

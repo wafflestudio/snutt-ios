@@ -70,7 +70,7 @@ public final class LectureDiaryListViewModel {
 
     private func extractQuarters(from diaries: [DiarySubmissionsOfYearSemester]) -> [Quarter] {
         let uniqueQuarters = Set(diaries.map(\.quarter))
-        return uniqueQuarters.sorted()
+        return uniqueQuarters.sorted(by: >)
     }
 }
 

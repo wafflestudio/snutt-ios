@@ -5,7 +5,6 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
-import APIClientInterface
 import Foundation
 import TimetableInterface
 
@@ -36,17 +35,5 @@ public struct DiarySummary: Sendable, Identifiable, Equatable {
         self.date = date
         self.shortQuestionReplies = shortQuestionReplies
         self.comment = comment
-    }
-}
-
-extension Components.Schemas.DiarySubmissionsOfYearSemesterDto {
-    public func toDiarySubmissionsOfYearSemester() -> DiarySubmissionsOfYearSemester {
-        return .init(
-            quarter: .init(
-                year: Int(year),
-                semester: .init(rawValue: Int(semester)) ?? .first
-            ),
-            diaryList: submissions.map { .init(dto: $0) }
-        )
     }
 }
