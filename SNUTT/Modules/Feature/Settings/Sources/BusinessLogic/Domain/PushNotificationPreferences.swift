@@ -10,4 +10,5 @@ import Foundation
 struct PushNotificationPreferences: Sendable {
     let isLectureUpdateEnabled: Bool
     let isVacancyEnabled: Bool
+    let isDiaryEnabled: Bool
 }

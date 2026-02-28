@@ -31,7 +31,8 @@ struct PushNotificationRepositoryKey: DependencyKey {
         let spy = PushNotificationRepositorySpy()
         spy.fetchPreferencesReturnValue = PushNotificationPreferences(
             isLectureUpdateEnabled: true,
-            isVacancyEnabled: true
+            isVacancyEnabled: true,
+            isDiaryEnabled: true
         )
         spy.savePreferencesClosure = { _ in }
         return spy

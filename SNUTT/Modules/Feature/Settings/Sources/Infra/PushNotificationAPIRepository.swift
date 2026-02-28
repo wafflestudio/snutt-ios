@@ -15,7 +15,8 @@ struct PushNotificationAPIRepository: PushNotificationRepository {
         let prefs = try await apiClient.getPushPreferences().ok.body.json.pushPreferences
         return PushNotificationPreferences(
             isLectureUpdateEnabled: prefs.first(where: { $0._type == .LECTURE_UPDATE })?.isEnabled ?? true,
-            isVacancyEnabled: prefs.first(where: { $0._type == .VACANCY_NOTIFICATION })?.isEnabled ?? true
+            isVacancyEnabled: prefs.first(where: { $0._type == .VACANCY_NOTIFICATION })?.isEnabled ?? true,
+            isDiaryEnabled: prefs.first(where: { $0._type == .DIARY })?.isEnabled ?? true
         )
     }
 
@@ -25,6 +26,7 @@ struct PushNotificationAPIRepository: PushNotificationRepository {
                 .init(pushPreferences: [
                     .init(isEnabled: preferences.isLectureUpdateEnabled, _type: .LECTURE_UPDATE),
                     .init(isEnabled: preferences.isVacancyEnabled, _type: .VACANCY_NOTIFICATION),
+                    .init(isEnabled: preferences.isDiaryEnabled, _type: .DIARY),
                 ])
             )
         ).ok

@@ -17,6 +17,8 @@ struct PushNotificationSettingsView: View {
                     .animation(.easeInOut, value: viewModel.isLectureUpdateOn)
                 Toggle(SettingsStrings.servicePushNotificationVacancy, isOn: $viewModel.isVacancyOn)
                     .animation(.easeInOut, value: viewModel.isVacancyOn)
+                Toggle(SettingsStrings.servicePushNotificationDiary, isOn: $viewModel.isDiaryOn)
+                    .animation(.easeInOut, value: viewModel.isDiaryOn)
             }
         }
         .navigationTitle(SettingsStrings.servicePushNotification)

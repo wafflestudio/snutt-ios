@@ -30,12 +30,20 @@ final class PushNotificationSettingsViewModel {
         }
     }
 
+    var isDiaryOn: Bool = true {
+        didSet {
+            guard isLoaded else { return }
+            Task { await savePreferences() }
+        }
+    }
+
     func loadPreferences() async {
         isLoaded = false
         do {
             let preferences = try await useCase.fetchPreferences()
             isLectureUpdateOn = preferences.isLectureUpdateEnabled
             isVacancyOn = preferences.isVacancyEnabled
+            isDiaryOn = preferences.isDiaryEnabled
         } catch {
             // Keep default values on failure
         }
@@ -46,7 +54,8 @@ final class PushNotificationSettingsViewModel {
         do {
             let preferences = PushNotificationPreferences(
                 isLectureUpdateEnabled: isLectureUpdateOn,
-                isVacancyEnabled: isVacancyOn
+                isVacancyEnabled: isVacancyOn,
+                isDiaryEnabled: isDiaryOn
             )
             try await useCase.savePreferences(preferences)
         } catch {
