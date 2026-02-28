@@ -15,9 +15,17 @@ import TimetableInterface
 @MainActor
 public final class LectureDiaryListViewModel {
     @ObservationIgnored
-    @Dependency(\.lectureDiaryRepository) private var repository
+    @Dependency(\.lectureDiaryRepository) private var diaryRepository
 
-    var targetLecture: Lecture?
+    var diaryEditContext: DiaryEditContext?
+    var diariesGroupedByDate: [(Date, [DiarySummary])] {
+        guard case .loaded(let diaries) = diaryListState else { return [] }
+        let selectedDiaries = diaries.first { $0.quarter == selectedQuarter }?.diaryList ?? []
+        return Dictionary(grouping: selectedDiaries) {
+            Calendar.current.startOfDay(for: $0.date)
+        }
+        .sorted { $0.key > $1.key }
+    }
 
     private(set) var diaryListState: DiaryListState = .loading
     private(set) var selectedQuarter: Quarter?
@@ -29,8 +37,7 @@ public final class LectureDiaryListViewModel {
         diaryListState = .loading
 
         do {
-            let diaries = try await repository.fetchDiaryList()
-
+            let diaries = try await diaryRepository.fetchDiaryList()
             if diaries.isEmpty {
                 diaryListState = .empty
             } else {
@@ -50,7 +57,7 @@ public final class LectureDiaryListViewModel {
 
     func deleteDiary(id: String) async {
         do {
-            try await repository.deleteDiary(diaryID: id)
+            try await diaryRepository.deleteDiary(diaryID: id)
             await loadDiaryList()
         } catch {
             // TODO: Handle error
@@ -59,14 +66,12 @@ public final class LectureDiaryListViewModel {
     }
 
     func getLectureForDiary() async {
-        //        guard let targetMetaData = services.lectureService.getCurrentOrNextSemesterPrimaryTable()
-        //        else { return nil }
-        //        do {
-        //            let targetTable = try await services.timetableService.fetchTimetableData(timetableId: targetMetaData.id)
-        //            return targetTable.lectures.first { $0.lectureId != nil }
-        //        } catch {
-        //            print("Failed to get lecture for diary: \(error)")
-        //        }
+        do {
+            diaryEditContext = try await diaryRepository.fetchTargetLecture()
+        } catch {
+            diaryEditContext = nil
+            diaryListState = .failed
+        }
     }
 
     private func extractQuarters(from diaries: [DiarySubmissionsOfYearSemester]) -> [Quarter] {

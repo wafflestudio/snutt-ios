@@ -12,7 +12,6 @@ import SwiftUIUtility
 
 public struct LectureDiaryListView: View {
     @State private var viewModel = LectureDiaryListViewModel()
-    @State private var showEditDiary = false
     @State private var showDiaryNotAvailableAlert = false
 
     public init() {}
@@ -24,8 +23,8 @@ public struct LectureDiaryListView: View {
                 ProgressView()
             case .empty:
                 emptyStateView
-            case .loaded(let diaries):
-                filledStateView(diaries: diaries)
+            case .loaded:
+                filledStateView
             case .failed:
                 errorView()
             }
@@ -35,10 +34,7 @@ public struct LectureDiaryListView: View {
         .task {
             await viewModel.loadDiaryList()
         }
-        .fullScreenCover(isPresented: $showEditDiary) {
-            // TODO: Pass actual lecture data
-            EditLectureDiaryScene(lectureID: "temp", lectureTitle: "컴퓨터의 개념 및 실습")
-        }
+        .overlayLectureDiarySheet($viewModel.diaryEditContext)
     }
 
     private var emptyStateView: some View {
@@ -57,7 +53,9 @@ public struct LectureDiaryListView: View {
             Button {
                 Task {
                     await viewModel.getLectureForDiary()
-                    showDiaryNotAvailableAlert = viewModel.targetLecture == nil
+                    if viewModel.diaryEditContext == nil {
+                        showDiaryNotAvailableAlert = true
+                    }
                 }
             } label: {
                 HStack(spacing: 4) {
@@ -77,54 +75,40 @@ public struct LectureDiaryListView: View {
             LectureDiaryStrings.lectureDiaryEmptyAlertTitle,
             isPresented: $showDiaryNotAvailableAlert
         ) {}
-        //        .fullScreenCover(item: $lectureForDiary) { lecture in
-        //            EditLectureDiaryScene(
-        //                viewModel: .init(container: viewModel.container),
-        //                lecture: lecture
-        //            )
-        //        }
     }
 
-    private func filledStateView(diaries: [DiarySubmissionsOfYearSemester]) -> some View {
-        ScrollView {
-            VStack(spacing: 0) {
-                // Quarter chips
-                if !viewModel.availableQuarters.isEmpty {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 8) {
-                            ForEach(viewModel.availableQuarters, id: \.self) { quarter in
-                                SemesterChip(
-                                    semester: quarter.id,
-                                    isSelected: viewModel.selectedQuarter == quarter,
-                                    onTap: {
-                                        viewModel.selectQuarter(quarter)
-                                    }
-                                )
+    private var filledStateView: some View {
+        VStack(spacing: 0) {
+            // Quarter chips
+            if !viewModel.availableQuarters.isEmpty {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        ForEach(viewModel.availableQuarters, id: \.self) { quarter in
+                            SemesterChip(
+                                semester: quarter.id,
+                                isSelected: viewModel.selectedQuarter == quarter,
+                                onTap: {
+                                    viewModel.selectQuarter(quarter)
+                                }
+                            )
+                        }
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 12)
+                }
+            }
+
+            ScrollView {
+                ForEach(viewModel.diariesGroupedByDate, id: \.0) { date, diariesForDate in
+                    ExpandableDiarySummaryCell(
+                        diaryList: diariesForDate,
+                        onDelete: { diaryID in
+                            Task {
+                                await viewModel.deleteDiary(id: diaryID)
                             }
                         }
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 12)
-                    }
+                    )
                 }
-
-                // Group diaries by date
-                let groupedDiaries = Dictionary(grouping: diaries.map(\.diaryList)) { diary in
-                    //Calendar.current.startOfDay(for: diary.date)
-                    diary.count
-                }
-                //
-                //                ForEach(groupedDiaries.keys.sorted(by: >), id: \.self) { date in
-                //                    if let diariesForDate = groupedDiaries[date] {
-                //                        ExpandableDiarySummaryCell(
-                //                            diaryList: diariesForDate,
-                //                            onDelete: { diaryID in
-                //                                Task {
-                //                                    await viewModel.deleteDiary(id: diaryID)
-                //                                }
-                //                            }
-                //                        )
-                //                    }
-                //                }
             }
         }
     }

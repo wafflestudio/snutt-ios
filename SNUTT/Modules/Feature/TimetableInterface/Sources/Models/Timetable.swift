@@ -36,7 +36,7 @@ public enum Semester: Int, Sendable, Codable, Equatable {
 
 public struct Quarter: Sendable, Codable, Equatable, Comparable, Identifiable, Hashable {
     public var id: String {
-        "\(year)-\(semester.rawValue)"
+        "\(String(year).suffix(2))-\(semester.rawValue)"
     }
 
     public let year: Int
