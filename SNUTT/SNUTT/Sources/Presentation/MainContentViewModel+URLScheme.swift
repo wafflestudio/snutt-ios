@@ -8,6 +8,7 @@
 import APIClientInterface
 import Foundation
 import Friends
+import LectureDiaryInterface
 import SharedUIComponents
 import Timetable
 import TimetableInterface
@@ -21,21 +22,19 @@ extension MainContentViewModel {
         case "notifications":
             selectedTab = .timetable
             notificationCenter.post(NavigateToNotificationsMessage())
-            return
         case "vacancy":
-            return
+            break
         case "friends":
             selectedTab = .friends
             notificationCenter.post(OpenFriendsMenuMessage())
-            return
         case "timetable-lecture":
             await handleTimetableLectureScheme(urlComponents.queryItems)
         case "bookmarks":
             handleBookmarkScheme(urlComponents.queryItems)
-            return
+        case "diary":
+            handleDiaryScheme(urlComponents.queryItems)
         case "kakaolink":
             handleKakaoLinkScheme(urlComponents.queryItems)
-            return
         default:
             return
         }
@@ -70,6 +69,18 @@ extension MainContentViewModel {
         selectedTab = .timetable
         notificationCenter.post(
             NavigateToBookmarkLecturePreviewMessage(year: year, semester: semester, lectureID: lectureID)
+        )
+    }
+
+    private func handleDiaryScheme(_ parameters: QueryParameters?) {
+        guard let lectureID = parameters?["lectureId"],
+            let lectureTitle = parameters?["courseTitle"]
+        else {
+            notificationCenter.post(.toast(.init(message: TimetableStrings.navigationErrorUnknown)))
+            return
+        }
+        notificationCenter.post(
+            NavigateToLectureDiaryMessage(lectureID: lectureID, lectureTitle: lectureTitle)
         )
     }
 

@@ -60,6 +60,15 @@ enum Semester: Int {
         case .winter: return "W"
         }
     }
+    
+    func mediumString() -> String {
+        switch self {
+        case .first: return "1"
+        case .second: return "2"
+        case .summer: return "여름"
+        case .winter: return "겨울"
+        }
+    }
 
     func longString() -> String {
         switch self {

@@ -66,7 +66,7 @@ public struct LectureReminderSettingsScene: View {
                             .foregroundStyle(SharedUIComponentsAsset.gray30.swiftUIColor)
                     } footer: {
                         Text(TimetableStrings.reminderSettingsFooter.asMarkdown())
-                            .lineHeight(with: .systemFont(ofSize: 13), percentage: 140)
+                            .font(.systemFont(ofSize: 13), lineHeightMultiple: 1.4)
                             .foregroundStyle(SharedUIComponentsAsset.gray30.swiftUIColor)
                             .padding(.top, 16)
                             .padding(.bottom, 48)

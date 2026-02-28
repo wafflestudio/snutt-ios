@@ -32,7 +32,7 @@ struct LectureReminderEmptyView: View {
                 .foregroundColor(.primary)
 
             Text(description.asMarkdown())
-                .lineHeight(with: .systemFont(ofSize: 13), percentage: 145)
+                .font(.systemFont(ofSize: 13), lineHeightMultiple: 1.45)
                 .foregroundColor(SharedUIComponentsAsset.gray30.swiftUIColor)
                 .multilineTextAlignment(.center)
 

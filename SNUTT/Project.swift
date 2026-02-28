@@ -120,6 +120,7 @@ let project = Project.app(
                 .target(name: "AnalyticsInterface"),
                 .target(name: "AppReviewPromptInterface"),
                 .target(name: "APIClientInterface"),
+                .target(name: "LectureDiaryInterface"),
                 .target(name: "TimetableInterface"),
                 .target(name: "ThemesInterface"),
                 .target(name: "VacancyInterface"),
@@ -224,6 +225,21 @@ let project = Project.app(
                 .external(name: "KakaoSDKTemplate"),
             ]
         ),
+        .module(
+            name: "LectureDiary",
+            category: .feature,
+            dependencies: [
+                .target(name: "AnalyticsInterface"),
+                .target(name: "LectureDiaryInterface"),
+                .target(name: "TimetableInterface"),
+                .target(name: "APIClientInterface"),
+                .target(name: "SharedUIComponents"),
+                .target(name: "SwiftUIUtility"),
+                .target(name: "FoundationUtility"),
+                .external(name: "Dependencies"),
+                .external(name: "MemberwiseInit"),
+            ]
+        ),
         // FeatureInterface
         .module(
             name: "TimetableInterface",
@@ -322,6 +338,16 @@ let project = Project.app(
             name: "FriendsInterface",
             category: .featureInterface,
             dependencies: []
+        ),
+        .module(
+            name: "LectureDiaryInterface",
+            category: .featureInterface,
+            dependencies: [
+                .target(name: "DependenciesUtility"),
+                .external(name: "Spyable"),
+                .external(name: "Dependencies"),
+                .external(name: "MemberwiseInit"),
+            ]
         ),
         // Shared
         .module(

@@ -25,6 +25,7 @@ struct MainContentView: View {
     @State private var viewModel = MainContentViewModel()
     @Environment(\.errorAlertHandler) private var errorAlertHandler
     @Environment(\.presentToast) private var presentToast
+    @AppStorage(AppStorageKeys.preferredColorScheme) private var selectedColorScheme: ColorSchemeSelection = .system
 
     var body: some View {
         ZStack {
@@ -66,6 +67,10 @@ struct MainContentView: View {
         .overlaySheet()
         .overlayPopup()
         .overlayADPopup()
+        //        .overlayLectureDiarySheet(
+        //            lectureId: viewModel.diaryEditContext?.lectureID ?? "",
+        //            lectureTitle: viewModel.diaryEditContext?.lectureTitle ?? ""
+        //        )
         .task {
             for await message in viewModel.notificationCenter.messages(of: ToastNotificationMessage.self) {
                 presentToast(message.toast)

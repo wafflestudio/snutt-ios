@@ -49,10 +49,19 @@
 		B800A38C2B77BD78008E8D84 /* SearchTimeMaskDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */; };
 		B80240B22CE8564500178428 /* TimerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80240B12CE8564500178428 /* TimerModifier.swift */; };
 		B824C7A72D50E39B002C3C71 /* PopoverTipModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B824C7A62D50E39B002C3C71 /* PopoverTipModifier.swift */; };
+		B825E8102DE741ED0068A4A1 /* LectureDiaryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825E80F2DE741E20068A4A1 /* LectureDiaryListView.swift */; };
+		B825E8122DE743780068A4A1 /* LectureDiary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825E8112DE743720068A4A1 /* LectureDiary.swift */; };
 		B82EA54C2B62C8490029FDF3 /* LectureMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */; };
 		B82EA54E2B6393190029FDF3 /* KakaoMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82EA54D2B6393190029FDF3 /* KakaoMapView.swift */; };
 		B84A4EA12B6035EE00C1E1A0 /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84A4EA02B6035EE00C1E1A0 /* Building.swift */; };
 		B84A4EA22B6259FF00C1E1A0 /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84A4EA02B6035EE00C1E1A0 /* Building.swift */; };
+		B84B4CB42EB7842A00212E8E /* ExpandableDiarySummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84B4CB32EB7842600212E8E /* ExpandableDiarySummaryCell.swift */; };
+		B84B4CB72EB784A100212E8E /* DiaryQuestionAnswerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84B4CB62EB7848600212E8E /* DiaryQuestionAnswerRow.swift */; };
+		B84B4CB92EB784FD00212E8E /* SemesterChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84B4CB82EB784FB00212E8E /* SemesterChip.swift */; };
+		B84B4CBB2EB8CDAB00212E8E /* OptionChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84B4CBA2EB8CD9400212E8E /* OptionChip.swift */; };
+		B84B4CBD2EB8D3A000212E8E /* ExtraCommentSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84B4CBC2EB8D39A00212E8E /* ExtraCommentSection.swift */; };
+		B84B4CC02EB8D46E00212E8E /* QuestionAnswerSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84B4CBF2EB8D46300212E8E /* QuestionAnswerSection.swift */; };
+		B84B4CC22EBA41E000212E8E /* WrappedOptionChipList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84B4CC12EBA41D800212E8E /* WrappedOptionChipList.swift */; };
 		B85B244D295BF36F00E6577E /* FindLocalIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85B244C295BF36F00E6577E /* FindLocalIdView.swift */; };
 		B861EF1929581FC7000DE5BC /* ResetPasswordScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B861EF1829581FC7000DE5BC /* ResetPasswordScene.swift */; };
 		B863301A2CE4D70F008E9003 /* EnterNewPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86330192CE4D70E008E9003 /* EnterNewPasswordView.swift */; };
@@ -89,6 +98,7 @@
 		B8A72A022A8F1ED000094FAA /* ChangeNicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A72A012A8F1ED000094FAA /* ChangeNicknameView.swift */; };
 		B8AF8D3E28C72A880056DE62 /* ValidationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AF8D3D28C72A880056DE62 /* ValidationUtils.swift */; };
 		B8B22D1629311F6200AB88F3 /* EmptyLectureList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B22D1529311F6200AB88F3 /* EmptyLectureList.swift */; };
+		B8B53CB02DBC84B800A3E3B2 /* LectureDiaryConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B53CAF2DBC84B800A3E3B2 /* LectureDiaryConfirmView.swift */; };
 		B8BC0C9028BE02D2007A1CA8 /* ReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */; };
 		B8C0C6512CD7EAB2005563F2 /* RoundedRectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C0C6502CD7EAB2005563F2 /* RoundedRectButton.swift */; };
 		B8C3F0192D23E29500DEB8C0 /* KakaoMapsSDK-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = B8C3F0182D23E29500DEB8C0 /* KakaoMapsSDK-SPM */; };
@@ -96,6 +106,11 @@
 		B8C5A2252E8F68DD00E9CEA4 /* SemesterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C5A2242E8F68DA00E9CEA4 /* SemesterRouter.swift */; };
 		B8C5A2272E8F70F300E9CEA4 /* SemesterDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C5A2262E8F70DE00E9CEA4 /* SemesterDto.swift */; };
 		B8C5A2292E8F890D00E9CEA4 /* LectureReminderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C5A2282E8F890800E9CEA4 /* LectureReminderState.swift */; };
+		B8CCCB7A2E75216100A0D036 /* EditLectureDiaryScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CCCB792E75215800A0D036 /* EditLectureDiaryScene.swift */; };
+		B8CCCB7C2E75218300A0D036 /* DiaryRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CCCB7B2E75218100A0D036 /* DiaryRouter.swift */; };
+		B8CCCB7E2E75219400A0D036 /* DiaryDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CCCB7D2E75219300A0D036 /* DiaryDto.swift */; };
+		B8D8FB842EABB0F50094ABE0 /* DiaryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D8FB832EABB0F20094ABE0 /* DiaryRepository.swift */; };
+		B8D8FB862EABB2F60094ABE0 /* DiaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D8FB852EABB2F30094ABE0 /* DiaryService.swift */; };
 		B8E51E6628B5EC500065248E /* NetworkConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */; };
 		B8E51E6828B615140065248E /* WebErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6728B615140065248E /* WebErrorView.swift */; };
 		B8E51E6B28B769680065248E /* ReviewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E51E6A28B769680065248E /* ReviewRouter.swift */; };
@@ -419,9 +434,18 @@
 		B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTimeMaskDto.swift; sourceTree = "<group>"; };
 		B80240B12CE8564500178428 /* TimerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerModifier.swift; sourceTree = "<group>"; };
 		B824C7A62D50E39B002C3C71 /* PopoverTipModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverTipModifier.swift; sourceTree = "<group>"; };
+		B825E80F2DE741E20068A4A1 /* LectureDiaryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureDiaryListView.swift; sourceTree = "<group>"; };
+		B825E8112DE743720068A4A1 /* LectureDiary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureDiary.swift; sourceTree = "<group>"; };
 		B82EA54B2B62C8490029FDF3 /* LectureMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureMapView.swift; sourceTree = "<group>"; };
 		B82EA54D2B6393190029FDF3 /* KakaoMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapView.swift; sourceTree = "<group>"; };
 		B84A4EA02B6035EE00C1E1A0 /* Building.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Building.swift; sourceTree = "<group>"; };
+		B84B4CB32EB7842600212E8E /* ExpandableDiarySummaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableDiarySummaryCell.swift; sourceTree = "<group>"; };
+		B84B4CB62EB7848600212E8E /* DiaryQuestionAnswerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryQuestionAnswerRow.swift; sourceTree = "<group>"; };
+		B84B4CB82EB784FB00212E8E /* SemesterChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemesterChip.swift; sourceTree = "<group>"; };
+		B84B4CBA2EB8CD9400212E8E /* OptionChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionChip.swift; sourceTree = "<group>"; };
+		B84B4CBC2EB8D39A00212E8E /* ExtraCommentSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtraCommentSection.swift; sourceTree = "<group>"; };
+		B84B4CBF2EB8D46300212E8E /* QuestionAnswerSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionAnswerSection.swift; sourceTree = "<group>"; };
+		B84B4CC12EBA41D800212E8E /* WrappedOptionChipList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedOptionChipList.swift; sourceTree = "<group>"; };
 		B85B244C295BF36F00E6577E /* FindLocalIdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindLocalIdView.swift; sourceTree = "<group>"; };
 		B861EF1829581FC7000DE5BC /* ResetPasswordScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordScene.swift; sourceTree = "<group>"; };
 		B86330192CE4D70E008E9003 /* EnterNewPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterNewPasswordView.swift; sourceTree = "<group>"; };
@@ -457,12 +481,18 @@
 		B8A72A012A8F1ED000094FAA /* ChangeNicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNicknameView.swift; sourceTree = "<group>"; };
 		B8AF8D3D28C72A880056DE62 /* ValidationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationUtils.swift; sourceTree = "<group>"; };
 		B8B22D1529311F6200AB88F3 /* EmptyLectureList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyLectureList.swift; sourceTree = "<group>"; };
+		B8B53CAF2DBC84B800A3E3B2 /* LectureDiaryConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureDiaryConfirmView.swift; sourceTree = "<group>"; };
 		B8BC0C8F28BE02D2007A1CA8 /* ReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRepository.swift; sourceTree = "<group>"; };
 		B8C0C6502CD7EAB2005563F2 /* RoundedRectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedRectButton.swift; sourceTree = "<group>"; };
 		B8C4F3342CA8F48E006B6BAD /* NoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeView.swift; sourceTree = "<group>"; };
 		B8C5A2242E8F68DA00E9CEA4 /* SemesterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemesterRouter.swift; sourceTree = "<group>"; };
 		B8C5A2262E8F70DE00E9CEA4 /* SemesterDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemesterDto.swift; sourceTree = "<group>"; };
 		B8C5A2282E8F890800E9CEA4 /* LectureReminderState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureReminderState.swift; sourceTree = "<group>"; };
+		B8CCCB792E75215800A0D036 /* EditLectureDiaryScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLectureDiaryScene.swift; sourceTree = "<group>"; };
+		B8CCCB7B2E75218100A0D036 /* DiaryRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryRouter.swift; sourceTree = "<group>"; };
+		B8CCCB7D2E75219300A0D036 /* DiaryDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDto.swift; sourceTree = "<group>"; };
+		B8D8FB832EABB0F20094ABE0 /* DiaryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryRepository.swift; sourceTree = "<group>"; };
+		B8D8FB852EABB2F30094ABE0 /* DiaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryService.swift; sourceTree = "<group>"; };
 		B8E51E5C28B546770065248E /* DebugConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DebugConfig.xcconfig; sourceTree = "<group>"; };
 		B8E51E5E28B547000065248E /* ReleaseConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ReleaseConfig.xcconfig; sourceTree = "<group>"; };
 		B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfiguration.swift; sourceTree = "<group>"; };
@@ -734,6 +764,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B84B4CB52EB7845A00212E8E /* LectureDiary */ = {
+			isa = PBXGroup;
+			children = (
+				B84B4CBF2EB8D46300212E8E /* QuestionAnswerSection.swift */,
+				B84B4CBC2EB8D39A00212E8E /* ExtraCommentSection.swift */,
+				B84B4CBA2EB8CD9400212E8E /* OptionChip.swift */,
+				B84B4CC12EBA41D800212E8E /* WrappedOptionChipList.swift */,
+				B84B4CB82EB784FB00212E8E /* SemesterChip.swift */,
+				B84B4CB62EB7848600212E8E /* DiaryQuestionAnswerRow.swift */,
+				B84B4CB32EB7842600212E8E /* ExpandableDiarySummaryCell.swift */,
+			);
+			path = LectureDiary;
+			sourceTree = "<group>";
+		};
+		B8B53CAA2DBC047C00A3E3B2 /* LectureDiary */ = {
+			isa = PBXGroup;
+			children = (
+				B8CCCB792E75215800A0D036 /* EditLectureDiaryScene.swift */,
+				B825E80F2DE741E20068A4A1 /* LectureDiaryListView.swift */,
+				B8B53CAF2DBC84B800A3E3B2 /* LectureDiaryConfirmView.swift */,
+			);
+			path = LectureDiary;
+			sourceTree = "<group>";
+		};
 		B8E51E6928B75E9E0065248E /* States */ = {
 			isa = PBXGroup;
 			children = (
@@ -987,6 +1041,7 @@
 		DC1E0ED2287738DF005632A3 /* Router */ = {
 			isa = PBXGroup;
 			children = (
+				B8CCCB7B2E75218100A0D036 /* DiaryRouter.swift */,
 				DC1E0ED02877381F005632A3 /* Router.swift */,
 				BE9413B828C20A4000171060 /* AuthRouter.swift */,
 				DC1E0ED3287738F2005632A3 /* TimetableRouter.swift */,
@@ -1085,6 +1140,7 @@
 		DC9C2CA928780589009EC3BC /* Dto */ = {
 			isa = PBXGroup;
 			children = (
+				B8CCCB7D2E75219300A0D036 /* DiaryDto.swift */,
 				DC9C2CAA287805D3009EC3BC /* TimetableDto.swift */,
 				BE682BFA2887FC27009EBCB7 /* SearchTagDto.swift */,
 				B800A38A2B76132C008E8D84 /* SearchTimeMaskDto.swift */,
@@ -1107,6 +1163,7 @@
 		DCD41A5E27E5CC4700CF380E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B825E8112DE743720068A4A1 /* LectureDiary.swift */,
 				DCD41A5F27E5CC7700CF380E /* Timetable.swift */,
 				BE982FBB281D5227005F71E6 /* TimePlace.swift */,
 				BEDF507427F4289B00CDCC13 /* Lecture.swift */,
@@ -1146,6 +1203,7 @@
 				CE3384B92A86704100437CC5 /* FriendsService.swift */,
 				738406F62B57134300007E62 /* ThemeService.swift */,
 				73C930E12DD0D47C0091F08C /* PushService.swift */,
+				B8D8FB852EABB2F30094ABE0 /* DiaryService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1172,6 +1230,7 @@
 				B8E51E6528B5EC500065248E /* NetworkConfiguration.swift */,
 				738406F22B57119100007E62 /* ThemeRepository.swift */,
 				73C930DF2DD0D3030091F08C /* PushRepository.swift */,
+				B8D8FB832EABB0F20094ABE0 /* DiaryRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -1192,6 +1251,7 @@
 		DCD41A6C27E5CDBE00CF380E /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				B8B53CAA2DBC047C00A3E3B2 /* LectureDiary */,
 				B8F40EA7289809AD0021A2A9 /* Settings */,
 				BEEBDFB9286B3A0C00DB5976 /* TabScene.swift */,
 				BE7E230027FF20EE004DC202 /* TimetableScene.swift */,
@@ -1247,6 +1307,7 @@
 				CE4F2C6129BA45420007194E /* TimeRangeSlider.swift */,
 				738407002B571D8E00007E62 /* ThemeIcon.swift */,
 				738407022B571E6200007E62 /* ThemeBottomSheet.swift */,
+				B84B4CB52EB7845A00212E8E /* LectureDiary */,
 				CE5BA5062B2EBF5600F15D10 /* Lecture */,
 				CEDDCA7C2A6AEF0E00474D4E /* Vacancy */,
 				BE28036028E884D300B2B1AB /* WebViews */,
@@ -1553,6 +1614,7 @@
 				B8657C802E62D34D004359E8 /* LectureReminderRouter.swift in Sources */,
 				B87B317428D816E1005C170B /* MenuSheet.swift in Sources */,
 				BEB57C2A28BCA7E400279EFF /* LectureColorList.swift in Sources */,
+				B84B4CB42EB7842A00212E8E /* ExpandableDiarySummaryCell.swift in Sources */,
 				BEE5CE10289E738900CF5ED3 /* MenuThemeSheet.swift in Sources */,
 				CE17DF892A7E9670000432B8 /* ConfigRepository.swift in Sources */,
 				738406F72B57134300007E62 /* ThemeService.swift in Sources */,
@@ -1570,9 +1632,11 @@
 				BE419B8D288B8C5A00FA9590 /* View+Debug.swift in Sources */,
 				B8EDF1572E16121F00FF23EB /* LectureReminderSettingScene.swift in Sources */,
 				B82EA54E2B6393190029FDF3 /* KakaoMapView.swift in Sources */,
+				B8CCCB7E2E75219400A0D036 /* DiaryDto.swift in Sources */,
 				BE419B9A288B915800FA9590 /* TimetableUtils.swift in Sources */,
 				B8823BC32BC2ED41003A3B69 /* BuildingRouter.swift in Sources */,
 				B8AF8D3E28C72A880056DE62 /* ValidationUtils.swift in Sources */,
+				B84B4CC22EBA41E000212E8E /* WrappedOptionChipList.swift in Sources */,
 				CEDDCA7E2A6AEF2200474D4E /* VacancyLectureList.swift in Sources */,
 				CE85901E2C5E549600ECFE9E /* FriendState.swift in Sources */,
 				B82EA54C2B62C8490029FDF3 /* LectureMapView.swift in Sources */,
@@ -1583,6 +1647,7 @@
 				CE9820522A0A0BE9001037F5 /* NetworkLogEntryView.swift in Sources */,
 				736AF84C2C2F275E00ED9C1A /* GoogleLogin.swift in Sources */,
 				BEE86519289E287400D3D0E4 /* MenuRenameSheet.swift in Sources */,
+				B8D8FB862EABB2F60094ABE0 /* DiaryService.swift in Sources */,
 				BEDE34DC2879B40100525014 /* AppEnvironment.swift in Sources */,
 				CEDDCA842A6AFBF700474D4E /* VacancyDto.swift in Sources */,
 				BEDF507327F427FA00CDCC13 /* LectureListScene.swift in Sources */,
@@ -1606,6 +1671,7 @@
 				BE6D892A28EFC637000607A6 /* EtcRepository.swift in Sources */,
 				CE63A3BC2A21B06900A633FC /* RoutingState.swift in Sources */,
 				B8C0C6512CD7EAB2005563F2 /* RoundedRectButton.swift in Sources */,
+				B825E8122DE743780068A4A1 /* LectureDiary.swift in Sources */,
 				BE9413BD28C2119500171060 /* NotificationRouter.swift in Sources */,
 				731DA005297BC8990027BA25 /* BookmarkScene.swift in Sources */,
 				BE28036428E8850E00B2B1AB /* WebViewType.swift in Sources */,
@@ -1616,6 +1682,7 @@
 				CEA428992D71DF4400944DAB /* AnalyticsScreen.swift in Sources */,
 				DC1E0ECF28772F13005632A3 /* NetworkUtils.swift in Sources */,
 				BE6D893528EFD68E000607A6 /* String+Localized.swift in Sources */,
+				B8D8FB842EABB0F50094ABE0 /* DiaryRepository.swift in Sources */,
 				BEB3B6A228CDB7A400E56062 /* LectureTimePicker.swift in Sources */,
 				CEA4289E2D71E23A00944DAB /* AnalyticsEvent.swift in Sources */,
 				CECDD3702CC3E4B400BB5E5B /* WebProgressView.swift in Sources */,
@@ -1631,6 +1698,7 @@
 				BE77D0A028AEAB920067A9D8 /* CourseBookRepository.swift in Sources */,
 				B88D170128AF71E300E2D652 /* UserSupportView.swift in Sources */,
 				BE98A00C288A9E2A00C2CE95 /* MenuSection.swift in Sources */,
+				B825E8102DE741ED0068A4A1 /* LectureDiaryListView.swift in Sources */,
 				BED04D2F28EA6FA600937E4C /* SettingsMenuItem.swift in Sources */,
 				738406FF2B5718C600007E62 /* ThemeDetailViewModel.swift in Sources */,
 				B8B22D1629311F6200AB88F3 /* EmptyLectureList.swift in Sources */,
@@ -1669,6 +1737,7 @@
 				BE28036A28E93EEF00B2B1AB /* LoginScene.swift in Sources */,
 				BECDB89A2840CFAA00F62AC8 /* MenuSheetScene.swift in Sources */,
 				DCD41A6327E5CCD500CF380E /* TimetableService.swift in Sources */,
+				B84B4CBD2EB8D3A000212E8E /* ExtraCommentSection.swift in Sources */,
 				73C930E42DD0D8040091F08C /* PushState.swift in Sources */,
 				DC9C2CAB287805D3009EC3BC /* TimetableDto.swift in Sources */,
 				BE682BFD2887FC78009EBCB7 /* SearchTag.swift in Sources */,
@@ -1695,6 +1764,7 @@
 				BE682BD928870718009EBCB7 /* LectureRepository.swift in Sources */,
 				BE98A00A288A90C000C2CE95 /* Logo.swift in Sources */,
 				BE982FB8281D0B33005F71E6 /* TimetableBlocksLayer.swift in Sources */,
+				B8CCCB7C2E75218300A0D036 /* DiaryRouter.swift in Sources */,
 				7359E9122DCF20AB00566337 /* PushNotificationSettingScene.swift in Sources */,
 				BEEBDFBC286B408E00DB5976 /* LectureBlocks.swift in Sources */,
 				BE77D09E28AEAA5A0067A9D8 /* CourseBookRouter.swift in Sources */,
@@ -1730,9 +1800,11 @@
 				BEF9233628E7EE45004AFCB2 /* SignUpView.swift in Sources */,
 				B8F40EAF28980D990021A2A9 /* DeveloperInfoView.swift in Sources */,
 				DC1E0ECC28771B32005632A3 /* TimetableRepository.swift in Sources */,
+				B84B4CBB2EB8CDAB00212E8E /* OptionChip.swift in Sources */,
 				B87DF6E92914F8FC008BB95B /* Popup.swift in Sources */,
 				B86C4CCF294DCA150019CE51 /* VerificationCodeView.swift in Sources */,
 				738406F52B5712BF00007E62 /* ThemeRouter.swift in Sources */,
+				B8CCCB7A2E75216100A0D036 /* EditLectureDiaryScene.swift in Sources */,
 				B89826D128F4971000477A14 /* SyllabusWebView.swift in Sources */,
 				BE9413D928C3AFA500171060 /* EmptySearchResult.swift in Sources */,
 				CE72435F2B30235300F9E0D7 /* SearchLectureSceneViewModel.swift in Sources */,
@@ -1754,6 +1826,7 @@
 				BE682BFB2887FC27009EBCB7 /* SearchTagDto.swift in Sources */,
 				CE17DF932A7FCB32000432B8 /* VacancyGuidePopup.swift in Sources */,
 				BEB57C2128B6758200279EFF /* Animation+Custom.swift in Sources */,
+				B8B53CB02DBC84B800A3E3B2 /* LectureDiaryConfirmView.swift in Sources */,
 				BE982FBE281D6244005F71E6 /* TimetableBlock.swift in Sources */,
 				CE17DF872A7E9560000432B8 /* ConfigRouter.swift in Sources */,
 				BE682BD128864CA8009EBCB7 /* LectureRouter.swift in Sources */,
@@ -1779,6 +1852,7 @@
 				B8E51E6B28B769680065248E /* ReviewRouter.swift in Sources */,
 				CE3F37AD29C5D452009EDCCC /* Collection+Getter.swift in Sources */,
 				BE8BB3AF285D77D000070A66 /* SearchBar.swift in Sources */,
+				B84B4CB72EB784A100212E8E /* DiaryQuestionAnswerRow.swift in Sources */,
 				B8C5A2252E8F68DD00E9CEA4 /* SemesterRouter.swift in Sources */,
 				B8F40EB328980DFF0021A2A9 /* PrivacyPolicyView.swift in Sources */,
 				738407012B571D8E00007E62 /* ThemeIcon.swift in Sources */,
@@ -1804,6 +1878,8 @@
 				CEA428A42D71FE4D00944DAB /* Encodable+Dictionary.swift in Sources */,
 				DCD41A7227E5CE1D00CF380E /* TimetableViewModel.swift in Sources */,
 				BE682BB6287C40AF009EBCB7 /* BasicTheme.swift in Sources */,
+				B84B4CC02EB8D46E00212E8E /* QuestionAnswerSection.swift in Sources */,
+				B84B4CB92EB784FD00212E8E /* SemesterChip.swift in Sources */,
 				BE779B1C28E72622009960EB /* AnimatedTextField.swift in Sources */,
 				B8BC0C9028BE02D2007A1CA8 /* ReviewRepository.swift in Sources */,
 				BE9C90ED2948F4BE00003AA6 /* ColorSchemeSettingScene.swift in Sources */,

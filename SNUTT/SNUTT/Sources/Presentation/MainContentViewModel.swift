@@ -8,6 +8,7 @@
 import Combine
 import Dependencies
 import Foundation
+import LectureDiaryInterface
 import Observation
 import SwiftUtility
 import Themes
@@ -26,6 +27,8 @@ final class MainContentViewModel {
 
     var selectedTab: TabItem = .timetable
     private var cancellables: Set<AnyCancellable> = []
+
+    var diaryEditContext: DiaryEditContext?
 
     let themeViewModel: ThemeViewModel
     let timetableViewModel: TimetableViewModel
@@ -69,6 +72,17 @@ final class MainContentViewModel {
             subscribing: notificationCenter.messages(of: NavigateToLectureRemindersMessage.self)
         ) { @MainActor viewModel, _ in
             viewModel.selectedTab = .settings
+        }
+
+        Task.scoped(
+            to: self,
+            subscribing: notificationCenter.messages(of: NavigateToLectureDiaryMessage.self)
+        ) { @MainActor viewModel, nextLecture in
+            viewModel.diaryEditContext = .init(
+                lectureID: nextLecture.lectureID,
+                lectureTitle: nextLecture.lectureTitle
+            )
+            viewModel.selectedTab = .timetable
         }
     }
 }
