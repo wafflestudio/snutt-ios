@@ -5,13 +5,14 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
-import APIClientInterface
 import Dependencies
 import Observation
 
 @MainActor
 @Observable
 final class PushNotificationSettingsViewModel {
+    @ObservationIgnored
+    @Dependency(\.pushNotificationUseCase) private var useCase
 
     private var isLoaded = false
 
@@ -32,8 +33,9 @@ final class PushNotificationSettingsViewModel {
     func loadPreferences() async {
         isLoaded = false
         do {
-            isLectureUpdateOn = true
-            isVacancyOn = true
+            let preferences = try await useCase.fetchPreferences()
+            isLectureUpdateOn = preferences.isLectureUpdateEnabled
+            isVacancyOn = preferences.isVacancyEnabled
         } catch {
             // Keep default values on failure
         }
@@ -42,7 +44,11 @@ final class PushNotificationSettingsViewModel {
 
     private func savePreferences() async {
         do {
-            // TODO
+            let preferences = PushNotificationPreferences(
+                isLectureUpdateEnabled: isLectureUpdateOn,
+                isVacancyEnabled: isVacancyOn
+            )
+            try await useCase.savePreferences(preferences)
         } catch {
             // Error handling deferred to global error handling
         }
