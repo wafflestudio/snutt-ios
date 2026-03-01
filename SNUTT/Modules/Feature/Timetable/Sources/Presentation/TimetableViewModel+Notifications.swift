@@ -13,12 +13,6 @@ extension TimetableViewModel {
     func subscribeToNotifications() {
         Task.scoped(
             to: self,
-            subscribing: notificationCenter.messages(of: NavigateToNotificationsMessage.self)
-        ) { @MainActor viewModel, _ in
-            viewModel.paths = [.notificationList]
-        }
-        Task.scoped(
-            to: self,
             subscribing: notificationCenter.messages(of: NavigateToLectureMessage.self)
         ) { @MainActor viewModel, message in
             await viewModel.handleLectureNavigation(message: message)
