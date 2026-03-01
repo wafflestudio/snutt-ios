@@ -12,22 +12,27 @@ struct PushNotificationSettingsView: View {
 
     var body: some View {
         Form {
-            Section {
-                Toggle(
-                    SettingsStrings.servicePushNotificationLectureUpdate,
-                    isOn: $viewModel.preferences.isLectureUpdateEnabled
-                )
-                .animation(.easeInOut, value: viewModel.preferences.isLectureUpdateEnabled)
-                Toggle(
-                    SettingsStrings.servicePushNotificationVacancy,
-                    isOn: $viewModel.preferences.isVacancyEnabled
-                )
-                .animation(.easeInOut, value: viewModel.preferences.isVacancyEnabled)
-                Toggle(
-                    SettingsStrings.servicePushNotificationDiary,
-                    isOn: $viewModel.preferences.isDiaryEnabled
-                )
-                .animation(.easeInOut, value: viewModel.preferences.isDiaryEnabled)
+            switch viewModel.loadState {
+            case .loading:
+                ProgressView()
+            case .loaded, .failed:
+                Section {
+                    Toggle(
+                        SettingsStrings.servicePushNotificationLectureUpdate,
+                        isOn: $viewModel.preferences.isLectureUpdateEnabled
+                    )
+                    .animation(.easeInOut, value: viewModel.preferences.isLectureUpdateEnabled)
+                    Toggle(
+                        SettingsStrings.servicePushNotificationVacancy,
+                        isOn: $viewModel.preferences.isVacancyEnabled
+                    )
+                    .animation(.easeInOut, value: viewModel.preferences.isVacancyEnabled)
+                    Toggle(
+                        SettingsStrings.servicePushNotificationDiary,
+                        isOn: $viewModel.preferences.isDiaryEnabled
+                    )
+                    .animation(.easeInOut, value: viewModel.preferences.isDiaryEnabled)
+                }
             }
         }
         .navigationTitle(SettingsStrings.servicePushNotification)
@@ -35,6 +40,14 @@ struct PushNotificationSettingsView: View {
         .task {
             await viewModel.loadPreferences()
         }
+    }
+}
+
+extension PushNotificationSettingsViewModel {
+    enum LoadState {
+        case loading
+        case loaded
+        case failed
     }
 }
 

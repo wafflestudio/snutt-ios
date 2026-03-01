@@ -13,10 +13,11 @@ struct PushNotificationAPIRepository: PushNotificationRepository {
 
     func fetchPreferences() async throws -> PushNotificationPreferences {
         let prefs = try await apiClient.getPushPreferences().ok.body.json.pushPreferences
+        let prefMap = Dictionary(uniqueKeysWithValues: prefs.map { ($0._type, $0.isEnabled) })
         return PushNotificationPreferences(
-            isLectureUpdateEnabled: prefs.first(where: { $0._type == .LECTURE_UPDATE })?.isEnabled ?? true,
-            isVacancyEnabled: prefs.first(where: { $0._type == .VACANCY_NOTIFICATION })?.isEnabled ?? true,
-            isDiaryEnabled: prefs.first(where: { $0._type == .DIARY })?.isEnabled ?? true
+            isLectureUpdateEnabled: prefMap[.LECTURE_UPDATE] ?? true,
+            isVacancyEnabled: prefMap[.VACANCY_NOTIFICATION] ?? true,
+            isDiaryEnabled: prefMap[.DIARY] ?? true
         )
     }
 
