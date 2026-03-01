@@ -6,7 +6,7 @@
 //
 
 struct PushNotificationPreferences: Sendable {
-    let isLectureUpdateEnabled: Bool
-    let isVacancyEnabled: Bool
-    let isDiaryEnabled: Bool
+    var isLectureUpdateEnabled: Bool = true
+    var isVacancyEnabled: Bool = true
+    var isDiaryEnabled: Bool = true
 }

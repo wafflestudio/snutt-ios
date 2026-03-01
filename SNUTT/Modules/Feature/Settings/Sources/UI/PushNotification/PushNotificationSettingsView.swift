@@ -13,12 +13,21 @@ struct PushNotificationSettingsView: View {
     var body: some View {
         Form {
             Section {
-                Toggle(SettingsStrings.servicePushNotificationLectureUpdate, isOn: $viewModel.isLectureUpdateOn)
-                    .animation(.easeInOut, value: viewModel.isLectureUpdateOn)
-                Toggle(SettingsStrings.servicePushNotificationVacancy, isOn: $viewModel.isVacancyOn)
-                    .animation(.easeInOut, value: viewModel.isVacancyOn)
-                Toggle(SettingsStrings.servicePushNotificationDiary, isOn: $viewModel.isDiaryOn)
-                    .animation(.easeInOut, value: viewModel.isDiaryOn)
+                Toggle(
+                    SettingsStrings.servicePushNotificationLectureUpdate,
+                    isOn: $viewModel.preferences.isLectureUpdateEnabled
+                )
+                .animation(.easeInOut, value: viewModel.preferences.isLectureUpdateEnabled)
+                Toggle(
+                    SettingsStrings.servicePushNotificationVacancy,
+                    isOn: $viewModel.preferences.isVacancyEnabled
+                )
+                .animation(.easeInOut, value: viewModel.preferences.isVacancyEnabled)
+                Toggle(
+                    SettingsStrings.servicePushNotificationDiary,
+                    isOn: $viewModel.preferences.isDiaryEnabled
+                )
+                .animation(.easeInOut, value: viewModel.preferences.isDiaryEnabled)
             }
         }
         .navigationTitle(SettingsStrings.servicePushNotification)
