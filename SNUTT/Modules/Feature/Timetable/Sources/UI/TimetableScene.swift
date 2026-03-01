@@ -14,6 +14,7 @@ import TimetableUIComponents
 
 public struct TimetableScene: View {
     @Dependency(\.application) private var application
+    @Dependency(\.notificationCenter) var notificationCenter
     @Bindable var timetableViewModel: TimetableViewModel
     @Environment(\.errorAlertHandler) private var errorAlertHandler
     @Environment(\.themeUIProvider) private var themeUIProvider

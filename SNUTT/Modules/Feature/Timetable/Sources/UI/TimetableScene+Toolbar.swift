@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TimetableInterface
 
 extension TimetableScene {
     var toolbarContent: some View {
@@ -53,6 +54,11 @@ extension TimetableScene {
             .timetableMenuSheet(isPresented: $timetableViewModel.isMenuPresented, viewModel: timetableViewModel)
         }
         ToolbarItemGroup(placement: .topBarTrailing) {
+            Button {
+                notificationCenter.post(NavigateToBookmarkMessage())
+            } label: {
+                TimetableAsset.navBookmark.swiftUIImage
+            }
             Button {
                 timetableViewModel.paths = [.lectureList]
             } label: {
