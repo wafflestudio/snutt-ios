@@ -80,6 +80,10 @@
 
 // MARK: 서비스
 "service" = "Service";
+"service.pushNotification" = "Push Notification Settings";
+"service.pushNotification.lectureUpdate" = "Lecture Updates";
+"service.pushNotification.vacancy" = "Vacancy Notification";
+"service.pushNotification.diary" = "Lecture Diary Notifications";
 "service.vacancy" = "Vacancy Notification";
 "service.lectureReminder" = "Lecture Reminder";
 "service.lectureDiary" = "Lecture Diary";

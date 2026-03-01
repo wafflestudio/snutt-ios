@@ -31,6 +31,7 @@ final class SettingsViewModel {
 
     let timetableSettingsViewModel = TimetableSettingsViewModel()
     let myAccountViewModel = MyAccountViewModel()
+    let pushNotificationSettingsViewModel = PushNotificationSettingsViewModel()
 
     init() {
         Task.scoped(
