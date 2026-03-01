@@ -7,7 +7,6 @@
 
 import AnalyticsInterface
 import Dependencies
-import NotificationsInterface
 import SharedUIComponents
 import SwiftUI
 import TimetableInterface

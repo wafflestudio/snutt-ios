@@ -56,6 +56,7 @@ struct MainContentView: View {
                 TabScene(
                     tabItem: TabItem.settings,
                     rootView: SettingsScene()
+                        .environment(\.notificationsUIProvider, NotificationsUIProvider())
                         .environment(\.vacancyUIProvider, VacancyUIProvider())
                         #if DEBUG
                             .environment(\.networkLogUIProvider, NetworkLogUIProvider())

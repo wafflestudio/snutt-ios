@@ -25,9 +25,6 @@ extension TimetableScene {
             ToolbarButton(image: TimetableAsset.navList.image) {
                 timetableViewModel.paths = [.lectureList]
             }
-            ToolbarButton(image: TimetableAsset.navAlarmOff.image) {
-                timetableViewModel.paths = [.notificationList]
-            }
         }
     }
 
@@ -60,11 +57,6 @@ extension TimetableScene {
                 timetableViewModel.paths = [.lectureList]
             } label: {
                 TimetableAsset.navList.swiftUIImage
-            }
-            Button {
-                timetableViewModel.paths = [.notificationList]
-            } label: {
-                TimetableAsset.navAlarmOff.swiftUIImage
             }
         }
     }

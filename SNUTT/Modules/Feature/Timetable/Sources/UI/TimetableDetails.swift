@@ -5,6 +5,7 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import NotificationsInterface
 import SwiftUI
 import ThemesInterface
 

@@ -121,6 +121,7 @@ let project = Project.app(
                 .target(name: "AppReviewPromptInterface"),
                 .target(name: "APIClientInterface"),
                 .target(name: "LectureDiaryInterface"),
+                .target(name: "NotificationsInterface"),
                 .target(name: "TimetableInterface"),
                 .target(name: "ThemesInterface"),
                 .target(name: "VacancyInterface"),
@@ -267,7 +268,11 @@ let project = Project.app(
         .module(
             name: "NotificationsInterface",
             category: .featureInterface,
-            dependencies: []
+            dependencies: [
+                .target(name: "DependenciesUtility"),
+                .external(name: "Spyable"),
+                .external(name: "Dependencies"),
+            ]
         ),
         .module(
             name: "ConfigsInterface",

@@ -9,6 +9,7 @@ import APIClientInterface
 import Foundation
 import Friends
 import LectureDiaryInterface
+import NotificationsInterface
 import SharedUIComponents
 import Timetable
 import TimetableInterface
@@ -20,7 +21,7 @@ extension MainContentViewModel {
         guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true) else { return }
         switch urlComponents.host {
         case "notifications":
-            selectedTab = .timetable
+            selectedTab = .settings
             notificationCenter.post(NavigateToNotificationsMessage())
         case "vacancy":
             break

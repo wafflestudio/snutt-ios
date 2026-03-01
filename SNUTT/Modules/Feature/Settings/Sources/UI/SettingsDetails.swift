@@ -7,6 +7,7 @@
 
 import APIClientInterface
 import LectureDiaryInterface
+import NotificationsInterface
 import SharedUIComponents
 import SwiftUI
 import ThemesInterface
@@ -18,6 +19,7 @@ struct SettingsDetails: View {
     let viewModel: SettingsViewModel
 
     @Environment(\.vacancyUIProvider) private var vacancyUIProvider
+    @Environment(\.notificationsUIProvider) private var notificationsUIProvider
     @Environment(\.timetableUIProvider) private var timetableUIProvider
     @Environment(\.lectureDiaryUIProvider) private var lectureDiaryUIProvider
     @Environment(\.themeUIProvider) private var themeUIProvider
@@ -30,6 +32,8 @@ struct SettingsDetails: View {
         case .myAccount:
             MyAccountScene(viewModel: viewModel.myAccountViewModel)
                 .analyticsScreen(.settingsAccount)
+        case .notificationInbox:
+            AnyView(notificationsUIProvider.makeNotificationsScene())
         case .appearance:
             ColorModeSettingView()
                 .analyticsScreen(.settingsColorScheme)
