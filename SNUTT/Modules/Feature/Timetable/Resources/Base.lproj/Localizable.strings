@@ -35,6 +35,13 @@
 "sheet.ellipsis.theme" = "시간표 테마 설정";
 "sheet.ellipsis.delete" = "시간표 삭제";
 
+"timetable.addMenu.search" = "검색으로 추가";
+"timetable.addMenu.direct" = "직접 추가";
+"timetable.addMenu.currentList" = "현재 시간표 목록";
+"timetable.addMenu.vacancyList" = "빈자리 알림 목록";
+"timetable.addMenu.section.add" = "강의 추가";
+"timetable.addMenu.section.list" = "목록으로 보기";
+
 "search.filter.sortCriteria" = "정렬 기준";
 "search.filter.classification" = "분류";
 "search.filter.department" = "학과";

@@ -61,6 +61,24 @@ public struct TimetableScene: View {
                     try await timetableViewModel.loadCourseBooks()
                 }
             }
+            .sheet(item: $timetableViewModel.lectureCreateDraft) { placeholderLecture in
+                if let currentTimetable = timetableViewModel.currentTimetable {
+                    let viewModel = LectureEditDetailViewModel(
+                        displayMode: .create(timetable: currentTimetable),
+                        entryLecture: placeholderLecture
+                    )
+                    NavigationStack {
+                        LectureEditDetailScene(
+                            viewModel: viewModel,
+                            belongsToOtherTimetable: false
+                        )
+                        .handleLectureTimeConflict()
+                        .analyticsScreen(.lectureCreate)
+                    }
+                } else {
+                    ProgressView()
+                }
+            }
             .sheet(isPresented: $timetableViewModel.isThemeSheetPresented) {
                 themeUIProvider.menuThemeSelectionSheet()
             }

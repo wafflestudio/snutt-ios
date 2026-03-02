@@ -34,6 +34,13 @@
 "sheet.ellipsis.share" = "Share timetable image";
 "sheet.ellipsis.theme" = "Configure theme";
 "sheet.ellipsis.delete" = "Delete timetable";
+
+"timetable.addMenu.search" = "Add by Search";
+"timetable.addMenu.direct" = "Add Manually";
+"timetable.addMenu.currentList" = "Current Timetable List";
+"timetable.addMenu.vacancyList" = "Vacancy Notification List";
+"timetable.addMenu.section.add" = "Add Lecture";
+"timetable.addMenu.section.list" = "Browse Lists";
 "search.filter.sortCriteria" = "Sort By";
 "search.filter.classification" = "Classification";
 "search.filter.department" = "Department";

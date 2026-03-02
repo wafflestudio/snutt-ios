@@ -73,6 +73,7 @@ public class TimetableViewModel: TimetableViewModelProtocol {
 
     var isMenuPresented = false
     var isThemeSheetPresented = false
+    var lectureCreateDraft: Lecture?
 
     private(set) var configuration: TimetableConfiguration = .init()
     private var configurationObserver: Task<Void, Never>?
@@ -208,6 +209,45 @@ public class TimetableViewModel: TimetableViewModelProtocol {
         timetableLoadState = .loaded(updatedTimetable)
     }
 
+    func presentLectureCreateScene() {
+        lectureCreateDraft = makeLectureCreatePlaceholder()
+    }
+
+    private func makeLectureCreatePlaceholder() -> Lecture {
+        let mondayMorningTimePlace = TimePlace(
+            id: UUID().uuidString,
+            day: .mon,
+            startTime: .init(hour: 9, minute: 0),
+            endTime: .init(hour: 10, minute: 0),
+            place: "",
+            isCustom: true
+        )
+
+        return Lecture(
+            id: UUID().uuidString,
+            lectureID: nil,
+            courseTitle: "새로운 강의",
+            timePlaces: [mondayMorningTimePlace],
+            lectureNumber: nil,
+            instructor: nil,
+            credit: nil,
+            courseNumber: nil,
+            department: nil,
+            academicYear: nil,
+            remark: nil,
+            evLecture: nil,
+            colorIndex: 1,
+            customColor: nil,
+            classification: nil,
+            category: nil,
+            wasFull: false,
+            registrationCount: 0,
+            quota: nil,
+            freshmenQuota: nil,
+            categoryPre2025: nil
+        )
+    }
+
     func renameTimetable(timetableID: String, title: String) async throws {
         let metadataList = try await timetableRepository.updateTimetableTitle(timetableID: timetableID, title: title)
         metadataLoadState = .loaded(metadataList)
@@ -256,6 +296,7 @@ extension TimetableViewModel {
 
 public enum TimetableDetailSceneTypes: Hashable {
     case lectureList
+    case vacancyList
     case notificationList
     case lectureDetail(Lecture, parentTimetable: Timetable)
     case lecturePreview(Lecture, quarter: Quarter)
@@ -265,6 +306,8 @@ public enum TimetableDetailSceneTypes: Hashable {
     public static func == (lhs: TimetableDetailSceneTypes, rhs: TimetableDetailSceneTypes) -> Bool {
         switch (lhs, rhs) {
         case (.lectureList, .lectureList):
+            true
+        case (.vacancyList, .vacancyList):
             true
         case (.notificationList, .notificationList):
             true

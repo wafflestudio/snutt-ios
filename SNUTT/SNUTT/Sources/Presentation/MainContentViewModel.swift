@@ -55,6 +55,13 @@ final class MainContentViewModel {
 
         Task.scoped(
             to: self,
+            subscribing: notificationCenter.messages(of: NavigateToSearchMessage.self)
+        ) { @MainActor viewModel, _ in
+            viewModel.selectedTab = .search
+        }
+
+        Task.scoped(
+            to: self,
             subscribing: notificationCenter.messages(of: NavigateToBookmarkMessage.self)
         ) { @MainActor viewModel, _ in
             viewModel.selectedTab = .search
