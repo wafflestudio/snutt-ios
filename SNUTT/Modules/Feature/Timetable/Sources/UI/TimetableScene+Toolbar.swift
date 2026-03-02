@@ -70,13 +70,21 @@ extension TimetableScene {
                 Button {
                     notificationCenter.post(NavigateToSearchMessage())
                 } label: {
-                    Label(TimetableStrings.timetableAddMenuSearch, systemImage: "magnifyingglass")
+                    Label {
+                        Text(TimetableStrings.timetableAddMenuSearch)
+                    } icon: {
+                        TimetableAsset.navMenuSearch.swiftUIImage
+                    }
                 }
 
                 Button {
                     timetableViewModel.presentLectureCreateScene()
                 } label: {
-                    Label(TimetableStrings.timetableAddMenuDirect, systemImage: "pencil")
+                    Label {
+                        Text(TimetableStrings.timetableAddMenuDirect)
+                    } icon: {
+                        TimetableAsset.navMenuPencil.swiftUIImage
+                    }
                 }
             }
 
@@ -84,17 +92,25 @@ extension TimetableScene {
                 Button {
                     timetableViewModel.paths = [.lectureList]
                 } label: {
-                    Label(TimetableStrings.timetableAddMenuCurrentList, systemImage: "list.bullet.rectangle")
+                    Label {
+                        Text(TimetableStrings.timetableAddMenuCurrentList)
+                    } icon: {
+                        TimetableAsset.navMenuList.swiftUIImage
+                    }
                 }
 
                 Button {
                     timetableViewModel.paths = [.vacancyList]
                 } label: {
-                    Label(TimetableStrings.timetableAddMenuVacancyList, systemImage: "bell")
+                    Label {
+                        Text(TimetableStrings.timetableAddMenuVacancyList)
+                    } icon: {
+                        TimetableAsset.navMenuVacancy.swiftUIImage
+                    }
                 }
             }
         } label: {
-            Image(systemName: "plus")
+            TimetableAsset.navPlus.swiftUIImage
         }
     }
 }
