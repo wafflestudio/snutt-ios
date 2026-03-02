@@ -8,17 +8,21 @@
 import NotificationsInterface
 import SwiftUI
 import ThemesInterface
+import VacancyInterface
 
 struct TimetableDetails: View {
     let pathType: TimetableDetailSceneTypes
     @Bindable var timetableViewModel: TimetableViewModel
     @Environment(\.notificationsUIProvider) private var notificationsUIProvider
     @Environment(\.themeViewModel) private var themeViewModel
+    @Environment(\.vacancyUIProvider) private var vacancyUIProvider
 
     var body: some View {
         switch pathType {
         case .lectureList:
             LectureListScene(viewModel: timetableViewModel)
+        case .vacancyList:
+            AnyView(vacancyUIProvider.makeVacancyScene())
         case let .lectureDetail(lecture, parentTimetable):
             let belongsToOtherTimetable = (parentTimetable.id != timetableViewModel.currentTimetable?.id)
             let viewModel = LectureEditDetailViewModel(

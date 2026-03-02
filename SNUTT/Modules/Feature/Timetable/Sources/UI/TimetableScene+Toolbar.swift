@@ -59,11 +59,42 @@ extension TimetableScene {
             } label: {
                 TimetableAsset.navBookmark.swiftUIImage
             }
-            Button {
-                timetableViewModel.paths = [.lectureList]
-            } label: {
-                TimetableAsset.navList.swiftUIImage
+            addLectureMenu
+        }
+    }
+
+    @ViewBuilder
+    private var addLectureMenu: some View {
+        Menu {
+            Section(TimetableStrings.timetableAddMenuSectionAdd) {
+                Button {
+                    notificationCenter.post(NavigateToSearchMessage())
+                } label: {
+                    Label(TimetableStrings.timetableAddMenuSearch, systemImage: "magnifyingglass")
+                }
+
+                Button {
+                    timetableViewModel.presentLectureCreateScene()
+                } label: {
+                    Label(TimetableStrings.timetableAddMenuDirect, systemImage: "pencil")
+                }
             }
+
+            Section(TimetableStrings.timetableAddMenuSectionList) {
+                Button {
+                    timetableViewModel.paths = [.lectureList]
+                } label: {
+                    Label(TimetableStrings.timetableAddMenuCurrentList, systemImage: "list.bullet.rectangle")
+                }
+
+                Button {
+                    timetableViewModel.paths = [.vacancyList]
+                } label: {
+                    Label(TimetableStrings.timetableAddMenuVacancyList, systemImage: "bell")
+                }
+            }
+        } label: {
+            Image(systemName: "plus")
         }
     }
 }

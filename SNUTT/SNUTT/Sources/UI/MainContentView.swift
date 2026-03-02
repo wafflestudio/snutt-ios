@@ -36,6 +36,7 @@ struct MainContentView: View {
                         timetableViewModel: viewModel.timetableViewModel
                     )
                     .environment(\.notificationsUIProvider, NotificationsUIProvider())
+                    .environment(\.vacancyUIProvider, VacancyUIProvider())
                 )
                 TabScene(
                     tabItem: TabItem.search,

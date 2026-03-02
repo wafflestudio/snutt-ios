@@ -7,7 +7,6 @@
 
 import AnalyticsInterface
 import Dependencies
-import Foundation
 import SwiftUI
 import TimetableInterface
 
@@ -27,41 +26,6 @@ class LectureListViewModel: ExpandableLectureListViewModel {
 
     let selectedLecture: Lecture? = nil
     var scrollPosition: Lecture.ID? = nil
-
-    private func createPlaceholderLecture() -> Lecture {
-        let mondayMorningTimePlace = TimePlace(
-            id: UUID().uuidString,
-            day: .mon,
-            startTime: .init(hour: 9, minute: 0),
-            endTime: .init(hour: 10, minute: 0),
-            place: "",
-            isCustom: true
-        )
-
-        return Lecture(
-            id: UUID().uuidString,
-            lectureID: nil,
-            courseTitle: "새로운 강의",
-            timePlaces: [mondayMorningTimePlace],
-            lectureNumber: nil,
-            instructor: nil,
-            credit: nil,
-            courseNumber: nil,
-            department: nil,
-            academicYear: nil,
-            remark: nil,
-            evLecture: nil,
-            colorIndex: 1,
-            customColor: nil,
-            classification: nil,
-            category: nil,
-            wasFull: false,
-            registrationCount: 0,
-            quota: nil,
-            freshmenQuota: nil,
-            categoryPre2025: nil
-        )
-    }
 }
 
 extension LectureListViewModel {
@@ -80,8 +44,7 @@ extension LectureListViewModel {
     }
 
     func createNewLecture() {
-        let placeholderLecture = createPlaceholderLecture()
-        timetableViewModel.paths.append(.lectureCreate(placeholderLecture))
+        timetableViewModel.presentLectureCreateScene()
     }
 
     func toggleAction(
