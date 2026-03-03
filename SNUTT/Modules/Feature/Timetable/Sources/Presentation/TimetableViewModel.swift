@@ -325,6 +325,25 @@ public enum TimetableDetailSceneTypes: Hashable {
     }
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(self)
+        switch self {
+        case .lectureList:
+            hasher.combine(0)
+        case .vacancyList:
+            hasher.combine(1)
+        case .notificationList:
+            hasher.combine(2)
+        case let .lectureDetail(lecture, _):
+            hasher.combine(3)
+            hasher.combine(lecture.id)
+        case let .lecturePreview(lecture, _):
+            hasher.combine(4)
+            hasher.combine(lecture.id)
+        case let .lectureCreate(lecture):
+            hasher.combine(5)
+            hasher.combine(lecture.id)
+        case let .lectureColorSelection(viewModel):
+            hasher.combine(6)
+            hasher.combine(viewModel.lectureID)
+        }
     }
 }
