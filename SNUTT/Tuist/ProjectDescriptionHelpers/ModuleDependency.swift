@@ -4,6 +4,7 @@ public struct ModuleDependency {
     public let name: String
     public let category: ModuleCategory
     public let dependencies: [TargetDependency]
+    public let testDependencies: [TargetDependency]
     public let productType: Product?
     public let additionalResources: [String]
     public let infoPlist: [String: Plist.Value]
@@ -24,6 +25,7 @@ public struct ModuleDependency {
         previewable: Bool = true,
         productType: Product? = nil,
         dependencies: [TargetDependency] = [],
+        testDependencies: [TargetDependency] = [],
         additionalResources: [String] = [],
         infoPlist: [String: Plist.Value] = [:],
     ) -> Self {
@@ -31,6 +33,7 @@ public struct ModuleDependency {
             name: name,
             category: category,
             dependencies: dependencies,
+            testDependencies: testDependencies,
             productType: productType,
             additionalResources: additionalResources,
             infoPlist: infoPlist,
