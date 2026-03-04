@@ -83,6 +83,11 @@ let project = Project.app(
                 .target(name: "AppReviewPromptInterface"),
                 .target(name: "DependenciesUtility"),
                 .external(name: "Dependencies"),
+            ],
+            testDependencies: [
+                .external(name: "Clocks"),
+                .external(name: "Dependencies"),
+                .external(name: "DependenciesAdditions"),
             ]
         ),
         .module(
