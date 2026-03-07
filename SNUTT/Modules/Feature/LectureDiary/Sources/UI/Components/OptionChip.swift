@@ -1,3 +1,4 @@
+#if FEATURE_LECTURE_DIARY
 //
 //  OptionChip.swift
 //  SNUTT
@@ -66,3 +67,4 @@ struct OptionChip: View {
     }
     .padding()
 }
+#endif

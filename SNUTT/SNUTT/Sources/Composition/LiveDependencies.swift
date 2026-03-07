@@ -13,8 +13,6 @@ import AuthInterface
 import Configs
 import ConfigsInterface
 import Dependencies
-import LectureDiary
-import LectureDiaryInterface
 import Reviews
 import ReviewsInterface
 import Themes
@@ -23,6 +21,11 @@ import Timetable
 import TimetableInterface
 import Vacancy
 import VacancyInterface
+
+#if FEATURE_LECTURE_DIARY
+    import LectureDiary
+    import LectureDiaryInterface
+#endif
 
 extension APIClientKey: @retroactive DependencyKey {
     public static let liveValue: any APIClientInterface.APIProtocol = APIClientProvider().apiClient()
@@ -60,9 +63,11 @@ extension VacancyRepositoryKey: @retroactive DependencyKey {
     public static let liveValue: any VacancyRepository = VacancyAPIRepository()
 }
 
-extension LectureDiaryUIProviderKey: @retroactive DependencyKey {
-    public static let liveValue: any LectureDiaryUIProvidable = LectureDiaryUIProvider()
-}
+#if FEATURE_LECTURE_DIARY
+    extension LectureDiaryUIProviderKey: @retroactive DependencyKey {
+        public static let liveValue: any LectureDiaryUIProvidable = LectureDiaryUIProvider()
+    }
+#endif
 
 extension ThemeUIProviderKey: @retroactive DependencyKey {
     public static let liveValue: any ThemeUIProvidable = ThemeUIProvider()

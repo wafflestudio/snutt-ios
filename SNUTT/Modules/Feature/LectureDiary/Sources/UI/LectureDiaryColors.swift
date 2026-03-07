@@ -1,3 +1,4 @@
+#if FEATURE_LECTURE_DIARY
 //
 //  LectureDiaryColors.swift
 //  SNUTT
@@ -192,3 +193,4 @@ extension Color {
         )
     }
 }
+#endif

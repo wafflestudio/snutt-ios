@@ -1,3 +1,4 @@
+#if FEATURE_LECTURE_DIARY
 //
 //  LectureDiaryConfirmView.swift
 //  SNUTT
@@ -89,3 +90,4 @@ extension LectureDiaryConfirmView {
 #Preview("Semester End") {
     LectureDiaryConfirmView(displayMode: .semesterEnd)
 }
+#endif

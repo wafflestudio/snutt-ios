@@ -1,3 +1,4 @@
+#if FEATURE_LECTURE_DIARY
 //
 //  DiarySubmission.swift
 //  SNUTT
@@ -25,3 +26,4 @@ public struct DiarySubmission: Sendable, Equatable {
         self.comment = comment
     }
 }
+#endif

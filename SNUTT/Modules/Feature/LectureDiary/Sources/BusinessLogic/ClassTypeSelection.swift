@@ -1,3 +1,4 @@
+#if FEATURE_LECTURE_DIARY
 //
 //  ClassTypeSelection.swift
 //  SNUTT
@@ -10,3 +11,4 @@ import Foundation
 struct ClassTypeSelection {
     var selected: [String] = []
 }
+#endif
