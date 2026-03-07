@@ -214,26 +214,29 @@ extension LectureEditDetailScene {
             editMode = .transient
             errorAlertHandler.withAlert {
                 do {
-                    try await conflictHandler.withConflictHandling { overrideOnConflict in
+                    let updatedTimetable = try await conflictHandler.withConflictHandling { overrideOnConflict in
                         try await viewModel.saveEditableLecture(overrideOnConflict: overrideOnConflict)
                     }
+                    try timetableViewModel.setCurrentTimetable(updatedTimetable)
                     editMode = .inactive
+                } catch is CancellationError {
+                    editMode = .active
                 } catch {
-                    // 에러가 발생하거나 취소된 경우 변경사항 되돌리기
-                    viewModel.cancelEdit()
-                    editMode = .inactive
+                    editMode = .active
                     throw error
                 }
             }
         case .create:
             errorAlertHandler.withAlert {
                 do {
-                    try await conflictHandler.withConflictHandling { overrideOnConflict in
+                    let updatedTimetable = try await conflictHandler.withConflictHandling { overrideOnConflict in
                         try await viewModel.addCustomLecture(overrideOnConflict: overrideOnConflict)
-                        dismiss()
                     }
+                    try timetableViewModel.setCurrentTimetable(updatedTimetable)
+                    dismiss()
+                } catch is CancellationError {
+                    return
                 } catch {
-                    // 에러가 발생하거나 취소된 경우
                     throw error
                 }
             }

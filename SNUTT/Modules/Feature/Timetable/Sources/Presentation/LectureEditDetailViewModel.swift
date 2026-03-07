@@ -5,6 +5,7 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import APIClientInterface
 import Dependencies
 import Foundation
 import FoundationUtility
@@ -96,33 +97,28 @@ public final class LectureEditDetailViewModel {
         buildings = (try? await lectureRepository.fetchBuildingList(places: lecturePlaces)) ?? []
     }
 
-    func saveEditableLecture(overrideOnConflict: Bool = false) async throws {
-        guard let timetableID = parentTimetable?.id else { return }
+    func saveEditableLecture(overrideOnConflict: Bool = false) async throws -> Timetable {
+        guard let timetableID = parentTimetable?.id else { throw LocalizedErrorCode.timetableNotFound }
         let lectureID = editableLecture.id
-        do {
-            let timetable = try await lectureRepository.updateLecture(
-                timetableID: timetableID,
-                lecture: editableLecture,
-                overrideOnConflict: overrideOnConflict
-            )
-            guard let updatedLecture = timetable.lectures.first(where: { $0.id == lectureID }) else { return }
-            entryLecture = updatedLecture
-        } catch {
-            throw error
-        }
+        let timetable = try await lectureRepository.updateLecture(
+            timetableID: timetableID,
+            lecture: editableLecture,
+            overrideOnConflict: overrideOnConflict
+        )
+        guard let updatedLecture = timetable.lectures.first(where: { $0.id == lectureID })
+        else { throw LocalizedErrorCode.lectureNotFound }
+        entryLecture = updatedLecture
+        editableLecture = updatedLecture
+        return timetable
     }
 
-    func addCustomLecture(overrideOnConflict: Bool = false) async throws {
-        guard let timetableID = parentTimetable?.id else { return }
-        do {
-            _ = try await lectureRepository.addCustomLecture(
-                timetableID: timetableID,
-                lecture: editableLecture,
-                overrideOnConflict: overrideOnConflict
-            )
-        } catch {
-            throw error
-        }
+    func addCustomLecture(overrideOnConflict: Bool = false) async throws -> Timetable {
+        guard let timetableID = parentTimetable?.id else { throw LocalizedErrorCode.timetableNotFound }
+        return try await lectureRepository.addCustomLecture(
+            timetableID: timetableID,
+            lecture: editableLecture,
+            overrideOnConflict: overrideOnConflict
+        )
     }
 
     func addTimePlace() {
@@ -154,27 +150,28 @@ public final class LectureEditDetailViewModel {
         editableLecture = entryLecture
     }
 
-    func deleteLecture() async throws {
-        guard let timetableID = parentTimetable?.id else { return }
-        _ = try await timetableRepository.removeLecture(
+    func deleteLecture() async throws -> Timetable {
+        guard let timetableID = parentTimetable?.id else { throw LocalizedErrorCode.timetableNotFound }
+        return try await timetableRepository.removeLecture(
             timetableID: timetableID,
             lectureID: entryLecture.id
         )
     }
 
-    func resetLecture() async throws {
-        guard let timetableID = parentTimetable?.id,
-            !entryLecture.isCustom
-        else { return }
+    func resetLecture() async throws -> Timetable {
+        guard let timetableID = parentTimetable?.id else { throw LocalizedErrorCode.timetableNotFound }
+        guard !entryLecture.isCustom else { throw LocalizedErrorCode.isCustomLecture }
 
         let timetable = try await lectureRepository.resetLecture(
             timetableID: timetableID,
             lectureID: entryLecture.id
         )
 
-        guard let resetLecture = timetable.lectures.first(where: { $0.id == entryLecture.id }) else { return }
+        guard let resetLecture = timetable.lectures.first(where: { $0.id == entryLecture.id })
+        else { throw LocalizedErrorCode.lectureNotFound }
         entryLecture = resetLecture
         editableLecture = resetLecture
+        return timetable
     }
 
     private func fetchBookmarkStatus() async {
