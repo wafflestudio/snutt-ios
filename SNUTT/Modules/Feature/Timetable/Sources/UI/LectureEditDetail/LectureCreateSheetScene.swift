@@ -11,52 +11,58 @@ import ThemesInterface
 import TimetableInterface
 
 struct LectureCreateSheetScene: View {
+    let placeholderLecture: Lecture
     @State private var path: [LectureCreateRoute] = []
-    @State private var viewModel: LectureEditDetailViewModel
-    @Bindable var timetableViewModel: TimetableViewModel
+    @State private var viewModel: LectureEditDetailViewModel?
+    @Environment(\.timetableViewModel) private var timetableViewModel: any TimetableViewModelProtocol
     @Environment(\.themeViewModel) private var themeViewModel
 
-    init(
-        placeholderLecture: Lecture,
-        currentTimetable: Timetable,
-        timetableViewModel: TimetableViewModel
-    ) {
-        _viewModel = .init(
-            initialValue: LectureEditDetailViewModel(
-                displayMode: .create(timetable: currentTimetable),
-                entryLecture: placeholderLecture
-            )
-        )
-        self.timetableViewModel = timetableViewModel
+    var body: some View {
+        lectureCreateContent
+            .task(id: timetableViewModel.currentTimetable?.id) {
+                initializeViewModelIfNeeded()
+            }
     }
 
-    var body: some View {
-        NavigationStack(path: $path) {
-            LectureEditDetailScene(
-                viewModel: viewModel,
-                belongsToOtherTimetable: false,
-                onTapLectureColorSelection: { _ in
-                    path.append(.lectureColorSelection)
-                }
-            )
-            .handleLectureTimeConflict()
-            .analyticsScreen(.lectureCreate)
-            .navigationDestination(for: LectureCreateRoute.self) { route in
-                switch route {
-                case .lectureColorSelection:
-                    let currentTheme = timetableViewModel.currentTimetable?.theme
-                    let theme = themeViewModel.availableThemes.first(where: { $0.id == currentTheme?.id })
-                    if let theme {
-                        LectureColorSelectionListView(
-                            theme: theme,
-                            viewModel: viewModel
-                        )
-                    } else {
-                        ProgressView()
+    @ViewBuilder private var lectureCreateContent: some View {
+        if let viewModel {
+            NavigationStack(path: $path) {
+                LectureEditDetailScene(
+                    viewModel: viewModel,
+                    belongsToOtherTimetable: false,
+                    onTapLectureColorSelection: { _ in
+                        path.append(.lectureColorSelection)
+                    }
+                )
+                .handleLectureTimeConflict()
+                .analyticsScreen(.lectureCreate)
+                .navigationDestination(for: LectureCreateRoute.self) { route in
+                    switch route {
+                    case .lectureColorSelection:
+                        let currentTheme = timetableViewModel.currentTimetable?.theme
+                        let theme = themeViewModel.availableThemes.first(where: { $0.id == currentTheme?.id })
+                        if let theme {
+                            LectureColorSelectionListView(
+                                theme: theme,
+                                viewModel: viewModel
+                            )
+                        } else {
+                            ProgressView()
+                        }
                     }
                 }
             }
+        } else {
+            ProgressView()
         }
+    }
+
+    private func initializeViewModelIfNeeded() {
+        guard viewModel == nil, let currentTimetable = timetableViewModel.currentTimetable else { return }
+        viewModel = LectureEditDetailViewModel(
+            displayMode: .create(timetable: currentTimetable),
+            entryLecture: placeholderLecture
+        )
     }
 }
 

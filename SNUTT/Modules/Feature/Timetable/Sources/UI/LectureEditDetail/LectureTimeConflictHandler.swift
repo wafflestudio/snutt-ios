@@ -28,13 +28,13 @@ public final class LectureTimeConflictHandler: Sendable {
 
     @discardableResult public func withConflictHandling<T: Sendable>(
         operation: @escaping (_ overrideOnConflict: Bool) async throws -> T
-    ) async throws -> T? {
+    ) async throws -> T {
         do {
             return try await operation(false)
         } catch {
             switch error.apiClientError {
             case .unknown(let serverError) where serverError.isLectureConflictError:
-                return await handleConflictError(operation: operation, error: serverError)
+                return try await handleConflictError(operation: operation, error: serverError)
             default:
                 throw error
             }
@@ -44,8 +44,8 @@ public final class LectureTimeConflictHandler: Sendable {
     private func handleConflictError<T: Sendable>(
         operation: @escaping (_ overrideOnConflict: Bool) async throws -> T,
         error: ClientUnknownServerError
-    ) async -> T? {
-        return await withCheckedContinuation { continuation in
+    ) async throws -> T {
+        try await withCheckedThrowingContinuation { continuation in
             pendingOperation = ConflictOperation(
                 error: error,
                 onConfirm: {
@@ -54,12 +54,12 @@ public final class LectureTimeConflictHandler: Sendable {
                             let result = try await operation(true)
                             continuation.resume(returning: result)
                         } catch {
-                            continuation.resume(returning: nil)
+                            continuation.resume(throwing: error)
                         }
                     }
                 },
                 onCancel: {
-                    continuation.resume(returning: nil)
+                    continuation.resume(throwing: CancellationError())
                 }
             )
         }

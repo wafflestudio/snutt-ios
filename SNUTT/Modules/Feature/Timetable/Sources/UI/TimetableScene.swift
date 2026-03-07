@@ -62,20 +62,14 @@ public struct TimetableScene: View {
                 }
             }
             .sheet(item: $timetableViewModel.lectureCreateDraft) { placeholderLecture in
-                if let currentTimetable = timetableViewModel.currentTimetable {
-                    LectureCreateSheetScene(
-                        placeholderLecture: placeholderLecture,
-                        currentTimetable: currentTimetable,
-                        timetableViewModel: timetableViewModel
-                    )
-                } else {
-                    ProgressView()
-                }
+                LectureCreateSheetScene(placeholderLecture: placeholderLecture)
+                    .environment(\.timetableViewModel, timetableViewModel)
             }
             .sheet(isPresented: $timetableViewModel.isThemeSheetPresented) {
                 themeUIProvider.menuThemeSelectionSheet()
             }
         }
+        .environment(\.timetableViewModel, timetableViewModel)
         .analyticsScreen(.timetableHome)
     }
 
