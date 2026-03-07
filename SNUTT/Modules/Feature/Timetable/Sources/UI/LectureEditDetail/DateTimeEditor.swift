@@ -53,7 +53,7 @@ struct DateTimeEditor: View {
             Spacer()
         }
         .ignoresSafeArea()
-        .presentationDetents([.height(250)])
+        .presentationDetents([.height(280)])
     }
 }
 
@@ -95,20 +95,16 @@ private struct LectureTimePicker: View {
 
     var body: some View {
         VStack(spacing: 10) {
-            HStack {
+            VStack(alignment: .leading, spacing: 8) {
                 Text(TimetableStrings.editWeekday)
-                Spacer()
                 Picker("", selection: $weekday) {
                     ForEach(Weekday.allCases) { day in
-                        Text(day.symbol).tag(day)
+                        Text(day.shortSymbol).tag(day)
                     }
                 }
+                .pickerStyle(.segmented)
                 .tint(.label)
                 .labelsHidden()
-                .background(
-                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(Color(uiColor: .tertiarySystemFill))
-                )
             }
 
             Divider()
