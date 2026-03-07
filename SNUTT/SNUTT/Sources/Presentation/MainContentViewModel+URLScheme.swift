@@ -21,7 +21,6 @@ extension MainContentViewModel {
         guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true) else { return }
         switch urlComponents.host {
         case "notifications":
-            selectedTab = .settings
             notificationCenter.post(NavigateToNotificationsMessage())
         case "vacancy":
             break

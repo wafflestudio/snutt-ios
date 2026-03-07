@@ -9,6 +9,7 @@ import Combine
 import Dependencies
 import Foundation
 import LectureDiaryInterface
+import NotificationsInterface
 import Observation
 import SwiftUtility
 import Themes
@@ -77,6 +78,13 @@ final class MainContentViewModel {
         Task.scoped(
             to: self,
             subscribing: notificationCenter.messages(of: NavigateToLectureRemindersMessage.self)
+        ) { @MainActor viewModel, _ in
+            viewModel.selectedTab = .settings
+        }
+
+        Task.scoped(
+            to: self,
+            subscribing: notificationCenter.messages(of: NavigateToNotificationsMessage.self)
         ) { @MainActor viewModel, _ in
             viewModel.selectedTab = .settings
         }
