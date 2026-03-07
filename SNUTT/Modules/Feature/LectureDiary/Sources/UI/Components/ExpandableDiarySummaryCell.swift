@@ -1,3 +1,4 @@
+#if FEATURE_LECTURE_DIARY
 //
 //  ExpandableDiarySummaryCell.swift
 //  SNUTT
@@ -175,3 +176,4 @@ struct ExpandableDiarySummaryCell: View {
     ExpandableDiarySummaryCell(diaryList: diaries, onDelete: { _ in })
         .padding()
 }
+#endif

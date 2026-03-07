@@ -1,3 +1,4 @@
+#if FEATURE_LECTURE_DIARY
 //
 //  LectureDiaryListViewModel.swift
 //  SNUTT
@@ -82,3 +83,4 @@ extension LectureDiaryListViewModel {
         case failed
     }
 }
+#endif

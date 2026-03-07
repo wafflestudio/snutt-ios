@@ -1,3 +1,4 @@
+#if FEATURE_LECTURE_DIARY
 //
 //  LectureDiaryRepository.swift
 //  SNUTT
@@ -17,3 +18,4 @@ public protocol LectureDiaryRepository: Sendable {
     func submitDiary(_ submission: DiarySubmission) async throws
     func deleteDiary(diaryID: String) async throws
 }
+#endif

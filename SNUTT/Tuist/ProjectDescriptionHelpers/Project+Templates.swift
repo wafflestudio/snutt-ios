@@ -173,8 +173,8 @@ extension Project {
     }
 
     private static func makeSettings(includeEntitlements: Bool = false) -> Settings {
-        let baseSetting: (ProjectDescription.ConfigurationName) -> [String: SettingValue] = { name in
-            switch name {
+        let baseSettings: (ProjectDescription.ConfigurationName) -> [String: SettingValue] = { name in
+            let settings: [String: SettingValue] = switch name {
             case .dev where includeEntitlements:
                 ["CODE_SIGN_ENTITLEMENTS": "Supporting Files/SNUTT-Dev.entitlements"]
             case .prod where includeEntitlements:
@@ -182,6 +182,9 @@ extension Project {
             default:
                 .init()
             }
+            return settings.swiftActiveCompilationConditions(
+                CompilationConditions.swiftActiveCompilationConditions(for: name)
+            )
         }
         return .settings(
             base: .init()
@@ -192,14 +195,13 @@ extension Project {
             configurations: [
                 .debug(
                     name: .dev,
-                    settings: baseSetting(.dev)
-                        .swiftActiveCompilationConditions(["DEBUG"])
+                    settings: baseSettings(.dev)
                         .merging(["ENABLE_TESTABILITY": "YES"]),
                     xcconfig: "XCConfigs/Dev.xcconfig"
                 ),
                 .release(
                     name: .prod,
-                    settings: baseSetting(.prod)
+                    settings: baseSettings(.prod)
                         .merging(["ENABLE_TESTABILITY": "NO"]),
                     xcconfig: "XCConfigs/Prod.xcconfig"
                 ),

@@ -65,10 +65,12 @@ public struct SettingsScene: View {
                         title: SettingsStrings.serviceLectureReminder,
                         value: SettingsPathType.lectureReminder
                     )
-                    SettingsNavigationLink(
-                        title: SettingsStrings.serviceLectureDiary,
-                        value: SettingsPathType.lectureDiary
-                    )
+                    #if FEATURE_LECTURE_DIARY
+                        SettingsNavigationLink(
+                            title: SettingsStrings.serviceLectureDiary,
+                            value: SettingsPathType.lectureDiary
+                        )
+                    #endif
                     SettingsNavigationLink(
                         title: SettingsStrings.serviceThemeMarket,
                         value: SettingsPathType.themeMarket

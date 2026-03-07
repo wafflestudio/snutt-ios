@@ -1,3 +1,4 @@
+#if FEATURE_LECTURE_DIARY
 //
 //  LectureDiaryDependencies.swift
 //  SNUTT
@@ -22,3 +23,4 @@ extension DependencyValues {
         set { self[LectureDiaryRepositoryKey.self] = newValue }
     }
 }
+#endif

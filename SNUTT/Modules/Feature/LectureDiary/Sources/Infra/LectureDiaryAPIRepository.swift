@@ -1,3 +1,4 @@
+#if FEATURE_LECTURE_DIARY
 //
 //  LectureDiaryAPIRepository.swift
 //  SNUTT
@@ -94,3 +95,4 @@ extension DiarySummary {
         )
     }
 }
+#endif

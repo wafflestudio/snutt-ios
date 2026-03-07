@@ -1,3 +1,4 @@
+#if FEATURE_LECTURE_DIARY
 //
 //  QuestionAnswerSection.swift
 //  SNUTT
@@ -80,3 +81,4 @@ struct QuestionAnswerSection: View {
     }
     .padding()
 }
+#endif

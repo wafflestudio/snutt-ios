@@ -1,3 +1,4 @@
+#if FEATURE_LECTURE_DIARY
 //
 //  EditLectureDiaryScene.swift
 //  SNUTT
@@ -224,3 +225,4 @@ struct EditLectureDiaryScene: View {
 #Preview {
     EditLectureDiaryScene(lectureID: "1", lectureTitle: "컴퓨터의 개념 및 실습")
 }
+#endif
