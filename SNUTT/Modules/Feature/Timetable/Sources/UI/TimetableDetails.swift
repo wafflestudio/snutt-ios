@@ -31,8 +31,8 @@ struct TimetableDetails: View {
             )
             LectureEditDetailScene(
                 viewModel: viewModel,
-                paths: $timetableViewModel.paths,
-                belongsToOtherTimetable: belongsToOtherTimetable
+                belongsToOtherTimetable: belongsToOtherTimetable,
+                onTapLectureColorSelection: { timetableViewModel.paths.append(.lectureColorSelection($0)) }
             )
             .handleLectureTimeConflict()
         case let .lecturePreview(lecture, quarter):
@@ -42,7 +42,6 @@ struct TimetableDetails: View {
             )
             LectureEditDetailScene(
                 viewModel: viewModel,
-                paths: $timetableViewModel.paths,
                 belongsToOtherTimetable: false
             )
         case let .lectureCreate(placeholderLecture):
@@ -53,8 +52,8 @@ struct TimetableDetails: View {
                 )
                 LectureEditDetailScene(
                     viewModel: viewModel,
-                    paths: $timetableViewModel.paths,
-                    belongsToOtherTimetable: false
+                    belongsToOtherTimetable: false,
+                    onTapLectureColorSelection: { timetableViewModel.paths.append(.lectureColorSelection($0)) }
                 )
                 .handleLectureTimeConflict()
                 .analyticsScreen(.lectureCreate)

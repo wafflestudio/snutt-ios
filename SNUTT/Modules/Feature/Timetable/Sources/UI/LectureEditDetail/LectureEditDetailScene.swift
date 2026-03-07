@@ -39,17 +39,17 @@ struct LectureEditDetailScene: View {
     @Dependency(\.notificationCenter) var notificationCenter
     @Dependency(\.appReviewService) var appReviewService
 
-    let paths: Binding<[TimetableDetailSceneTypes]>
     let belongsToOtherTimetable: Bool
+    let onTapLectureColorSelection: (LectureEditDetailViewModel) -> Void
 
     init(
         viewModel: LectureEditDetailViewModel,
-        paths: Binding<[TimetableDetailSceneTypes]> = .constant([]),
-        belongsToOtherTimetable: Bool = false
+        belongsToOtherTimetable: Bool = false,
+        onTapLectureColorSelection: @escaping (LectureEditDetailViewModel) -> Void = { _ in }
     ) {
         _viewModel = .init(initialValue: viewModel)
-        self.paths = paths
         self.belongsToOtherTimetable = belongsToOtherTimetable
+        self.onTapLectureColorSelection = onTapLectureColorSelection
         self._editMode = .init(initialValue: viewModel.displayMode.isCreate ? .active : .inactive)
     }
 
@@ -157,7 +157,7 @@ struct LectureEditDetailScene: View {
                         title: nil,
                         trailingImage: editMode.isEditing ? TimetableAsset.chevronRight.swiftUIImage : nil
                     ) {
-                        paths.wrappedValue.append(.lectureColorSelection(viewModel))
+                        onTapLectureColorSelection(viewModel)
                     }
                     .disabled(!editMode.isEditing)
                 }
