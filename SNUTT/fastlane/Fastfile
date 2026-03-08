@@ -427,12 +427,17 @@ platform :ios do
       channel: Constants::Slack::CHANNEL,
       slack_url: webhook,
       success: success,
-      attachment_properties: { fields: fields },
+      attachment_properties: {
+        fields: fields,
+        mrkdwn_in: ["fields"]
+      },
       default_payloads: [:git_author, :last_git_commit]
     )
   end
 
   def build_slack_fields(config, target, version, build, tag, error)
+    github_actions_run_url = ENV["GITHUB_ACTIONS_RUN_URL"]
+
     fields = [
       { title: "Target", value: target.display_name, short: true },
       { title: "Environment", value: config.to_s, short: true },
@@ -442,6 +447,7 @@ platform :ios do
     fields << { title: "Build Number", value: build.to_s, short: true } if build
     fields << { title: "Tag", value: tag, short: false }
     fields << { title: "Error", value: error, short: false } if error
+    fields << { title: "GitHub Actions", value: "<#{github_actions_run_url}|Open logs>", short: false } if github_actions_run_url && !github_actions_run_url.empty?
 
     fields
   end
