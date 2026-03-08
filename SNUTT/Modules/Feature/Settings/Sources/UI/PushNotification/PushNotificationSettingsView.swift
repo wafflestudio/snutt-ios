@@ -15,7 +15,7 @@ struct PushNotificationSettingsView: View {
             switch viewModel.loadState {
             case .loading:
                 ProgressView()
-            case .loaded, .failed:
+            case .loaded:
                 Section {
                     Toggle(
                         SettingsStrings.servicePushNotificationLectureUpdate,
@@ -40,14 +40,6 @@ struct PushNotificationSettingsView: View {
         .task {
             await viewModel.loadPreferences()
         }
-    }
-}
-
-extension PushNotificationSettingsViewModel {
-    enum LoadState {
-        case loading
-        case loaded
-        case failed
     }
 }
 

@@ -28,10 +28,10 @@ final class PushNotificationSettingsViewModel {
     func loadPreferences() async {
         loadState = .loading
         do {
-            preferences = try await repository.fetchPreferences()
-            loadState = .loaded
+            let preferences = try await repository.fetchPreferences()
+            loadState = .loaded(preferences)
         } catch {
-            loadState = .failed
+
         }
     }
 
@@ -39,7 +39,14 @@ final class PushNotificationSettingsViewModel {
         do {
             try await repository.savePreferences(preferences)
         } catch {
-            // Error handling deferred to global error handling
+            // Error handling
         }
+    }
+}
+
+extension PushNotificationSettingsViewModel {
+    enum LoadState {
+        case loading
+        case loaded(PushNotificationPreferences)
     }
 }
