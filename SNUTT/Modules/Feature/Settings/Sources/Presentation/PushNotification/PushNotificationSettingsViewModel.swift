@@ -14,32 +14,35 @@ final class PushNotificationSettingsViewModel {
     @ObservationIgnored
     @Dependency(\.pushNotificationRepository) private var repository
 
-    private var saveTask: Task<Void, Never>?
     private(set) var loadState: LoadState = .loading
+    private(set) var savedPreferences: PushNotificationPreferences?
 
-    var preferences: PushNotificationPreferences = .init() {
-        didSet {
+    var preferences: PushNotificationPreferences {
+        get {
+            guard case .loaded(let preferences) = loadState else { return .init() }
+            return preferences
+        }
+        set {
             guard case .loaded = loadState else { return }
-            saveTask?.cancel()
-            saveTask = Task { await savePreferences() }
+            loadState = .loaded(newValue)
         }
     }
 
-    func loadPreferences() async {
+    func loadPreferences() async throws {
         loadState = .loading
-        do {
-            let preferences = try await repository.fetchPreferences()
-            loadState = .loaded(preferences)
-        } catch {
-
-        }
+        let preferences = try await repository.fetchPreferences()
+        savedPreferences = preferences
+        loadState = .loaded(preferences)
     }
 
-    private func savePreferences() async {
+    func savePreferences(_ oldValue: PushNotificationPreferences) async throws {
+        guard case .loaded(let preferences) = loadState else { return }
         do {
             try await repository.savePreferences(preferences)
+            savedPreferences = preferences
         } catch {
-            // Error handling
+            loadState = .loaded(oldValue)
+            throw error
         }
     }
 }

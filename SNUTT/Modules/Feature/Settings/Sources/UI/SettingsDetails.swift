@@ -42,6 +42,7 @@ struct SettingsDetails: View {
             AnyView(themeUIProvider.themeSettingsScene())
         case .pushNotificationSettings:
             PushNotificationSettingsView(viewModel: viewModel.pushNotificationSettingsViewModel)
+                .analyticsScreen(.settingsPushNotification)
         case .vacancyNotification:
             AnyView(vacancyUIProvider.makeVacancyScene())
                 .analyticsScreen(.vacancy)

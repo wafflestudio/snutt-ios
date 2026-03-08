@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PushNotificationSettingsView: View {
     @Bindable var viewModel: PushNotificationSettingsViewModel
+    @Environment(\.errorAlertHandler) private var errorAlertHandler
 
     var body: some View {
         Form {
@@ -38,7 +39,15 @@ struct PushNotificationSettingsView: View {
         .navigationTitle(SettingsStrings.servicePushNotification)
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            await viewModel.loadPreferences()
+            errorAlertHandler.withAlert {
+                try await viewModel.loadPreferences()
+            }
+        }
+        .onChange(of: viewModel.preferences) { oldValue, newValue in
+            guard newValue != viewModel.savedPreferences else { return }
+            errorAlertHandler.withAlert {
+                try await viewModel.savePreferences(oldValue)
+            }
         }
     }
 }
