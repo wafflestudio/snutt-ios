@@ -58,6 +58,16 @@ extension Error {
         }
     }
 
+    public var isNetworkUnavailableError: Bool {
+        switch self {
+        case let error as ClientError:
+            let nsError = error.underlyingError as NSError
+            return nsError.domain == NSURLErrorDomain && nsError.code == NSURLErrorNotConnectedToInternet
+        default:
+            return false
+        }
+    }
+
     public var isTimeoutError: Bool {
         switch self {
         case let error as ClientError:

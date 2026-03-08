@@ -42,7 +42,7 @@ public final class ErrorAlertHandler: Sendable {
         } catch is CancellationError {
             return nil
         } catch let error as any ErrorWrapper {
-            if error.isCancellationError {
+            if error.isCancellationError || error.isNetworkUnavailableError {
                 return nil
             } else {
                 currentError = .init(underlyingError: error.underlyingError)
@@ -59,6 +59,8 @@ public protocol ErrorWrapper {
     var underlyingError: any Error { get }
     /// Indicates whether the error represents a task cancellation (either a direct `CancellationError` or one wrapped within another error type).
     var isCancellationError: Bool { get }
+    /// Indicates whether the error represents a network unavailable condition (e.g., airplane mode).
+    var isNetworkUnavailableError: Bool { get }
 }
 
 struct AnyLocalizedError: LocalizedError {
