@@ -1,3 +1,4 @@
+#if FEATURE_LECTURE_DIARY
 //
 //  AnswerOption.swift
 //  SNUTT
@@ -16,3 +17,4 @@ public struct AnswerOption: Sendable, Identifiable, Equatable {
         self.content = content
     }
 }
+#endif

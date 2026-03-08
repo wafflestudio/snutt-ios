@@ -15,6 +15,7 @@ public struct SettingsScene: View {
     @State private(set) var viewModel: SettingsViewModel = .init()
     @AppStorage(AppStorageKeys.preferredColorScheme) private var selectedColorScheme: ColorSchemeSelection = .system
     @Dependency(\.appReviewService) private var appReviewService
+    @Environment(\.errorAlertHandler) private var errorAlertHandler
 
     public init() {}
 
@@ -29,6 +30,14 @@ public struct SettingsScene: View {
                         detail: viewModel.myAccountViewModel.titleDescription
                     )
                     .padding(.vertical, 12)
+                }
+
+                Section {
+                    SettingsNavigationLink(
+                        title: SettingsStrings.notificationInbox,
+                        value: SettingsPathType.notificationInbox,
+                        showRedDot: viewModel.unreadNotificationCount > 0
+                    )
                 }
 
                 Section(SettingsStrings.display) {
@@ -60,10 +69,12 @@ public struct SettingsScene: View {
                         title: SettingsStrings.serviceLectureReminder,
                         value: SettingsPathType.lectureReminder
                     )
-                    SettingsNavigationLink(
-                        title: SettingsStrings.serviceLectureDiary,
-                        value: SettingsPathType.lectureDiary
-                    )
+                    #if FEATURE_LECTURE_DIARY
+                        SettingsNavigationLink(
+                            title: SettingsStrings.serviceLectureDiary,
+                            value: SettingsPathType.lectureDiary
+                        )
+                    #endif
                     SettingsNavigationLink(
                         title: SettingsStrings.serviceThemeMarket,
                         value: SettingsPathType.themeMarket
@@ -127,6 +138,11 @@ public struct SettingsScene: View {
             }
             .navigationDestination(for: MyAccountPathType.self) { menuItem in
                 MyAccountDetails(menuItem: menuItem, viewModel: viewModel.myAccountViewModel)
+            }
+            .task {
+                await errorAlertHandler.withAlert {
+                    try await viewModel.loadUnreadNotificationCount()
+                }
             }
         }
         .analyticsScreen(.settingsHome)

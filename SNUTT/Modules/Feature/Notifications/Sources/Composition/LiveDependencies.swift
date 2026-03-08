@@ -7,6 +7,7 @@
 
 import Dependencies
 import Foundation
+import NotificationsInterface
 
 struct NotificationRepositoryKey: DependencyKey {
     static let liveValue: any NotificationRepository = NotificationAPIRepository()
@@ -90,6 +91,16 @@ struct NotificationRepositoryKey: DependencyKey {
                 deeplink: nil
             ),
         ]
+        return spy
+    }()
+}
+
+extension NotificationCountRepositoryKey: @retroactive DependencyKey {
+    public static let liveValue: any NotificationCountRepository = NotificationAPIRepository()
+
+    public static let previewValue: any NotificationCountRepository = {
+        let spy = NotificationCountRepositorySpy()
+        spy.fetchUnreadNotificationCountReturnValue = 3
         return spy
     }()
 }

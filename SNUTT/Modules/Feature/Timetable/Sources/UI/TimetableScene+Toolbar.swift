@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TimetableInterface
 
 extension TimetableScene {
     var toolbarContent: some View {
@@ -24,9 +25,6 @@ extension TimetableScene {
             Spacer()
             ToolbarButton(image: TimetableAsset.navList.image) {
                 timetableViewModel.paths = [.lectureList]
-            }
-            ToolbarButton(image: TimetableAsset.navAlarmOff.image) {
-                timetableViewModel.paths = [.notificationList]
             }
         }
     }
@@ -57,15 +55,62 @@ extension TimetableScene {
         }
         ToolbarItemGroup(placement: .topBarTrailing) {
             Button {
-                timetableViewModel.paths = [.lectureList]
+                notificationCenter.post(NavigateToBookmarkMessage())
             } label: {
-                TimetableAsset.navList.swiftUIImage
+                TimetableAsset.navBookmark.swiftUIImage
             }
-            Button {
-                timetableViewModel.paths = [.notificationList]
-            } label: {
-                TimetableAsset.navAlarmOff.swiftUIImage
+            addLectureMenu
+        }
+    }
+
+    @ViewBuilder
+    private var addLectureMenu: some View {
+        Menu {
+            Section(TimetableStrings.timetableAddMenuSectionAdd) {
+                Button {
+                    notificationCenter.post(NavigateToSearchMessage())
+                } label: {
+                    Label {
+                        Text(TimetableStrings.timetableAddMenuSearch)
+                    } icon: {
+                        TimetableAsset.navMenuSearch.swiftUIImage
+                    }
+                }
+
+                Button {
+                    timetableViewModel.presentLectureCreateScene()
+                } label: {
+                    Label {
+                        Text(TimetableStrings.timetableAddMenuDirect)
+                    } icon: {
+                        TimetableAsset.navMenuPencil.swiftUIImage
+                    }
+                }
             }
+
+            Section(TimetableStrings.timetableAddMenuSectionList) {
+                Button {
+                    timetableViewModel.paths = [.lectureList]
+                } label: {
+                    Label {
+                        Text(TimetableStrings.timetableAddMenuCurrentList)
+                    } icon: {
+                        TimetableAsset.navMenuList.swiftUIImage
+                    }
+                }
+
+                Button {
+                    timetableViewModel.paths = [.vacancyList]
+                } label: {
+                    Label {
+                        Text(TimetableStrings.timetableAddMenuVacancyList)
+                    } icon: {
+                        TimetableAsset.navMenuVacancy.swiftUIImage
+                    }
+                }
+            }
+        } label: {
+            TimetableAsset.navPlus.swiftUIImage
         }
     }
 }

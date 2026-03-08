@@ -1,3 +1,4 @@
+#if FEATURE_LECTURE_DIARY
 //
 //  LectureDiaryUIProvidable.swift
 //  SNUTT
@@ -40,3 +41,4 @@ extension EnvironmentValues {
         }
     }
 }
+#endif

@@ -1,3 +1,4 @@
+#if FEATURE_LECTURE_DIARY
 //
 //  NavigateToLectureDiaryMessage.swift
 //  SNUTT
@@ -19,3 +20,4 @@ public struct NavigateToLectureDiaryMessage: NotificationCenter.TypedMessage {
         self.lectureTitle = lectureTitle
     }
 }
+#endif

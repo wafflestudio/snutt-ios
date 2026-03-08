@@ -1,3 +1,4 @@
+#if FEATURE_LECTURE_DIARY
 //
 //  SemesterChip.swift
 //  SNUTT
@@ -56,3 +57,4 @@ struct SemesterChip: View {
     }
     .padding()
 }
+#endif

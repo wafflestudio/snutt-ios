@@ -1,3 +1,4 @@
+#if FEATURE_LECTURE_DIARY
 //
 //  LectureDiaryListView.swift
 //  SNUTT
@@ -164,3 +165,4 @@ public struct LectureDiaryListView: View {
         LectureDiaryListView()
     }
 }
+#endif

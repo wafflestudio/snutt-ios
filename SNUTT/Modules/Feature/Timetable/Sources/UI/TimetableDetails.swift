@@ -5,19 +5,24 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import NotificationsInterface
 import SwiftUI
 import ThemesInterface
+import VacancyInterface
 
 struct TimetableDetails: View {
     let pathType: TimetableDetailSceneTypes
     @Bindable var timetableViewModel: TimetableViewModel
     @Environment(\.notificationsUIProvider) private var notificationsUIProvider
     @Environment(\.themeViewModel) private var themeViewModel
+    @Environment(\.vacancyUIProvider) private var vacancyUIProvider
 
     var body: some View {
         switch pathType {
         case .lectureList:
             LectureListScene(viewModel: timetableViewModel)
+        case .vacancyList:
+            AnyView(vacancyUIProvider.makeVacancyScene())
         case let .lectureDetail(lecture, parentTimetable):
             let belongsToOtherTimetable = (parentTimetable.id != timetableViewModel.currentTimetable?.id)
             let viewModel = LectureEditDetailViewModel(
@@ -26,8 +31,8 @@ struct TimetableDetails: View {
             )
             LectureEditDetailScene(
                 viewModel: viewModel,
-                paths: $timetableViewModel.paths,
-                belongsToOtherTimetable: belongsToOtherTimetable
+                belongsToOtherTimetable: belongsToOtherTimetable,
+                onTapLectureColorSelection: { timetableViewModel.paths.append(.lectureColorSelection($0)) }
             )
             .handleLectureTimeConflict()
         case let .lecturePreview(lecture, quarter):
@@ -37,7 +42,6 @@ struct TimetableDetails: View {
             )
             LectureEditDetailScene(
                 viewModel: viewModel,
-                paths: $timetableViewModel.paths,
                 belongsToOtherTimetable: false
             )
         case let .lectureCreate(placeholderLecture):
@@ -48,8 +52,8 @@ struct TimetableDetails: View {
                 )
                 LectureEditDetailScene(
                     viewModel: viewModel,
-                    paths: $timetableViewModel.paths,
-                    belongsToOtherTimetable: false
+                    belongsToOtherTimetable: false,
+                    onTapLectureColorSelection: { timetableViewModel.paths.append(.lectureColorSelection($0)) }
                 )
                 .handleLectureTimeConflict()
                 .analyticsScreen(.lectureCreate)

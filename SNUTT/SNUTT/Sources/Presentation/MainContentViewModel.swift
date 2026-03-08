@@ -8,13 +8,18 @@
 import Combine
 import Dependencies
 import Foundation
-import LectureDiaryInterface
+import NotificationsInterface
 import Observation
 import SwiftUtility
 import Themes
 import ThemesInterface
 import Timetable
 import TimetableInterface
+
+#if FEATURE_LECTURE_DIARY
+    import LectureDiary
+    import LectureDiaryInterface
+#endif
 
 @Observable
 @MainActor
@@ -28,7 +33,9 @@ final class MainContentViewModel {
     var selectedTab: TabItem = .timetable
     private var cancellables: Set<AnyCancellable> = []
 
-    var diaryEditContext: DiaryEditContext?
+    #if FEATURE_LECTURE_DIARY
+        var diaryEditContext: DiaryEditContext?
+    #endif
 
     let themeViewModel: ThemeViewModel
     let timetableViewModel: TimetableViewModel
@@ -55,6 +62,13 @@ final class MainContentViewModel {
 
         Task.scoped(
             to: self,
+            subscribing: notificationCenter.messages(of: NavigateToSearchMessage.self)
+        ) { @MainActor viewModel, _ in
+            viewModel.selectedTab = .search
+        }
+
+        Task.scoped(
+            to: self,
             subscribing: notificationCenter.messages(of: NavigateToBookmarkMessage.self)
         ) { @MainActor viewModel, _ in
             viewModel.selectedTab = .search
@@ -76,13 +90,22 @@ final class MainContentViewModel {
 
         Task.scoped(
             to: self,
-            subscribing: notificationCenter.messages(of: NavigateToLectureDiaryMessage.self)
-        ) { @MainActor viewModel, nextLecture in
-            viewModel.diaryEditContext = .init(
-                lectureID: nextLecture.lectureID,
-                lectureTitle: nextLecture.lectureTitle
-            )
-            viewModel.selectedTab = .timetable
+            subscribing: notificationCenter.messages(of: NavigateToNotificationsMessage.self)
+        ) { @MainActor viewModel, _ in
+            viewModel.selectedTab = .settings
         }
+
+        #if FEATURE_LECTURE_DIARY
+            Task.scoped(
+                to: self,
+                subscribing: notificationCenter.messages(of: NavigateToLectureDiaryMessage.self)
+            ) { @MainActor viewModel, nextLecture in
+                viewModel.diaryEditContext = .init(
+                    lectureID: nextLecture.lectureID,
+                    lectureTitle: nextLecture.lectureTitle
+                )
+                viewModel.selectedTab = .timetable
+            }
+        #endif
     }
 }

@@ -16,6 +16,7 @@ tuist generate --no-open  # Generate without opening Xcode (useful when making f
 # - Renaming or moving files
 # - Adding new modules
 # - Modifying Project.swift or Tuist configuration files
+# - Updating resource keys that generate typed accessors (e.g. Localizable.strings, assets)
 # Tip: Use --no-open when you plan to continue editing files before opening Xcode
 
 # Building

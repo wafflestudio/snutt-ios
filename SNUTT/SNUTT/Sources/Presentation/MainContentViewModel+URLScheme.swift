@@ -8,10 +8,14 @@
 import APIClientInterface
 import Foundation
 import Friends
-import LectureDiaryInterface
+import NotificationsInterface
 import SharedUIComponents
 import Timetable
 import TimetableInterface
+
+#if FEATURE_LECTURE_DIARY
+    import LectureDiaryInterface
+#endif
 
 extension MainContentViewModel {
     typealias QueryParameters = [URLQueryItem]
@@ -20,7 +24,6 @@ extension MainContentViewModel {
         guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true) else { return }
         switch urlComponents.host {
         case "notifications":
-            selectedTab = .timetable
             notificationCenter.post(NavigateToNotificationsMessage())
         case "vacancy":
             break
@@ -31,8 +34,10 @@ extension MainContentViewModel {
             await handleTimetableLectureScheme(urlComponents.queryItems)
         case "bookmarks":
             handleBookmarkScheme(urlComponents.queryItems)
-        case "diary":
-            handleDiaryScheme(urlComponents.queryItems)
+        #if FEATURE_LECTURE_DIARY
+            case "diary":
+                handleDiaryScheme(urlComponents.queryItems)
+        #endif
         case "kakaolink":
             handleKakaoLinkScheme(urlComponents.queryItems)
         default:
@@ -72,17 +77,19 @@ extension MainContentViewModel {
         )
     }
 
-    private func handleDiaryScheme(_ parameters: QueryParameters?) {
-        guard let lectureID = parameters?["lectureId"],
-            let lectureTitle = parameters?["courseTitle"]
-        else {
-            notificationCenter.post(.toast(.init(message: TimetableStrings.navigationErrorUnknown)))
-            return
+    #if FEATURE_LECTURE_DIARY
+        private func handleDiaryScheme(_ parameters: QueryParameters?) {
+            guard let lectureID = parameters?["lectureId"],
+                let lectureTitle = parameters?["courseTitle"]
+            else {
+                notificationCenter.post(.toast(.init(message: TimetableStrings.navigationErrorUnknown)))
+                return
+            }
+            notificationCenter.post(
+                NavigateToLectureDiaryMessage(lectureID: lectureID, lectureTitle: lectureTitle)
+            )
         }
-        notificationCenter.post(
-            NavigateToLectureDiaryMessage(lectureID: lectureID, lectureTitle: lectureTitle)
-        )
-    }
+    #endif
 
     private func handleKakaoLinkScheme(_ parameters: QueryParameters?) {
         guard parameters?["type"] == "add-friend-kakao",

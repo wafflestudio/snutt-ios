@@ -10,6 +10,7 @@ import FoundationUtility
 
 enum SettingsPathType: Hashable {
     case myAccount
+    case notificationInbox
     case appearance
     case timetableSettings
     case timetableRange
@@ -17,7 +18,9 @@ enum SettingsPathType: Hashable {
     case pushNotificationSettings
     case vacancyNotification
     case lectureReminder
-    case lectureDiary
+    #if FEATURE_LECTURE_DIARY
+        case lectureDiary
+    #endif
     case themeMarket
     case developers
     case userSupport

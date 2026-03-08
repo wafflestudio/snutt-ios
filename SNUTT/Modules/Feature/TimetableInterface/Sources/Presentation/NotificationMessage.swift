@@ -16,8 +16,8 @@ public struct NavigateToVacancyMessage: NotificationCenter.TypedMessage {
     public init() {}
 }
 
-public struct NavigateToNotificationsMessage: NotificationCenter.TypedMessage {
-    public static let name = Notification.Name("navigateToNotifications")
+public struct NavigateToSearchMessage: NotificationCenter.TypedMessage {
+    public static let name = Notification.Name("navigateToSearch")
 
     public init() {}
 }

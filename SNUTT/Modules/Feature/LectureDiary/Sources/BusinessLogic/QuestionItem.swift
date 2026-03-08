@@ -1,3 +1,4 @@
+#if FEATURE_LECTURE_DIARY
 //
 //  QuestionItem.swift
 //  SNUTT
@@ -36,3 +37,4 @@ public struct NextLecture: Sendable {
     public let id: String
     public let title: String
 }
+#endif

@@ -15,6 +15,7 @@ struct SettingsNavigationLink<Value: Hashable>: View {
     var detail: String?
     var detailImage: Image?
     var showNewBadge: Bool = false
+    var showRedDot: Bool = false
     var destructive: Bool = false
 
     var body: some View {
@@ -34,6 +35,10 @@ struct SettingsNavigationLink<Value: Hashable>: View {
                 if showNewBadge {
                     Spacer().frame(width: 6)
                     NewBadgeView()
+                }
+                if showRedDot {
+                    Spacer().frame(width: 6)
+                    CircleBadge(color: .red)
                 }
                 Spacer()
                 Group {

@@ -80,6 +80,7 @@
 
 // MARK: 서비스
 "service" = "Service";
+"notification.inbox" = "Notification Inbox";
 "service.pushNotification" = "Push Notification Settings";
 "service.pushNotification.lectureUpdate" = "Lecture Updates";
 "service.pushNotification.vacancy" = "Vacancy Notification";

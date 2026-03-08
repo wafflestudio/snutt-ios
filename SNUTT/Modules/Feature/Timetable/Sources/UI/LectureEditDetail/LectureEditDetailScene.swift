@@ -32,6 +32,7 @@ struct LectureEditDetailScene: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
     @Environment(\.themeViewModel) private var themeViewModel
+    @Environment(\.timetableViewModel) var timetableViewModel: any TimetableViewModelProtocol
     @Environment(\.errorAlertHandler) var errorAlertHandler
     @Environment(\.lectureTimeConflictHandler) var conflictHandler
     @Environment(\.reviewsUIProvider) private var reviewsUIProvider
@@ -39,17 +40,17 @@ struct LectureEditDetailScene: View {
     @Dependency(\.notificationCenter) var notificationCenter
     @Dependency(\.appReviewService) var appReviewService
 
-    let paths: Binding<[TimetableDetailSceneTypes]>
     let belongsToOtherTimetable: Bool
+    let onTapLectureColorSelection: (LectureEditDetailViewModel) -> Void
 
     init(
         viewModel: LectureEditDetailViewModel,
-        paths: Binding<[TimetableDetailSceneTypes]> = .constant([]),
-        belongsToOtherTimetable: Bool = false
+        belongsToOtherTimetable: Bool = false,
+        onTapLectureColorSelection: @escaping (LectureEditDetailViewModel) -> Void = { _ in }
     ) {
         _viewModel = .init(initialValue: viewModel)
-        self.paths = paths
         self.belongsToOtherTimetable = belongsToOtherTimetable
+        self.onTapLectureColorSelection = onTapLectureColorSelection
         self._editMode = .init(initialValue: viewModel.displayMode.isCreate ? .active : .inactive)
     }
 
@@ -107,7 +108,8 @@ struct LectureEditDetailScene: View {
             Button(SharedUIComponentsStrings.alertCancel, role: .cancel) {}
             Button(TimetableStrings.editReset, role: .destructive) {
                 errorAlertHandler.withAlert {
-                    try await viewModel.resetLecture()
+                    let updatedTimetable = try await viewModel.resetLecture()
+                    try timetableViewModel.setCurrentTimetable(updatedTimetable)
                     editMode = .inactive
                     application.dismissKeyboard()
                 }
@@ -119,7 +121,8 @@ struct LectureEditDetailScene: View {
             Button(SharedUIComponentsStrings.alertCancel, role: .cancel) {}
             Button(SharedUIComponentsStrings.alertDelete, role: .destructive) {
                 errorAlertHandler.withAlert {
-                    try await viewModel.deleteLecture()
+                    let updatedTimetable = try await viewModel.deleteLecture()
+                    try timetableViewModel.setCurrentTimetable(updatedTimetable)
                     dismiss()
                 }
             }
@@ -157,7 +160,7 @@ struct LectureEditDetailScene: View {
                         title: nil,
                         trailingImage: editMode.isEditing ? TimetableAsset.chevronRight.swiftUIImage : nil
                     ) {
-                        paths.wrappedValue.append(.lectureColorSelection(viewModel))
+                        onTapLectureColorSelection(viewModel)
                     }
                     .disabled(!editMode.isEditing)
                 }

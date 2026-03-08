@@ -1,3 +1,4 @@
+#if FEATURE_LECTURE_DIARY
 //
 //  QuestionAnswer.swift
 //  SNUTT
@@ -16,3 +17,4 @@ public struct QuestionAnswer: Sendable, Equatable {
         self.answerIndex = answerIndex
     }
 }
+#endif

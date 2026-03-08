@@ -40,6 +40,7 @@ public struct NotificationsListScene: View {
         }
         .withResponsiveTouch()
         .navigationTitle(NotificationsStrings.notificationsTitle)
+        .analyticsScreen(.notificationList)
         .scrollPosition(id: $scrolledID, anchor: .bottom)
         .onChange(of: scrolledID) { _, _ in
             if viewModel.notifications.suffix(5).map({ $0.id }).contains(scrolledID) {

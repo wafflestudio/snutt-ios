@@ -1,3 +1,4 @@
+#if FEATURE_LECTURE_DIARY
 //
 //  LectureDiaryUIProvider.swift
 //  SNUTT
@@ -14,3 +15,4 @@ public struct LectureDiaryUIProvider: LectureDiaryUIProvidable {
         AnyView(LectureDiaryListView())
     }
 }
+#endif

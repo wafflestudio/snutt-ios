@@ -8,8 +8,9 @@
 import APIClientInterface
 import Dependencies
 import Foundation
+import NotificationsInterface
 
-struct NotificationAPIRepository: NotificationRepository {
+struct NotificationAPIRepository: NotificationRepository, NotificationCountRepository {
     @Dependency(\.apiClient) private var apiClient
 
     func fetchNotifications(offset: Int, limit: Int, markAsRead: Bool) async throws -> [NotificationModel] {

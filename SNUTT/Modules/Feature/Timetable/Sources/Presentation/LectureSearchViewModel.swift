@@ -39,6 +39,13 @@ class LectureSearchViewModel {
     private func subscribeToNotifications() {
         Task.scoped(
             to: self,
+            subscribing: notificationCenter.messages(of: NavigateToSearchMessage.self)
+        ) { @MainActor viewModel, _ in
+            viewModel.searchDisplayMode = .search
+        }
+
+        Task.scoped(
+            to: self,
             subscribing: notificationCenter.messages(of: NavigateToBookmarkMessage.self)
         ) { @MainActor viewModel, _ in
             viewModel.searchDisplayMode = .bookmark

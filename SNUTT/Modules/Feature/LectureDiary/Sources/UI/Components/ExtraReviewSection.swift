@@ -1,3 +1,4 @@
+#if FEATURE_LECTURE_DIARY
 //
 //  ExtraReviewSection.swift
 //  SNUTT
@@ -114,3 +115,4 @@ struct ExtraReviewSection: View {
     ExtraReviewSection(extraReview: $text)
         .padding()
 }
+#endif

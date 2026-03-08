@@ -1,3 +1,4 @@
+#if FEATURE_LECTURE_DIARY
 //
 //  WrappedOptionChipList.swift
 //  SNUTT
@@ -131,3 +132,4 @@ struct FlowLayout: Layout {
     )
     .padding()
 }
+#endif
