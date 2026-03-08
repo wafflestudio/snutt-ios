@@ -36,6 +36,8 @@ public class FriendsViewModel {
     private(set) var activeFriendsLoadState: FriendsLoadState = .loading
     private(set) var requestedFriendsLoadState: FriendsLoadState = .loading
     var selectedFriendContent: FriendContentLoadState = .loading
+    private var lastRefreshAt: Date?
+    private let refreshThrottleInterval: TimeInterval = 2
 
     public init() {
         subscribeToNotifications()
@@ -47,6 +49,7 @@ public class FriendsViewModel {
             subscribing: notificationCenter.messages(of: OpenFriendsMenuMessage.self)
         ) { @MainActor viewModel, _ in
             viewModel.isMenuPresented = true
+            await viewModel.refreshFriendsIfNeeded()
         }
 
         Task.scoped(
@@ -55,6 +58,7 @@ public class FriendsViewModel {
         ) { @MainActor viewModel, message in
             try await viewModel.handleKakaoFriendRequest(requestToken: message.requestToken)
         }
+
     }
 
     var selectedFriend: Friend? {
@@ -179,6 +183,17 @@ extension FriendsViewModel {
     /// Refresh requested friends list (used after sending friend request)
     func refreshRequestedFriends() async throws {
         try await loadRequestedFriends()
+    }
+
+    func refreshFriendsIfNeeded() async {
+        let now = Date()
+        if let lastRefreshAt,
+            now.timeIntervalSince(lastRefreshAt) < refreshThrottleInterval
+        {
+            return
+        }
+        self.lastRefreshAt = now
+        try? await initialLoadFriends()
     }
 }
 

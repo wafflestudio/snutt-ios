@@ -31,6 +31,7 @@ public struct FriendsScene: View {
     @Environment(\.timetableUIProvider) private var timetableUIProvider
     @Environment(\.themeViewModel) private var themeViewModel
     @Environment(\.errorAlertHandler) private var errorAlertHandler
+    @Environment(\.scenePhase) private var scenePhase
 
     private var shouldShowGuidePopup: Bool {
         isNewToFriendsService || viewModel.isGuidePopupPresented
@@ -80,6 +81,12 @@ public struct FriendsScene: View {
             .onLoad {
                 errorAlertHandler.withAlert {
                     try await viewModel.initialLoadFriends()
+                }
+            }
+            .onChange(of: scenePhase) { _, newPhase in
+                guard newPhase == .active else { return }
+                Task {
+                    await viewModel.refreshFriendsIfNeeded()
                 }
             }
             .sheet(isPresented: $viewModel.isRequestSheetPresented) {
