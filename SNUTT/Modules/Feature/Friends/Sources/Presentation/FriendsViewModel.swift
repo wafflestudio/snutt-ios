@@ -56,7 +56,7 @@ public class FriendsViewModel {
             to: self,
             subscribing: notificationCenter.messages(of: KakaoFriendRequestMessage.self)
         ) { @MainActor viewModel, message in
-            try await viewModel.handleKakaoFriendRequest(requestToken: message.requestToken)
+            try? await viewModel.handleKakaoFriendRequest(requestToken: message.requestToken)
         }
 
     }

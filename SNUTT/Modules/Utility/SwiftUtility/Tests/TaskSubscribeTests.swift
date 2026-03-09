@@ -74,40 +74,7 @@ struct TaskSubscribeTests {
         stream.continuation.finish()
     }
 
-    @MainActor
-    @Test("Task handles errors thrown by onElement closure")
-    func taskHandlesErrorsThrownByOnElementClosure() async throws {
-        let stream = AsyncStream.makeStream(of: Int.self)
-        let owner = TestViewController()
-        var items = [Int]()
-
-        let task = Task.scoped(to: owner, subscribing: stream.stream) { @MainActor _, element in
-            items.append(element)
-            if element == 2 {
-                throw TestError.intentionalFailure
-            }
-        }
-
-        // Emit elements
-        stream.continuation.yield(1)
-        try await Task.sleep(for: .milliseconds(10))
-        stream.continuation.yield(2)  // This will throw
-        try await Task.sleep(for: .milliseconds(10))
-
-        // Verify first element was processed
-        #expect(items == [1, 2])
-
-        // Task should have failed
-        await #expect(throws: TestError.self) {
-            try await task.value
-        }
-        stream.continuation.finish()
-    }
 }
 
 @MainActor
 private final class TestViewController {}
-
-private enum TestError: Error {
-    case intentionalFailure
-}

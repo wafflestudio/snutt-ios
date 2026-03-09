@@ -42,12 +42,12 @@ extension Task where Success == Void, Failure == any Error {
         to owner: Owner,
         subscribing stream: sending S,
         priority: TaskPriority? = nil,
-        onElement: @escaping @Sendable (Owner, S.Element) async throws -> Void
+        onElement: @escaping @Sendable (Owner, S.Element) async -> Void
     ) -> Task<Success, Failure> where Owner: Sendable, S: SendableMetatype {
         return self.init(priority: priority) { [weak weakOwner = owner] in
             for try await element in stream {
                 guard let strongOwner = weakOwner else { throw TaskCancellationError() }
-                try await onElement(strongOwner, element)
+                await onElement(strongOwner, element)
             }
         }
     }
