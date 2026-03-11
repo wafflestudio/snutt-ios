@@ -1,19 +1,22 @@
-//
-//  DiaryEditContext.swift
-//  SNUTT
-//
-//  Copyright © 2026 wafflestudio.com. All rights reserved.
-//
+#if FEATURE_LECTURE_DIARY
+    //
+    //  DiaryEditContext.swift
+    //  SNUTT
+    //
+    //  Copyright © 2026 wafflestudio.com. All rights reserved.
+    //
 
-import Foundation
+    import Foundation
 
-public struct DiaryEditContext: Identifiable {
-    public let id = UUID()
-    let lectureID: String
-    let lectureTitle: String
+    public struct DiaryEditContext: Sendable, Identifiable {
 
-    public init(lectureID: String, lectureTitle: String) {
-        self.lectureID = lectureID
-        self.lectureTitle = lectureTitle
+        public let id = UUID()
+        public let lectureID: String
+        public let lectureTitle: String
+
+        public init(lectureID: String, lectureTitle: String) {
+            self.lectureID = lectureID
+            self.lectureTitle = lectureTitle
+        }
     }
-}
+#endif
