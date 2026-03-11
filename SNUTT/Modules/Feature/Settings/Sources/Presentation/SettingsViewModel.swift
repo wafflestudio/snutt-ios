@@ -35,6 +35,7 @@ final class SettingsViewModel {
 
     let timetableSettingsViewModel = TimetableSettingsViewModel()
     let myAccountViewModel = MyAccountViewModel()
+    let pushNotificationSettingsViewModel = PushNotificationSettingsViewModel()
 
     private(set) var unreadNotificationCount: Int = 0
 

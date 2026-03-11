@@ -15,6 +15,7 @@ enum SettingsPathType: Hashable {
     case timetableSettings
     case timetableRange
     case timetableTheme
+    case pushNotificationSettings
     case vacancyNotification
     case lectureReminder
     #if FEATURE_LECTURE_DIARY

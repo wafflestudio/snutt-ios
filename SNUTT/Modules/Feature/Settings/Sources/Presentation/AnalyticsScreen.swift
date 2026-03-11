@@ -13,6 +13,7 @@ enum AnalyticsScreen: AnalyticsLogEvent {
     case settingsAccount
     case settingsTimetable
     case settingsColorScheme
+    case settingsPushNotification
     case settingsSupport
     case settingsDevelopers
 
@@ -28,6 +29,8 @@ enum AnalyticsScreen: AnalyticsLogEvent {
             "settings_timetable"
         case .settingsColorScheme:
             "settings_color_scheme"
+        case .settingsPushNotification:
+            "settings_push_notification"
         case .settingsSupport:
             "settings_support"
         case .settingsDevelopers:
