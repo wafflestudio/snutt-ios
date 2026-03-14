@@ -37,6 +37,7 @@
         @State private var showConfirmView = false
         @State private var showNextSection = false
         @State private var detailQuestionPosition: Int?
+        @State private var shouldPostNotificationOnDismiss = false
 
         public init(lectureID: String, lectureTitle: String) {
             _viewModel = State(
@@ -94,6 +95,11 @@
             }
             .onChange(of: showConfirmView) { _, isShowing in
                 if !isShowing { dismiss() }
+            }
+            .onDisappear {
+                if shouldPostNotificationOnDismiss {
+                    notificationCenter.post(NavigateToPushNotificationSettingsMessage())
+                }
             }
         }
 
@@ -245,8 +251,8 @@
                     .font(.systemFont(ofSize: 13), lineHeightMultiple: 1.45)
                     .multilineTextAlignment(.center)
                 Button {
+                    shouldPostNotificationOnDismiss = true
                     dismiss()
-                    notificationCenter.post(NavigateToPushNotificationSettingsMessage())
                 } label: {
                     HStack(spacing: 0) {
                         Text(LectureDiaryStrings.lectureDiaryEditSetNotificationButtonLabel)
