@@ -32,7 +32,7 @@ public struct ErrorStateView: View {
 
             Text(title)
                 .font(.system(size: 15, weight: .semibold))
-                .foregroundColor(.primary)
+                .foregroundStyle(.primary)
 
             Text(description.asMarkdown())
                 .font(.systemFont(ofSize: 13), lineHeightMultiple: 1.45)

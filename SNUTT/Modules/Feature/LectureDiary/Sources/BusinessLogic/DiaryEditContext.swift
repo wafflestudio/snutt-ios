@@ -8,7 +8,7 @@
 
     import Foundation
 
-    public struct DiaryEditContext: Sendable, Identifiable, Equatable {
+    public struct DiaryEditContext: Sendable, Identifiable {
 
         public let id = UUID()
         public let lectureID: String

@@ -37,11 +37,8 @@
             .task {
                 await viewModel.loadDiaryList()
             }
-            .overlayLectureDiarySheet($viewModel.diaryEditContext)
-            .onChange(of: viewModel.diaryEditContext) { oldValue, newValue in
-                if oldValue != nil, newValue == nil {
-                    Task { await viewModel.loadDiaryList() }
-                }
+            .overlayLectureDiarySheet($viewModel.diaryEditContext) {
+                Task { await viewModel.loadDiaryList() }
             }
         }
 

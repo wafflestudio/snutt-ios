@@ -13,9 +13,10 @@
 
     extension View {
         public func overlayLectureDiarySheet(
-            _ item: Binding<DiaryEditContext?>
+            _ item: Binding<DiaryEditContext?>,
+            onDismiss: @escaping () -> Void = {}
         ) -> some View {
-            fullScreenCover(item: item) { context in
+            fullScreenCover(item: item, onDismiss: onDismiss) { context in
                 EditLectureDiaryScene(
                     lectureID: context.lectureID,
                     lectureTitle: context.lectureTitle
