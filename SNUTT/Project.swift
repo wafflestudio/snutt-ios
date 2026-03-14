@@ -3,7 +3,7 @@ import ProjectDescriptionHelpers
 
 let project = Project.app(
     name: "SNUTT",
-    destinations: .iOS,
+    destinations: [.iPhone],
     swiftPackages: [],
     moduleDependencies: [
         // Feature
