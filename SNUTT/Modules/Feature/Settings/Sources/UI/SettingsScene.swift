@@ -32,11 +32,15 @@ public struct SettingsScene: View {
                     .padding(.vertical, 12)
                 }
 
-                Section {
+                Section(SettingsStrings.notification) {
                     SettingsNavigationLink(
                         title: SettingsStrings.notificationInbox,
                         value: SettingsPathType.notificationInbox,
                         showRedDot: viewModel.unreadNotificationCount > 0
+                    )
+                    SettingsNavigationLink(
+                        title: SettingsStrings.servicePushNotification,
+                        value: SettingsPathType.pushNotificationSettings
                     )
                 }
 
@@ -57,10 +61,6 @@ public struct SettingsScene: View {
                 }
 
                 Section(SettingsStrings.service) {
-                    SettingsNavigationLink(
-                        title: SettingsStrings.servicePushNotification,
-                        value: SettingsPathType.pushNotificationSettings
-                    )
                     SettingsNavigationLink(
                         title: SettingsStrings.serviceVacancy,
                         value: SettingsPathType.vacancyNotification
