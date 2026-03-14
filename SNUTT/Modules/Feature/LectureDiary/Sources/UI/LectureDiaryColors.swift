@@ -54,7 +54,7 @@
             )
         }
 
-        // Mark: - Foreground: Edit LectureDiary
+        // MARK: - Foreground: Edit LectureDiary
 
         static var setNotificationLabel: Color {
             Color(UIColor { _ in SharedUIComponentsAsset.gray30.color })
@@ -82,7 +82,7 @@
             )
         }
 
-        // Mark: - Foreground: LectureDiary Summary
+        // MARK: - Foreground: LectureDiary Summary
 
         static var lectureTitleForeground: Color {
             Color(
