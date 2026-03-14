@@ -9,7 +9,7 @@ import SwiftUI
 import UIKit
 
 extension Color {
-    // MARK: Background
+    // MARK: - Background
 
     static var enabledRectButtonBackground: Color {
         Color(
@@ -29,7 +29,7 @@ extension Color {
         )
     }
 
-    // MARK: Foreground
+    // MARK: - Foreground
 
     static var disabledRectButtonLabel: Color {
         Color(

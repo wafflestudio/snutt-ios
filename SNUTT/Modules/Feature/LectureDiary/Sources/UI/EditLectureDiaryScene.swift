@@ -25,8 +25,12 @@
     }
 
     struct EditLectureDiaryScene: View {
+
         @Environment(\.dismiss) private var dismiss
+        @Environment(\.errorAlertHandler) private var errorAlertHandler
+
         @Dependency(\.notificationCenter) private var notificationCenter
+
         @State private var viewModel: EditLectureDiaryViewModel
         @State private var showCancelAlert = false
         @State private var showConfirmView = false
@@ -226,15 +230,7 @@
                     type: .medium,
                     disabled: !viewModel.canSubmit
                 ) {
-                    Task {
-                        do {
-                            try await viewModel.submitDiary()
-                            showConfirmView = true
-                        } catch {
-                            // TODO: Show error alert
-                            print("Failed to submit diary: \(error)")
-                        }
-                    }
+                    submitDiary()
                 }
                 .frame(width: 122)
             }
@@ -263,6 +259,13 @@
             }
             .foregroundStyle(Color.setNotificationLabel)
             .padding(.bottom, 16)
+        }
+
+        private func submitDiary() {
+            errorAlertHandler.withAlert {
+                try await viewModel.submitDiary()
+                showConfirmView = true
+            }
         }
     }
 

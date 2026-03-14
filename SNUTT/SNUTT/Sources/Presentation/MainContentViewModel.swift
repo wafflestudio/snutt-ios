@@ -8,8 +8,6 @@
 import Combine
 import Dependencies
 import Foundation
-import LectureDiary
-import LectureDiaryInterface
 import NotificationsInterface
 import Observation
 import SwiftUtility
