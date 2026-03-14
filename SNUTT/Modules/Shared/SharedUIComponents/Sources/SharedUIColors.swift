@@ -9,7 +9,7 @@ import SwiftUI
 import UIKit
 
 extension Color {
-    // MARK: - Background
+    // MARK: Background
 
     static var enabledRectButtonBackground: Color {
         Color(
@@ -25,6 +25,17 @@ extension Color {
             UIColor {
                 $0.userInterfaceStyle == .dark
                     ? SharedUIComponentsAsset.darkerGray.color : SharedUIComponentsAsset.neutral95.color
+            }
+        )
+    }
+
+    // MARK: Foreground
+
+    static var disabledRectButtonLabel: Color {
+        Color(
+            UIColor {
+                $0.userInterfaceStyle == .dark
+                    ? SharedUIComponentsAsset.neutral50.color : SharedUIComponentsAsset.assistive.color
             }
         )
     }

@@ -116,8 +116,10 @@
                 .padding(.top, 44)
                 .padding(.bottom, 24)
                 .background(Color.cardBackground)
-
-                Divider().foregroundStyle(SharedUIComponentsAsset.border.swiftUIColor)
+            }
+            .overlay(alignment: .bottom) {
+                Divider()
+                    .frame(height: 0.4)
             }
             .shadow(color: .black.opacity(0.02), radius: 12, y: 6)
             .alert(
@@ -180,7 +182,6 @@
             .padding(.top, 24)
             .background(Color.cardBackground)
             .clipShape(RoundedRectangle(cornerRadius: 12))
-            .shadow(color: .black.opacity(0.04), radius: 20, x: 12, y: 6)
         }
 
         @ViewBuilder
@@ -208,7 +209,7 @@
                     }
                 }
                 .padding(20)
-                .background(Color(.systemBackground))
+                .background(Color.cardBackground)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
             }
         }

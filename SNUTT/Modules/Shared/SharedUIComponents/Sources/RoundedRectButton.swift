@@ -37,18 +37,20 @@ public struct RoundedRectButton: View {
                 .tracking(tracking)
                 .foregroundStyle(
                     disabled
-                        ? SharedUIComponentsAsset.assistive.swiftUIColor
+                        ? Color.disabledRectButtonLabel
                         : .white
                 )
                 .font(type.font)
                 .padding(.vertical, type.verticalPadding)
                 .frame(maxWidth: .infinity)
-                .backgroundStyle(
-                    disabled
-                        ? Color.disabledRectButtonBackground
-                        : Color.enabledRectButtonBackground
+                .background(
+                    RoundedRectangle(cornerRadius: type.cornerRadius)
+                        .fill(
+                            disabled
+                                ? Color.disabledRectButtonBackground
+                                : Color.enabledRectButtonBackground
+                        )
                 )
-                .clipShape(RoundedRectangle(cornerRadius: type.cornerRadius))
         }
         .disabled(disabled)
     }
