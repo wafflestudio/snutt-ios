@@ -20,6 +20,8 @@
 "lecture_diary.edit.extra_comment.title" = "Write additional comments.";
 "lecture_diary.edit.extra_comment.optional" = "Optional";
 "lecture_diary.edit.extra_comment.placeholder" = "Write briefly about what you learned\nand how you felt in today's class.";
+"lecture_diary.edit.set_notification.label" = "A weekly reminder is provided and can be changed in Settings.";
+"lecture_diary.edit.set_notification.button_label" = "Notification Settings";
 
 /* Confirm */
 "lecture_diary.confirm.title" = "Lecture diary has been registered.";

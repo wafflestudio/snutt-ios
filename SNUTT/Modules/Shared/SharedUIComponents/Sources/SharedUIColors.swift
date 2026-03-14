@@ -28,4 +28,15 @@ extension Color {
             }
         )
     }
+
+    // MARK: - Foreground
+
+    static var disabledRectButtonLabel: Color {
+        Color(
+            UIColor {
+                $0.userInterfaceStyle == .dark
+                    ? SharedUIComponentsAsset.neutral50.color : SharedUIComponentsAsset.assistive.color
+            }
+        )
+    }
 }

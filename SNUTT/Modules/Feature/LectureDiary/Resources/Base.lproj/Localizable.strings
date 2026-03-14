@@ -20,6 +20,8 @@
 "lecture_diary.edit.extra_comment.title" = "더 남기고 싶은 말을 작성해주세요.";
 "lecture_diary.edit.extra_comment.optional" = "선택";
 "lecture_diary.edit.extra_comment.placeholder" = "오늘 수업에서 배운 내용, 느낀 점 등을 간단하게\n적어보세요.";
+"lecture_diary.edit.set_notification.label" = "주 1회 알림이 제공되며, 설정에서 변경할 수 있어요";
+"lecture_diary.edit.set_notification.button_label" = "알림 설정";
 
 /* Confirm */
 "lecture_diary.confirm.title" = "강의일기가 등록되었습니다.";

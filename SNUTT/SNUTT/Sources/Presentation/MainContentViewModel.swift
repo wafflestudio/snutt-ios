@@ -98,6 +98,13 @@ final class MainContentViewModel {
         #if FEATURE_LECTURE_DIARY
             Task.scoped(
                 to: self,
+                subscribing: notificationCenter.messages(of: NavigateToPushNotificationSettingsMessage.self)
+            ) { @MainActor viewModel, _ in
+                viewModel.selectedTab = .settings
+            }
+
+            Task.scoped(
+                to: self,
                 subscribing: notificationCenter.messages(of: NavigateToLectureDiaryMessage.self)
             ) { @MainActor viewModel, nextLecture in
                 viewModel.diaryEditContext = .init(
