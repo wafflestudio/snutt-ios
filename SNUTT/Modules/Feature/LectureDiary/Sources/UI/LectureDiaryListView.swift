@@ -118,27 +118,11 @@
         }
 
         private var errorView: some View {
-            VStack(spacing: 12) {
-                Image(systemName: "exclamationmark.triangle")
-                    .font(.system(size: 40))
-                    .foregroundStyle(.red)
-
-                Text("오류가 발생했습니다")
-                    .font(.system(size: 15, weight: .semibold))
-
-                Text("잠시 후 다시 시도해주세요")
-                    .font(.system(size: 13))
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-
-                Button("다시 시도") {
-                    Task {
-                        await viewModel.loadDiaryList()
-                    }
+            ErrorStateView {
+                Task {
+                    await viewModel.loadDiaryList()
                 }
-                .buttonStyle(.borderedProminent)
             }
-            .padding()
         }
 
         private func deleteDiary(_ id: String) {
