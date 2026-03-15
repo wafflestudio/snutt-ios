@@ -20,10 +20,4 @@ public struct NavigateToLectureDiaryMessage: NotificationCenter.TypedMessage {
         self.lectureTitle = lectureTitle
     }
 }
-
-public struct NavigateToPushNotificationSettingsMessage: NotificationCenter.TypedMessage {
-    public static let name = Notification.Name("navigateToPushNotificationSettings")
-
-    public init() {}
-}
 #endif

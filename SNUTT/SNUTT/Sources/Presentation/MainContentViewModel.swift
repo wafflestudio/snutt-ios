@@ -10,6 +10,7 @@ import Dependencies
 import Foundation
 import NotificationsInterface
 import Observation
+import SettingsInterface
 import SwiftUtility
 import Themes
 import ThemesInterface
@@ -95,7 +96,6 @@ final class MainContentViewModel {
             viewModel.selectedTab = .settings
         }
 
-        #if FEATURE_LECTURE_DIARY
         Task.scoped(
             to: self,
             subscribing: notificationCenter.messages(of: NavigateToPushNotificationSettingsMessage.self)
@@ -103,6 +103,7 @@ final class MainContentViewModel {
             viewModel.selectedTab = .settings
         }
 
+        #if FEATURE_LECTURE_DIARY
         Task.scoped(
             to: self,
             subscribing: notificationCenter.messages(of: NavigateToLectureDiaryMessage.self)

@@ -125,12 +125,12 @@ let project = Project.app(
                 .target(name: "AnalyticsInterface"),
                 .target(name: "AppReviewPromptInterface"),
                 .target(name: "APIClientInterface"),
-                .target(name: "LectureDiaryInterface"),
                 .target(name: "NotificationsInterface"),
                 .target(name: "TimetableInterface"),
                 .target(name: "ThemesInterface"),
                 .target(name: "VacancyInterface"),
                 .target(name: "AuthInterface"),
+                .target(name: "SettingsInterface"),
                 .target(name: "SharedUIComponents"),
                 .target(name: "SharedUIWebKit"),
                 .target(name: "SwiftUtility"),
@@ -239,6 +239,7 @@ let project = Project.app(
                 .target(name: "LectureDiaryInterface"),
                 .target(name: "TimetableInterface"),
                 .target(name: "APIClientInterface"),
+                .target(name: "SettingsInterface"),
                 .target(name: "SharedUIComponents"),
                 .target(name: "SwiftUIUtility"),
                 .target(name: "FoundationUtility"),
@@ -285,6 +286,13 @@ let project = Project.app(
             dependencies: [
                 .external(name: "Spyable"),
                 .external(name: "Dependencies"),
+            ]
+        ),
+        .module(
+            name: "SettingsInterface",
+            category: .featureInterface,
+            dependencies: [
+                .target(name: "DependenciesUtility")
             ]
         ),
         .module(

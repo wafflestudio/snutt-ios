@@ -10,9 +10,9 @@ import Dependencies
 import DependenciesUtility
 import Foundation
 import FoundationUtility
-import LectureDiaryInterface
 import NotificationsInterface
 import Observation
+import SettingsInterface
 import SharedAppMetadata
 import SwiftUI
 import SwiftUtility
@@ -97,10 +97,8 @@ final class SettingsViewModel {
         notificationCenter.messages(of: NavigateToNotificationsMessage.self)
     }
 
-    #if FEATURE_LECTURE_DIARY
     /// Async stream of push notification settings navigation notifications
     func pushNotificationSettingsNavigationNotifications() -> AsyncStream<NavigateToPushNotificationSettingsMessage> {
         notificationCenter.messages(of: NavigateToPushNotificationSettingsMessage.self)
     }
-    #endif
 }

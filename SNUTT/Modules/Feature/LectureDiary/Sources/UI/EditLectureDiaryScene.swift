@@ -8,6 +8,7 @@
 
 import Dependencies
 import LectureDiaryInterface
+import SettingsInterface
 import SharedUIComponents
 import SwiftUI
 
