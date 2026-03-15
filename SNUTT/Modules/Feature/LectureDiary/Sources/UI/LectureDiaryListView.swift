@@ -90,7 +90,7 @@ public struct LectureDiaryListView: View {
                     HStack(spacing: 8) {
                         ForEach(viewModel.availableQuarters, id: \.self) { quarter in
                             SemesterChip(
-                                semester: quarter.id,
+                                semester: quarter.shortID,
                                 isSelected: viewModel.selectedQuarter == quarter,
                                 onTap: {
                                     viewModel.selectQuarter(quarter)

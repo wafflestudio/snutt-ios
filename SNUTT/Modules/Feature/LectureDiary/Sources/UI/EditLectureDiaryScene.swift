@@ -172,7 +172,8 @@ struct EditLectureDiaryScene: View {
                         await viewModel.loadQuestionnaire()
                     }
                     showNextSection = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    Task {
+                        try? await Task.sleep(for: .milliseconds(500))
                         detailQuestionPosition = 1
                     }
                 } label: {
@@ -234,11 +235,11 @@ struct EditLectureDiaryScene: View {
             Spacer()
             RoundedRectButton(
                 label: LectureDiaryStrings.lectureDiaryEditNext,
-                type: .medium,
-                disabled: !viewModel.canSubmit
+                type: .medium
             ) {
                 submitDiary()
             }
+            .disabled(!viewModel.canSubmit)
             .frame(width: 122)
         }
         .padding(.top, 4)

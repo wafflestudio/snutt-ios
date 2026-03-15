@@ -36,6 +36,10 @@ public enum Semester: Int, Sendable, Codable, Equatable {
 
 public struct Quarter: Sendable, Codable, Equatable, Comparable, Identifiable, Hashable {
     public var id: String {
+        "\(year)-\(semester.rawValue)"
+    }
+
+    public var shortID: String {
         "\(String(year).suffix(2))-\(semester.rawValue)"
     }
 

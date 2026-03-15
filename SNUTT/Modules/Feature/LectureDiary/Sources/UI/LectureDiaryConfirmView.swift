@@ -56,8 +56,7 @@ public struct LectureDiaryConfirmView: View {
             Spacer()
             RoundedRectButton(
                 label: LectureDiaryStrings.lectureDiaryConfirmHome,
-                type: .medium,
-                disabled: false
+                type: .medium
             ) {
                 dismiss()
             }
