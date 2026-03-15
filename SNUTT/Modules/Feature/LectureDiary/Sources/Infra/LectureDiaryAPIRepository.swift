@@ -16,6 +16,21 @@ struct LectureDiaryAPIRepository: LectureDiaryRepository {
 
     init() {}
 
+    func fetchTargetLecture() async throws -> DiaryEditContext {
+        let semesterStatus = try await apiClient.getSemesterStatus().ok.body.json
+        let yearAndSemester = semesterStatus.current ?? semesterStatus.next
+        let responseDto = try await apiClient.getRandomTargetLecture(
+            query: .init(
+                year: yearAndSemester.year,
+                semester: try require(.init(rawValue: yearAndSemester.semester.rawValue))
+            )
+        ).ok.body.json
+        return .init(
+            lectureID: responseDto.lectureId,
+            lectureTitle: responseDto.courseTitle
+        )
+    }
+
     func fetchClassTypeList() async throws -> [AnswerOption] {
         let response = try await apiClient.getDailyClassTypes().ok.body.json
         return response.map { .init(id: $0.id, content: $0.name) }

@@ -19,7 +19,7 @@ enum SettingsPathType: Hashable {
     case vacancyNotification
     case lectureReminder
     #if FEATURE_LECTURE_DIARY
-        case lectureDiary
+    case lectureDiary
     #endif
     case themeMarket
     case developers
@@ -27,6 +27,6 @@ enum SettingsPathType: Hashable {
     case termsOfService
     case privacyPolicy
     #if DEBUG
-        case networkLogs
+    case networkLogs
     #endif
 }

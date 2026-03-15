@@ -11,21 +11,19 @@ public struct RoundedRectButton: View {
     private let label: String
     private let tracking: CGFloat
     private let type: ButtonType
-
-    private let disabled: Bool
     private let action: () -> Void
+
+    @Environment(\.isEnabled) private var isEnabled
 
     public init(
         label: String,
         tracking: CGFloat = 0,
         type: ButtonType,
-        disabled: Bool,
         action: @escaping () -> Void
     ) {
         self.label = label
         self.tracking = tracking
         self.type = type
-        self.disabled = disabled
         self.action = action
     }
 
@@ -36,21 +34,22 @@ public struct RoundedRectButton: View {
             Text(label)
                 .tracking(tracking)
                 .foregroundStyle(
-                    disabled
-                        ? SharedUIComponentsAsset.assistive.swiftUIColor
-                        : .white
+                    isEnabled
+                        ? .white
+                        : Color.disabledRectButtonLabel
                 )
                 .font(type.font)
                 .padding(.vertical, type.verticalPadding)
                 .frame(maxWidth: .infinity)
-                .backgroundStyle(
-                    disabled
-                        ? Color.disabledRectButtonBackground
-                        : Color.enabledRectButtonBackground
+                .background(
+                    RoundedRectangle(cornerRadius: type.cornerRadius)
+                        .fill(
+                            isEnabled
+                                ? Color.enabledRectButtonBackground
+                                : Color.disabledRectButtonBackground
+                        )
                 )
-                .clipShape(RoundedRectangle(cornerRadius: type.cornerRadius))
         }
-        .disabled(disabled)
     }
 }
 

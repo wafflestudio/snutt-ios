@@ -21,17 +21,18 @@ struct ExpandableDiarySummaryCell: View {
 
     private var dateString: String {
         guard let firstDiary = diaryList.first else { return "" }
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy.MM.dd"
-        return formatter.string(from: firstDiary.date)
+        return firstDiary.date.formatted(
+            Date.VerbatimFormatStyle(
+                format: "\(year: .defaultDigits).\(month: .twoDigits).\(day: .twoDigits)",
+                timeZone: .current,
+                calendar: .current
+            )
+        )
     }
 
     private var weekdayString: String {
         guard let firstDiary = diaryList.first else { return "" }
-        let formatter = DateFormatter()
-        formatter.dateFormat = "E"
-        formatter.locale = Locale(identifier: "ko_KR")
-        return formatter.string(from: firstDiary.date)
+        return firstDiary.date.formatted(.dateTime.weekday(.abbreviated))
     }
 
     private var joinedLectureTitle: String {

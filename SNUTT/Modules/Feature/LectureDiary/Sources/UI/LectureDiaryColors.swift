@@ -11,7 +11,7 @@ import SwiftUI
 import UIKit
 
 extension Color {
-    // MARK: Background
+    // MARK: - Background
 
     static var sceneBackground: Color {
         Color(UIColor { $0.userInterfaceStyle == .dark ? .black : SharedUIComponentsAsset.lightField.color })
@@ -34,7 +34,7 @@ extension Color {
         Color(UIColor { $0.userInterfaceStyle == .dark ? SharedUIComponentsAsset.neutral5.color : .white })
     }
 
-    // MARK: Foreground
+    // MARK: - Foreground
 
     static var subtitleForeground: Color {
         Color(
@@ -53,6 +53,36 @@ extension Color {
             }
         )
     }
+
+    // MARK: - Foreground: Edit LectureDiary
+
+    static var setNotificationLabel: Color {
+        Color(UIColor { _ in SharedUIComponentsAsset.gray30.color })
+    }
+
+    static var enabledButtonLabel: Color {
+        Color(
+            UIColor {
+                $0.userInterfaceStyle == .dark
+                    ? SharedUIComponentsAsset.darkMint1.color : SharedUIComponentsAsset.darkMint2.color
+            }
+        )
+    }
+
+    static var disabledButtonLabel: Color {
+        Color(UIColor { _ in SharedUIComponentsAsset.gray30.color })
+    }
+
+    static var charCountForeground: Color {
+        Color(
+            UIColor {
+                $0.userInterfaceStyle == .dark
+                    ? SharedUIComponentsAsset.darkerGray.color : SharedUIComponentsAsset.alternative.color
+            }
+        )
+    }
+
+    // MARK: - Foreground: LectureDiary Summary
 
     static var lectureTitleForeground: Color {
         Color(
@@ -81,29 +111,7 @@ extension Color {
         )
     }
 
-    static var enabledButtonLabel: Color {
-        Color(
-            UIColor {
-                $0.userInterfaceStyle == .dark
-                    ? SharedUIComponentsAsset.darkMint1.color : SharedUIComponentsAsset.darkMint2.color
-            }
-        )
-    }
-
-    static var disabledButtonLabel: Color {
-        Color(UIColor { _ in SharedUIComponentsAsset.gray30.color })
-    }
-
-    static var charCountForeground: Color {
-        Color(
-            UIColor {
-                $0.userInterfaceStyle == .dark
-                    ? SharedUIComponentsAsset.darkerGray.color : SharedUIComponentsAsset.alternative.color
-            }
-        )
-    }
-
-    // MARK: Components - OptionChip
+    // MARK: - Components: OptionChip
 
     static var selectedOptionChipLabel: Color {
         Color(
@@ -132,7 +140,7 @@ extension Color {
         ).opacity(0.08)
     }
 
-    // MARK: Components - SemesterChip
+    // MARK: - Components: SemesterChip
 
     static var unselectedSemesterChipLabel: Color {
         Color(
@@ -161,7 +169,7 @@ extension Color {
         )
     }
 
-    // MARK: Components - Etc
+    // MARK: - Components: Etc
 
     static var capsuleBorder: Color {
         Color(

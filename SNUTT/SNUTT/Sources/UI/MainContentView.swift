@@ -7,6 +7,7 @@
 
 import AnalyticsInterface
 import Friends
+import LectureDiary
 import Notifications
 import NotificationsInterface
 import Reviews
@@ -18,7 +19,7 @@ import TimetableInterface
 import Vacancy
 
 #if DEBUG
-    import APIClient
+import APIClient
 #endif
 
 struct MainContentView: View {
@@ -60,7 +61,7 @@ struct MainContentView: View {
                         .environment(\.notificationsUIProvider, NotificationsUIProvider())
                         .environment(\.vacancyUIProvider, VacancyUIProvider())
                         #if DEBUG
-                            .environment(\.networkLogUIProvider, NetworkLogUIProvider())
+                    .environment(\.networkLogUIProvider, NetworkLogUIProvider())
                         #endif
                 )
             }
@@ -69,10 +70,7 @@ struct MainContentView: View {
         .overlaySheet()
         .overlayPopup()
         .overlayADPopup()
-        //        .overlayLectureDiarySheet(
-        //            lectureId: viewModel.diaryEditContext?.lectureID ?? "",
-        //            lectureTitle: viewModel.diaryEditContext?.lectureTitle ?? ""
-        //        )
+        .overlayLectureDiarySheet($viewModel.diaryEditContext)
         .task {
             for await message in viewModel.notificationCenter.messages(of: ToastNotificationMessage.self) {
                 presentToast(message.toast)

@@ -70,6 +70,10 @@ struct ExtraReviewSection: View {
                             .padding(.top, 8)
                     }
                 }
+                .introspect(.textEditor, on: .iOS(.v17, .v18, .v26)) { textView in
+                    textView.textContainerInset = .zero
+                    textView.textContainer.lineFragmentPadding = 0
+                }
 
             HStack(spacing: 0) {
                 Spacer()

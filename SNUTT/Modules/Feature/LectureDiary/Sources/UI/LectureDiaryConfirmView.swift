@@ -36,7 +36,6 @@ public struct LectureDiaryConfirmView: View {
 
             if displayMode != .reviewDone {
                 Button {
-                    // TODO: Implement action based on displayMode
                     dismiss()
                 } label: {
                     HStack(spacing: 4) {
@@ -57,10 +56,8 @@ public struct LectureDiaryConfirmView: View {
             Spacer()
             RoundedRectButton(
                 label: LectureDiaryStrings.lectureDiaryConfirmHome,
-                type: .medium,
-                disabled: false
+                type: .medium
             ) {
-                // TODO: Navigate to home
                 dismiss()
             }
         }

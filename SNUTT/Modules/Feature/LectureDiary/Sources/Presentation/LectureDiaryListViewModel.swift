@@ -15,29 +15,42 @@ import TimetableInterface
 @MainActor
 public final class LectureDiaryListViewModel {
     @ObservationIgnored
-    @Dependency(\.lectureDiaryRepository) private var repository
+    @Dependency(\.lectureDiaryRepository) private var diaryRepository
 
-    var targetLecture: Lecture?
+    var diaryEditContext: DiaryEditContext?
+    private(set) var diariesGroupedByDate: [(Date, [DiarySummary])] = []
 
-    private(set) var diaryListState: DiaryListState = .loading
-    private(set) var selectedQuarter: Quarter?
+    private(set) var diaryListState: DiaryListState = .loading {
+        didSet { updateDiariesGroupedByDate() }
+    }
+
+    private(set) var selectedQuarter: Quarter? {
+        didSet { updateDiariesGroupedByDate() }
+    }
+
     private(set) var availableQuarters: [Quarter] = []
 
     public init() {}
 
     func loadDiaryList() async {
-        diaryListState = .loading
+        if case .loaded = diaryListState {
+            // keep existing data visible
+        } else {
+            diaryListState = .loading
+        }
 
         do {
-            let diaries = try await repository.fetchDiaryList()
-
+            let diaries = try await diaryRepository.fetchDiaryList()
             if diaries.isEmpty {
                 diaryListState = .empty
             } else {
                 diaryListState = .loaded(diaries)
-                // Extract unique quarters
                 availableQuarters = extractQuarters(from: diaries)
-                selectedQuarter = availableQuarters.first
+                if let current = selectedQuarter, availableQuarters.contains(current) {
+                    // preserve the currently selected quarter
+                } else {
+                    selectedQuarter = availableQuarters.first
+                }
             }
         } catch {
             diaryListState = .failed
@@ -48,25 +61,39 @@ public final class LectureDiaryListViewModel {
         selectedQuarter = quarter
     }
 
-    func deleteDiary(id: String) async {
-        do {
-            try await repository.deleteDiary(diaryID: id)
-            await loadDiaryList()
-        } catch {
-            // TODO: Handle error
-            print("Failed to delete diary: \(error)")
+    func deleteDiary(id: String) async throws {
+        try await diaryRepository.deleteDiary(diaryID: id)
+        guard case .loaded(let diaries) = diaryListState else { return }
+        let updatedDiaries = diaries.compactMap { group in
+            let filteredList = group.diaryList.filter { $0.id != id }
+            return filteredList.isEmpty
+                ? nil : DiarySubmissionsOfYearSemester(quarter: group.quarter, diaryList: filteredList)
         }
+        availableQuarters = extractQuarters(from: updatedDiaries)
+        if let current = selectedQuarter, !availableQuarters.contains(current) {
+            selectedQuarter = availableQuarters.first
+        }
+        diaryListState = updatedDiaries.isEmpty ? .empty : .loaded(updatedDiaries)
     }
 
     func getLectureForDiary() async {
-        //        guard let targetMetaData = services.lectureService.getCurrentOrNextSemesterPrimaryTable()
-        //        else { return nil }
-        //        do {
-        //            let targetTable = try await services.timetableService.fetchTimetableData(timetableId: targetMetaData.id)
-        //            return targetTable.lectures.first { $0.lectureId != nil }
-        //        } catch {
-        //            print("Failed to get lecture for diary: \(error)")
-        //        }
+        do {
+            diaryEditContext = try await diaryRepository.fetchTargetLecture()
+        } catch {
+            diaryEditContext = nil
+        }
+    }
+
+    private func updateDiariesGroupedByDate() {
+        guard case .loaded(let diaries) = diaryListState else {
+            diariesGroupedByDate = []
+            return
+        }
+        let selectedDiaries = diaries.first { $0.quarter == selectedQuarter }?.diaryList ?? []
+        diariesGroupedByDate = Dictionary(grouping: selectedDiaries) {
+            Calendar.current.startOfDay(for: $0.date)
+        }
+        .sorted { $0.key > $1.key }
     }
 
     private func extractQuarters(from diaries: [DiarySubmissionsOfYearSemester]) -> [Quarter] {
