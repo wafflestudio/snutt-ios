@@ -70,10 +70,10 @@ public struct SettingsScene: View {
                         value: SettingsPathType.lectureReminder
                     )
                     #if FEATURE_LECTURE_DIARY
-                        SettingsNavigationLink(
-                            title: SettingsStrings.serviceLectureDiary,
-                            value: SettingsPathType.lectureDiary
-                        )
+                    SettingsNavigationLink(
+                        title: SettingsStrings.serviceLectureDiary,
+                        value: SettingsPathType.lectureDiary
+                    )
                     #endif
                     SettingsNavigationLink(
                         title: SettingsStrings.serviceThemeMarket,
@@ -116,12 +116,12 @@ public struct SettingsScene: View {
                 }
 
                 #if DEBUG
-                    Section(SettingsStrings.debug) {
-                        SettingsNavigationLink(
-                            title: SettingsStrings.debugLog,
-                            value: SettingsPathType.networkLogs
-                        )
-                    }
+                Section(SettingsStrings.debug) {
+                    SettingsNavigationLink(
+                        title: SettingsStrings.debugLog,
+                        value: SettingsPathType.networkLogs
+                    )
+                }
                 #endif
 
                 Section {

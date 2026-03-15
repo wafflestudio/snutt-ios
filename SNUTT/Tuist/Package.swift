@@ -2,39 +2,39 @@
 import PackageDescription
 
 #if TUIST
-    import ProjectDescription
-    import ProjectDescriptionHelpers
+import ProjectDescription
+import ProjectDescriptionHelpers
 
-    let packageSettings = PackageSettings(
-        // Customize the product types for specific package product
-        // Default is .staticFramework
-        // productTypes: ["Alamofire": .framework,]
-        productTypes: [
-            "Dependencies": .framework,
-            "Clocks": .framework,
-            "ConcurrencyExtras": .framework,
-            "CombineSchedulers": .framework,
-            "XCTestDynamicOverlay": .framework,
-            "SwiftUIIntrospect": .framework,
-            "Spyable": .framework,
-            "MemberwiseInit": .framework,
-            "DependenciesAdditions": .framework,
-            "DependenciesAdditionsBasics": .framework,
-            "UserDefaultsDependency": .framework,
-            "IssueReporting": .framework,
-            "OpenAPIRuntime": .framework,
-            "OpenAPIURLSession": .framework,
-            "HTTPTypes": .framework,
-            "SnapKit": .framework,
-            "KakaoSDKCommon": .framework,
-            "Alamofire": .framework,
-            "DequeModule": .framework,
-        ],
-        baseSettings: .settings(configurations: [
-            .debug(name: .dev),
-            .release(name: .prod),
-        ])
-    )
+let packageSettings = PackageSettings(
+    // Customize the product types for specific package product
+    // Default is .staticFramework
+    // productTypes: ["Alamofire": .framework,]
+    productTypes: [
+        "Dependencies": .framework,
+        "Clocks": .framework,
+        "ConcurrencyExtras": .framework,
+        "CombineSchedulers": .framework,
+        "XCTestDynamicOverlay": .framework,
+        "SwiftUIIntrospect": .framework,
+        "Spyable": .framework,
+        "MemberwiseInit": .framework,
+        "DependenciesAdditions": .framework,
+        "DependenciesAdditionsBasics": .framework,
+        "UserDefaultsDependency": .framework,
+        "IssueReporting": .framework,
+        "OpenAPIRuntime": .framework,
+        "OpenAPIURLSession": .framework,
+        "HTTPTypes": .framework,
+        "SnapKit": .framework,
+        "KakaoSDKCommon": .framework,
+        "Alamofire": .framework,
+        "DequeModule": .framework,
+    ],
+    baseSettings: .settings(configurations: [
+        .debug(name: .dev),
+        .release(name: .prod),
+    ])
+)
 #endif
 
 let package = Package(

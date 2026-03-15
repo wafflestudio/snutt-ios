@@ -174,14 +174,15 @@ extension Project {
 
     private static func makeSettings(includeEntitlements: Bool = false) -> Settings {
         let baseSettings: (ProjectDescription.ConfigurationName) -> [String: SettingValue] = { name in
-            let settings: [String: SettingValue] = switch name {
-            case .dev where includeEntitlements:
-                ["CODE_SIGN_ENTITLEMENTS": "Supporting Files/SNUTT-Dev.entitlements"]
-            case .prod where includeEntitlements:
-                ["CODE_SIGN_ENTITLEMENTS": "Supporting Files/SNUTT-Prod.entitlements"]
-            default:
-                .init()
-            }
+            let settings: [String: SettingValue] =
+                switch name {
+                case .dev where includeEntitlements:
+                    ["CODE_SIGN_ENTITLEMENTS": "Supporting Files/SNUTT-Dev.entitlements"]
+                case .prod where includeEntitlements:
+                    ["CODE_SIGN_ENTITLEMENTS": "Supporting Files/SNUTT-Prod.entitlements"]
+                default:
+                    .init()
+                }
             return settings.swiftActiveCompilationConditions(
                 CompilationConditions.swiftActiveCompilationConditions(for: name)
             )

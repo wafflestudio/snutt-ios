@@ -34,9 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /// Ensures dev/prod data isolation for analytics, crash reports, and push notifications.
     internal var firebaseConfigName: String {
         #if DEBUG
-            return "GoogleServiceDebugInfo"
+        return "GoogleServiceDebugInfo"
         #else
-            return "GoogleServiceReleaseInfo"
+        return "GoogleServiceReleaseInfo"
         #endif
     }
 

@@ -6,5 +6,6 @@
   },
   "lineBreakBeforeEachArgument": true,
   "respectsExistingLineBreaks": true,
-  "prioritizeKeepingFunctionOutputTogether": true
+  "prioritizeKeepingFunctionOutputTogether": true,
+  "indentConditionalCompilationBlocks": false
 }

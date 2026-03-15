@@ -42,7 +42,7 @@ struct ContentView: View {
             }
         }
         #if DEBUG
-            .observeNetworkLogsGesture()
+        .observeNetworkLogsGesture()
         #endif
     }
 }
