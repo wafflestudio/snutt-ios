@@ -38,7 +38,6 @@ struct EditLectureDiaryScene: View {
     @State private var showConfirmView = false
     @State private var showNextSection = false
     @State private var detailQuestionPosition: Int?
-    @State private var shouldPostNotificationOnDismiss = false
 
     public init(lectureID: String, lectureTitle: String) {
         _viewModel = State(
@@ -96,11 +95,6 @@ struct EditLectureDiaryScene: View {
         }
         .onChange(of: showConfirmView) { _, isShowing in
             if !isShowing { dismiss() }
-        }
-        .onDisappear {
-            if shouldPostNotificationOnDismiss {
-                notificationCenter.post(NavigateToPushNotificationSettingsMessage())
-            }
         }
     }
 
@@ -253,7 +247,7 @@ struct EditLectureDiaryScene: View {
                 .font(.systemFont(ofSize: 13), lineHeightMultiple: 1.45)
                 .multilineTextAlignment(.center)
             Button {
-                shouldPostNotificationOnDismiss = true
+                notificationCenter.post(NavigateToPushNotificationSettingsMessage())
                 dismiss()
             } label: {
                 HStack(spacing: 0) {

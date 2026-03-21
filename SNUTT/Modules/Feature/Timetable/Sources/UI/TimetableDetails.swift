@@ -10,12 +10,20 @@ import SwiftUI
 import ThemesInterface
 import VacancyInterface
 
+#if FEATURE_LECTURE_DIARY
+import LectureDiaryInterface
+#endif
+
 struct TimetableDetails: View {
     let pathType: TimetableDetailSceneTypes
     @Bindable var timetableViewModel: TimetableViewModel
     @Environment(\.notificationsUIProvider) private var notificationsUIProvider
     @Environment(\.themeViewModel) private var themeViewModel
     @Environment(\.vacancyUIProvider) private var vacancyUIProvider
+
+    #if FEATURE_LECTURE_DIARY
+    @Environment(\.lectureDiaryUIProvider) private var diaryListUIProvider
+    #endif
 
     var body: some View {
         switch pathType {
@@ -73,6 +81,11 @@ struct TimetableDetails: View {
             }
         case .notificationList:
             AnyView(notificationsUIProvider.makeNotificationsScene())
+
+        #if FEATURE_LECTURE_DIARY
+        case .lectureDiaryList:
+            AnyView(diaryListUIProvider.makeLectureDiaryListView())
+        #endif
         }
     }
 }
