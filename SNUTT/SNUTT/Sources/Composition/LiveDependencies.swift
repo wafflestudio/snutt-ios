@@ -23,8 +23,8 @@ import Vacancy
 import VacancyInterface
 
 #if FEATURE_LECTURE_DIARY
-    import LectureDiary
-    import LectureDiaryInterface
+import LectureDiary
+import LectureDiaryInterface
 #endif
 
 extension APIClientKey: @retroactive DependencyKey {
@@ -64,9 +64,9 @@ extension VacancyRepositoryKey: @retroactive DependencyKey {
 }
 
 #if FEATURE_LECTURE_DIARY
-    extension LectureDiaryUIProviderKey: @retroactive DependencyKey {
-        public static let liveValue: any LectureDiaryUIProvidable = LectureDiaryUIProvider()
-    }
+extension LectureDiaryUIProviderKey: @retroactive DependencyKey {
+    public static let liveValue: any LectureDiaryUIProvidable = LectureDiaryUIProvider()
+}
 #endif
 
 extension ThemeUIProviderKey: @retroactive DependencyKey {

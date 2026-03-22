@@ -14,7 +14,7 @@ import TimetableInterface
 import VacancyInterface
 
 #if FEATURE_LECTURE_DIARY
-    import LectureDiaryInterface
+import LectureDiaryInterface
 #endif
 
 struct SettingsDetails: View {
@@ -25,11 +25,11 @@ struct SettingsDetails: View {
     @Environment(\.notificationsUIProvider) private var notificationsUIProvider
     @Environment(\.timetableUIProvider) private var timetableUIProvider
     #if FEATURE_LECTURE_DIARY
-        @Environment(\.lectureDiaryUIProvider) private var lectureDiaryUIProvider
+    @Environment(\.lectureDiaryUIProvider) private var lectureDiaryUIProvider
     #endif
     @Environment(\.themeUIProvider) private var themeUIProvider
     #if DEBUG
-        @Environment(\.networkLogUIProvider) private var networkLogUIProvider
+    @Environment(\.networkLogUIProvider) private var networkLogUIProvider
     #endif
 
     var body: some View {
@@ -58,8 +58,8 @@ struct SettingsDetails: View {
         case .lectureReminder:
             timetableUIProvider.makeLectureReminderScene()
         #if FEATURE_LECTURE_DIARY
-            case .lectureDiary:
-                lectureDiaryUIProvider.makeLectureDiaryListView()
+        case .lectureDiary:
+            lectureDiaryUIProvider.makeLectureDiaryListView()
         #endif
         case .themeMarket:
             AnyView(themeUIProvider.themeMarketScene())
@@ -74,8 +74,8 @@ struct SettingsDetails: View {
         case .privacyPolicy:
             PrivacyPolicyView()
         #if DEBUG
-            case .networkLogs:
-                AnyView(networkLogUIProvider.makeNetworkLogsScene())
+        case .networkLogs:
+            AnyView(networkLogUIProvider.makeNetworkLogsScene())
         #endif
         }
     }

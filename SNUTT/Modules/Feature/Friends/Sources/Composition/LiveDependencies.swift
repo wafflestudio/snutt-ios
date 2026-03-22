@@ -11,7 +11,7 @@ import Foundation
 struct FriendsRepositoryKey: DependencyKey {
     static let liveValue: any FriendsRepository = FriendsAPIRepository()
     #if DEBUG
-        static let previewValue: any FriendsRepository = FakeFriendsRepository()
+    static let previewValue: any FriendsRepository = FakeFriendsRepository()
     #endif
 }
 

@@ -18,7 +18,7 @@ import TimetableInterface
 import Vacancy
 
 #if DEBUG
-    import APIClient
+import APIClient
 #endif
 
 struct MainContentView: View {
@@ -60,7 +60,7 @@ struct MainContentView: View {
                         .environment(\.notificationsUIProvider, NotificationsUIProvider())
                         .environment(\.vacancyUIProvider, VacancyUIProvider())
                         #if DEBUG
-                            .environment(\.networkLogUIProvider, NetworkLogUIProvider())
+                    .environment(\.networkLogUIProvider, NetworkLogUIProvider())
                         #endif
                 )
             }

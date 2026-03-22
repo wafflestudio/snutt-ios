@@ -33,7 +33,7 @@ public struct APIClientProvider: Sendable {
             ErrorDecodingMiddleware(),
         ]
         #if DEBUG
-            middlewares.append(DebugNetworkLoggingMiddleware())
+        middlewares.append(DebugNetworkLoggingMiddleware())
         #endif
         return Client(
             serverURL: appMetadata.apiURL,

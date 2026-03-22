@@ -17,8 +17,8 @@ import Timetable
 import TimetableInterface
 
 #if FEATURE_LECTURE_DIARY
-    import LectureDiary
-    import LectureDiaryInterface
+import LectureDiary
+import LectureDiaryInterface
 #endif
 
 @Observable
@@ -34,7 +34,7 @@ final class MainContentViewModel {
     private var cancellables: Set<AnyCancellable> = []
 
     #if FEATURE_LECTURE_DIARY
-        var diaryEditContext: DiaryEditContext?
+    var diaryEditContext: DiaryEditContext?
     #endif
 
     let themeViewModel: ThemeViewModel
@@ -96,16 +96,16 @@ final class MainContentViewModel {
         }
 
         #if FEATURE_LECTURE_DIARY
-            Task.scoped(
-                to: self,
-                subscribing: notificationCenter.messages(of: NavigateToLectureDiaryMessage.self)
-            ) { @MainActor viewModel, nextLecture in
-                viewModel.diaryEditContext = .init(
-                    lectureID: nextLecture.lectureID,
-                    lectureTitle: nextLecture.lectureTitle
-                )
-                viewModel.selectedTab = .timetable
-            }
+        Task.scoped(
+            to: self,
+            subscribing: notificationCenter.messages(of: NavigateToLectureDiaryMessage.self)
+        ) { @MainActor viewModel, nextLecture in
+            viewModel.diaryEditContext = .init(
+                lectureID: nextLecture.lectureID,
+                lectureTitle: nextLecture.lectureTitle
+            )
+            viewModel.selectedTab = .timetable
+        }
         #endif
     }
 }

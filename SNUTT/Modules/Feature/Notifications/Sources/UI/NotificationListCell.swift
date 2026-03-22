@@ -45,12 +45,12 @@ struct NotificationListCell: View {
                         .font(Design.messageFont)
                         .padding(.trailing, 8)
                     #if DEBUG
-                        if let deeplink = notification.deeplink {
-                            Text("[DEBUG] 🔗 \(deeplink)")
-                                .font(.system(size: 10))
-                                .foregroundStyle(.tertiary)
-                                .padding(.top, 5)
-                        }
+                    if let deeplink = notification.deeplink {
+                        Text("[DEBUG] 🔗 \(deeplink)")
+                            .font(.system(size: 10))
+                            .foregroundStyle(.tertiary)
+                            .padding(.top, 5)
+                    }
                     #endif
                 }
                 .padding(.trailing, 2)
