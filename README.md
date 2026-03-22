@@ -10,18 +10,13 @@
     The best timetable application for SNU students, developed and maintained by SNU students.
     <br />
     <br />
-    <a href="https://github.com/wafflestudio/snutt-ios/actions/workflows/snutt-ci.yml">
-      <img src="https://img.shields.io/github/actions/workflow/status/wafflestudio/snutt-ios/snutt-ci.yml?label=CI&logo=github"/>
-    </a>
-    <a href="https://github.com/wafflestudio/snutt-ios/actions/workflows/snutt-deploy.yml">
-      <img src="https://img.shields.io/github/actions/workflow/status/wafflestudio/snutt-ios/snutt-deploy.yml?label=Deploy&logo=github"/>
-    </a>
-    <img src="https://img.shields.io/badge/Swift-6.1-F05138?logo=swift&logoColor=white"/>
-    <img src="https://img.shields.io/badge/Platforms-iOS_17+-F05138?logo=swift&logoColor=white"/>
-    <a href="https://apps.apple.com/kr/app/snutt-%EC%84%9C%EC%9A%B8%EB%8C%80%ED%95%99%EA%B5%90-%EC%8B%9C%EA%B0%84%ED%91%9C-%EC%95%B1/id1215668309">
-      <img src="https://img.shields.io/itunes/v/1215668309?logo=app-store&logoColor=white&color=0D96F6&label=App%20Store"/>
-    </a>
-    <img src="https://img.shields.io/github/license/wafflestudio/snutt-ios"/>
+    <a href="https://github.com/wafflestudio/snutt-ios/actions/workflows/snutt-ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/wafflestudio/snutt-ios/snutt-ci.yml?label=CI&logo=github"/></a>
+    <a href="https://github.com/wafflestudio/snutt-ios/actions/workflows/snutt-deploy.yml"><img src="https://img.shields.io/github/actions/workflow/status/wafflestudio/snutt-ios/snutt-deploy.yml?label=Deploy&logo=github"/></a>
+    <a href="https://github.com/wafflestudio/snutt-ios/blob/master/LICENSE"><img src="https://img.shields.io/github/license/wafflestudio/snutt-ios"/></a>
+    <br />
+    <a href="https://apps.apple.com/kr/app/snutt-%EC%84%9C%EC%9A%B8%EB%8C%80%ED%95%99%EA%B5%90-%EC%8B%9C%EA%B0%84%ED%91%9C-%EC%95%B1/id1215668309"><img src="https://img.shields.io/itunes/v/1215668309?logo=app-store&logoColor=white&color=0D96F6&label=App%20Store"/></a>
+    <a href="https://github.com/wafflestudio/snutt-ios/blob/master/SNUTT/Project.swift"><img src="https://img.shields.io/badge/Swift-6.1-F05138?logo=swift&logoColor=white"/></a>
+    <a href="https://github.com/wafflestudio/snutt-ios/blob/master/SNUTT/Project.swift"><img src="https://img.shields.io/badge/Platforms-iOS_17+-F05138?logo=swift&logoColor=white"/></a>
   </p>
 </div>
 
