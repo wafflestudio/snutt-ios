@@ -6,14 +6,14 @@
 //
 
 #if DEBUG
-    import APIClientInterface
-    import SwiftUI
+import APIClientInterface
+import SwiftUI
 
-    public struct NetworkLogUIProvider: NetworkLogUIProvidable {
-        public init() {}
+public struct NetworkLogUIProvider: NetworkLogUIProvidable {
+    public init() {}
 
-        public func makeNetworkLogsScene() -> AnyView {
-            AnyView(NetworkLogsScene())
-        }
+    public func makeNetworkLogsScene() -> AnyView {
+        AnyView(NetworkLogsScene())
     }
+}
 #endif

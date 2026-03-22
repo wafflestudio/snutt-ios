@@ -53,66 +53,66 @@ public enum FriendState: String, Sendable {
 }
 
 #if DEBUG
-    extension Friend {
-        public static let preview1 = Friend(
-            id: "friend1",
-            userId: "user1",
-            nickname: "김철수",
-            tag: "1234",
-            displayName: "철수",
-        )
+extension Friend {
+    public static let preview1 = Friend(
+        id: "friend1",
+        userId: "user1",
+        nickname: "김철수",
+        tag: "1234",
+        displayName: "철수",
+    )
 
-        public static let preview2 = Friend(
-            id: "friend2",
-            userId: "user2",
-            nickname: "이영희",
-            tag: "5678",
+    public static let preview2 = Friend(
+        id: "friend2",
+        userId: "user2",
+        nickname: "이영희",
+        tag: "5678",
+        displayName: nil,
+    )
+
+    public static let preview3 = Friend(
+        id: "friend3",
+        userId: "user3",
+        nickname: "박민수",
+        tag: "9012",
+        displayName: "민수님",
+    )
+
+    public static let preview4 = Friend(
+        id: "friend4",
+        userId: "user4",
+        nickname: "최지현",
+        tag: "3456",
+        displayName: nil,
+    )
+
+    public static let previewRequested = [
+        Friend(
+            id: "friend5",
+            userId: "user5",
+            nickname: "정수빈",
+            tag: "7890",
             displayName: nil,
-        )
-
-        public static let preview3 = Friend(
-            id: "friend3",
-            userId: "user3",
-            nickname: "박민수",
-            tag: "9012",
-            displayName: "민수님",
-        )
-
-        public static let preview4 = Friend(
-            id: "friend4",
-            userId: "user4",
-            nickname: "최지현",
-            tag: "3456",
+        ),
+        Friend(
+            id: "friend5b",
+            userId: "user5b",
+            nickname: "김민수",
+            tag: "7891",
             displayName: nil,
-        )
+        ),
+    ]
 
-        public static let previewRequested = [
-            Friend(
-                id: "friend5",
-                userId: "user5",
-                nickname: "정수빈",
-                tag: "7890",
-                displayName: nil,
-            ),
-            Friend(
-                id: "friend5b",
-                userId: "user5b",
-                nickname: "김민수",
-                tag: "7891",
-                displayName: nil,
-            ),
-        ]
+    public static let previewRequesting = Friend(
+        id: "friend6",
+        userId: "user6",
+        nickname: "강예진",
+        tag: "2345",
+        displayName: nil,
+    )
 
-        public static let previewRequesting = Friend(
-            id: "friend6",
-            userId: "user6",
-            nickname: "강예진",
-            tag: "2345",
-            displayName: nil,
-        )
-
-        public static var previews: [Friend] {
-            [preview1, preview2, preview3, preview4]
-        }
+    public static var previews: [Friend] {
+        [preview1, preview2, preview3, preview4]
     }
+}
 #endif

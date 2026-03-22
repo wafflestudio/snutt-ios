@@ -30,9 +30,9 @@ public struct AppMetadata: Sendable {
             marketingVersion
         case .appType:
             #if DEBUG
-                "debug"
+            "debug"
             #else
-                "release"
+            "release"
             #endif
         case .osType:
             "ios"

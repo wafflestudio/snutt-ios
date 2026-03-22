@@ -14,7 +14,7 @@ import Timetable
 import TimetableInterface
 
 #if FEATURE_LECTURE_DIARY
-    import LectureDiaryInterface
+import LectureDiaryInterface
 #endif
 
 extension MainContentViewModel {
@@ -35,8 +35,8 @@ extension MainContentViewModel {
         case "bookmarks":
             handleBookmarkScheme(urlComponents.queryItems)
         #if FEATURE_LECTURE_DIARY
-            case "diary":
-                handleDiaryScheme(urlComponents.queryItems)
+        case "diary":
+            handleDiaryScheme(urlComponents.queryItems)
         #endif
         case "kakaolink":
             handleKakaoLinkScheme(urlComponents.queryItems)
@@ -78,17 +78,17 @@ extension MainContentViewModel {
     }
 
     #if FEATURE_LECTURE_DIARY
-        private func handleDiaryScheme(_ parameters: QueryParameters?) {
-            guard let lectureID = parameters?["lectureId"],
-                let lectureTitle = parameters?["courseTitle"]
-            else {
-                notificationCenter.post(.toast(.init(message: TimetableStrings.navigationErrorUnknown)))
-                return
-            }
-            notificationCenter.post(
-                NavigateToLectureDiaryMessage(lectureID: lectureID, lectureTitle: lectureTitle)
-            )
+    private func handleDiaryScheme(_ parameters: QueryParameters?) {
+        guard let lectureID = parameters?["lectureId"],
+            let lectureTitle = parameters?["courseTitle"]
+        else {
+            notificationCenter.post(.toast(.init(message: TimetableStrings.navigationErrorUnknown)))
+            return
         }
+        notificationCenter.post(
+            NavigateToLectureDiaryMessage(lectureID: lectureID, lectureTitle: lectureTitle)
+        )
+    }
     #endif
 
     private func handleKakaoLinkScheme(_ parameters: QueryParameters?) {
