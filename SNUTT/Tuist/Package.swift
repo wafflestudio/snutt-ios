@@ -29,6 +29,7 @@ let packageSettings = PackageSettings(
         "KakaoSDKCommon": .framework,
         "Alamofire": .framework,
         "DequeModule": .framework,
+        "Tagged": .framework,
     ],
     baseSettings: .settings(configurations: [
         .debug(name: .dev),
@@ -53,5 +54,6 @@ let package = Package(
         .package(url: "https://github.com/google/GoogleSignIn-iOS", from: "7.0.0"),
         .package(url: "https://github.com/facebook/facebook-ios-sdk", .upToNextMajor(from: "18.0.1")),
         .package(url: "https://github.com/kakao/kakao-ios-sdk", .upToNextMajor(from: "2.25.0")),
+        .package(url: "https://github.com/pointfreeco/swift-tagged", from: "0.10.0"),
     ]
 )

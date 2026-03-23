@@ -7,12 +7,13 @@
 
 import SharedUIComponents
 import SwiftUI
+import TimetableInterface
 
 struct VacancyLectureListView: View {
     let viewModel: VacancyViewModel
 
     @Binding var editMode: EditMode
-    @State private var selectedLectureIDs = Set<String>()
+    @State private var selectedLectureIDs = Set<LectureID>()
     @State private var isDeleteConfirmAlertPresented = false
     @Environment(\.errorAlertHandler) private var errorAlertHandler
 
@@ -80,7 +81,7 @@ struct VacancyLectureListView: View {
             withAnimation {
                 self.editMode.toggle()
             }
-            self.selectedLectureIDs = Set<String>()
+            self.selectedLectureIDs = Set<LectureID>()
         }) {
             Text(self.editMode.title)
         }

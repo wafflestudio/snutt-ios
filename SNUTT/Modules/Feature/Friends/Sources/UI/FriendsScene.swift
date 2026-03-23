@@ -14,7 +14,7 @@ import TimetableInterface
 
 public struct FriendsScene: View {
     struct SelectedLecture: Identifiable {
-        let id: String
+        let id: LectureID
         let lecture: Lecture
         let quarter: Quarter
 

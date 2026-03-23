@@ -9,6 +9,7 @@ import APIClientInterface
 import Dependencies
 import Foundation
 import FoundationUtility
+import TimetableInterface
 import VacancyInterface
 
 public struct VacancyAPIRepository: VacancyRepository {
@@ -20,16 +21,16 @@ public struct VacancyAPIRepository: VacancyRepository {
         try await apiClient.getVacancyNotificationLectures().ok.body.json.lectures
     }
 
-    public func addVacancyLecture(lectureID: String) async throws {
-        _ = try await apiClient.addVacancyNotification(.init(path: .init(lectureId: lectureID))).ok
+    public func addVacancyLecture(lectureID: LectureID) async throws {
+        _ = try await apiClient.addVacancyNotification(.init(path: .init(lectureId: lectureID.rawValue))).ok
     }
 
-    public func deleteVacancyLecture(lectureID: String) async throws {
-        _ = try await apiClient.deleteVacancyNotification(path: .init(lectureId: lectureID)).ok
+    public func deleteVacancyLecture(lectureID: LectureID) async throws {
+        _ = try await apiClient.deleteVacancyNotification(path: .init(lectureId: lectureID.rawValue)).ok
     }
 
-    public func isVacancyNotificationEnabled(lectureID: String) async throws -> Bool {
+    public func isVacancyNotificationEnabled(lectureID: LectureID) async throws -> Bool {
         let vacancyLectures = try await fetchVacancyLectures()
-        return vacancyLectures.contains { $0._id == lectureID }
+        return vacancyLectures.contains { $0._id == lectureID.rawValue }
     }
 }

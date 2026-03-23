@@ -51,7 +51,7 @@ public final class LectureEditDetailViewModel {
     private(set) var isBookmarked = false
     private(set) var isVacancyNotificationEnabled = false
     private(set) var reminderViewModel: LectureReminderViewModel?
-    nonisolated let lectureID: String
+    nonisolated let lectureID: LectureID
 
     var showMapView: Bool {
         !buildings.isEmpty && isGwanak
@@ -152,22 +152,24 @@ public final class LectureEditDetailViewModel {
 
     func deleteLecture() async throws -> Timetable {
         guard let timetableID = parentTimetable?.id else { throw LocalizedErrorCode.timetableNotFound }
+        guard let timetableLectureID = entryLecture.timetableLectureID else { throw LocalizedErrorCode.lectureNotFound }
         return try await timetableRepository.removeLecture(
             timetableID: timetableID,
-            lectureID: entryLecture.id
+            lectureID: timetableLectureID
         )
     }
 
     func resetLecture() async throws -> Timetable {
         guard let timetableID = parentTimetable?.id else { throw LocalizedErrorCode.timetableNotFound }
         guard !entryLecture.isCustom else { throw LocalizedErrorCode.isCustomLecture }
+        guard let timetableLectureID = entryLecture.timetableLectureID else { throw LocalizedErrorCode.lectureNotFound }
 
         let timetable = try await lectureRepository.resetLecture(
             timetableID: timetableID,
-            lectureID: entryLecture.id
+            lectureID: timetableLectureID
         )
 
-        guard let resetLecture = timetable.lectures.first(where: { $0.id == entryLecture.id })
+        guard let resetLecture = timetable.lectures.first(where: { $0.timetableLectureID == timetableLectureID })
         else { throw LocalizedErrorCode.lectureNotFound }
         entryLecture = resetLecture
         editableLecture = resetLecture
@@ -176,30 +178,30 @@ public final class LectureEditDetailViewModel {
 
     private func fetchBookmarkStatus() async {
         guard !entryLecture.isCustom else { return }
-        isBookmarked = (try? await lectureRepository.isBookmarked(lectureID: entryLecture.referenceID)) ?? false
+        isBookmarked = (try? await lectureRepository.isBookmarked(lectureID: entryLecture.id)) ?? false
     }
 
     private func fetchVacancyNotificationStatus() async {
         guard !entryLecture.isCustom else { return }
         isVacancyNotificationEnabled =
             (try? await vacancyRepository
-                .isVacancyNotificationEnabled(lectureID: entryLecture.referenceID)) ?? false
+                .isVacancyNotificationEnabled(lectureID: entryLecture.id)) ?? false
     }
 
     func toggleBookmark() async throws {
         guard !entryLecture.isCustom else { return }
         if isBookmarked {
-            try await lectureRepository.removeBookmark(lectureID: entryLecture.referenceID)
+            try await lectureRepository.removeBookmark(lectureID: entryLecture.id)
         } else {
             analyticsLogger.logEvent(
                 AnalyticsAction.addToBookmark(
                     .init(
-                        lectureID: entryLecture.referenceID,
+                        lectureID: entryLecture.id,
                         referrer: .lectureDetail
                     )
                 )
             )
-            try await lectureRepository.addBookmark(lectureID: entryLecture.referenceID)
+            try await lectureRepository.addBookmark(lectureID: entryLecture.id)
         }
         isBookmarked.toggle()
     }
@@ -207,17 +209,17 @@ public final class LectureEditDetailViewModel {
     func toggleVacancyNotification() async throws {
         guard !entryLecture.isCustom else { return }
         if isVacancyNotificationEnabled {
-            try await vacancyRepository.deleteVacancyLecture(lectureID: entryLecture.referenceID)
+            try await vacancyRepository.deleteVacancyLecture(lectureID: entryLecture.id)
         } else {
             analyticsLogger.logEvent(
                 AnalyticsAction.addToVacancy(
                     .init(
-                        lectureID: entryLecture.referenceID,
+                        lectureID: entryLecture.id,
                         referrer: .lectureDetail
                     )
                 )
             )
-            try await vacancyRepository.addVacancyLecture(lectureID: entryLecture.referenceID)
+            try await vacancyRepository.addVacancyLecture(lectureID: entryLecture.id)
         }
         isVacancyNotificationEnabled.toggle()
     }
@@ -244,14 +246,16 @@ public final class LectureEditDetailViewModel {
 
     private func initializeReminderViewModelIfNeeded() async throws {
         let semesterStatus = try await semesterRepository.fetchSemesterStatus()
-        guard let timetableID = parentTimetable?.id, shouldShowReminderPicker(semesterStatus: semesterStatus)
+        guard let timetableID = parentTimetable?.id,
+            let timetableLectureID = entryLecture.timetableLectureID,
+            shouldShowReminderPicker(semesterStatus: semesterStatus)
         else { return }
         let reminderOption = try await lectureReminderRepository.getReminder(
             timetableID: timetableID,
-            lectureID: entryLecture.id
+            lectureID: timetableLectureID.rawValue
         )
         let lectureReminder = LectureReminder(
-            timetableLectureID: entryLecture.id,
+            timetableLectureID: timetableLectureID.rawValue,
             lectureTitle: entryLecture.courseTitle,
             option: reminderOption
         )

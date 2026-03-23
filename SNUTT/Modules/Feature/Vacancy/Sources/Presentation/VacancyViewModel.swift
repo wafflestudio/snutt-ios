@@ -22,7 +22,7 @@ final class VacancyViewModel {
         vacancyLectures = try lectureDtos.map { try $0.toLecture() }
     }
 
-    func deleteVacancyLectures(lectureIDs: Set<String>) async throws {
+    func deleteVacancyLectures(lectureIDs: Set<LectureID>) async throws {
         vacancyLectures.removeAll(where: { lectureIDs.contains($0.id) })
         do {
             try await withThrowingTaskGroup(of: Void.self) { group in
