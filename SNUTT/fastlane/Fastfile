@@ -140,7 +140,7 @@ end
 default_platform(:ios)
 
 platform :ios do
-  desc "Check if version in xcconfig matches the provided version"
+  desc "Verify version in xcconfig matches the provided version. Fails if mismatched."
   lane :check_version do |options|
     tag_version = options[:version]
     current_version = get_xcconfig_value(
@@ -153,10 +153,8 @@ platform :ios do
 
     if current_version == tag_version
       UI.success("Version matches!")
-      next { matches: true }
     else
-      UI.important("Version mismatch detected")
-      next { matches: false }
+      UI.user_error!("Version mismatch: xcconfig has '#{current_version}', expected '#{tag_version}'")
     end
   end
 

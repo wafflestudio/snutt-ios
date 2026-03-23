@@ -91,10 +91,14 @@ jobs:
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
 
+            # Find the branch containing this tag
+            TAG_COMMIT=$(git rev-list -n 1 "${{ github.ref_name }}")
+            BRANCH=$(git branch -r --contains "$TAG_COMMIT" | grep -v HEAD | head -n 1 | sed 's|origin/||' | xargs)
+
             # Commit and push
             git add XCConfigs/Base.xcconfig
             git commit -m "🔖 Update version to ${{ steps.parse_tag.outputs.version }} for deployment"
-            git push origin HEAD:${{ github.ref }}
+            git push origin HEAD:refs/heads/$BRANCH
           else
             echo "Version already matches. No update needed."
           fi
