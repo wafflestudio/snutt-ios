@@ -9,6 +9,7 @@ import APIClientInterface
 import Dependencies
 import Spyable
 import SwiftUI
+import TimetableInterface
 
 @MainActor
 public protocol VacancyUIProvidable {
@@ -21,9 +22,9 @@ public protocol VacancyUIProvidable {
 @Spyable
 public protocol VacancyRepository: Sendable {
     func fetchVacancyLectures() async throws -> [Components.Schemas.LectureDto]
-    func addVacancyLecture(lectureID: String) async throws
-    func deleteVacancyLecture(lectureID: String) async throws
-    func isVacancyNotificationEnabled(lectureID: String) async throws -> Bool
+    func addVacancyLecture(lectureID: LectureID) async throws
+    func deleteVacancyLecture(lectureID: LectureID) async throws
+    func isVacancyNotificationEnabled(lectureID: LectureID) async throws -> Bool
 }
 
 public enum VacancyRepositoryKey: TestDependencyKey {

@@ -39,7 +39,7 @@ extension LectureListViewModel {
             .lectureDetail(lecture, parentTimetable: currentTimetable)
         )
         analyticsLogger.logScreen(
-            AnalyticsScreen.lectureDetail(.init(lectureID: lecture.referenceID, referrer: .lectureList))
+            AnalyticsScreen.lectureDetail(.init(lectureID: lecture.id, referrer: .lectureList))
         )
     }
 

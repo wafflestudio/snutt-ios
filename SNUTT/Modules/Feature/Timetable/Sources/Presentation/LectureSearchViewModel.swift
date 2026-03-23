@@ -181,7 +181,7 @@ class LectureSearchViewModel {
 
     func fetchVacancyLectures() async throws {
         let lectures = try await vacancyRepository.fetchVacancyLectures()
-        vacancyLectureIds = Set(lectures.compactMap(\._id))
+        vacancyLectureIds = Set(lectures.compactMap { $0._id.map(LectureID.init(rawValue:)) })
     }
 
     func fetchBookmarkedLectures() async throws {
@@ -259,40 +259,40 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
             targetForLectureDetail = lecture
             analyticsLogger.logScreen(
                 AnalyticsScreen.lectureDetail(
-                    .init(lectureID: lecture.referenceID, referrer: detailReferrer)
+                    .init(lectureID: lecture.id, referrer: detailReferrer)
                 )
             )
         case .review:
             targetForLectureReview = lecture
             analyticsLogger.logScreen(
                 AnalyticsScreen.reviewDetail(
-                    .init(lectureID: lecture.referenceID, referrer: detailReferrer)
+                    .init(lectureID: lecture.id, referrer: detailReferrer)
                 )
             )
         case .bookmark:
             if isToggled(lecture: lecture, type: type) {
-                try await lectureRepository.removeBookmark(lectureID: lecture.referenceID)
+                try await lectureRepository.removeBookmark(lectureID: lecture.id)
                 bookmarkedLectures.removeAll { $0.id == lecture.id }
             } else {
                 analyticsLogger.logEvent(
                     AnalyticsAction.addToBookmark(
-                        .init(lectureID: lecture.referenceID, referrer: lectureActionReferrer)
+                        .init(lectureID: lecture.id, referrer: lectureActionReferrer)
                     )
                 )
-                try await lectureRepository.addBookmark(lectureID: lecture.referenceID)
+                try await lectureRepository.addBookmark(lectureID: lecture.id)
                 if !bookmarkedLectures.contains(where: { $0.id == lecture.id }) {
                     bookmarkedLectures.append(lecture)
                 }
             }
         case .vacancy:
             if isToggled(lecture: lecture, type: type) {
-                try await vacancyRepository.deleteVacancyLecture(lectureID: lecture.referenceID)
+                try await vacancyRepository.deleteVacancyLecture(lectureID: lecture.id)
                 vacancyLectureIds.remove(lecture.id)
             } else {
                 analyticsLogger.logEvent(
-                    AnalyticsAction.addToVacancy(.init(lectureID: lecture.referenceID, referrer: lectureActionReferrer))
+                    AnalyticsAction.addToVacancy(.init(lectureID: lecture.id, referrer: lectureActionReferrer))
                 )
-                try await vacancyRepository.addVacancyLecture(lectureID: lecture.referenceID)
+                try await vacancyRepository.addVacancyLecture(lectureID: lecture.id)
                 vacancyLectureIds.insert(lecture.id)
             }
         case .add:
@@ -300,7 +300,7 @@ extension LectureSearchViewModel: ExpandableLectureListViewModel {
                 analyticsLogger.logEvent(
                     AnalyticsAction.addToTimetable(
                         .init(
-                            lectureID: lecture.referenceID,
+                            lectureID: lecture.id,
                             timetableID: timetableViewModel.currentTimetable?.id,
                             referrer: lectureActionReferrer
                         )

@@ -52,8 +52,8 @@ public enum PreviewHelpers {
 
     private static func previewLecture<T: RandomNumberGenerator>(using generator: inout T) -> Lecture {
         .init(
-            id: UUID().uuidString,
-            lectureID: UUID().uuidString,
+            id: LectureID(rawValue: UUID().uuidString),
+            timetableLectureID: TimetableLectureID(rawValue: UUID().uuidString),
             courseTitle: courseTitles.randomElement(using: &generator)!,
             timePlaces: (1...Int.random(in: 1...3, using: &generator))
                 .map { _ in previewTimeplace(using: &generator) },
