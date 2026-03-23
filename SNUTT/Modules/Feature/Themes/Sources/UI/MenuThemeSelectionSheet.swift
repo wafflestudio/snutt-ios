@@ -18,6 +18,8 @@ struct MenuThemeSelectionSheet: View {
     @Environment(\.themeViewModel) private var themeViewModel: any ThemeViewModelProtocol
     @Environment(\.errorAlertHandler) private var errorAlertHandler: ErrorAlertHandler
 
+    @State private var isNewThemePresented = false
+
     enum SelectionType: Identifiable, Equatable {
         case new
         case theme(Theme)
@@ -76,6 +78,12 @@ struct MenuThemeSelectionSheet: View {
                 .padding(.vertical)
             }
         }
+        .sheet(isPresented: $isNewThemePresented) {
+            NavigationStack {
+                ThemeEditDetailScene(entryTheme: nil)
+            }
+            .presentationDetents([.large])
+        }
         .presentationDetents([.height(160)])
         .observeErrors()
         .onAppear {
@@ -95,7 +103,7 @@ struct MenuThemeSelectionSheet: View {
         Button {
             switch selection {
             case .new:
-                break
+                isNewThemePresented = true
             case let .theme(theme):
                 themeViewModel.selectTheme(theme)
             }
