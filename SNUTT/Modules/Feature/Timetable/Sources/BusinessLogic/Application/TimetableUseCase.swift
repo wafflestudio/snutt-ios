@@ -33,14 +33,14 @@ public struct TimetableUseCase: Sendable {
         return timetable
     }
 
-    func selectTimetable(timetableID: String) async throws -> Timetable {
+    func selectTimetable(timetableID: TimetableID) async throws -> Timetable {
         let timetable = try await timetableRepository.fetchTimetable(timetableID: timetableID)
         try timetableLocalRepository.storeSelectedTimetable(timetable)
         return timetable
     }
 
     func addLecture(
-        timetableID: String,
+        timetableID: TimetableID,
         lectureID: LectureID,
         overrideOnConflict: Bool = false
     ) async throws -> Timetable {
@@ -53,13 +53,13 @@ public struct TimetableUseCase: Sendable {
         return timetable
     }
 
-    func removeLecture(timetableID: String, lectureID: TimetableLectureID) async throws -> Timetable {
+    func removeLecture(timetableID: TimetableID, lectureID: TimetableLectureID) async throws -> Timetable {
         let timetable = try await timetableRepository.removeLecture(timetableID: timetableID, lectureID: lectureID)
         try timetableLocalRepository.storeSelectedTimetable(timetable)
         return timetable
     }
 
-    public func updateTheme(timetableID: String, theme: Theme) async throws -> Timetable {
+    public func updateTheme(timetableID: TimetableID, theme: Theme) async throws -> Timetable {
         let timetable = try await timetableRepository.updateTimetableTheme(timetableID: timetableID, theme: theme)
         try timetableLocalRepository.storeSelectedTimetable(timetable)
         return timetable

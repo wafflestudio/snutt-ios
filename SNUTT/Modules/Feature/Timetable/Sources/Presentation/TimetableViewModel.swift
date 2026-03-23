@@ -147,17 +147,17 @@ public class TimetableViewModel: TimetableViewModelProtocol {
         }
     }
 
-    func selectTimetable(timetableID: String) async throws {
+    func selectTimetable(timetableID: TimetableID) async throws {
         let timetable = try await timetableUseCase.selectTimetable(timetableID: timetableID)
         timetableLoadState = .loaded(timetable)
     }
 
-    func copyTimetable(timetableID: String) async throws {
+    func copyTimetable(timetableID: TimetableID) async throws {
         let metadataList = try await timetableRepository.copyTimetable(timetableID: timetableID)
         metadataLoadState = .loaded(metadataList)
     }
 
-    func deleteTimetable(timetableID: String) async throws {
+    func deleteTimetable(timetableID: TimetableID) async throws {
         guard case let .loaded(metadataList) = metadataLoadState,
             let originalIndex = metadataList.firstIndex(where: { $0.id == timetableID })
         else { throw LocalizedErrorCode.timetableNotFound }
@@ -169,12 +169,12 @@ public class TimetableViewModel: TimetableViewModelProtocol {
         }
     }
 
-    func setPrimaryTimetable(timetableID: String) async throws {
+    func setPrimaryTimetable(timetableID: TimetableID) async throws {
         try await timetableRepository.setPrimaryTimetable(timetableID: timetableID)
         try await loadTimetableList()
     }
 
-    func unsetPrimaryTimetable(timetableID: String) async throws {
+    func unsetPrimaryTimetable(timetableID: TimetableID) async throws {
         try await timetableRepository.unsetPrimaryTimetable(timetableID: timetableID)
         try await loadTimetableList()
     }
@@ -244,7 +244,7 @@ public class TimetableViewModel: TimetableViewModelProtocol {
         )
     }
 
-    func renameTimetable(timetableID: String, title: String) async throws {
+    func renameTimetable(timetableID: TimetableID, title: String) async throws {
         let metadataList = try await timetableRepository.updateTimetableTitle(timetableID: timetableID, title: title)
         metadataLoadState = .loaded(metadataList)
     }

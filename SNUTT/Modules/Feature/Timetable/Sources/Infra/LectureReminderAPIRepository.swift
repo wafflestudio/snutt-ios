@@ -15,8 +15,8 @@ public struct LectureReminderAPIRepository: LectureReminderRepository {
 
     public init() {}
 
-    public func fetchReminders(timetableID: String) async throws -> [LectureReminder] {
-        let response = try await apiClient.getReminders(path: .init(timetableId: timetableID)).ok.body.json
+    public func fetchReminders(timetableID: TimetableID) async throws -> [LectureReminder] {
+        let response = try await apiClient.getReminders(path: .init(timetableId: timetableID.rawValue)).ok.body.json
         return response.map { dto in
             LectureReminder(
                 timetableLectureID: dto.timetableLectureId,
@@ -26,15 +26,15 @@ public struct LectureReminderAPIRepository: LectureReminderRepository {
         }
     }
 
-    public func getReminder(timetableID: String, lectureID: String) async throws -> ReminderOption {
+    public func getReminder(timetableID: TimetableID, lectureID: String) async throws -> ReminderOption {
         let response = try await apiClient.getReminder(
-            path: .init(timetableId: timetableID, timetableLectureId: lectureID)
+            path: .init(timetableId: timetableID.rawValue, timetableLectureId: lectureID)
         ).ok.body.json
         return ReminderOption(from: response.option)
     }
 
     public func updateReminder(
-        timetableID: String,
+        timetableID: TimetableID,
         lectureID: String,
         option: ReminderOption
     ) async throws
@@ -44,7 +44,7 @@ public struct LectureReminderAPIRepository: LectureReminderRepository {
             option: option.toDTO()
         )
         let response = try await apiClient.modifyReminder(
-            path: .init(timetableId: timetableID, timetableLectureId: lectureID),
+            path: .init(timetableId: timetableID.rawValue, timetableLectureId: lectureID),
             body: .json(requestDto)
         ).ok.body.json
         return LectureReminder(
