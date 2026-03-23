@@ -25,10 +25,10 @@ public struct NavigateToSearchMessage: NotificationCenter.TypedMessage {
 public struct NavigateToLectureMessage: NotificationCenter.TypedMessage {
     public static let name = Notification.Name("navigateToLecture")
 
-    public let timetableID: String
+    public let timetableID: TimetableID
     public let lectureID: TimetableLectureID
 
-    public init(timetableID: String, lectureID: TimetableLectureID) {
+    public init(timetableID: TimetableID, lectureID: TimetableLectureID) {
         self.timetableID = timetableID
         self.lectureID = lectureID
     }
@@ -43,9 +43,9 @@ public struct NavigateToBookmarkMessage: NotificationCenter.TypedMessage {
 public struct NavigateToTimetableMessage: NotificationCenter.TypedMessage {
     public static let name = Notification.Name("navigateToTimetable")
 
-    public let timetableID: String
+    public let timetableID: TimetableID
 
-    public init(timetableID: String) {
+    public init(timetableID: TimetableID) {
         self.timetableID = timetableID
     }
 }

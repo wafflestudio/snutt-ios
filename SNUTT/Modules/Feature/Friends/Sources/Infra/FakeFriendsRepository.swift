@@ -87,7 +87,7 @@ actor FakeFriendsRepository: FriendsRepository {
     func getFriendPrimaryTable(friendID: String, quarter: Quarter) async throws -> Timetable {
         try await Task.sleep(for: .seconds(1))
         return Timetable(
-            id: UUID().uuidString,
+            id: TimetableID(rawValue: UUID().uuidString),
             title: "친구 시간표",
             quarter: quarter,
             lectures: [],

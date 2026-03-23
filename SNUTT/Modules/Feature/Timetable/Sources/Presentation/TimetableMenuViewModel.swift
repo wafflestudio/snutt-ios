@@ -68,27 +68,27 @@ final class TimetableMenuViewModel {
         }
     }
 
-    func selectTimetable(timetableID: String) async throws {
+    func selectTimetable(timetableID: TimetableID) async throws {
         try await timetableViewModel.selectTimetable(timetableID: timetableID)
     }
 
-    func copyTimetable(timetableID: String) async throws {
+    func copyTimetable(timetableID: TimetableID) async throws {
         try await timetableViewModel.copyTimetable(timetableID: timetableID)
     }
 
-    func deleteTimetable(timetableID: String) async throws {
+    func deleteTimetable(timetableID: TimetableID) async throws {
         try await timetableViewModel.deleteTimetable(timetableID: timetableID)
     }
 
-    func setPrimaryTimetable(timetableID: String) async throws {
+    func setPrimaryTimetable(timetableID: TimetableID) async throws {
         try await timetableViewModel.setPrimaryTimetable(timetableID: timetableID)
     }
 
-    func unsetPrimaryTimetable(timetableID: String) async throws {
+    func unsetPrimaryTimetable(timetableID: TimetableID) async throws {
         try await timetableViewModel.unsetPrimaryTimetable(timetableID: timetableID)
     }
 
-    func renameTimetable(timetableID: String, title: String) async throws {
+    func renameTimetable(timetableID: TimetableID, title: String) async throws {
         try await timetableViewModel.renameTimetable(timetableID: timetableID, title: title)
     }
 
@@ -125,7 +125,7 @@ extension TimetableMenuViewModel {
 }
 
 struct TimetableImage: Identifiable, Sendable {
-    let id: String
+    let id: TimetableID
     let title: String
     let image: UIImage
 }

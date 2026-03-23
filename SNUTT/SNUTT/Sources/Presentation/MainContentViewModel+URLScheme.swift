@@ -46,7 +46,7 @@ extension MainContentViewModel {
     }
 
     private func handleTimetableLectureScheme(_ parameters: QueryParameters?) async {
-        guard let timetableID = parameters?["timetableId"],
+        guard let timetableIDString = parameters?["timetableId"],
             let lectureID = parameters?["lectureId"]
         else {
             notificationCenter.post(
@@ -56,7 +56,10 @@ extension MainContentViewModel {
         }
         selectedTab = .timetable
         notificationCenter.post(
-            NavigateToLectureMessage(timetableID: timetableID, lectureID: TimetableLectureID(rawValue: lectureID))
+            NavigateToLectureMessage(
+                timetableID: TimetableID(rawValue: timetableIDString),
+                lectureID: TimetableLectureID(rawValue: lectureID)
+            )
         )
     }
 

@@ -62,7 +62,7 @@ public final class LectureReminderSettingsViewModel {
         }
     }
 
-    private func getUpcomingSemesterTimetableID() async throws -> String? {
+    private func getUpcomingSemesterTimetableID() async throws -> TimetableID? {
         let semesterStatus = try await semesterRepository.fetchSemesterStatus()
         let targetSemester = semesterStatus.currentOrNext
         let timetableMetadataList = try await timetableRepository.fetchTimetableMetadataList()

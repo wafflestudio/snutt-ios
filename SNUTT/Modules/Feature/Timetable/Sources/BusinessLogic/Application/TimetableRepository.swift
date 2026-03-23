@@ -12,17 +12,17 @@ import TimetableInterface
 
 @Spyable
 public protocol TimetableRepository: Sendable {
-    func fetchTimetable(timetableID: String) async throws -> Timetable
+    func fetchTimetable(timetableID: TimetableID) async throws -> Timetable
     func fetchRecentTimetable() async throws -> Timetable
     func fetchTimetableMetadataList() async throws -> [TimetableMetadata]
-    func updateTimetableTitle(timetableID: String, title: String) async throws -> [TimetableMetadata]
-    func updateTimetableTheme(timetableID: String, theme: Theme) async throws -> Timetable
-    func setPrimaryTimetable(timetableID: String) async throws
-    func unsetPrimaryTimetable(timetableID: String) async throws
-    func copyTimetable(timetableID: String) async throws -> [TimetableMetadata]
-    func deleteTimetable(timetableID: String) async throws -> [TimetableMetadata]
-    func addLecture(timetableID: String, lectureID: LectureID, overrideOnConflict: Bool) async throws -> Timetable
-    func removeLecture(timetableID: String, lectureID: TimetableLectureID) async throws -> Timetable
+    func updateTimetableTitle(timetableID: TimetableID, title: String) async throws -> [TimetableMetadata]
+    func updateTimetableTheme(timetableID: TimetableID, theme: Theme) async throws -> Timetable
+    func setPrimaryTimetable(timetableID: TimetableID) async throws
+    func unsetPrimaryTimetable(timetableID: TimetableID) async throws
+    func copyTimetable(timetableID: TimetableID) async throws -> [TimetableMetadata]
+    func deleteTimetable(timetableID: TimetableID) async throws -> [TimetableMetadata]
+    func addLecture(timetableID: TimetableID, lectureID: LectureID, overrideOnConflict: Bool) async throws -> Timetable
+    func removeLecture(timetableID: TimetableID, lectureID: TimetableLectureID) async throws -> Timetable
     func createTimetable(title: String, quarter: Quarter) async throws -> [TimetableMetadata]
 }
 

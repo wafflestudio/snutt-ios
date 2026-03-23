@@ -22,7 +22,7 @@ public struct LectureAPIRepository: LectureRepository {
     }
 
     public func updateLecture(
-        timetableID: String,
+        timetableID: TimetableID,
         lecture: Lecture,
         overrideOnConflict: Bool
     ) async throws -> Timetable {
@@ -53,14 +53,14 @@ public struct LectureAPIRepository: LectureRepository {
             remark: lecture.remark
         )
         return try await apiClient.modifyTimetableLecture(
-            path: .init(timetableId: timetableID, timetableLectureId: lectureID.rawValue),
+            path: .init(timetableId: timetableID.rawValue, timetableLectureId: lectureID.rawValue),
             query: .init(isForced: overrideOnConflict),
             body: .json(requestDto)
         ).ok.body.json.toTimetable()
     }
 
     public func addCustomLecture(
-        timetableID: String,
+        timetableID: TimetableID,
         lecture: Lecture,
         overrideOnConflict: Bool
     ) async throws -> Timetable {
@@ -84,14 +84,14 @@ public struct LectureAPIRepository: LectureRepository {
             remark: lecture.remark
         )
         return try await apiClient.addCustomLecture(
-            path: .init(timetableId: timetableID),
+            path: .init(timetableId: timetableID.rawValue),
             body: .json(requestDto)
         ).ok.body.json.toTimetable()
     }
 
-    public func resetLecture(timetableID: String, lectureID: TimetableLectureID) async throws -> Timetable {
+    public func resetLecture(timetableID: TimetableID, lectureID: TimetableLectureID) async throws -> Timetable {
         try await apiClient.resetTimetableLecture(
-            path: .init(timetableId: timetableID, timetableLectureId: lectureID.rawValue)
+            path: .init(timetableId: timetableID.rawValue, timetableLectureId: lectureID.rawValue)
         ).ok.body.json.toTimetable()
     }
 

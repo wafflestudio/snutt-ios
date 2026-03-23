@@ -120,7 +120,7 @@ extension Components.Schemas.TimetableDto {
             }
 
         return Timetable(
-            id: try require(id),
+            id: TimetableID(rawValue: try require(id)),
             title: title,
             quarter: quarter,
             lectures: try lectures.map { try $0.toLecture() },

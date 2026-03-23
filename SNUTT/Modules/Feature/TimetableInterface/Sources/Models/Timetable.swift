@@ -7,11 +7,12 @@
 
 import Foundation
 import MemberwiseInit
+import Tagged
 import ThemesInterface
 
 @MemberwiseInit(.public)
 public struct Timetable: Identifiable, Sendable, Codable {
-    public let id: String
+    public let id: TimetableID
     public let title: String
     public let quarter: Quarter
     public let lectures: [Lecture]
@@ -22,7 +23,7 @@ public struct Timetable: Identifiable, Sendable, Codable {
 
 @MemberwiseInit(.public)
 public struct TimetableMetadata: Identifiable, Sendable, Codable, Equatable {
-    public let id: String
+    public let id: TimetableID
     public let title: String
     public let quarter: Quarter
     public let totalCredit: Int
