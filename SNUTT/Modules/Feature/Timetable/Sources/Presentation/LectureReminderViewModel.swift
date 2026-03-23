@@ -20,12 +20,12 @@ public final class LectureReminderViewModel {
     @Dependency(\.appReviewService) private var appReviewService
 
     let lectureReminder: LectureReminder
-    private let timetableID: String
+    private let timetableID: TimetableID
 
     var option: ReminderOption
     private var pendingTask: Task<Void, any Error>?
 
-    public init(lectureReminder: LectureReminder, timetableID: String) {
+    public init(lectureReminder: LectureReminder, timetableID: TimetableID) {
         self.lectureReminder = lectureReminder
         self.timetableID = timetableID
         self.option = lectureReminder.option

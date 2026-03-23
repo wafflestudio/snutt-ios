@@ -17,8 +17,8 @@ public struct TimetableAPIRepository: TimetableRepository {
 
     public init() {}
 
-    public func fetchTimetable(timetableID: String) async throws -> Timetable {
-        try await apiClient.getTimetable(path: .init(timetableId: timetableID)).ok.body.json.toTimetable()
+    public func fetchTimetable(timetableID: TimetableID) async throws -> Timetable {
+        try await apiClient.getTimetable(path: .init(timetableId: timetableID.rawValue)).ok.body.json.toTimetable()
     }
 
     public func fetchRecentTimetable() async throws -> Timetable {
@@ -29,12 +29,15 @@ public struct TimetableAPIRepository: TimetableRepository {
         try await apiClient.getTimetableBriefs().ok.body.json.map { try $0.toTimetableMetadata() }
     }
 
-    public func updateTimetableTitle(timetableID: String, title: String) async throws -> [TimetableMetadata] {
-        try await apiClient.modifyTimetable(path: .init(timetableId: timetableID), body: .json(.init(title: title))).ok
+    public func updateTimetableTitle(timetableID: TimetableID, title: String) async throws -> [TimetableMetadata] {
+        try await apiClient.modifyTimetable(
+            path: .init(timetableId: timetableID.rawValue),
+            body: .json(.init(title: title))
+        ).ok
             .body.json.map { try $0.toTimetableMetadata() }
     }
 
-    public func updateTimetableTheme(timetableID: String, theme: Theme) async throws -> Timetable {
+    public func updateTimetableTheme(timetableID: TimetableID, theme: Theme) async throws -> Timetable {
         let dto: Components.Schemas.TimetableModifyThemeRequestDto =
             switch theme.type {
             case let .builtInTheme(theme):
@@ -42,46 +45,49 @@ public struct TimetableAPIRepository: TimetableRepository {
             case let .customTheme(themeID):
                 .init(theme: nil, themeId: themeID)
             }
-        return try await apiClient.modifyTimetableTheme(path: .init(timetableId: timetableID), body: .json(dto)).ok
+        return try await apiClient.modifyTimetableTheme(
+            path: .init(timetableId: timetableID.rawValue),
+            body: .json(dto)
+        ).ok
             .body.json.toTimetable()
     }
 
-    public func setPrimaryTimetable(timetableID: String) async throws {
-        _ = try await apiClient.setPrimary(path: .init(timetableId: timetableID)).ok
+    public func setPrimaryTimetable(timetableID: TimetableID) async throws {
+        _ = try await apiClient.setPrimary(path: .init(timetableId: timetableID.rawValue)).ok
     }
 
-    public func unsetPrimaryTimetable(timetableID: String) async throws {
-        _ = try await apiClient.unSetPrimary(path: .init(timetableId: timetableID)).ok
+    public func unsetPrimaryTimetable(timetableID: TimetableID) async throws {
+        _ = try await apiClient.unSetPrimary(path: .init(timetableId: timetableID.rawValue)).ok
     }
 
-    public func copyTimetable(timetableID: String) async throws -> [TimetableMetadata] {
-        try await apiClient.copyTimetable(.init(path: .init(timetableId: timetableID))).ok.body.json.map {
+    public func copyTimetable(timetableID: TimetableID) async throws -> [TimetableMetadata] {
+        try await apiClient.copyTimetable(.init(path: .init(timetableId: timetableID.rawValue))).ok.body.json.map {
             try $0.toTimetableMetadata()
         }
     }
 
-    public func deleteTimetable(timetableID: String) async throws -> [TimetableMetadata] {
-        try await apiClient.deleteTimetable(.init(path: .init(timetableId: timetableID))).ok.body.json.map {
+    public func deleteTimetable(timetableID: TimetableID) async throws -> [TimetableMetadata] {
+        try await apiClient.deleteTimetable(.init(path: .init(timetableId: timetableID.rawValue))).ok.body.json.map {
             try $0.toTimetableMetadata()
         }
     }
 
     public func addLecture(
-        timetableID: String,
+        timetableID: TimetableID,
         lectureID: LectureID,
         overrideOnConflict: Bool = false
     ) async throws -> Timetable {
         try await apiClient.addLecture(
-            path: .init(timetableId: timetableID, lectureId: lectureID.rawValue),
+            path: .init(timetableId: timetableID.rawValue, lectureId: lectureID.rawValue),
             query: .init(isForced: overrideOnConflict)
         ).ok.body.json.toTimetable()
     }
 
-    public func removeLecture(timetableID: String, lectureID: TimetableLectureID) async throws -> Timetable {
+    public func removeLecture(timetableID: TimetableID, lectureID: TimetableLectureID) async throws -> Timetable {
         try await apiClient.deleteTimetableLecture(
             .init(
                 path: .init(
-                    timetableId: timetableID,
+                    timetableId: timetableID.rawValue,
                     timetableLectureId: lectureID.rawValue
                 )
             )
@@ -125,7 +131,7 @@ extension Components.Schemas.TimetableLegacyDto {
                 .builtInTheme(builtInTheme)
             }
         return try Timetable(
-            id: require(_id),
+            id: TimetableID(rawValue: require(_id)),
             title: title,
             quarter: Quarter(year: Int(year), semester: require(Semester(rawValue: semester.rawValue))),
             lectures: lecture_list.map { try $0.toLecture() },
@@ -162,7 +168,7 @@ extension Components.Schemas.TimetableBriefDto {
         let semester = try require(Semester(rawValue: Int(semester)))
         let quarter = Quarter(year: Int(year), semester: semester)
         return TimetableMetadata(
-            id: _id,
+            id: TimetableID(rawValue: _id),
             title: title,
             quarter: quarter,
             totalCredit: Int(total_credit),

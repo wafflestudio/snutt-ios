@@ -15,7 +15,7 @@ public enum PreviewHelpers {
         preview(id: "1")
     }
 
-    public static func preview(id: String) -> Timetable {
+    public static func preview(id: TimetableID) -> Timetable {
         let seed = {
             var hasher = Hasher()
             hasher.combine(id)
@@ -34,7 +34,7 @@ public enum PreviewHelpers {
         )
     }
 
-    public static func previewMetadata(with id: String) -> TimetableMetadata {
+    public static func previewMetadata(with id: TimetableID) -> TimetableMetadata {
         let seed = {
             var hasher = Hasher()
             hasher.combine(id)

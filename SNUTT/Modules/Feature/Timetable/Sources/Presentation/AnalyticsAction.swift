@@ -51,7 +51,7 @@ public struct AddToBookmarkParameter: Encodable, Sendable {
 public struct AddToTimetableParameter: Encodable, Sendable {
     typealias Referrer = LectureActionReferrer
     let lectureID: LectureID
-    let timetableID: String?
+    let timetableID: TimetableID?
     let referrer: Referrer
 }
 

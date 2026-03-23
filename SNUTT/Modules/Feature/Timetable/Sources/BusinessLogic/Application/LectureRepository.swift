@@ -13,9 +13,13 @@ import TimetableInterface
 public protocol LectureRepository: Sendable {
     typealias LectureBuilding = String
     func fetchBuildingList(places: [LectureBuilding]) async throws -> [Building]
-    func updateLecture(timetableID: String, lecture: Lecture, overrideOnConflict: Bool) async throws -> Timetable
-    func addCustomLecture(timetableID: String, lecture: Lecture, overrideOnConflict: Bool) async throws -> Timetable
-    func resetLecture(timetableID: String, lectureID: TimetableLectureID) async throws -> Timetable
+    func updateLecture(timetableID: TimetableID, lecture: Lecture, overrideOnConflict: Bool) async throws -> Timetable
+    func addCustomLecture(
+        timetableID: TimetableID,
+        lecture: Lecture,
+        overrideOnConflict: Bool
+    ) async throws -> Timetable
+    func resetLecture(timetableID: TimetableID, lectureID: TimetableLectureID) async throws -> Timetable
     func addBookmark(lectureID: LectureID) async throws
     func removeBookmark(lectureID: LectureID) async throws
     func isBookmarked(lectureID: LectureID) async throws -> Bool
