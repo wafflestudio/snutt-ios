@@ -7,6 +7,7 @@
 
 import AnalyticsInterface
 import FoundationUtility
+import TimetableInterface
 
 enum AnalyticsAction: AnalyticsLogEvent {
     case searchLecture(SearchLectureParameter)
@@ -43,23 +44,20 @@ enum AnalyticsAction: AnalyticsLogEvent {
 
 public struct AddToBookmarkParameter: Encodable, Sendable {
     typealias Referrer = LectureActionReferrer
-    /// 강좌의 레퍼런스 ID
-    let lectureID: String
+    let lectureID: LectureID
     let referrer: Referrer
 }
 
 public struct AddToTimetableParameter: Encodable, Sendable {
     typealias Referrer = LectureActionReferrer
-    /// 강좌의 레퍼런스 ID
-    let lectureID: String
+    let lectureID: LectureID
     let timetableID: String?
     let referrer: Referrer
 }
 
 public struct AddToVacancyParameter: Encodable, Sendable {
     typealias Referrer = LectureActionReferrer
-    /// 강좌의 레퍼런스 ID
-    let lectureID: String
+    let lectureID: LectureID
     let referrer: Referrer
 }
 

@@ -15,9 +15,9 @@ public protocol LectureRepository: Sendable {
     func fetchBuildingList(places: [LectureBuilding]) async throws -> [Building]
     func updateLecture(timetableID: String, lecture: Lecture, overrideOnConflict: Bool) async throws -> Timetable
     func addCustomLecture(timetableID: String, lecture: Lecture, overrideOnConflict: Bool) async throws -> Timetable
-    func resetLecture(timetableID: String, lectureID: String) async throws -> Timetable
-    func addBookmark(lectureID: String) async throws
-    func removeBookmark(lectureID: String) async throws
-    func isBookmarked(lectureID: String) async throws -> Bool
+    func resetLecture(timetableID: String, lectureID: TimetableLectureID) async throws -> Timetable
+    func addBookmark(lectureID: LectureID) async throws
+    func removeBookmark(lectureID: LectureID) async throws
+    func isBookmarked(lectureID: LectureID) async throws -> Bool
     func fetchBookmarks(quarter: Quarter) async throws -> [Lecture]
 }

@@ -26,9 +26,9 @@ public struct NavigateToLectureMessage: NotificationCenter.TypedMessage {
     public static let name = Notification.Name("navigateToLecture")
 
     public let timetableID: String
-    public let lectureID: String
+    public let lectureID: TimetableLectureID
 
-    public init(timetableID: String, lectureID: String) {
+    public init(timetableID: String, lectureID: TimetableLectureID) {
         self.timetableID = timetableID
         self.lectureID = lectureID
     }
@@ -55,9 +55,9 @@ public struct NavigateToBookmarkLecturePreviewMessage: NotificationCenter.TypedM
 
     public let year: Int
     public let semester: Semester
-    public let lectureID: String
+    public let lectureID: LectureID
 
-    public init(year: Int, semester: Semester, lectureID: String) {
+    public init(year: Int, semester: Semester, lectureID: LectureID) {
         self.year = year
         self.semester = semester
         self.lectureID = lectureID

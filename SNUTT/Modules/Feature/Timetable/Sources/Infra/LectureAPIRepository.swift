@@ -26,7 +26,9 @@ public struct LectureAPIRepository: LectureRepository {
         lecture: Lecture,
         overrideOnConflict: Bool
     ) async throws -> Timetable {
-        let lectureID = lecture.id
+        guard let lectureID = lecture.timetableLectureID else {
+            throw LectureAPIRepositoryError.missingTimetableLectureID
+        }
         let timePlaces = try lecture.timePlaces
             .map {
                 try Components.Schemas.ClassPlaceAndTimeLegacyRequestDto(
@@ -51,7 +53,7 @@ public struct LectureAPIRepository: LectureRepository {
             remark: lecture.remark
         )
         return try await apiClient.modifyTimetableLecture(
-            path: .init(timetableId: timetableID, timetableLectureId: lectureID),
+            path: .init(timetableId: timetableID, timetableLectureId: lectureID.rawValue),
             query: .init(isForced: overrideOnConflict),
             body: .json(requestDto)
         ).ok.body.json.toTimetable()
@@ -87,29 +89,29 @@ public struct LectureAPIRepository: LectureRepository {
         ).ok.body.json.toTimetable()
     }
 
-    public func resetLecture(timetableID: String, lectureID: String) async throws -> Timetable {
+    public func resetLecture(timetableID: String, lectureID: TimetableLectureID) async throws -> Timetable {
         try await apiClient.resetTimetableLecture(
-            path: .init(timetableId: timetableID, timetableLectureId: lectureID)
+            path: .init(timetableId: timetableID, timetableLectureId: lectureID.rawValue)
         ).ok.body.json.toTimetable()
     }
 
-    public func addBookmark(lectureID: String) async throws {
-        let requestDto = Components.Schemas.BookmarkLectureModifyRequest(lecture_id: lectureID)
+    public func addBookmark(lectureID: LectureID) async throws {
+        let requestDto = Components.Schemas.BookmarkLectureModifyRequest(lecture_id: lectureID.rawValue)
         _ = try await apiClient.addLecture_1(
             body: .json(requestDto)
         ).ok
     }
 
-    public func removeBookmark(lectureID: String) async throws {
-        let requestDto = Components.Schemas.BookmarkLectureModifyRequest(lecture_id: lectureID)
+    public func removeBookmark(lectureID: LectureID) async throws {
+        let requestDto = Components.Schemas.BookmarkLectureModifyRequest(lecture_id: lectureID.rawValue)
         _ = try await apiClient.deleteBookmark(
             body: .json(requestDto)
         ).ok
     }
 
-    public func isBookmarked(lectureID: String) async throws -> Bool {
+    public func isBookmarked(lectureID: LectureID) async throws -> Bool {
         try await apiClient.existsBookmarkLecture(
-            path: .init(lectureId: lectureID)
+            path: .init(lectureId: lectureID.rawValue)
         ).ok.body.json.exists
     }
 
@@ -122,6 +124,10 @@ public struct LectureAPIRepository: LectureRepository {
         ).ok.body.json
         return try response.lectures.map { try $0.toLecture() }
     }
+}
+
+enum LectureAPIRepositoryError: Error {
+    case missingTimetableLectureID
 }
 
 extension Building {

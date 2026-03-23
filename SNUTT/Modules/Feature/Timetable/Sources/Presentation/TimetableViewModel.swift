@@ -180,11 +180,7 @@ public class TimetableViewModel: TimetableViewModelProtocol {
     }
 
     func isLectureInCurrentTimetable(lecture: Lecture) -> Bool {
-        if let timetableLectureID = lecture.lectureID {
-            currentTimetable?.lectures.contains(where: { $0.lectureID == timetableLectureID }) ?? false
-        } else {
-            currentTimetable?.lectures.contains(where: { $0.lectureID == lecture.id }) ?? false
-        }
+        currentTimetable?.lectures.contains(where: { $0.id == lecture.id }) ?? false
     }
 
     func addLecture(lecture: Lecture, overrideOnConflict: Bool = false) async throws {
@@ -200,7 +196,7 @@ public class TimetableViewModel: TimetableViewModelProtocol {
     func removeLecture(lecture: Lecture) async throws {
         guard let currentTimetable,
             let timetableLectureID = currentTimetable.lectures
-                .first(where: { $0.lectureID == (lecture.lectureID ?? lecture.id) })?.id
+                .first(where: { $0.id == lecture.id })?.timetableLectureID
         else { return }
         let updatedTimetable = try await timetableUseCase.removeLecture(
             timetableID: currentTimetable.id,
@@ -224,8 +220,8 @@ public class TimetableViewModel: TimetableViewModelProtocol {
         )
 
         return Lecture(
-            id: UUID().uuidString,
-            lectureID: nil,
+            id: LectureID(rawValue: UUID().uuidString),
+            timetableLectureID: nil,
             courseTitle: "새로운 강의",
             timePlaces: [mondayMorningTimePlace],
             lectureNumber: nil,

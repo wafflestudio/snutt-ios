@@ -41,14 +41,14 @@ extension TimetableViewModel {
     private func handleLectureNavigation(message: NavigateToLectureMessage) async {
         do {
             let timetable = try await timetableRepository.fetchTimetable(timetableID: message.timetableID)
-            guard let lecture = timetable.lectures.first(where: { $0.lectureID == message.lectureID })
+            guard let lecture = timetable.lectures.first(where: { $0.timetableLectureID == message.lectureID })
             else {
                 notificationCenter.post(.toast(.init(message: TimetableStrings.navigationErrorLectureNotFound)))
                 return
             }
             paths = [.notificationList, .lectureDetail(lecture, parentTimetable: timetable)]
             analyticsLogger.logScreen(
-                AnalyticsScreen.lectureDetail(.init(lectureID: lecture.referenceID, referrer: .notification))
+                AnalyticsScreen.lectureDetail(.init(lectureID: lecture.id, referrer: .notification))
             )
         } catch let error as any ErrorWrapper {
             notificationCenter.post(.toast(error: error))
@@ -61,14 +61,14 @@ extension TimetableViewModel {
         do {
             let quarter = Quarter(year: message.year, semester: message.semester)
             let bookmarks = try await lectureRepository.fetchBookmarks(quarter: quarter)
-            guard let lecture = bookmarks.first(where: { $0.referenceID == message.lectureID })
+            guard let lecture = bookmarks.first(where: { $0.id == message.lectureID })
             else {
                 notificationCenter.post(.toast(.init(message: TimetableStrings.navigationErrorBookmarkNotFound)))
                 return
             }
             paths = [.notificationList, .lecturePreview(lecture, quarter: quarter)]
             analyticsLogger.logScreen(
-                AnalyticsScreen.lectureDetail(.init(lectureID: lecture.referenceID, referrer: .notification))
+                AnalyticsScreen.lectureDetail(.init(lectureID: lecture.id, referrer: .notification))
             )
         } catch let error as any ErrorWrapper {
             notificationCenter.post(.toast(error: error))

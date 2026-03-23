@@ -56,7 +56,7 @@ extension MainContentViewModel {
         }
         selectedTab = .timetable
         notificationCenter.post(
-            NavigateToLectureMessage(timetableID: timetableID, lectureID: lectureID)
+            NavigateToLectureMessage(timetableID: timetableID, lectureID: TimetableLectureID(rawValue: lectureID))
         )
     }
 
@@ -73,7 +73,11 @@ extension MainContentViewModel {
         }
         selectedTab = .timetable
         notificationCenter.post(
-            NavigateToBookmarkLecturePreviewMessage(year: year, semester: semester, lectureID: lectureID)
+            NavigateToBookmarkLecturePreviewMessage(
+                year: year,
+                semester: semester,
+                lectureID: LectureID(rawValue: lectureID)
+            )
         )
     }
 

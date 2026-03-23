@@ -132,14 +132,14 @@ struct LectureEditDetailScene: View {
                 SyllabusWebView(lectureTitle: viewModel.entryLecture.courseTitle, url: syllabusURL)
                     .ignoresSafeArea(edges: .bottom)
                     .interactiveDismissDisabled()
-                    .analyticsScreen(.lectureSyllabus(.init(lectureID: viewModel.entryLecture.referenceID)))
+                    .analyticsScreen(.lectureSyllabus(.init(lectureID: viewModel.entryLecture.id)))
             }
         }
         .sheet(isPresented: $showReviewsScene) {
             if let evLectureID = viewModel.entryLecture.evLecture?.evLectureID {
                 reviewsUIProvider.makeReviewsScene(for: evLectureID)
                     .analyticsScreen(
-                        .reviewDetail(.init(lectureID: viewModel.entryLecture.referenceID, referrer: .lectureDetail))
+                        .reviewDetail(.init(lectureID: viewModel.entryLecture.id, referrer: .lectureDetail))
                     )
             }
         }

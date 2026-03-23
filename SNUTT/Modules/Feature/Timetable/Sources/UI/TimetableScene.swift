@@ -92,7 +92,7 @@ public struct TimetableScene: View {
                     .lectureDetail(lecture, parentTimetable: currentTimetable)
                 )
                 Dependency(\.analyticsLogger).wrappedValue.logScreen(
-                    AnalyticsScreen.lectureDetail(.init(lectureID: lecture.referenceID, referrer: .timetable))
+                    AnalyticsScreen.lectureDetail(.init(lectureID: lecture.id, referrer: .timetable))
                 )
             })
         )

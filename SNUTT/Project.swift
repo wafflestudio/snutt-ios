@@ -259,6 +259,7 @@ let project = Project.app(
                 .external(name: "Spyable"),
                 .external(name: "Dependencies"),
                 .external(name: "MemberwiseInit"),
+                .external(name: "Tagged"),
             ]
         ),
         .module(
@@ -266,6 +267,7 @@ let project = Project.app(
             category: .featureInterface,
             dependencies: [
                 .target(name: "APIClientInterface"),
+                .target(name: "TimetableInterface"),
                 .external(name: "Spyable"),
                 .external(name: "Dependencies"),
             ]

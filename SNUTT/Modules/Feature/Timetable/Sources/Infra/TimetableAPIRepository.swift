@@ -68,21 +68,21 @@ public struct TimetableAPIRepository: TimetableRepository {
 
     public func addLecture(
         timetableID: String,
-        lectureID: String,
+        lectureID: LectureID,
         overrideOnConflict: Bool = false
     ) async throws -> Timetable {
         try await apiClient.addLecture(
-            path: .init(timetableId: timetableID, lectureId: lectureID),
+            path: .init(timetableId: timetableID, lectureId: lectureID.rawValue),
             query: .init(isForced: overrideOnConflict)
         ).ok.body.json.toTimetable()
     }
 
-    public func removeLecture(timetableID: String, lectureID: String) async throws -> Timetable {
+    public func removeLecture(timetableID: String, lectureID: TimetableLectureID) async throws -> Timetable {
         try await apiClient.deleteTimetableLecture(
             .init(
                 path: .init(
                     timetableId: timetableID,
-                    timetableLectureId: lectureID
+                    timetableLectureId: lectureID.rawValue
                 )
             )
         ).ok.body.json.toTimetable()
@@ -192,9 +192,10 @@ extension Components.Schemas.TimetableLectureLegacyDto {
             } else {
                 nil
             }
+        let entryID = try require(_id)
         return Lecture(
-            id: _id ?? UUID().uuidString,
-            lectureID: lecture_id,
+            id: LectureID(rawValue: lecture_id ?? entryID),
+            timetableLectureID: TimetableLectureID(rawValue: entryID),
             courseTitle: course_title,
             timePlaces: timePlaces,
             lectureNumber: lecture_number,
