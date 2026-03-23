@@ -9,17 +9,20 @@ import APIClientInterface
 import FoundationUtility
 import MemberwiseInit
 import SwiftUI
+import Tagged
 import ThemesInterface
 
 @MemberwiseInit(.public)
 public struct Lecture: Identifiable, Equatable, Sendable, Codable {
-    /// 강의의 고유 ID
+    /// 과목(강의) 식별 ID
     ///
-    /// - Note: 동일한 강의라도 시간표에 추가된 경우 고유한 ID가 부여된다.
-    public let id: String
+    /// 시간표 추가 여부에 관계없이 과목 자체를 식별한다.
+    public let id: LectureID
 
-    /// 시간표에 추가되지 않은 강의면 `nil`, 추가된 강의면 해당 강의의 고유 ID
-    public let lectureID: String?
+    /// 시간표 항목 ID
+    ///
+    /// 시간표에 추가된 강의면 값이 존재하고, 검색 결과 등 시간표에 속하지 않는 강의면 `nil`이다.
+    public let timetableLectureID: TimetableLectureID?
     public var courseTitle: String
     public var timePlaces: [TimePlace]
     public var lectureNumber: String?
@@ -60,11 +63,6 @@ extension Lecture {
     public var isCustom: Bool {
         courseNumber == nil || courseNumber == ""
     }
-
-    /// DB에 저장된 강의 고유 ID (시간표 추가 여부에 관계 없이 모든 유저에게 동일하게 적용되는 ID)
-    public var referenceID: String {
-        lectureID ?? id
-    }
 }
 
 // MARK: - LectureDto 변환
@@ -82,8 +80,8 @@ extension Components.Schemas.LectureDto {
             )
         }
         return try Lecture(
-            id: require(_id),
-            lectureID: nil,
+            id: LectureID(rawValue: require(_id)),
+            timetableLectureID: nil,
             courseTitle: course_title,
             timePlaces: timePlaces,
             lectureNumber: lecture_number,
@@ -119,8 +117,8 @@ extension Components.Schemas.BookmarkLectureDto {
             )
         }
         return try Lecture(
-            id: require(_id),
-            lectureID: nil,
+            id: LectureID(rawValue: require(_id)),
+            timetableLectureID: nil,
             courseTitle: course_title,
             timePlaces: timePlaces,
             lectureNumber: lecture_number,

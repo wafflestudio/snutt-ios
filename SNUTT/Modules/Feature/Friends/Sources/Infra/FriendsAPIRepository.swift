@@ -148,8 +148,8 @@ extension Components.Schemas.TimetableLectureDto {
             }
 
         return Lecture(
-            id: UUID().uuidString,
-            lectureID: nil,
+            id: LectureID(rawValue: UUID().uuidString),
+            timetableLectureID: nil,
             courseTitle: courseTitle,
             timePlaces: timePlaces,
             lectureNumber: lectureNumber,

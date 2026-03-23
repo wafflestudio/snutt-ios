@@ -8,6 +8,7 @@
 import AnalyticsInterface
 import Foundation
 import FoundationUtility
+import TimetableInterface
 
 public enum AnalyticsScreen: AnalyticsLogEvent {
     case timetableHome
@@ -74,22 +75,22 @@ public enum AnalyticsScreen: AnalyticsLogEvent {
 
 public struct LectureDetailParameter: Encodable, Sendable {
     public typealias Referrer = DetailScreenReferrer
-    let lectureID: String
+    let lectureID: LectureID
     let referrer: Referrer
 
-    public init(lectureID: String, referrer: Referrer) {
+    public init(lectureID: LectureID, referrer: Referrer) {
         self.lectureID = lectureID
         self.referrer = referrer
     }
 }
 
 public struct LectureSyllabusParameter: Encodable, Sendable {
-    let lectureID: String
+    let lectureID: LectureID
 }
 
 public struct ReviewDetailParameter: Encodable, Sendable {
     typealias Referrer = DetailScreenReferrer
-    let lectureID: String
+    let lectureID: LectureID
     let referrer: Referrer
 }
 

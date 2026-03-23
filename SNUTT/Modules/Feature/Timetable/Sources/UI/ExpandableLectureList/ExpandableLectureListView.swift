@@ -7,10 +7,11 @@
 
 import SharedUIComponents
 import SwiftUI
+import TimetableInterface
 
 struct ExpandableLectureListView: View {
     let viewModel: any ExpandableLectureListViewModel
-    @State private var scrolledID: String?
+    @State private var scrolledID: LectureID?
 
     var body: some View {
         ScrollView {

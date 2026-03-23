@@ -41,7 +41,7 @@ public struct TimetableUseCase: Sendable {
 
     func addLecture(
         timetableID: String,
-        lectureID: String,
+        lectureID: LectureID,
         overrideOnConflict: Bool = false
     ) async throws -> Timetable {
         let timetable = try await timetableRepository.addLecture(
@@ -53,7 +53,7 @@ public struct TimetableUseCase: Sendable {
         return timetable
     }
 
-    func removeLecture(timetableID: String, lectureID: String) async throws -> Timetable {
+    func removeLecture(timetableID: String, lectureID: TimetableLectureID) async throws -> Timetable {
         let timetable = try await timetableRepository.removeLecture(timetableID: timetableID, lectureID: lectureID)
         try timetableLocalRepository.storeSelectedTimetable(timetable)
         return timetable

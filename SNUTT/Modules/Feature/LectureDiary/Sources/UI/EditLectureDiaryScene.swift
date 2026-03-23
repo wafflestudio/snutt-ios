@@ -125,7 +125,9 @@ struct EditLectureDiaryScene: View {
 
             WrappedOptionChipList(
                 selectedOptions: Binding(
-                    get: { viewModel.classTypes.filter { viewModel.selectedClassTypes.selected.contains($0.content) } },
+                    get: {
+                        viewModel.classTypes.filter { viewModel.selectedClassTypes.selected.contains($0.content) }
+                    },
                     set: { viewModel.selectedClassTypes = .init(selected: $0.map(\.content)) }
                 ),
                 answerOptions: viewModel.classTypes,
