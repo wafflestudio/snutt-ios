@@ -446,6 +446,10 @@ platform :ios do
 
     fields << { title: "Build Number", value: build.to_s, short: true } if build
     fields << { title: "Tag", value: tag, short: false }
+
+    version_warning = ENV["VERSION_WARNING"]
+    fields << { title: "Warning", value: version_warning, short: false } if version_warning && !version_warning.empty?
+
     fields << { title: "Error", value: error, short: false } if error
     fields << { title: "GitHub Actions", value: "<#{github_actions_run_url}|Open logs>", short: false } if github_actions_run_url && !github_actions_run_url.empty?
 
