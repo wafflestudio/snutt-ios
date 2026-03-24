@@ -19,6 +19,7 @@ let project = Project.app(
                 .target(name: "ReviewsInterface"),
                 .target(name: "NotificationsInterface"),
                 .target(name: "VacancyInterface"),
+                .target(name: "LectureDiaryInterface"),
                 .target(name: "AuthInterface"),
                 .target(name: "APIClientInterface"),
                 .target(name: "SwiftUIUtility"),
@@ -377,6 +378,7 @@ let project = Project.app(
                 .target(name: "DependenciesUtility"),
                 .target(name: "FoundationUtility"),
                 .external(name: "MemberwiseInit"),
+                .external(name: "SwiftUIIntrospect"),
             ]
         ),
         .module(

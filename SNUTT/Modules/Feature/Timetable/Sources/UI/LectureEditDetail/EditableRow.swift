@@ -7,8 +7,8 @@
 
 import FoundationUtility
 import MemberwiseInit
+import SharedUIComponents
 import SwiftUI
-import SwiftUIIntrospect
 import SwiftUIUtility
 import TimetableInterface
 
@@ -48,9 +48,8 @@ struct EditableRow<Value: Sendable>: View {
                 switch container {
                 case let container as ValueContainer<String?> where multiline:
                     PlaceholderTextEditor(
-                        label: label,
-                        text: container.bindingNonOptional,
-                        placeholder: container.placeholderText
+                        placeholder: container.placeholderText,
+                        text: container.bindingNonOptional
                     )
                 case let container as ValueContainer<String>:
                     TextField(label, text: container.binding, prompt: Text(container.placeholderText))

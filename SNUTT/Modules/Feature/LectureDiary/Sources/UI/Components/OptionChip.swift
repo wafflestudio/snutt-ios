@@ -38,7 +38,16 @@ struct OptionChip: View {
                             lineWidth: isSelected ? 1.0 : 0.6
                         )
                 )
+                .animation(nil, value: isSelected)
         }
+        .buttonStyle(OptionChipButtonStyle())
+    }
+}
+
+private struct OptionChipButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .animation(.easeOut(duration: 0.15), value: configuration.isPressed)
     }
 }
 
