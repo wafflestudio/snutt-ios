@@ -8,7 +8,9 @@
 
 import Dependencies
 import Foundation
+import LectureDiaryInterface
 import Observation
+import SwiftUtility
 import TimetableInterface
 
 @Observable
@@ -17,7 +19,9 @@ public final class LectureDiaryListViewModel {
     @ObservationIgnored
     @Dependency(\.lectureDiaryRepository) private var diaryRepository
 
-    var diaryEditContext: DiaryEditContext?
+    @ObservationIgnored
+    @Dependency(\.notificationCenter) private var notificationCenter
+
     private(set) var diariesGroupedByDate: [(Date, [DiarySummary])] = []
 
     private(set) var diaryListState: DiaryListState = .loading {
@@ -30,7 +34,14 @@ public final class LectureDiaryListViewModel {
 
     private(set) var availableQuarters: [Quarter] = []
 
-    public init() {}
+    public init() {
+        Task.scoped(
+            to: self,
+            subscribing: notificationCenter.messages(of: RefreshLectureDiaryListMessage.self)
+        ) { @MainActor viewModel, _ in
+            await viewModel.loadDiaryList()
+        }
+    }
 
     func loadDiaryList() async {
         if case .loaded = diaryListState {
@@ -76,11 +87,15 @@ public final class LectureDiaryListViewModel {
         diaryListState = updatedDiaries.isEmpty ? .empty : .loaded(updatedDiaries)
     }
 
-    func getLectureForDiary() async {
+    func getLectureForDiary() async -> Bool {
         do {
-            diaryEditContext = try await diaryRepository.fetchTargetLecture()
+            let context = try await diaryRepository.fetchTargetLecture()
+            notificationCenter.post(
+                NavigateToLectureDiaryMessage(lectureID: context.lectureID, lectureTitle: context.lectureTitle)
+            )
+            return true
         } catch {
-            diaryEditContext = nil
+            return false
         }
     }
 

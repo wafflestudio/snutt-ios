@@ -112,7 +112,6 @@ final class MainContentViewModel {
                 lectureID: nextLecture.lectureID,
                 lectureTitle: nextLecture.lectureTitle
             )
-            viewModel.selectedTab = .timetable
         }
         #endif
     }

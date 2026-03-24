@@ -37,9 +37,6 @@ public struct LectureDiaryListView: View {
         .task {
             await viewModel.loadDiaryList()
         }
-        .overlayLectureDiarySheet($viewModel.diaryEditContext) {
-            Task { await viewModel.loadDiaryList() }
-        }
     }
 
     private var emptyStateView: some View {
@@ -57,8 +54,8 @@ public struct LectureDiaryListView: View {
             .multilineTextAlignment(.center)
             Button {
                 Task {
-                    await viewModel.getLectureForDiary()
-                    if viewModel.diaryEditContext == nil {
+                    let available = await viewModel.getLectureForDiary()
+                    if !available {
                         showDiaryNotAvailableAlert = true
                     }
                 }
