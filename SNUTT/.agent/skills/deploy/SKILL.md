@@ -48,6 +48,16 @@ App Store deployments require a **GitHub Release** with release notes (used as A
   ```bash
   gh api repos/wafflestudio/snutt-ios/releases --jq '[.[] | select(.tag_name | startswith("appstore/"))] | .[:3] | .[] | "=== \(.tag_name) ===\n\(.body)\n"'
   ```
+- **Patch version convention**: If the version is a patch release (e.g., `X.Y.Z` where `Z > 0`), automatically append the most recent major/minor release notes below a separator. Find the latest `appstore/vX.Y.0*` release and append its body. Format:
+  ```
+  {새 릴리즈 노트}
+
+  ---
+
+  [X.Y.0]
+  {이전 릴리즈 노트 body}
+  ```
+  If no matching major/minor release is found, just use the new notes alone.
 - Present the final release notes to the user for confirmation before proceeding.
 
 ### Step 3: Tag, push, and release
