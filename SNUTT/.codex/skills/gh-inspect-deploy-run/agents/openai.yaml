@@ -1,4 +1,0 @@
-interface:
-  display_name: "Inspect Deploy Run"
-  short_description: "Inspect SNUTT deploy run logs"
-  default_prompt: "Use $gh-inspect-deploy-run to inspect a SNUTT iOS deploy run and review its logs."

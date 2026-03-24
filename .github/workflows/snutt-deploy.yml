@@ -79,24 +79,16 @@ jobs:
           brew install imagemagick
 
       - name: Check and update version if needed
+        id: check_version
         run: |
           # Check if version matches
           if ! mise exec -- bundle exec fastlane check_version version:"${{ steps.parse_tag.outputs.version }}"; then
-            echo "Version mismatch detected. Updating version..."
-
-            # Update version
+            echo "Version mismatch detected. Updating version locally for build..."
             mise exec -- bundle exec fastlane update_version version:"${{ steps.parse_tag.outputs.version }}"
-
-            # Configure git
-            git config user.name "github-actions[bot]"
-            git config user.email "github-actions[bot]@users.noreply.github.com"
-
-            # Commit and push
-            git add XCConfigs/Base.xcconfig
-            git commit -m "🔖 Update version to ${{ steps.parse_tag.outputs.version }} for deployment"
-            git push origin HEAD:${{ github.ref }}
+            echo "version_warning=⚠️ MARKETING_VERSION in Base.xcconfig is outdated. Please update it to ${{ steps.parse_tag.outputs.version }} manually." >> $GITHUB_OUTPUT
           else
             echo "Version already matches. No update needed."
+            echo "version_warning=" >> $GITHUB_OUTPUT
           fi
 
       - name: Setup git ssh - repo mapping
@@ -163,4 +155,5 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           GIT_TAG_NAME: ${{ github.ref_name }}
           GITHUB_ACTIONS_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/attempts/${{ github.run_attempt }}
+          VERSION_WARNING: ${{ steps.check_version.outputs.version_warning }}
         run: mise exec -- bundle exec fastlane ${{ steps.determine_lane.outputs.lane }}

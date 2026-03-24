@@ -5,6 +5,7 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import SharedUIComponents
 import SwiftUI
 
 struct PushNotificationSettingsView: View {
@@ -49,6 +50,7 @@ struct PushNotificationSettingsView: View {
                 try await viewModel.savePreferences(oldValue)
             }
         }
+        .tint(SharedUIComponentsAsset.cyan.swiftUIColor)
     }
 }
 
