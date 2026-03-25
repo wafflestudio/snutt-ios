@@ -377,6 +377,18 @@ platform :ios do
         UI.user_error!("Release notes are empty. Add notes to GitHub Release before deploying.")
       end
 
+      # Patch releases (e.g., 4.0.1): release immediately without phased rollout
+      # Major/Minor releases (e.g., 4.1.0, 5.0.0): release with phased rollout
+      patch_version = marketing_version.split(".").last.to_i
+      is_patch_release = patch_version > 0
+      use_phased_release = !is_patch_release
+
+      if is_patch_release
+        UI.message("Patch release detected (v#{marketing_version}) — immediate release, no phased rollout")
+      else
+        UI.message("Major/Minor release detected (v#{marketing_version}) — phased rollout enabled")
+      end
+
       upload_to_app_store(
         api_key: api_key,
         app_identifier: app_config.bundle_id,
@@ -386,8 +398,8 @@ platform :ios do
         copyright: "#{Time.now.year} WaffleStudio.",
         precheck_include_in_app_purchases: false,
         submit_for_review: true,
-        automatic_release: false,
-        phased_release: true,
+        automatic_release: true,
+        phased_release: use_phased_release,
         release_notes: {
           'default' => release_notes,
           'ko' => release_notes

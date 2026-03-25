@@ -86,6 +86,9 @@ The deployment workflow will:
 - Validate that a GitHub Release exists for the tag.
 - Extract release notes from the GitHub Release.
 - Submit to App Store with compliance information (IDFA: false, Encryption: false).
+- **Release strategy** (automatic, based on version):
+  - **Patch release** (`X.Y.Z` where `Z > 0`): Immediate release upon approval (no phased rollout).
+  - **Major/Minor release** (`X.Y.0`): Phased release upon approval (gradual 7-day rollout).
 
 ## Notes
 
