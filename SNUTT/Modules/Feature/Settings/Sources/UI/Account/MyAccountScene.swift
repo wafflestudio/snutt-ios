@@ -44,7 +44,7 @@ struct MyAccountScene: View {
                     if let localID = user.localID {
                         SettingsMenuButton(
                             title: SettingsStrings.accountId,
-                            detail: localID
+                            detail: localID.rawValue
                         )
                         SettingsNavigationLink(
                             title: SettingsStrings.accountPasswordChange,

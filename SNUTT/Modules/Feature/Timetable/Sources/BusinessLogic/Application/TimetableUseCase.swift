@@ -22,7 +22,7 @@ public struct TimetableUseCase: Sendable {
 
     func loadLocalRecentTimetable() -> Timetable? {
         guard let timetable = try? timetableLocalRepository.loadSelectedTimetable(),
-            authState.get(.userID) == timetable.userID
+            authState.get(.userID) == timetable.userID.rawValue
         else { return nil }
         return timetable
     }

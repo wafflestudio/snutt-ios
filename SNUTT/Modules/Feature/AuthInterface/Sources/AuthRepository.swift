@@ -15,12 +15,12 @@ import Spyable
 public protocol AuthRepository: Sendable {
     func fetchUser() async throws -> User
     func addDevice(fcmToken: String) async throws
-    func registerWithLocalID(localID: String, localPassword: String, email: String) async throws -> LoginResponse
-    func loginWithLocalID(localID: String, localPassword: String) async throws -> LoginResponse
+    func registerWithLocalID(localID: Username, localPassword: String, email: String) async throws -> LoginResponse
+    func loginWithLocalID(localID: Username, localPassword: String) async throws -> LoginResponse
     func loginWithSocial(provider: SocialAuthProvider, providerToken: String) async throws -> LoginResponse
     func linkSocial(provider: SocialAuthProvider, providerToken: String) async throws -> TokenResponse
     func unlinkSocial(provider: SocialAuthProvider) async throws -> TokenResponse
-    func attachLocalID(localID: String, localPassword: String) async throws -> TokenResponse
+    func attachLocalID(localID: Username, localPassword: String) async throws -> TokenResponse
     func changePassword(oldPassword: String, newPassword: String) async throws -> TokenResponse
     func changeNickname(to nickname: String) async throws -> User
     func logout(fcmToken: String) async throws
@@ -28,11 +28,11 @@ public protocol AuthRepository: Sendable {
     func fetchSocialAuthProviderState() async throws -> SocialAuthProviderState
 
     // Password reset & ID recovery
-    func getLinkedEmail(localID: String) async throws -> String
+    func getLinkedEmail(localID: Username) async throws -> String
     func sendVerificationCode(email: String) async throws
     func sendResetPasswordCode(email: String) async throws
-    func checkVerificationCode(localID: String, code: String) async throws
-    func resetPassword(localID: String, password: String, code: String) async throws
+    func checkVerificationCode(localID: Username, code: String) async throws
+    func resetPassword(localID: Username, password: String, code: String) async throws
     func findLocalID(email: String) async throws
 
     // Feedback
@@ -43,7 +43,7 @@ public protocol AuthRepository: Sendable {
 public struct LoginResponse: Sendable {
     public let accessToken: String
     /// Server-side id of user entity
-    public let userID: String
+    public let userID: UserID
 }
 
 @MemberwiseInit(.public)
@@ -63,7 +63,10 @@ public enum AuthRepositoryKey: TestDependencyKey {
             notificationCheckedAt: Date(),
             registeredAt: Date()
         )
-        spy.registerWithLocalIDLocalIDLocalPasswordEmailReturnValue = .init(accessToken: "123", userID: "123")
+        spy.registerWithLocalIDLocalIDLocalPasswordEmailReturnValue = .init(
+            accessToken: "123",
+            userID: "123"
+        )
         spy.loginWithSocialProviderProviderTokenReturnValue = .init(accessToken: "123", userID: "123")
         spy.linkSocialProviderProviderTokenReturnValue = .init(accessToken: "123")
         spy.unlinkSocialProviderReturnValue = .init(accessToken: "123")

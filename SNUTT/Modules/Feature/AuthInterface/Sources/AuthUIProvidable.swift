@@ -7,12 +7,13 @@
 
 import Dependencies
 import SwiftUI
+import Tagged
 
 @MainActor
 public protocol AuthUIProvidable: Sendable {
     func socialLoginSettingsScene() -> AnyView
     func attachLocalIDScene(
-        onAttach: @escaping (String, String) async throws -> Void
+        onAttach: @escaping (Username, String) async throws -> Void
     ) -> AnyView
     func changePasswordScene(
         onChangePassword: @escaping (String, String) async throws -> Void
@@ -24,7 +25,7 @@ private struct EmptyAuthUIProvider: AuthUIProvidable {
         AnyView(Text("Empty AuthUIProvider"))
     }
 
-    func attachLocalIDScene(onAttach: @escaping (String, String) async throws -> Void) -> AnyView {
+    func attachLocalIDScene(onAttach: @escaping (Username, String) async throws -> Void) -> AnyView {
         AnyView(Text("Empty AuthUIProvider"))
     }
 

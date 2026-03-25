@@ -5,6 +5,7 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AuthInterface
 import Foundation
 import MemberwiseInit
 import Tagged
@@ -16,7 +17,7 @@ public struct Timetable: Identifiable, Sendable, Codable {
     public let title: String
     public let quarter: Quarter
     public let lectures: [Lecture]
-    public let userID: String
+    public let userID: UserID
     public let theme: ThemeType
     public let isPrimary: Bool
 }

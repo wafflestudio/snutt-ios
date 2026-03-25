@@ -5,7 +5,9 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AuthInterface
 import Foundation
+import Tagged
 
 struct NotificationModel: Sendable, Identifiable {
     let id: String
@@ -13,7 +15,7 @@ struct NotificationModel: Sendable, Identifiable {
     let message: String
     let createdAt: Date
     let type: NotificationType
-    let userID: String?
+    let userID: UserID?
     let deeplink: URL?
 }
 

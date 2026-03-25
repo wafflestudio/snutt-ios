@@ -1,18 +1,19 @@
 import APIClientInterface
 import Foundation
+import Tagged
 
 public struct User: Sendable, Codable, Hashable {
-    public let id: String
+    public let id: UserID
     /// Can be `nil` if the user is very old.
-    public let localID: String?
+    public let localID: Username?
     public let email: String?
     public let nickname: Nickname
     public let notificationCheckedAt: Date
     public let registeredAt: Date
 
     public init(
-        id: String,
-        localID: String?,
+        id: UserID,
+        localID: Username?,
         email: String?,
         nickname: Nickname,
         notificationCheckedAt: Date,
@@ -28,8 +29,8 @@ public struct User: Sendable, Codable, Hashable {
 
     public init(dto: Components.Schemas.UserDto) {
         self.init(
-            id: dto.id,
-            localID: dto.localId,
+            id: UserID(rawValue: dto.id),
+            localID: dto.localId.map(Username.init(rawValue:)),
             email: dto.email,
             nickname: .init(nickname: dto.nickname.nickname, tag: dto.nickname.tag),
             notificationCheckedAt: dto.notificationCheckedAt,

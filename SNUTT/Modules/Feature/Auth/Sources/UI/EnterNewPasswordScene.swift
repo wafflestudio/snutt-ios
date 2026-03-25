@@ -5,12 +5,13 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AuthInterface
 import SharedUIComponents
 import SwiftUI
 
 struct EnterNewPasswordScene: View {
     let viewModel: OnboardViewModel
-    let localID: String
+    let localID: Username
     let verificationCode: String
 
     @State private var password = ""

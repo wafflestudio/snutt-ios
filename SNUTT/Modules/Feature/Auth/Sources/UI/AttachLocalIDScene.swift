@@ -5,11 +5,12 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AuthInterface
 import SharedUIComponents
 import SwiftUI
 
 public struct AttachLocalIDScene: View {
-    let onAttach: (String, String) async throws -> Void
+    let onAttach: (Username, String) async throws -> Void
 
     @State private var localID = ""
     @State private var localPassword = ""
@@ -20,7 +21,7 @@ public struct AttachLocalIDScene: View {
     @Environment(\.errorAlertHandler) private var errorAlertHandler
     @Environment(\.dismiss) private var dismiss
 
-    public init(onAttach: @escaping (String, String) async throws -> Void) {
+    public init(onAttach: @escaping (Username, String) async throws -> Void) {
         self.onAttach = onAttach
     }
 
@@ -89,7 +90,7 @@ public struct AttachLocalIDScene: View {
 
     private func submit() {
         errorAlertHandler.withAlert {
-            try await onAttach(localID, localPassword)
+            try await onAttach(Username(rawValue: localID), localPassword)
             focusedField = nil
             isSuccessAlertPresented = true
         }

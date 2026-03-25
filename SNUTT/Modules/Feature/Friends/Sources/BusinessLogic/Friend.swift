@@ -5,11 +5,12 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AuthInterface
 import Foundation
 
 public struct Friend: Sendable, Equatable, Identifiable {
     public let id: String
-    public let userId: String
+    public let userId: UserID
     public let nickname: String
     public let tag: String
     public let displayName: String?
@@ -20,7 +21,7 @@ public struct Friend: Sendable, Equatable, Identifiable {
 
     public init(
         id: String,
-        userId: String,
+        userId: UserID,
         nickname: String,
         tag: String,
         displayName: String? = nil,

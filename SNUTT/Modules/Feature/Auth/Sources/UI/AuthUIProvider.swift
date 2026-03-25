@@ -16,7 +16,7 @@ public struct AuthUIProvider: AuthUIProvidable {
     }
 
     public func attachLocalIDScene(
-        onAttach: @escaping (String, String) async throws -> Void
+        onAttach: @escaping (Username, String) async throws -> Void
     ) -> AnyView {
         AnyView(AttachLocalIDScene(onAttach: onAttach))
     }
