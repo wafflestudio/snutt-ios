@@ -6,9 +6,11 @@
 //
 
 import APIClientInterface
+import AuthInterface
 import Dependencies
 import Foundation
 import NotificationsInterface
+import Tagged
 
 struct NotificationAPIRepository: NotificationRepository, NotificationCountRepository {
     @Dependency(\.apiClient) private var apiClient
@@ -28,7 +30,7 @@ struct NotificationAPIRepository: NotificationRepository, NotificationCountRepos
                 message: $0.message,
                 createdAt: $0.created_at,
                 type: require(NotificationType(rawValue: $0._type.rawValue)),
-                userID: $0.user_id,
+                userID: $0.user_id.map(UserID.init(rawValue:)),
                 deeplink: $0.deeplink.flatMap { URL(string: $0) }
             )
         }

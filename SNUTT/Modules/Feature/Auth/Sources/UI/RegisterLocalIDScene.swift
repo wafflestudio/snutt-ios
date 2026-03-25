@@ -5,6 +5,7 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AuthInterface
 import FoundationUtility
 import SharedUIComponents
 import SwiftUI
@@ -139,7 +140,7 @@ struct RegisterLocalIDScene: View {
             defer { isLoading = false }
 
             try await viewModel.registerWithLocalID(
-                localID: localID,
+                localID: Username(rawValue: localID),
                 localPassword: password,
                 email: emailFullAddress
             )

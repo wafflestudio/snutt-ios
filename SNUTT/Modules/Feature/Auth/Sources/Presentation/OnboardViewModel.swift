@@ -33,12 +33,12 @@ final class OnboardViewModel {
         authState.isAuthenticated
     }
 
-    func loginWithLocalId(localID: String, localPassword: String) async throws {
+    func loginWithLocalId(localID: Username, localPassword: String) async throws {
         analyticsLogger.logEvent(AnalyticsAction.login(.init(provider: .local)))
         try await authUseCase.loginWithLocalID(localID: localID, localPassword: localPassword)
     }
 
-    func registerWithLocalID(localID: String, localPassword: String, email: String) async throws {
+    func registerWithLocalID(localID: Username, localPassword: String, email: String) async throws {
         analyticsLogger.logEvent(AnalyticsAction.signUp)
         try await authUseCase.registerWithLocalID(
             localID: localID,
@@ -64,17 +64,17 @@ final class OnboardViewModel {
         try await authRepository.sendResetPasswordCode(email: email)
     }
 
-    func checkVerificationCode(code: String, localID: String? = nil) async throws {
+    func checkVerificationCode(code: String, localID: Username? = nil) async throws {
         if let localID {
             try await authRepository.checkVerificationCode(localID: localID, code: code)
         }
     }
 
-    func getLinkedEmail(localID: String) async throws -> String {
+    func getLinkedEmail(localID: Username) async throws -> String {
         try await authRepository.getLinkedEmail(localID: localID)
     }
 
-    func resetPassword(localID: String, password: String, code: String) async throws {
+    func resetPassword(localID: Username, password: String, code: String) async throws {
         try await authRepository.resetPassword(localID: localID, password: password, code: code)
     }
 
@@ -93,8 +93,8 @@ enum OnboardDetailSceneTypes: Hashable {
     case findLocalID
     case resetLocalPassword
     case termsOfService
-    case verificationCode(email: String, mode: VerificationMode, localID: String? = nil)
-    case enterNewPassword(localID: String, verificationCode: String)
+    case verificationCode(email: String, mode: VerificationMode, localID: Username? = nil)
+    case enterNewPassword(localID: Username, verificationCode: String)
     case emailVerification(email: String)
     case userSupport
 

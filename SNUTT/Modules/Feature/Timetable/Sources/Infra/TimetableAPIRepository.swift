@@ -6,9 +6,11 @@
 //
 
 import APIClientInterface
+import AuthInterface
 import Dependencies
 import Foundation
 import FoundationUtility
+import Tagged
 import ThemesInterface
 import TimetableInterface
 
@@ -135,7 +137,7 @@ extension Components.Schemas.TimetableLegacyDto {
             title: title,
             quarter: Quarter(year: Int(year), semester: require(Semester(rawValue: semester.rawValue))),
             lectures: lecture_list.map { try $0.toLecture() },
-            userID: user_id,
+            userID: UserID(rawValue: user_id),
             theme: themeType,
             isPrimary: isPrimary
         )

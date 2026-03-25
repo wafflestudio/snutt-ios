@@ -35,21 +35,21 @@ public struct AuthAPIRepository: AuthRepository {
     }
 
     public func registerWithLocalID(
-        localID: String,
+        localID: Username,
         localPassword: String,
         email: String
     ) async throws -> LoginResponse {
         let result = try await apiClient.registerLocal(
-            body: .json(.init(email: email, id: localID, password: localPassword))
+            body: .json(.init(email: email, id: localID.rawValue, password: localPassword))
         )
         let json = try result.ok.body.json
-        return .init(accessToken: json.token, userID: json.user_id)
+        return .init(accessToken: json.token, userID: UserID(rawValue: json.user_id))
     }
 
-    public func loginWithLocalID(localID: String, localPassword: String) async throws -> LoginResponse {
-        let result = try await apiClient.loginLocal(body: .json(.init(id: localID, password: localPassword)))
+    public func loginWithLocalID(localID: Username, localPassword: String) async throws -> LoginResponse {
+        let result = try await apiClient.loginLocal(body: .json(.init(id: localID.rawValue, password: localPassword)))
         let json = try result.ok.body.json
-        return .init(accessToken: json.token, userID: json.user_id)
+        return .init(accessToken: json.token, userID: UserID(rawValue: json.user_id))
     }
 
     public func loginWithSocial(provider: SocialAuthProvider, providerToken: String) async throws -> LoginResponse {
@@ -60,7 +60,7 @@ public struct AuthAPIRepository: AuthRepository {
             case .apple: try await apiClient.loginApple(body: .json(.init(token: providerToken))).ok.body.json
             case .facebook: try await apiClient.loginFacebook(body: .json(.init(token: providerToken))).ok.body.json
             }
-        return .init(accessToken: result.token, userID: result.user_id)
+        return .init(accessToken: result.token, userID: UserID(rawValue: result.user_id))
     }
 
     public func linkSocial(provider: SocialAuthProvider, providerToken: String) async throws -> TokenResponse {
@@ -85,8 +85,8 @@ public struct AuthAPIRepository: AuthRepository {
         return .init(accessToken: result.token)
     }
 
-    public func attachLocalID(localID: String, localPassword: String) async throws -> TokenResponse {
-        let result = try await apiClient.attachLocal(body: .json(.init(id: localID, password: localPassword)))
+    public func attachLocalID(localID: Username, localPassword: String) async throws -> TokenResponse {
+        let result = try await apiClient.attachLocal(body: .json(.init(id: localID.rawValue, password: localPassword)))
         let json = try result.ok.body.json
         return .init(accessToken: json.token)
     }
@@ -119,8 +119,8 @@ public struct AuthAPIRepository: AuthRepository {
 // MARK: Password Reset & ID Recovery
 
 extension AuthAPIRepository {
-    public func getLinkedEmail(localID: String) async throws -> String {
-        let result = try await apiClient.getMaskedEmail(body: .json(.init(user_id: localID)))
+    public func getLinkedEmail(localID: Username) async throws -> String {
+        let result = try await apiClient.getMaskedEmail(body: .json(.init(user_id: localID.rawValue)))
         let json = try result.ok.body.json
         return json.email
     }
@@ -135,16 +135,16 @@ extension AuthAPIRepository {
         _ = try result.ok.body.json
     }
 
-    public func checkVerificationCode(localID: String, code: String) async throws {
+    public func checkVerificationCode(localID: Username, code: String) async throws {
         let result = try await apiClient.verifyResetPasswordCode(
-            body: .json(.init(code: code, user_id: localID))
+            body: .json(.init(code: code, user_id: localID.rawValue))
         )
         _ = try result.ok.body.json
     }
 
-    public func resetPassword(localID: String, password: String, code: String) async throws {
+    public func resetPassword(localID: Username, password: String, code: String) async throws {
         let result = try await apiClient.resetPassword(
-            body: .json(.init(code: code, password: password, user_id: localID))
+            body: .json(.init(code: code, password: password, user_id: localID.rawValue))
         )
         _ = try result.ok.body.json
     }

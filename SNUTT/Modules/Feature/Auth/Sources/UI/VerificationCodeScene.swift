@@ -5,6 +5,7 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AuthInterface
 import SharedUIComponents
 import SwiftUI
 
@@ -12,7 +13,7 @@ struct VerificationCodeScene: View {
     let viewModel: OnboardViewModel
     let email: String
     let mode: OnboardDetailSceneTypes.VerificationMode
-    let localID: String?
+    let localID: Username?
 
     @State private var verificationCode = ""
     @State private var showHelpAlert = false

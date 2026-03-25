@@ -110,6 +110,7 @@ let project = Project.app(
             category: .feature,
             dependencies: [
                 .target(name: "AnalyticsInterface"),
+                .target(name: "AuthInterface"),
                 .target(name: "NotificationsInterface"),
                 .target(name: "APIClientInterface"),
                 .target(name: "SharedUIComponents"),
@@ -117,6 +118,7 @@ let project = Project.app(
                 .target(name: "SwiftUIUtility"),
                 .external(name: "Dependencies"),
                 .external(name: "MemberwiseInit"),
+                .external(name: "Tagged"),
             ]
         ),
         .module(
@@ -228,6 +230,7 @@ let project = Project.app(
                 .target(name: "DependenciesUtility"),
                 .external(name: "Dependencies"),
                 .external(name: "MemberwiseInit"),
+                .external(name: "Tagged"),
                 .external(name: "KakaoSDKCommon"),
                 .external(name: "KakaoSDKShare"),
                 .external(name: "KakaoSDKTemplate"),
@@ -256,6 +259,7 @@ let project = Project.app(
             category: .featureInterface,
             dependencies: [
                 .target(name: "APIClientInterface"),
+                .target(name: "AuthInterface"),
                 .target(name: "ThemesInterface"),
                 .target(name: "FoundationUtility"),
                 .target(name: "SwiftUIUtility"),
@@ -317,6 +321,7 @@ let project = Project.app(
                 .target(name: "APIClientInterface"),
                 .external(name: "Dependencies"),
                 .external(name: "MemberwiseInit"),
+                .external(name: "Tagged"),
             ]
         ),
         .module(

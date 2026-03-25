@@ -56,7 +56,7 @@ final class MyAccountViewModel {
         try await authUseCase.logout()
     }
 
-    func attachLocalID(localID: String, localPassword: String) async throws {
+    func attachLocalID(localID: Username, localPassword: String) async throws {
         let snuttToken = try await authRepository.attachLocalID(localID: localID, localPassword: localPassword)
         authState.set(.accessToken, value: snuttToken.accessToken)
         try await fetchUser()

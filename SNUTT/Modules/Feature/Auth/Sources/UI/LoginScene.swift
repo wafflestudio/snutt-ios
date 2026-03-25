@@ -5,6 +5,7 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AuthInterface
 import MemberwiseInit
 import SharedUIComponents
 import SwiftUI
@@ -73,7 +74,7 @@ struct LoginScene: View {
 
     private func submit() {
         errorAlertHandler.withAlert {
-            try await viewModel.loginWithLocalId(localID: localID, localPassword: localPassword)
+            try await viewModel.loginWithLocalId(localID: Username(rawValue: localID), localPassword: localPassword)
             focusedField = nil
         }
     }

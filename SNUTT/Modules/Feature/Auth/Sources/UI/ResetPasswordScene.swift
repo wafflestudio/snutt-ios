@@ -5,6 +5,7 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AuthInterface
 import SharedUIComponents
 import SwiftUI
 
@@ -143,7 +144,7 @@ struct ResetPasswordScene: View {
             defer { isLoading = false }
 
             if currentStep == .enterID {
-                let linkedEmail = try await viewModel.getLinkedEmail(localID: localID)
+                let linkedEmail = try await viewModel.getLinkedEmail(localID: Username(rawValue: localID))
                 focusedField = nil
 
                 withAnimation(.easeInOut(duration: 0.3)) {
@@ -153,7 +154,9 @@ struct ResetPasswordScene: View {
                 }
             } else {
                 try await viewModel.sendResetPasswordCode(email: email)
-                viewModel.paths.append(.verificationCode(email: email, mode: .resetPassword, localID: localID))
+                viewModel.paths.append(
+                    .verificationCode(email: email, mode: .resetPassword, localID: Username(rawValue: localID))
+                )
             }
         }
     }
