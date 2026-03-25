@@ -6,7 +6,9 @@
 //
 
 #if DEBUG
+import AuthInterface
 import Foundation
+import Tagged
 import ThemesInterface
 import TimetableInterface
 
@@ -38,7 +40,7 @@ actor FakeFriendsRepository: FriendsRepository {
         try await Task.sleep(for: .seconds(1))
         let newFriend = Friend(
             id: UUID().uuidString,
-            userId: UUID().uuidString,
+            userId: UserID(rawValue: UUID().uuidString),
             nickname: nickname,
             tag: String(Int.random(in: 1000...9999)),
             displayName: nil,
@@ -91,7 +93,7 @@ actor FakeFriendsRepository: FriendsRepository {
             title: "친구 시간표",
             quarter: quarter,
             lectures: [],
-            userID: friendID,
+            userID: UserID(rawValue: friendID),
             theme: .builtInTheme(.snutt),
             isPrimary: true
         )
@@ -104,7 +106,7 @@ actor FakeFriendsRepository: FriendsRepository {
     func acceptFriendByLink(requestToken: String) async throws -> Friend {
         let newFriend = Friend(
             id: UUID().uuidString,
-            userId: UUID().uuidString,
+            userId: UserID(rawValue: UUID().uuidString),
             nickname: "카카오친구",
             tag: String(Int.random(in: 1000...9999)),
             displayName: nil,

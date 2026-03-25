@@ -35,15 +35,15 @@ public struct AuthUseCase: AuthUseCaseProtocol {
         }
     }
 
-    public func loginWithLocalID(localID: String, localPassword: String) async throws {
+    public func loginWithLocalID(localID: Username, localPassword: String) async throws {
         let response = try await authRepository.loginWithLocalID(localID: localID, localPassword: localPassword)
         try secureRepository.saveAccessToken(response.accessToken)
         authState.set(.accessToken, value: response.accessToken)
-        authState.set(.userID, value: response.userID)
+        authState.set(.userID, value: response.userID.rawValue)
         try await registerPendingFCMTokenIfNeeded()
     }
 
-    public func registerWithLocalID(localID: String, localPassword: String, email: String) async throws {
+    public func registerWithLocalID(localID: Username, localPassword: String, email: String) async throws {
         let response = try await authRepository.registerWithLocalID(
             localID: localID,
             localPassword: localPassword,
@@ -51,7 +51,7 @@ public struct AuthUseCase: AuthUseCaseProtocol {
         )
         try secureRepository.saveAccessToken(response.accessToken)
         authState.set(.accessToken, value: response.accessToken)
-        authState.set(.userID, value: response.userID)
+        authState.set(.userID, value: response.userID.rawValue)
         try await registerPendingFCMTokenIfNeeded()
     }
 
@@ -60,7 +60,7 @@ public struct AuthUseCase: AuthUseCaseProtocol {
         let response = try await authRepository.loginWithSocial(provider: provider, providerToken: providerToken)
         try secureRepository.saveAccessToken(response.accessToken)
         authState.set(.accessToken, value: response.accessToken)
-        authState.set(.userID, value: response.userID)
+        authState.set(.userID, value: response.userID.rawValue)
         try await registerPendingFCMTokenIfNeeded()
     }
 

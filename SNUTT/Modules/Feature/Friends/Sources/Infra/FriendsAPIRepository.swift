@@ -6,9 +6,11 @@
 //
 
 import APIClientInterface
+import AuthInterface
 import Dependencies
 import Foundation
 import FoundationUtility
+import Tagged
 import ThemesInterface
 import TimetableInterface
 
@@ -22,7 +24,7 @@ struct FriendsAPIRepository: FriendsRepository {
         return response.content.map { dto in
             Friend(
                 id: dto.id,
-                userId: dto.userId,
+                userId: UserID(rawValue: dto.userId),
                 nickname: dto.nickname.nickname,
                 tag: dto.nickname.tag,
                 displayName: dto.displayName,
@@ -90,7 +92,7 @@ struct FriendsAPIRepository: FriendsRepository {
         ).ok.body.json
         return Friend(
             id: response.id,
-            userId: response.userId,
+            userId: UserID(rawValue: response.userId),
             nickname: response.nickname.nickname,
             tag: response.nickname.tag,
             displayName: response.displayName
@@ -124,7 +126,7 @@ extension Components.Schemas.TimetableDto {
             title: title,
             quarter: quarter,
             lectures: try lectures.map { try $0.toLecture() },
-            userID: userId,
+            userID: UserID(rawValue: userId),
             theme: themeType,
             isPrimary: isPrimary
         )
