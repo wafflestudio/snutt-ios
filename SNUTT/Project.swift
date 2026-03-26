@@ -371,6 +371,7 @@ let project = Project.app(
             name: "LectureDiaryInterface",
             category: .featureInterface,
             dependencies: [
+                .target(name: "TimetableInterface"),
                 .target(name: "DependenciesUtility"),
                 .external(name: "Spyable"),
                 .external(name: "Dependencies"),

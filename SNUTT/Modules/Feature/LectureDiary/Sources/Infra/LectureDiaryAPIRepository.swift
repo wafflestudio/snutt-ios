@@ -26,7 +26,7 @@ struct LectureDiaryAPIRepository: LectureDiaryRepository {
             )
         ).ok.body.json
         return .init(
-            lectureID: responseDto.lectureId,
+            lectureID: LectureID(rawValue: responseDto.lectureId),
             lectureTitle: responseDto.courseTitle
         )
     }
@@ -40,10 +40,10 @@ struct LectureDiaryAPIRepository: LectureDiaryRepository {
         try await apiClient.getMySubmissions().ok.body.json.map { try $0.toDiaryList() }
     }
 
-    func fetchQuestionnaire(for lectureID: String, with classTypes: [String]) async throws -> QuestionnaireItem {
+    func fetchQuestionnaire(for lectureID: LectureID, with classTypes: [String]) async throws -> QuestionnaireItem {
         let requestDto = Components.Schemas.DiaryQuestionnaireRequestDto(
             dailyClassTypes: classTypes,
-            lectureId: lectureID
+            lectureId: lectureID.rawValue
         )
         let response = try await apiClient.getQuestionnaireFromDailyClassTypes(body: .json(requestDto)).ok.body.json
         return .init(dto: response)
@@ -53,7 +53,7 @@ struct LectureDiaryAPIRepository: LectureDiaryRepository {
         let requestDto = Components.Schemas.DiarySubmissionRequestDto(
             comment: submission.comment ?? "",
             dailyClassTypes: submission.dailyClassTypes,
-            lectureId: submission.lectureID,
+            lectureId: submission.lectureID.rawValue,
             questionAnswers: submission.questionAnswers.map {
                 .init(answerIndex: Int32($0.answerIndex), questionId: $0.questionID)
             }
@@ -100,7 +100,7 @@ extension DiarySummary {
     init(dto: Components.Schemas.DiarySubmissionSummaryDto) {
         self.init(
             id: dto.id,
-            lectureID: dto.lectureId,
+            lectureID: LectureID(rawValue: dto.lectureId),
             date: dto.date,
             lectureTitle: dto.courseTitle,
             shortQuestionReplies: dto.shortQuestionReplies.map {

@@ -8,14 +8,15 @@
 
 import DependenciesUtility
 import Foundation
+import TimetableInterface
 
 public struct NavigateToLectureDiaryMessage: NotificationCenter.TypedMessage {
     public static let name = Notification.Name("navigateToLectureDiary")
 
-    public let lectureID: String
+    public let lectureID: LectureID
     public let lectureTitle: String
 
-    public init(lectureID: String, lectureTitle: String) {
+    public init(lectureID: LectureID, lectureTitle: String) {
         self.lectureID = lectureID
         self.lectureTitle = lectureTitle
     }

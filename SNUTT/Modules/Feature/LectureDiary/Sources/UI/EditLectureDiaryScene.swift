@@ -11,6 +11,7 @@ import LectureDiaryInterface
 import SettingsInterface
 import SharedUIComponents
 import SwiftUI
+import TimetableInterface
 
 extension View {
     public func overlayLectureDiarySheet(
@@ -39,7 +40,7 @@ struct EditLectureDiaryScene: View {
     @State private var showNextSection = false
     @State private var detailQuestionPosition: Int?
 
-    public init(lectureID: String, lectureTitle: String) {
+    public init(lectureID: LectureID, lectureTitle: String) {
         _viewModel = State(
             initialValue: EditLectureDiaryViewModel(
                 lectureID: lectureID,

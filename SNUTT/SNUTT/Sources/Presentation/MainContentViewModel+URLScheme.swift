@@ -93,7 +93,7 @@ extension MainContentViewModel {
             return
         }
         notificationCenter.post(
-            NavigateToLectureDiaryMessage(lectureID: lectureID, lectureTitle: lectureTitle)
+            NavigateToLectureDiaryMessage(lectureID: LectureID(rawValue: lectureID), lectureTitle: lectureTitle)
         )
     }
     #endif

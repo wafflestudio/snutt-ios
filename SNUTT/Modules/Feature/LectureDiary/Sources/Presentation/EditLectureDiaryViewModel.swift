@@ -9,6 +9,7 @@
 import Dependencies
 import Foundation
 import Observation
+import TimetableInterface
 
 @Observable
 @MainActor
@@ -22,12 +23,12 @@ public final class EditLectureDiaryViewModel {
     private(set) var selectedAnswers: [String: Int] = [:]  // questionID -> answerIndex
     var extraComment: String = ""
 
-    let lectureID: String
+    let lectureID: LectureID
     let lectureTitle: String
 
     var nextLecture: NextLecture? = nil
 
-    public init(lectureID: String, lectureTitle: String) {
+    public init(lectureID: LectureID, lectureTitle: String) {
         self.lectureID = lectureID
         self.lectureTitle = lectureTitle
     }
