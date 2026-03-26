@@ -15,7 +15,7 @@ public protocol LectureDiaryRepository: Sendable {
     func fetchClassTypeList() async throws -> [AnswerOption]
     func fetchTargetLecture() async throws -> DiaryEditContext
     func fetchDiaryList() async throws -> [DiarySubmissionsOfYearSemester]
-    func fetchQuestionnaire(for lectureID: String, with classTypes: [String]) async throws -> QuestionnaireItem
+    func fetchQuestionnaire(for lectureID: LectureID, with classTypes: [String]) async throws -> QuestionnaireItem
     func submitDiary(_ submission: DiarySubmission) async throws
     func deleteDiary(diaryID: String) async throws
 }

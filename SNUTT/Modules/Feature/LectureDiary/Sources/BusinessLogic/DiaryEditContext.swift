@@ -7,14 +7,15 @@
 //
 
 import Foundation
+import TimetableInterface
 
 public struct DiaryEditContext: Sendable, Identifiable {
 
     public let id = UUID()
-    public let lectureID: String
+    public let lectureID: LectureID
     public let lectureTitle: String
 
-    public init(lectureID: String, lectureTitle: String) {
+    public init(lectureID: LectureID, lectureTitle: String) {
         self.lectureID = lectureID
         self.lectureTitle = lectureTitle
     }

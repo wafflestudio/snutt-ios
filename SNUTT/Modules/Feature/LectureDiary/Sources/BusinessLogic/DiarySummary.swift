@@ -16,7 +16,7 @@ public struct DiarySubmissionsOfYearSemester: Sendable {
 
 public struct DiarySummary: Sendable, Identifiable, Equatable {
     public let id: String
-    public let lectureID: String
+    public let lectureID: LectureID
     public let lectureTitle: String
     public let date: Date  // When the diary was written
     public let shortQuestionReplies: [QuestionReply]
@@ -24,7 +24,7 @@ public struct DiarySummary: Sendable, Identifiable, Equatable {
 
     public init(
         id: String,
-        lectureID: String,
+        lectureID: LectureID,
         date: Date,
         lectureTitle: String,
         shortQuestionReplies: [QuestionReply],

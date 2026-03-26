@@ -7,15 +7,16 @@
 //
 
 import Foundation
+import TimetableInterface
 
 public struct DiarySubmission: Sendable, Equatable {
-    public let lectureID: String
+    public let lectureID: LectureID
     public let dailyClassTypes: [String]
     public let questionAnswers: [QuestionAnswer]
     public let comment: String?
 
     public init(
-        lectureID: String,
+        lectureID: LectureID,
         dailyClassTypes: [String],
         questionAnswers: [QuestionAnswer],
         comment: String?
