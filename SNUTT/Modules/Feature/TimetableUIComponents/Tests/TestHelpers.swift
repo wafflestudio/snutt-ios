@@ -36,7 +36,7 @@ extension TimetablePainter {
 
 extension Timetable {
     static func stub(
-        id: String = "test",
+        id: TimetableID = "test",
         lectures: [Lecture] = [],
         theme: ThemeType = .builtInTheme(.snutt)
     ) -> Timetable {
@@ -56,8 +56,8 @@ extension Timetable {
 
 extension Lecture {
     static func stub(
-        id: String = UUID().uuidString,
-        lectureID: String = "1",
+        id: LectureID = LectureID(rawValue: UUID().uuidString),
+        timetableLectureID: TimetableLectureID? = nil,
         courseTitle: String = "Test Course",
         timePlaces: [TimePlace] = [],
         colorIndex: Int = 0,
@@ -65,7 +65,7 @@ extension Lecture {
     ) -> Lecture {
         Lecture(
             id: id,
-            lectureID: lectureID,
+            timetableLectureID: timetableLectureID,
             courseTitle: courseTitle,
             timePlaces: timePlaces,
             lectureNumber: nil,
