@@ -39,6 +39,10 @@ public struct Quarter: Sendable, Codable, Equatable, Comparable, Identifiable, H
         "\(year)-\(semester.rawValue)"
     }
 
+    public var shortDescription: String {
+        "\(String(year).suffix(2))-\(semester.rawValue)"
+    }
+
     public let year: Int
     public let semester: Semester
 

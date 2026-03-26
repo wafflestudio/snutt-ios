@@ -27,3 +27,7 @@
 "alert.cancel" = "취소";
 "alert.delete" = "삭제";
 "alert.apply" = "적용";
+
+"error.view.title" = "오류가 발생했습니다";
+"error.view.subTitle" = "잠시 후 다시 시도해주세요";
+"error.view.buttonLabel" = "다시 시도";

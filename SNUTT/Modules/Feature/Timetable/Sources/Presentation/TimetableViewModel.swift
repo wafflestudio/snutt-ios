@@ -302,6 +302,9 @@ public enum TimetableDetailSceneTypes: Hashable {
     case lecturePreview(Lecture, quarter: Quarter)
     case lectureCreate(Lecture)
     case lectureColorSelection(LectureEditDetailViewModel)
+    #if FEATURE_LECTURE_DIARY
+    case lectureDiaryList
+    #endif
 
     public static func == (lhs: TimetableDetailSceneTypes, rhs: TimetableDetailSceneTypes) -> Bool {
         switch (lhs, rhs) {
@@ -319,6 +322,10 @@ public enum TimetableDetailSceneTypes: Hashable {
             lhs.id == rhs.id
         case let (.lecturePreview(lhs, _), .lecturePreview(rhs, _)):
             lhs.id == rhs.id
+        #if FEATURE_LECTURE_DIARY
+        case (.lectureDiaryList, .lectureDiaryList):
+            true
+        #endif
         default:
             false
         }
@@ -344,6 +351,10 @@ public enum TimetableDetailSceneTypes: Hashable {
         case let .lectureColorSelection(viewModel):
             hasher.combine(6)
             hasher.combine(viewModel.lectureID)
+        #if FEATURE_LECTURE_DIARY
+        case .lectureDiaryList:
+            hasher.combine(7)
+        #endif
         }
     }
 }

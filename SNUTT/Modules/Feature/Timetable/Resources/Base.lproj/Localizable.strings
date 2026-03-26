@@ -37,8 +37,9 @@
 
 "timetable.addMenu.search" = "검색으로 추가";
 "timetable.addMenu.direct" = "직접 추가";
-"timetable.addMenu.currentList" = "현재 시간표 목록";
-"timetable.addMenu.vacancyList" = "빈자리 알림 목록";
+"timetable.addMenu.currentList" = "강의 목록";
+"timetable.addMenu.vacancyList" = "빈자리 알림";
+"timetable.addMenu.diaryList" = "강의 일기장";
 "timetable.addMenu.section.add" = "강의 추가";
 "timetable.addMenu.section.list" = "목록으로 보기";
 

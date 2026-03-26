@@ -6,19 +6,33 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
+import Dependencies
+import LectureDiaryInterface
+import SettingsInterface
 import SharedUIComponents
 import SwiftUI
 
 extension View {
-    public func overlayLectureDiarySheet(lectureId: String, lectureTitle: String) -> some View {
-        overlay {
-            EditLectureDiaryScene(lectureID: lectureId, lectureTitle: lectureTitle)
+    public func overlayLectureDiarySheet(
+        _ item: Binding<DiaryEditContext?>,
+        onDismiss: @escaping () -> Void = {}
+    ) -> some View {
+        fullScreenCover(item: item, onDismiss: onDismiss) { context in
+            EditLectureDiaryScene(
+                lectureID: context.lectureID,
+                lectureTitle: context.lectureTitle
+            )
         }
     }
 }
 
 struct EditLectureDiaryScene: View {
+
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.errorAlertHandler) private var errorAlertHandler
+
+    @Dependency(\.notificationCenter) private var notificationCenter
+
     @State private var viewModel: EditLectureDiaryViewModel
     @State private var showCancelAlert = false
     @State private var showConfirmView = false
@@ -47,23 +61,30 @@ struct EditLectureDiaryScene: View {
             VStack(spacing: 0) {
                 headerView
 
-                ScrollView {
-                    VStack(spacing: 16) {
-                        step1ClassTypeSelection
-                            .id(0)
+                GeometryReader { proxy in
+                    ScrollView {
+                        VStack(spacing: 16) {
+                            step1ClassTypeSelection
+                                .id(0)
 
-                        if showNextSection {
-                            step2QuestionAnswers
-                                .id(1)
-                            extraCommentSection
-                            submitButton
+                            if showNextSection {
+                                step2QuestionAnswers
+                                    .id(1)
+                                extraCommentSection
+                                submitButton
+                                Spacer()
+                            } else {
+                                Spacer(minLength: 0)
+                                setNotificationButton
+                            }
                         }
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 24)
+                        .frame(minHeight: proxy.size.height)
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 24)
+                    .scrollPosition(id: $detailQuestionPosition, anchor: .top)
+                    .animation(.easeInOut(duration: 0.3), value: detailQuestionPosition)
                 }
-                .scrollPosition(id: $detailQuestionPosition, anchor: .top)
-                .animation(.easeInOut(duration: 0.3), value: detailQuestionPosition)
             }
         }
         .task {
@@ -71,6 +92,9 @@ struct EditLectureDiaryScene: View {
         }
         .fullScreenCover(isPresented: $showConfirmView) {
             LectureDiaryConfirmView(displayMode: .reviewDone)
+        }
+        .onChange(of: showConfirmView) { _, isShowing in
+            if !isShowing { dismiss() }
         }
     }
 
@@ -98,8 +122,10 @@ struct EditLectureDiaryScene: View {
             .padding(.top, 44)
             .padding(.bottom, 24)
             .background(Color.cardBackground)
-
-            Divider().foregroundStyle(SharedUIComponentsAsset.border.swiftUIColor)
+        }
+        .overlay(alignment: .bottom) {
+            Divider()
+                .frame(height: 0.4)
         }
         .shadow(color: .black.opacity(0.02), radius: 12, y: 6)
         .alert(
@@ -125,7 +151,9 @@ struct EditLectureDiaryScene: View {
 
             WrappedOptionChipList(
                 selectedOptions: Binding(
-                    get: { viewModel.classTypes.filter { viewModel.selectedClassTypes.selected.contains($0.content) } },
+                    get: {
+                        viewModel.classTypes.filter { viewModel.selectedClassTypes.selected.contains($0.content) }
+                    },
                     set: { viewModel.selectedClassTypes = .init(selected: $0.map(\.content)) }
                 ),
                 answerOptions: viewModel.classTypes,
@@ -139,7 +167,8 @@ struct EditLectureDiaryScene: View {
                         await viewModel.loadQuestionnaire()
                     }
                     showNextSection = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    Task {
+                        try? await Task.sleep(for: .milliseconds(500))
                         detailQuestionPosition = 1
                     }
                 } label: {
@@ -160,7 +189,6 @@ struct EditLectureDiaryScene: View {
         .padding(.top, 24)
         .background(Color.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .shadow(color: .black.opacity(0.04), radius: 20, x: 12, y: 6)
     }
 
     @ViewBuilder
@@ -188,7 +216,7 @@ struct EditLectureDiaryScene: View {
                 }
             }
             .padding(20)
-            .background(Color(.systemBackground))
+            .background(Color.cardBackground)
             .clipShape(RoundedRectangle(cornerRadius: 12))
         }
     }
@@ -202,23 +230,45 @@ struct EditLectureDiaryScene: View {
             Spacer()
             RoundedRectButton(
                 label: LectureDiaryStrings.lectureDiaryEditNext,
-                type: .medium,
-                disabled: !viewModel.canSubmit
+                type: .medium
             ) {
-                Task {
-                    do {
-                        try await viewModel.submitDiary()
-                        showConfirmView = true
-                    } catch {
-                        // TODO: Show error alert
-                        print("Failed to submit diary: \(error)")
-                    }
-                }
+                submitDiary()
             }
+            .disabled(!viewModel.canSubmit)
             .frame(width: 122)
         }
         .padding(.top, 4)
         .padding(.bottom, 40)
+    }
+
+    private var setNotificationButton: some View {
+        VStack(spacing: 2) {
+            Text(LectureDiaryStrings.lectureDiaryEditSetNotificationLabel)
+                .font(.systemFont(ofSize: 13), lineHeightMultiple: 1.45)
+                .multilineTextAlignment(.center)
+            Button {
+                notificationCenter.post(NavigateToPushNotificationSettingsMessage())
+                dismiss()
+            } label: {
+                HStack(spacing: 0) {
+                    Text(LectureDiaryStrings.lectureDiaryEditSetNotificationButtonLabel)
+                        .font(.system(size: 14, weight: .medium))
+                    LectureDiaryAsset.chevronRightDark.swiftUIImage
+                }
+            }
+            .padding(.vertical, 6)
+            .padding(.leading, 12)
+            .padding(.trailing, 8)
+        }
+        .foregroundStyle(Color.setNotificationLabel)
+        .padding(.bottom, 16)
+    }
+
+    private func submitDiary() {
+        errorAlertHandler.withAlert {
+            try await viewModel.submitDiary()
+            showConfirmView = true
+        }
     }
 }
 

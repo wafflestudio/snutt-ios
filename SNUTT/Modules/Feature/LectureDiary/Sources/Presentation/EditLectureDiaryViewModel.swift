@@ -49,7 +49,7 @@ public final class EditLectureDiaryViewModel {
                 with: selectedClassTypes.selected
             )
             nextLecture = questionnaire.nextLecture
-            questionnaireState = .loaded(questionnaire.questions)
+            questionnaireState = .loaded(questionnaire.questions.sorted { $0.id < $1.id })
         } catch {
             questionnaireState = .failed
         }

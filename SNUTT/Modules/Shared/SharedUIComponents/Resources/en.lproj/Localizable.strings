@@ -27,3 +27,7 @@
 "alert.cancel" = "Cancel";
 "alert.delete" = "Delete";
 "alert.apply" = "Apply";
+
+"error.view.title" = "An Error Has Occurred";
+"error.view.subTitle" = "Please try again later";
+"error.view.buttonLabel" = "Try Again";

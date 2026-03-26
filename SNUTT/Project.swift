@@ -19,6 +19,7 @@ let project = Project.app(
                 .target(name: "ReviewsInterface"),
                 .target(name: "NotificationsInterface"),
                 .target(name: "VacancyInterface"),
+                .target(name: "LectureDiaryInterface"),
                 .target(name: "AuthInterface"),
                 .target(name: "APIClientInterface"),
                 .target(name: "SwiftUIUtility"),
@@ -125,12 +126,13 @@ let project = Project.app(
                 .target(name: "AnalyticsInterface"),
                 .target(name: "AppReviewPromptInterface"),
                 .target(name: "APIClientInterface"),
-                .target(name: "LectureDiaryInterface"),
                 .target(name: "NotificationsInterface"),
                 .target(name: "TimetableInterface"),
                 .target(name: "ThemesInterface"),
                 .target(name: "VacancyInterface"),
                 .target(name: "AuthInterface"),
+                .target(name: "SettingsInterface"),
+                .target(name: "LectureDiaryInterface"),
                 .target(name: "SharedUIComponents"),
                 .target(name: "SharedUIWebKit"),
                 .target(name: "SwiftUtility"),
@@ -239,8 +241,10 @@ let project = Project.app(
                 .target(name: "LectureDiaryInterface"),
                 .target(name: "TimetableInterface"),
                 .target(name: "APIClientInterface"),
+                .target(name: "SettingsInterface"),
                 .target(name: "SharedUIComponents"),
                 .target(name: "SwiftUIUtility"),
+                .target(name: "SwiftUtility"),
                 .target(name: "FoundationUtility"),
                 .external(name: "Dependencies"),
                 .external(name: "MemberwiseInit"),
@@ -285,6 +289,13 @@ let project = Project.app(
             dependencies: [
                 .external(name: "Spyable"),
                 .external(name: "Dependencies"),
+            ]
+        ),
+        .module(
+            name: "SettingsInterface",
+            category: .featureInterface,
+            dependencies: [
+                .target(name: "DependenciesUtility")
             ]
         ),
         .module(
@@ -367,7 +378,9 @@ let project = Project.app(
                 .target(name: "SwiftUIUtility"),
                 .target(name: "UIKitUtility"),
                 .target(name: "DependenciesUtility"),
+                .target(name: "FoundationUtility"),
                 .external(name: "MemberwiseInit"),
+                .external(name: "SwiftUIIntrospect"),
             ]
         ),
         .module(

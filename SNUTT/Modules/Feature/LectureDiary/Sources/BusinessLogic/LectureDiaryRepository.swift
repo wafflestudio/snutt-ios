@@ -13,6 +13,7 @@ import TimetableInterface
 @Spyable
 public protocol LectureDiaryRepository: Sendable {
     func fetchClassTypeList() async throws -> [AnswerOption]
+    func fetchTargetLecture() async throws -> DiaryEditContext
     func fetchDiaryList() async throws -> [DiarySubmissionsOfYearSemester]
     func fetchQuestionnaire(for lectureID: String, with classTypes: [String]) async throws -> QuestionnaireItem
     func submitDiary(_ submission: DiarySubmission) async throws

@@ -13,7 +13,7 @@ struct ExtraReviewSection: View {
     @Binding var extraReview: String
     @State private var isExpanded: Bool = false
 
-    private let maxCharacters = 200
+    private let maxCharacters = 1000
 
     var body: some View {
         VStack(spacing: 8) {
@@ -57,19 +57,12 @@ struct ExtraReviewSection: View {
 
     private var textEditorView: some View {
         VStack(spacing: 0) {
-            TextEditor(text: $extraReview)
-                .font(.system(size: 14))
-                .scrollContentBackground(.hidden)
-                .padding(.top, 8)
-                .overlay(alignment: .topLeading) {
-                    if extraReview.isEmpty {
-                        Text(LectureDiaryStrings.lectureDiaryEditExtraCommentPlaceholder)
-                            .font(.system(size: 14))
-                            .foregroundStyle(SharedUIComponentsAsset.alternative.swiftUIColor)
-                            .allowsHitTesting(false)
-                            .padding(.top, 8)
-                    }
-                }
+            PlaceholderTextEditor(
+                placeholder: LectureDiaryStrings.lectureDiaryEditExtraCommentPlaceholder,
+                text: $extraReview
+            )
+            .font(.system(size: 14))
+            .padding(.top, 8)
 
             HStack(spacing: 0) {
                 Spacer()
@@ -81,7 +74,7 @@ struct ExtraReviewSection: View {
                     .foregroundStyle(Color.charCountForeground)
             }
         }
-        .frame(height: 120)
+        .frame(minHeight: 120)
         .onChange(of: extraReview) { _, newValue in
             if newValue.count > maxCharacters {
                 extraReview = String(newValue.prefix(maxCharacters))

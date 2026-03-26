@@ -12,6 +12,7 @@ import Foundation
 import FoundationUtility
 import NotificationsInterface
 import Observation
+import SettingsInterface
 import SharedAppMetadata
 import SwiftUI
 import SwiftUtility
@@ -60,6 +61,15 @@ final class SettingsViewModel {
         ) { @MainActor viewModel, element in
             viewModel.path = .init([SettingsPathType.lectureReminder])
         }
+
+        #if FEATURE_LECTURE_DIARY
+        Task.scoped(
+            to: self,
+            subscribing: pushNotificationSettingsNavigationNotifications()
+        ) { @MainActor viewModel, _ in
+            viewModel.path = .init([SettingsPathType.pushNotificationSettings])
+        }
+        #endif
     }
 
     var path = NavigationPath()
@@ -85,5 +95,10 @@ final class SettingsViewModel {
     /// Async stream of notification inbox navigation notifications
     func notificationInboxNavigationNotifications() -> AsyncStream<NavigateToNotificationsMessage> {
         notificationCenter.messages(of: NavigateToNotificationsMessage.self)
+    }
+
+    /// Async stream of push notification settings navigation notifications
+    func pushNotificationSettingsNavigationNotifications() -> AsyncStream<NavigateToPushNotificationSettingsMessage> {
+        notificationCenter.messages(of: NavigateToPushNotificationSettingsMessage.self)
     }
 }

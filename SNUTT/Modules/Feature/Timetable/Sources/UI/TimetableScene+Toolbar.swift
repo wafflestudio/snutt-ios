@@ -108,6 +108,18 @@ extension TimetableScene {
                         TimetableAsset.navMenuVacancy.swiftUIImage
                     }
                 }
+
+                #if FEATURE_LECTURE_DIARY
+                Button {
+                    timetableViewModel.paths = [.lectureDiaryList]
+                } label: {
+                    Label {
+                        Text(TimetableStrings.timetableAddMenuDiaryList)
+                    } icon: {
+                        TimetableAsset.navMenuList.swiftUIImage
+                    }
+                }
+                #endif
             }
         } label: {
             TimetableAsset.navPlus.swiftUIImage

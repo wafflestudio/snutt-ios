@@ -6,22 +6,26 @@
 //
 
 import SwiftUI
+import SwiftUIIntrospect
 
-struct PlaceholderTextEditor: View {
-    let label: String
-    @Binding var text: String
+public struct PlaceholderTextEditor: View {
     let placeholder: String
+    @Binding var text: String
 
-    var body: some View {
-        ZStack(alignment: .top) {
-            if text.isEmpty == true {
-                TextField(label, text: .constant(""), prompt: Text(placeholder))
+    public init(placeholder: String, text: Binding<String>) {
+        self.placeholder = placeholder
+        self._text = text
+    }
+
+    public var body: some View {
+        ZStack(alignment: .topLeading) {
+            if text.isEmpty {
+                Text(placeholder)
+                    .foregroundStyle(SharedUIComponentsAsset.alternative.swiftUIColor)
                     .allowsHitTesting(false)
-                    .accessibilityHidden(true)
             }
             TextEditor(text: $text)
                 .scrollContentBackground(.hidden)
-                .frame(minHeight: 30, maxHeight: 400)
                 .introspect(.textEditor, on: .iOS(.v17, .v18, .v26)) { textView in
                     textView.textContainerInset = .zero
                     textView.textContainer.lineFragmentPadding = 0
