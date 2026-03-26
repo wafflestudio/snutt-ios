@@ -19,23 +19,23 @@ public struct LectureReminderAPIRepository: LectureReminderRepository {
         let response = try await apiClient.getReminders(path: .init(timetableId: timetableID.rawValue)).ok.body.json
         return response.map { dto in
             LectureReminder(
-                timetableLectureID: dto.timetableLectureId,
+                timetableLectureID: TimetableLectureID(rawValue: dto.timetableLectureId),
                 lectureTitle: dto.courseTitle,
                 option: ReminderOption(from: dto.option)
             )
         }
     }
 
-    public func getReminder(timetableID: TimetableID, lectureID: String) async throws -> ReminderOption {
+    public func getReminder(timetableID: TimetableID, lectureID: TimetableLectureID) async throws -> ReminderOption {
         let response = try await apiClient.getReminder(
-            path: .init(timetableId: timetableID.rawValue, timetableLectureId: lectureID)
+            path: .init(timetableId: timetableID.rawValue, timetableLectureId: lectureID.rawValue)
         ).ok.body.json
         return ReminderOption(from: response.option)
     }
 
     public func updateReminder(
         timetableID: TimetableID,
-        lectureID: String,
+        lectureID: TimetableLectureID,
         option: ReminderOption
     ) async throws
         -> LectureReminder
@@ -44,11 +44,11 @@ public struct LectureReminderAPIRepository: LectureReminderRepository {
             option: option.toDTO()
         )
         let response = try await apiClient.modifyReminder(
-            path: .init(timetableId: timetableID.rawValue, timetableLectureId: lectureID),
+            path: .init(timetableId: timetableID.rawValue, timetableLectureId: lectureID.rawValue),
             body: .json(requestDto)
         ).ok.body.json
         return LectureReminder(
-            timetableLectureID: response.timetableLectureId,
+            timetableLectureID: TimetableLectureID(rawValue: response.timetableLectureId),
             lectureTitle: response.courseTitle,
             option: ReminderOption(from: response.option)
         )
