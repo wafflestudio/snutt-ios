@@ -252,10 +252,10 @@ public final class LectureEditDetailViewModel {
         else { return }
         let reminderOption = try await lectureReminderRepository.getReminder(
             timetableID: timetableID,
-            lectureID: timetableLectureID.rawValue
+            lectureID: timetableLectureID
         )
         let lectureReminder = LectureReminder(
-            timetableLectureID: timetableLectureID.rawValue,
+            timetableLectureID: timetableLectureID,
             lectureTitle: entryLecture.courseTitle,
             option: reminderOption
         )

@@ -6,14 +6,16 @@
 //
 
 import Foundation
+import Tagged
+import TimetableInterface
 
 /// Represents a lecture reminder configuration
 public struct LectureReminder: Equatable, Sendable {
-    public let timetableLectureID: String
+    public let timetableLectureID: TimetableLectureID
     public let lectureTitle: String
     public var option: ReminderOption
 
-    public init(timetableLectureID: String, lectureTitle: String, option: ReminderOption) {
+    public init(timetableLectureID: TimetableLectureID, lectureTitle: String, option: ReminderOption) {
         self.timetableLectureID = timetableLectureID
         self.lectureTitle = lectureTitle
         self.option = option
@@ -21,5 +23,5 @@ public struct LectureReminder: Equatable, Sendable {
 }
 
 extension LectureReminder: Identifiable {
-    public var id: String { timetableLectureID }
+    public var id: TimetableLectureID { timetableLectureID }
 }

@@ -9,12 +9,12 @@ public protocol LectureReminderRepository: Sendable {
     func fetchReminders(timetableID: TimetableID) async throws -> [LectureReminder]
 
     /// Gets the reminder option for a specific lecture
-    func getReminder(timetableID: TimetableID, lectureID: String) async throws -> ReminderOption
+    func getReminder(timetableID: TimetableID, lectureID: TimetableLectureID) async throws -> ReminderOption
 
     /// Updates the reminder option for a specific lecture
     func updateReminder(
         timetableID: TimetableID,
-        lectureID: String,
+        lectureID: TimetableLectureID,
         option: ReminderOption
     ) async throws
         -> LectureReminder
