@@ -7,8 +7,6 @@
 
 import AnalyticsInterface
 import Friends
-import LectureDiary
-import LectureDiaryInterface
 import Notifications
 import NotificationsInterface
 import Reviews
@@ -18,6 +16,11 @@ import SwiftUI
 import Timetable
 import TimetableInterface
 import Vacancy
+
+#if FEATURE_LECTURE_DIARY
+import LectureDiary
+import LectureDiaryInterface
+#endif
 
 #if DEBUG
 import APIClient
@@ -71,9 +74,11 @@ struct MainContentView: View {
         .overlaySheet()
         .overlayPopup()
         .overlayADPopup()
+        #if FEATURE_LECTURE_DIARY
         .overlayLectureDiarySheet($viewModel.diaryEditContext) {
             viewModel.notificationCenter.post(RefreshLectureDiaryListMessage())
         }
+        #endif
         .task {
             for await message in viewModel.notificationCenter.messages(of: ToastNotificationMessage.self) {
                 presentToast(message.toast)
