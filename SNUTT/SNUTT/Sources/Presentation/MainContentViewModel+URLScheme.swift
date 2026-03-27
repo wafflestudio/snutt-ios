@@ -58,7 +58,7 @@ extension MainContentViewModel {
         notificationCenter.post(
             NavigateToLectureMessage(
                 timetableID: TimetableID(rawValue: timetableIDString),
-                lectureID: TimetableLectureID(rawValue: lectureID)
+                timetableLectureID: TimetableLectureID(rawValue: lectureID)
             )
         )
     }

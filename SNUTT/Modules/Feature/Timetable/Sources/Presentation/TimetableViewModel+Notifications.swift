@@ -41,7 +41,7 @@ extension TimetableViewModel {
     private func handleLectureNavigation(message: NavigateToLectureMessage) async {
         do {
             let timetable = try await timetableRepository.fetchTimetable(timetableID: message.timetableID)
-            guard let lecture = timetable.lectures.first(where: { $0.timetableLectureID == message.lectureID })
+            guard let lecture = timetable.lectures.first(where: { $0.timetableLectureID == message.timetableLectureID })
             else {
                 notificationCenter.post(.toast(.init(message: TimetableStrings.navigationErrorLectureNotFound)))
                 return

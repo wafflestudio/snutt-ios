@@ -27,7 +27,7 @@ public struct LectureAPIRepository: LectureRepository {
         overrideOnConflict: Bool
     ) async throws -> Timetable {
         guard let lectureID = lecture.timetableLectureID else {
-            throw LectureAPIRepositoryError.missingTimetableLectureID
+            throw LocalizedErrorCode.lectureNotFound
         }
         let timePlaces = try lecture.timePlaces
             .map {
@@ -124,10 +124,6 @@ public struct LectureAPIRepository: LectureRepository {
         ).ok.body.json
         return try response.lectures.map { try $0.toLecture() }
     }
-}
-
-enum LectureAPIRepositoryError: Error {
-    case missingTimetableLectureID
 }
 
 extension Building {
