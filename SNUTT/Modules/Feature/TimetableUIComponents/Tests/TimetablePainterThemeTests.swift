@@ -23,8 +23,8 @@ struct TimetablePainterThemeTests {
         #expect(color == Theme.snutt.colors.first ?? .temporary)
     }
 
-    @Test("timetableLectureID가 일치하지 않으면 SNUTT 기본 테마의 첫 번째 색상을 반환한다")
-    func timetableLectureIDNotFound() {
+    @Test("시간표에 해당 강의가 없으면 SNUTT 기본 테마의 첫 번째 색상을 반환한다")
+    func lectureNotFoundInTimetable() {
         let lecture = Lecture.stub(timetableLectureID: "999", colorIndex: 999)
         let timetable = Timetable.stub(lectures: [Lecture.stub(timetableLectureID: "1")])
         let painter = TimetablePainter.stub(timetable: timetable)
