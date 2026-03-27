@@ -26,11 +26,11 @@ public struct NavigateToLectureMessage: NotificationCenter.TypedMessage {
     public static let name = Notification.Name("navigateToLecture")
 
     public let timetableID: TimetableID
-    public let lectureID: TimetableLectureID
+    public let timetableLectureID: TimetableLectureID
 
-    public init(timetableID: TimetableID, lectureID: TimetableLectureID) {
+    public init(timetableID: TimetableID, timetableLectureID: TimetableLectureID) {
         self.timetableID = timetableID
-        self.lectureID = lectureID
+        self.timetableLectureID = timetableLectureID
     }
 }
 
