@@ -145,7 +145,7 @@ extension Project {
     ) -> Target {
         return .target(
             name: "\(name)WidgetExtension",
-            destinations: [.iPhone, .iPad, .macCatalyst],
+            destinations: [.iPhone, .iPad],
             product: .appExtension,
             bundleId: "$(PRODUCT_BUNDLE_IDENTIFIER).widget",
             deploymentTargets: deploymentTargets,
