@@ -8,6 +8,7 @@
 import UIKit
 
 public protocol TabItem: Hashable {
+    var title: String { get }
     var isSearchRole: Bool { get }
     func image(isSelected: Bool) -> UIImage
     func viewIndex() -> Int

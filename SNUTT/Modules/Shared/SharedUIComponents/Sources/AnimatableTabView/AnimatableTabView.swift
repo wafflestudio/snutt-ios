@@ -248,6 +248,9 @@ public struct TabScene<T: TabItem> {
     }
     enum PreviewTabItem: Int, TabItem {
         case timetable, search, friends, review, settings
+
+        var title: String { "\(self)" }
+
         func image(isSelected _: Bool) -> UIImage {
             UIImage.checkmark
         }

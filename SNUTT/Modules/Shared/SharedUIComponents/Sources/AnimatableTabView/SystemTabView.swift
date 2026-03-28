@@ -19,11 +19,6 @@ public class SystemUITabBarController<T: TabItem>: UITabBarController, UITabBarC
         _selectedTabItem = selectedTabItem
         tabItems = tabScenes.compactMap { $0.tabItem }
         super.init(nibName: nil, bundle: nil)
-        if #available(iOS 18, *) {
-            mode = .tabSidebar
-            sidebar.isHidden = false
-        }
-
         viewControllers = tabScenes.enumerated().map { index, scene in
             guard let rootView = scene.rootView else {
                 return UIViewController()
@@ -36,8 +31,12 @@ public class SystemUITabBarController<T: TabItem>: UITabBarController, UITabBarC
                 } else {
                     UITabBarItem()
                 }
-            uiTabItem.image = tabItem.image(isSelected: false)
-            uiTabItem.selectedImage = tabItem.image(isSelected: true)
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                uiTabItem.title = tabItem.title
+            } else {
+                uiTabItem.image = tabItem.image(isSelected: false)
+                uiTabItem.selectedImage = tabItem.image(isSelected: true)
+            }
             hostingController.tabBarItem = uiTabItem
             return hostingController
         }
