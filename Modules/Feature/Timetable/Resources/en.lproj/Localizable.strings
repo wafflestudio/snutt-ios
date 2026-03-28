@@ -115,6 +115,8 @@
 
 "edit.color.title" = "Color Selection";
 "edit.color.name" = "Name";
+"edit.color.colorNumber" = "Color %d";
+"edit.color.custom" = "Custom";
 "edit.color.fontColor" = "Font Color";
 "edit.color.backgroundColor" = "Background Color";
 

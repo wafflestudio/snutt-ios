@@ -116,6 +116,8 @@
 
 "edit.color.title" = "색상 선택";
 "edit.color.name" = "이름";
+"edit.color.colorNumber" = "색상 %d";
+"edit.color.custom" = "커스텀";
 "edit.color.fontColor" = "글꼴색";
 "edit.color.backgroundColor" = "배경색";
 
