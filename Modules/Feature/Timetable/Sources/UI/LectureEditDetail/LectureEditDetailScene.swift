@@ -278,50 +278,33 @@ struct LectureEditDetailScene: View {
 
     private var actionButtonsSection: some View {
         VStack {
-            Group {
-                if !viewModel.entryLecture.isCustom, !editMode.isEditing {
-                    Button {
-                        Task {
-                            syllabusURL = await viewModel.fetchSyllabusURL()
-                            if syllabusURL != nil {
-                                await appReviewService.requestReviewIfNeeded()
-                                showSyllabusWebView = true
-                            }
+            if !viewModel.entryLecture.isCustom, !editMode.isEditing {
+                ActionButton(TimetableStrings.lectureActionSyllabus) {
+                    Task {
+                        syllabusURL = await viewModel.fetchSyllabusURL()
+                        if syllabusURL != nil {
+                            await appReviewService.requestReviewIfNeeded()
+                            showSyllabusWebView = true
                         }
-                    } label: {
-                        Text(TimetableStrings.lectureActionSyllabus)
-                    }
-
-                    Button {
-                        showReviewsScene = true
-                    } label: {
-                        Text(TimetableStrings.lectureActionReview)
                     }
                 }
 
-                if !viewModel.entryLecture.isCustom, viewModel.displayMode.isNormal, editMode.isEditing {
-                    Button {
-                        showResetConfirmation = true
-                    } label: {
-                        Text(TimetableStrings.editReset)
-                            .foregroundStyle(.red)
-                    }
-                }
-
-                if viewModel.displayMode.isNormal, !editMode.isEditing {
-                    Button {
-                        showDeleteConfirmation = true
-                    } label: {
-                        Text(SharedUIComponentsStrings.alertDelete)
-                            .foregroundStyle(.red)
-                    }
+                ActionButton(TimetableStrings.lectureActionReview) {
+                    showReviewsScene = true
                 }
             }
-            .font(.system(size: 16))
-            .padding(.vertical, 15)
-            .frame(maxWidth: .infinity)
-            .background(SharedUIComponentsAsset.groupForeground.swiftUIColor)
-            .contentShape(.rect)
+
+            if !viewModel.entryLecture.isCustom, viewModel.displayMode.isNormal, editMode.isEditing {
+                ActionButton(TimetableStrings.editReset, role: .destructive) {
+                    showResetConfirmation = true
+                }
+            }
+
+            if viewModel.displayMode.isNormal, !editMode.isEditing {
+                ActionButton(SharedUIComponentsStrings.alertDelete, role: .destructive) {
+                    showDeleteConfirmation = true
+                }
+            }
         }
     }
 }
@@ -350,6 +333,31 @@ extension LectureEditDetailScene {
             }
             .padding(.bottom, 20)
         }
+    }
+}
+
+private struct ActionButton: View {
+    let title: String
+    let role: ButtonRole?
+    let action: () -> Void
+
+    init(_ title: String, role: ButtonRole? = nil, action: @escaping () -> Void) {
+        self.title = title
+        self.role = role
+        self.action = action
+    }
+
+    var body: some View {
+        Button(role: role, action: action) {
+            Text(title)
+                .foregroundStyle(role == .destructive ? .red : .primary)
+                .font(.system(size: 16))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 15)
+                .background(SharedUIComponentsAsset.groupForeground.swiftUIColor)
+                .contentShape(.rect)
+        }
+        .buttonStyle(.plain)
     }
 }
 
