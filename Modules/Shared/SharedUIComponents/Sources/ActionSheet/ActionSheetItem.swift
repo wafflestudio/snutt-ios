@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-public struct ActionSheetItem: Identifiable {
-    public let id = UUID()
-    public let image: Image?
-    public let title: String
-    public let role: ActionSheetLabel.Role
-    public let action: @MainActor () -> Void
+public struct ActionSheetItem: Identifiable, Sendable {
+    public var id: String { title }
+    let image: Image?
+    let title: String
+    let role: ActionSheetLabel.Role
+    let action: @MainActor () -> Void
 
     public init(
         image: Image? = nil,
