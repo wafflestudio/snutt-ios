@@ -15,10 +15,6 @@ jobs:
     runs-on: macos-latest
     timeout-minutes: 40
 
-    defaults:
-      run:
-        working-directory: ./SNUTT
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -64,8 +60,6 @@ jobs:
 
       - name: Setup mise (Tuist + Ruby)
         uses: jdx/mise-action@v3
-        with:
-          working_directory: ./SNUTT
 
       - name: Install brew dependencies
         run: brew install just mint

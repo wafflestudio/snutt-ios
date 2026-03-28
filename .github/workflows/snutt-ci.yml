@@ -4,9 +4,10 @@ on:
   pull_request:
     branches:
       - master
-    paths:
-      - "SNUTT/**"
-      - ".github/workflows/SNUTT/**"
+    paths-ignore:
+      - "README.md"
+      - "LICENSE"
+      - "docs/**"
 
 env:
   XCODE_VERSION: "26.2"
@@ -15,10 +16,6 @@ jobs:
   check-and-test:
     runs-on: macos-latest
     timeout-minutes: 40
-
-    defaults:
-      run:
-        working-directory: ./SNUTT
 
     steps:
       - name: Checkout repository
@@ -45,8 +42,6 @@ jobs:
 
       - name: Setup mise (Tuist + Ruby)
         uses: jdx/mise-action@v3
-        with:
-          working_directory: ./SNUTT
 
       - name: Install brew dependencies
         run: brew install just mint
