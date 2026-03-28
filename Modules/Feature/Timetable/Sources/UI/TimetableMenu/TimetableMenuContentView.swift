@@ -72,16 +72,16 @@ struct TimetableMenuContentView: View {
             Logo(orientation: .horizontal)
                 .padding(.vertical)
             Spacer()
-            AnimatableButton(
-                animationOptions: .impact().scale(0.9).backgroundColor(touchDown: .black.opacity(0.1)),
-                layoutOptions: [.respectIntrinsicHeight, .respectIntrinsicWidth]
-            ) {
+            Button {
                 dismiss()
-            } configuration: { _ in
-                var configuration = UIButton.Configuration.plain()
-                configuration.image = TimetableAsset.xmark.image
-                return configuration
+            } label: {
+                Image(uiImage: TimetableAsset.xmark.image)
+                    .renderingMode(.template)
+                    .foregroundStyle(.primary)
             }
+            .buttonStyle(
+                .animatable(scale: 0.9, backgroundHighlightColor: Color(.label).opacity(0.1), hapticFeedback: true)
+            )
         }
         .padding(.horizontal, 20)
     }

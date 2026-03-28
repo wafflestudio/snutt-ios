@@ -384,7 +384,6 @@ let project = Project.app(
             category: .shared(ui: true),
             dependencies: [
                 .target(name: "SwiftUIUtility"),
-                .target(name: "UIKitUtility"),
                 .target(name: "DependenciesUtility"),
                 .target(name: "FoundationUtility"),
                 .external(name: "MemberwiseInit"),

@@ -12,7 +12,6 @@ import SharedUIComponents
 import SwiftUI
 import TimetableInterface
 import UIKit
-import UIKitUtility
 
 struct ExpandableLectureCell: View {
     let viewModel: any ExpandableLectureListViewModel
@@ -91,10 +90,7 @@ private struct LectureActionButton: View {
     @Dependency(\.notificationCenter) private var notificationCenter
 
     var body: some View {
-        AnimatableButton(
-            animationOptions: .identity.impact().scale(0.95).backgroundColor(touchDown: .black.opacity(0.04)),
-            layoutOptions: [.respectIntrinsicHeight, .expandHorizontally]
-        ) {
+        Button {
             errorAlertHandler.withAlert {
                 do {
                     try await conflictHandler.withConflictHandling { overrideOnConflict in
@@ -109,22 +105,20 @@ private struct LectureActionButton: View {
                     throw error
                 }
             }
-        } configuration: { button in
-            var config = UIButton.Configuration.plain()
-            config.imagePlacement = .top
-            config.imagePadding = 2
-            config.image = type.image(isSelected: isSelected).withTintColor(.white).resized(
-                to: .init(width: 19, height: 19)
-            )
-            config.attributedTitle = .init(
-                type.text(isSelected: isSelected),
-                attributes: .init([.font: Design.buttonFont])
-            )
-            config.baseForegroundColor = .white
-            config.contentInsets = .init(top: 5, leading: 0, bottom: 5, trailing: 0)
-            button.tintAdjustmentMode = .normal
-            return config
+        } label: {
+            VStack(spacing: 2) {
+                Image(uiImage: type.image(isSelected: isSelected))
+                    .renderingMode(.template)
+                    .resizable()
+                    .frame(width: 19, height: 19)
+                Text(type.text(isSelected: isSelected))
+                    .font(Font(Design.buttonFont))
+            }
+            .foregroundStyle(.white)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 5)
         }
+        .buttonStyle(.animatable(scale: 0.95, backgroundHighlightColor: .black.opacity(0.04), hapticFeedback: true))
     }
 
     private func handleSuccessToast(for actionType: ActionButtonType) {
