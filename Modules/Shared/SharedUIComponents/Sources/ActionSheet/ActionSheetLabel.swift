@@ -36,6 +36,7 @@ public struct ActionSheetLabel: View {
         HStack(spacing: 10) {
             if let image {
                 image
+                    .renderingMode(.template)
                     .frame(width: 24, height: 24)
             }
             Text(title)
