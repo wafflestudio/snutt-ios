@@ -60,10 +60,8 @@ struct MenuEllipsisSheet: View {
             }
             ActionSheetItem(image: Menu.delete.image, title: Menu.delete.text) {
                 dismiss()
-                Task {
-                    errorAlertHandler.withAlert {
-                        try await viewModel.deleteTimetable(timetableID: metadata.id)
-                    }
+                errorAlertHandler.withAlert {
+                    try await viewModel.deleteTimetable(timetableID: metadata.id)
                 }
             }
         }
