@@ -15,6 +15,8 @@ public protocol ThemeViewModelProtocol: Observable {
     func fetchThemes() async throws
     func selectTheme(_ theme: Theme?)
     func saveSelectedTheme() async throws
+    func deleteTheme(_ theme: Theme) async throws
+    func copyTheme(_ theme: Theme) async throws
 }
 
 struct DefaultThemeViewModel: ThemeViewModelProtocol {
@@ -23,6 +25,8 @@ struct DefaultThemeViewModel: ThemeViewModelProtocol {
     func fetchThemes() async throws {}
     func selectTheme(_: Theme?) {}
     func saveSelectedTheme() async throws {}
+    func deleteTheme(_: Theme) async throws {}
+    func copyTheme(_: Theme) async throws {}
 }
 
 extension EnvironmentValues {

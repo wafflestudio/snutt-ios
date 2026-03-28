@@ -40,14 +40,24 @@ struct ThemeDetailSheet: View {
                 }
             }
             if theme.status == .customPrivate {
-                ActionSheetItem(image: Image(systemName: "doc.on.doc"), title: ThemesStrings.sheetDetailDuplicate) {}
+                ActionSheetItem(image: Image(systemName: "doc.on.doc"), title: ThemesStrings.sheetDetailDuplicate) {
+                    dismiss()
+                    errorAlertHandler.withAlert {
+                        try await themeViewModel.copyTheme(theme)
+                    }
+                }
             }
             if theme.status == .customPrivate || theme.status == .customDownloaded {
                 ActionSheetItem(
                     image: Image(systemName: "trash"),
                     title: ThemesStrings.sheetDetailDelete,
                     role: .destructive
-                ) {}
+                ) {
+                    dismiss()
+                    errorAlertHandler.withAlert {
+                        try await themeViewModel.deleteTheme(theme)
+                    }
+                }
             }
         }
         .sheet(isPresented: $isEditDetailPresented) {

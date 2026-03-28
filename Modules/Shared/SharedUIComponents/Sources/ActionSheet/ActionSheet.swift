@@ -36,3 +36,24 @@ public struct ActionSheet: View {
         .presentationDetents([.height(ActionSheetLabel.rowHeight * CGFloat(items.count) + 20)])
     }
 }
+
+#Preview {
+    @Previewable @State var isPresented = true
+    @Previewable @State var canDelete = true
+    ZStack {
+        Color.gray.ignoresSafeArea()
+        Button("Present Sheet") { isPresented = true }
+            .buttonStyle(.borderedProminent)
+    }
+    .sheet(isPresented: $isPresented) {
+        ActionSheet {
+            ActionSheetItem(image: Image(systemName: "pencil"), title: "Rename") {}
+            ActionSheetItem(image: Image(systemName: "star"), title: "Set as primary") {}
+            ActionSheetItem(image: Image(systemName: "square.and.arrow.up"), title: "Share image") {}
+            ActionSheetItem(image: Image(systemName: "paintpalette"), title: "Configure theme") {}
+            if canDelete {
+                ActionSheetItem(image: Image(systemName: "trash"), title: "Delete", role: .destructive) {}
+            }
+        }
+    }
+}
