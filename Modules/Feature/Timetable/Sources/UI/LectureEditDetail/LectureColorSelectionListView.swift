@@ -38,7 +38,7 @@ struct LectureColorSelectionListView: View {
                     }
                 LectureColorPreviewButton(
                     lectureColor: color,
-                    title: TimetableStrings.editColorName,
+                    title: TimetableStrings.editColorColorNumber(index + 1),
                     trailingImage: isSelected ? checkMarkImage : nil
                 ) {
                     withAnimation(.defaultSpring) {
@@ -78,7 +78,7 @@ extension LectureColorSelectionListView {
                 } label: {
                     LectureColorPreviewButton(
                         lectureColor: viewModel.editableLecture.customColor ?? .temporary,
-                        title: TimetableStrings.editColorName,
+                        title: TimetableStrings.editColorCustom,
                         trailingImage: isSelected ? checkMarkImage : nil
                     ) {
                         withAnimation(.defaultSpring) {
