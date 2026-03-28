@@ -8,7 +8,6 @@
 import AuthInterface
 import SharedUIComponents
 import SwiftUI
-import SwiftUIUtility
 
 struct FriendManageOptionSheet: View {
     let friend: Friend
@@ -21,22 +20,20 @@ struct FriendManageOptionSheet: View {
     @State private var showDeleteConfirmation = false
 
     var body: some View {
-        GeometryReader { _ in
-            VStack {
-                Spacer()
-                ManageOptionButton(option: .editName) {
-                    isEditNamePresented = true
-                }
-
-                ManageOptionButton(option: .delete) {
-                    showDeleteConfirmation = true
-                }
-
-                Spacer()
+        ActionSheet {
+            ActionSheetItem(
+                image: Image(uiImage: FriendsAsset.sheetEdit.image),
+                title: FriendsStrings.friendManageEditName
+            ) {
+                isEditNamePresented = true
             }
-            .padding(.vertical, 10)
-            .padding(.horizontal, 5)
-            .presentationDetents([.height(150)])
+            ActionSheetItem(
+                image: Image(uiImage: FriendsAsset.sheetTrash.image),
+                title: FriendsStrings.friendManageDelete,
+                role: .destructive
+            ) {
+                showDeleteConfirmation = true
+            }
         }
         .sheet(isPresented: $isEditNamePresented) {
             FriendEditDisplayNameSheet(friend: friend, viewModel: viewModel)
@@ -56,52 +53,6 @@ struct FriendManageOptionSheet: View {
             Text(FriendsStrings.friendDeleteConfirmationMessage)
         }
         .observeErrors()
-    }
-}
-
-private struct ManageOptionButton: View {
-    let option: ManageOption
-    let action: () async -> Void
-
-    var body: some View {
-        AnimatableButton(
-            animationOptions: .backgroundColor(touchDown: .label.opacity(0.05)).scale(0.99),
-            layoutOptions: [.expandHorizontally, .respectIntrinsicHeight]
-        ) {
-            Task {
-                await action()
-            }
-        } configuration: { button in
-            var config = UIButton.Configuration.plain()
-            config.image = option.image
-            config.title = option.text
-            config.imagePadding = 10
-            config.baseForegroundColor = .label
-            button.contentHorizontalAlignment = .leading
-            config.background.cornerRadius = 10
-            return config
-        }
-    }
-}
-
-extension ManageOptionButton {
-    enum ManageOption {
-        case editName
-        case delete
-
-        var image: UIImage {
-            switch self {
-            case .editName: return FriendsAsset.sheetEdit.image
-            case .delete: return FriendsAsset.sheetTrash.image
-            }
-        }
-
-        var text: String {
-            switch self {
-            case .editName: return FriendsStrings.friendManageEditName
-            case .delete: return FriendsStrings.friendManageDelete
-            }
-        }
     }
 }
 
