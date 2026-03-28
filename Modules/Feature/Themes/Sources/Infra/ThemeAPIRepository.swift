@@ -37,6 +37,14 @@ public struct ThemeAPIRepository: ThemeRepository {
             )
         ).ok.body.json.toTheme()
     }
+
+    public func deleteTheme(themeId: String) async throws {
+        _ = try await apiClient.deleteTheme(path: .init(themeId: themeId)).ok
+    }
+
+    public func copyTheme(themeId: String) async throws -> Theme {
+        try await apiClient.copyTheme(path: .init(themeId: themeId)).ok.body.json.toTheme()
+    }
 }
 
 extension Theme {

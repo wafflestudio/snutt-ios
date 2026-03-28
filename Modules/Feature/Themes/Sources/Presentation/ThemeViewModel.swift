@@ -62,4 +62,14 @@ public final class ThemeViewModel: ThemeViewModelProtocol {
         guard let selectedTheme else { return }
         try await saveSelectedTheme(selectedTheme)
     }
+
+    public func deleteTheme(_ theme: Theme) async throws {
+        try await themeRepository.deleteTheme(themeId: theme.id)
+        try await fetchThemes()
+    }
+
+    public func copyTheme(_ theme: Theme) async throws {
+        _ = try await themeRepository.copyTheme(themeId: theme.id)
+        try await fetchThemes()
+    }
 }

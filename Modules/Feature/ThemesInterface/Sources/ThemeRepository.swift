@@ -13,6 +13,8 @@ public protocol ThemeRepository: Sendable {
     func fetchThemes() async throws -> [Theme]
     func updateTheme(theme: Theme) async throws -> Theme
     func createTheme(theme: Theme) async throws -> Theme
+    func deleteTheme(themeId: String) async throws
+    func copyTheme(themeId: String) async throws -> Theme
 }
 
 public struct ThemeRepositoryKey: TestDependencyKey {
@@ -21,6 +23,7 @@ public struct ThemeRepositoryKey: TestDependencyKey {
         spy.fetchThemesReturnValue = [.preview1, .preview2, .preview3, .snutt, .cherryBlossom, .fall]
         spy.updateThemeThemeReturnValue = .preview1
         spy.createThemeThemeReturnValue = .preview1
+        spy.copyThemeThemeIdReturnValue = .preview1
         return spy
     }()
 }
