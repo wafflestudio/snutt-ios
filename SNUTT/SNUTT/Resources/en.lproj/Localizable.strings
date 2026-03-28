@@ -21,3 +21,9 @@
 
 /* Add your translations below */
 
+/* Tab Bar */
+"tab.timetable" = "Timetable";
+"tab.search" = "Search";
+"tab.review" = "Reviews";
+"tab.friends" = "Friends";
+"tab.settings" = "Settings";

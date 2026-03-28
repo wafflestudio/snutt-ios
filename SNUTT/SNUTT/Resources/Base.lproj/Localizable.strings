@@ -20,3 +20,10 @@
 */
 
 /* Add your translations below */
+
+/* Tab Bar */
+"tab.timetable" = "시간표";
+"tab.search" = "검색";
+"tab.review" = "강의평";
+"tab.friends" = "친구";
+"tab.settings" = "설정";
