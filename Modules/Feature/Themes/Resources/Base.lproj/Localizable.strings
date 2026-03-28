@@ -36,3 +36,10 @@
 "colorNumber" = "색상 %d";
 "preview" = "미리보기";
 "save" = "저장";
+
+/* Theme Detail Sheet */
+"sheet.detail.edit" = "상세 수정";
+"sheet.detail.view" = "상세 보기";
+"sheet.detail.apply" = "현재 시간표에 적용";
+"sheet.detail.duplicate" = "테마 복제";
+"sheet.detail.delete" = "테마 삭제";

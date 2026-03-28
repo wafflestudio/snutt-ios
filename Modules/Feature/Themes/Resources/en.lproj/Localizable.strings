@@ -36,3 +36,10 @@
 "colorNumber" = "Color %d";
 "preview" = "Preview";
 "save" = "Save";
+
+/* Theme Detail Sheet */
+"sheet.detail.edit" = "Edit Details";
+"sheet.detail.view" = "View Details";
+"sheet.detail.apply" = "Apply to Current Timetable";
+"sheet.detail.duplicate" = "Duplicate Theme";
+"sheet.detail.delete" = "Delete Theme";

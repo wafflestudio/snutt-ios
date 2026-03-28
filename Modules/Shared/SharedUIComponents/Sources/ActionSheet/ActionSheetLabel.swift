@@ -10,7 +10,7 @@ import SwiftUI
 public struct ActionSheetLabel: View {
     public static let rowHeight: CGFloat = 48
 
-    public enum Role {
+    public enum Role: Sendable {
         case normal
         case destructive
     }
@@ -42,7 +42,7 @@ public struct ActionSheetLabel: View {
             Spacer()
         }
         .foregroundStyle(foregroundColor)
-        .padding(.horizontal, 16)
+        .padding(.horizontal, 8)
         .padding(.vertical, 12)
         .contentShape(Rectangle())
     }
