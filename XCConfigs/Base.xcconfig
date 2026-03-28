@@ -5,7 +5,7 @@
 // Version Settings
 // Marketing Version (e.g., 4.0.0)
 // This should match the version in git tags (appstore/v4.0.0, testflight/v4.0.0)
-MARKETING_VERSION = 4.0.1
+MARKETING_VERSION = 4.1.0
 
 // Build Number (Current Project Version)
 // In local builds, this is always 1.
