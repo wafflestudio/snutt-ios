@@ -18,26 +18,22 @@ struct ProminentButton: View {
     let action: () -> Void
 
     var body: some View {
-        AnimatableButton(
-            animationOptions: .identity.impact().backgroundColor(touchDown: .black.opacity(0.05)).scale(0.97),
-            layoutOptions: [.respectIntrinsicHeight, .expandHorizontally]
-        ) {
+        Button {
             action()
-        } configuration: { button in
-            button.isEnabled = isEnabled
-            var configuration = UIButton.Configuration.plain()
-            configuration.attributedTitle = .init(
-                label,
-                attributes: .init().font(font)
-            )
-            configuration.cornerStyle = .large
-            configuration.baseForegroundColor = .init(foregroundColor)
-            configuration.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
-            configuration.background.backgroundColor =
-                isEnabled
-                ? .init(backgroundColor)
-                : .init(backgroundColorDisabled)
-            return configuration
+        } label: {
+            Text(label)
+                .font(Font(font))
+                .foregroundStyle(foregroundColor)
+                .frame(maxWidth: .infinity)
+                .padding(10)
+                .background(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(isEnabled ? backgroundColor : backgroundColorDisabled)
+                )
         }
+        .disabled(!isEnabled)
+        .buttonStyle(
+            .animatable(scale: 0.97, backgroundHighlightColor: Color(.label).opacity(0.05), hapticFeedback: true)
+        )
     }
 }

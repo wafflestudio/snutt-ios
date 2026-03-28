@@ -20,23 +20,25 @@ struct SearchPredicateScrollView: View {
                     HStack {
                         ForEach(selectedTagList, id: \.localizedDescription) { (tag: SearchPredicate) in
 
-                            AnimatableButton(animationOptions: .scale(0.95).impact()) {
+                            Button {
                                 withAnimation(.defaultSpring) {
                                     deselect(tag)
                                 }
-                            } configuration: { button in
-                                var config = UIButton.Configuration.borderedProminent()
-                                config.cornerStyle = .capsule
-                                config.attributedTitle = .init(tag.localizedDescription, font: .systemFont(ofSize: 14))
-                                config.image = TimetableAsset.xmark.image
-                                    .withTintColor(.white)
-                                    .resized(to: .init(width: 10, height: 10))
-                                config.imagePlacement = .trailing
-                                config.baseBackgroundColor = UIColor(tag.category.backgroundColor)
-                                config.imagePadding = 5
-                                button.tintAdjustmentMode = .normal
-                                return config
+                            } label: {
+                                HStack(spacing: 5) {
+                                    Text(tag.localizedDescription)
+                                        .font(.system(size: 14))
+                                    Image(uiImage: TimetableAsset.xmark.image)
+                                        .renderingMode(.template)
+                                        .resizable()
+                                        .frame(width: 10, height: 10)
+                                }
+                                .foregroundStyle(.white)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 8)
+                                .background(Capsule().fill(tag.category.backgroundColor))
                             }
+                            .buttonStyle(.animatable(scale: 0.95, hapticFeedback: true))
                             .id(tag.localizedDescription)
                         }
                     }

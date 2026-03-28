@@ -39,22 +39,17 @@ struct SearchFilterSheet: View {
         VStack {
             ForEach(viewModel.supportedCategories, id: \.rawValue) { category in
                 let isSelected = viewModel.selectedCategory == category
-                AnimatableButton(
-                    animationOptions: .backgroundColor(touchDown: .label.opacity(0.05)).scale(0.95),
-                    layoutOptions: [.expandHorizontally, .respectIntrinsicHeight]
-                ) {
+                Button {
                     viewModel.selectedCategory = category
-                } configuration: { button in
-                    var config = UIButton.Configuration.plain()
-                    config.title = category.localizedDescription
-                    config.attributedTitle = .init(
-                        category.localizedDescription,
-                        attributes: .init([.font: UIFont.systemFont(ofSize: 18, weight: .semibold)])
-                    )
-                    config.baseForegroundColor = isSelected ? .label : .label.withAlphaComponent(0.5)
-                    button.contentHorizontalAlignment = .leading
-                    return config
+                } label: {
+                    Text(category.localizedDescription)
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(isSelected ? Color(.label) : Color(.label).opacity(0.5))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.vertical, 6)
+                        .padding(.horizontal, 8)
                 }
+                .buttonStyle(.animatable(scale: 0.95, backgroundHighlightColor: Color(.label).opacity(0.05)))
             }
         }
     }
@@ -110,25 +105,25 @@ struct FilterOptionButton: View {
     let action: () -> Void
 
     var body: some View {
-        AnimatableButton(
-            layoutOptions: [.expandHorizontally, .respectIntrinsicHeight]
-        ) {
+        Button {
             action()
-        } configuration: { button in
-            var config = UIButton.Configuration.plain()
-            config.title = title
-            config.baseForegroundColor = .label
-            config.imagePadding = 5
-            config.attributedTitle = .init(title, font: .systemFont(ofSize: 14))
-            config.image =
-                if isSelected {
-                    TimetableAsset.checkmarkCircleTick.image
-                } else {
-                    TimetableAsset.checkmarkCircleUntick.image
-                }
-            button.contentHorizontalAlignment = .leading
-            return config
+        } label: {
+            HStack(spacing: 5) {
+                Image(
+                    uiImage: isSelected
+                        ? TimetableAsset.checkmarkCircleTick.image
+                        : TimetableAsset.checkmarkCircleUntick.image
+                )
+                .renderingMode(.template)
+                Text(title)
+                    .font(.system(size: 14))
+            }
+            .foregroundStyle(Color(.label))
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.vertical, 6)
+            .padding(.horizontal, 8)
         }
+        .buttonStyle(.animatable)
     }
 }
 

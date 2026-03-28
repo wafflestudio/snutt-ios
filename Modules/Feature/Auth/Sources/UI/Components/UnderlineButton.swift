@@ -17,23 +17,14 @@ struct UnderlineButton: View {
     }
 
     var body: some View {
-        AnimatableButton(
-            animationOptions: .identity.scale(0.95),
-            layoutOptions: [.respectIntrinsicWidth, .respectIntrinsicHeight]
-        ) {
+        Button {
             action()
-        } configuration: { _ in
-            var configuration = UIButton.Configuration.plain()
-            configuration.baseBackgroundColor = SharedUIComponentsAsset.cyan.color
-            configuration.baseForegroundColor = Design.fontColor
-            let attributes: [NSAttributedString.Key: Any] = [
-                .underlineStyle: NSUnderlineStyle.single.rawValue,
-                .underlineColor: Design.fontColor,
-                .font: UIFont.systemFont(ofSize: 14),
-            ]
-            configuration.contentInsets = .zero
-            configuration.attributedTitle = .init(label, attributes: AttributeContainer(attributes))
-            return configuration
+        } label: {
+            Text(label)
+                .font(.system(size: 14))
+                .foregroundStyle(Color(Design.fontColor))
+                .underline(color: Color(Design.fontColor))
         }
+        .buttonStyle(.animatable)
     }
 }

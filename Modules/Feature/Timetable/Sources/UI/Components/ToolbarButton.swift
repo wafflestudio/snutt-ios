@@ -15,19 +15,19 @@ struct ToolbarButton: View {
     let action: () -> Void
 
     var body: some View {
-        AnimatableButton(
-            animationOptions: .identity.impact().scale(0.9).backgroundColor(touchDown: .black.opacity(0.1)),
-            layoutOptions: []
-        ) {
+        Button {
             action()
-        } configuration: { _ in
-            var configuration = UIButton.Configuration.plain()
-            configuration.image = image.withTintColor(.label, renderingMode: .alwaysOriginal)
-            configuration.contentInsets = .init(contentInsets)
-            return configuration
+        } label: {
+            Image(uiImage: image)
+                .renderingMode(.template)
+                .foregroundStyle(Color(.label))
+                .padding(contentInsets)
         }
         .frame(width: 40, height: 40)
         .contentShape(Rectangle())
+        .buttonStyle(
+            .animatable(scale: 0.9, backgroundHighlightColor: Color(.label).opacity(0.1), hapticFeedback: true)
+        )
     }
 }
 
