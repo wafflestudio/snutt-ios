@@ -25,6 +25,7 @@ let project = Project.app(
                 .target(name: "SwiftUIUtility"),
                 .target(name: "SwiftUtility"),
                 .target(name: "FoundationUtility"),
+                .target(name: "UIKitUtility"),
                 .target(name: "DependenciesUtility"),
                 .target(name: "SharedUIComponents"),
                 .target(name: "SharedUIMapKit"),
