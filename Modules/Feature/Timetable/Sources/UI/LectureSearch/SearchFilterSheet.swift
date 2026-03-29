@@ -106,15 +106,31 @@ struct FilterOptionButton: View {
 
     var body: some View {
         Button {
-            action()
+            withAnimation(.defaultSpring) {
+                action()
+            }
         } label: {
-            HStack(spacing: 5) {
-                Image(
-                    uiImage: isSelected
-                        ? TimetableAsset.checkmarkCircleTick.image
-                        : TimetableAsset.checkmarkCircleUntick.image
-                )
-                .renderingMode(.template)
+            HStack(spacing: 4) {
+                if #available(iOS 26.0, *) {
+                    Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(
+                            isSelected
+                                ? SharedUIComponentsAsset.cyanSecondary.swiftUIColor
+                                : Color(.secondaryLabel)
+                        )
+                        .symbolRenderingMode(.multicolor)
+                        .contentTransition(
+                            .symbolEffect(.replace.magic(fallback: .downUp.byLayer), options: .nonRepeating)
+                        )
+                        .frame(width: 25, height: 25)
+                } else {
+                    Image(
+                        uiImage: isSelected
+                            ? TimetableAsset.checkmarkCircleTick.image
+                            : TimetableAsset.checkmarkCircleUntick.image
+                    )
+                }
                 Text(title)
                     .font(.system(size: 14))
             }
@@ -123,7 +139,7 @@ struct FilterOptionButton: View {
             .padding(.vertical, 6)
             .padding(.horizontal, 8)
         }
-        .buttonStyle(.animatable)
+        .buttonStyle(.animatable(scale: 0.98))
     }
 }
 
