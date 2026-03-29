@@ -34,6 +34,9 @@ public class SystemUITabBarController<T: TabItem>: UITabBarController, UITabBarC
             if UIDevice.current.userInterfaceIdiom == .pad {
                 uiTabItem.title = tabItem.title
             } else {
+                if #unavailable(iOS 26) {
+                    uiTabItem.title = nil
+                }
                 uiTabItem.image = tabItem.image(isSelected: false)
                 uiTabItem.selectedImage = tabItem.image(isSelected: true)
             }
