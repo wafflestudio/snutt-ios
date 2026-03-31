@@ -34,6 +34,7 @@ public struct AnimatableButtonStyle: ButtonStyle {
                         .fill(color.opacity(configuration.isPressed ? 1 : 0))
                 }
             )
+            .contentShape(.rect)
             .animation(animation, value: configuration.isPressed)
             .onChange(of: configuration.isPressed) { _, isPressed in
                 if isPressed && hapticFeedback {

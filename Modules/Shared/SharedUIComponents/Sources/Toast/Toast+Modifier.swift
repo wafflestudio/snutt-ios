@@ -36,6 +36,7 @@ extension View {
 
 private struct ToastContainerModifier<Content: View>: View {
     @State private var viewModel = ToastContainerViewModel()
+    @State private var bottomSafeArea: CGFloat = 0
     let content: Content
 
     init(content: Content) {
@@ -50,19 +51,27 @@ private struct ToastContainerModifier<Content: View>: View {
                     viewModel.present(toast)
                 }
             )
+            .onPreferenceChange(SafeAreaBottomInsetsPreferenceKey.self) { value in
+                bottomSafeArea = value
+            }
             .overlay(alignment: .bottom) {
-                VStack(spacing: 8) {
-                    ForEach(viewModel.toasts) { toast in
-                        ToastItemView(toast: toast) {
-                            viewModel.handleButtonTap(for: toast)
+                GeometryReader { reader in
+                    /// The view inside `.overlay` already respects the safe area.
+                    /// Subtracting the default safe area inset gives us the extra bottom inset (for example, from tab bars).
+                    let additionalSafeAreaInsetBottom = bottomSafeArea - reader.safeAreaInsets.bottom
+                    VStack(spacing: 8) {
+                        ForEach(viewModel.toasts) { toast in
+                            ToastItemView(toast: toast) {
+                                viewModel.handleButtonTap(for: toast)
+                            }
+                            .transition(.move(edge: .bottom).combined(with: .blurReplace))
                         }
-                        .transition(.move(edge: .bottom).combined(with: .blurReplace))
                     }
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, additionalSafeAreaInsetBottom + 8)
+                    .animation(.defaultSpring, value: viewModel.toasts)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
                 }
-                .padding(.horizontal, 20)
-                .padding(.bottom, 8)
-                .animation(.defaultSpring, value: viewModel.toasts)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
             }
     }
 }
