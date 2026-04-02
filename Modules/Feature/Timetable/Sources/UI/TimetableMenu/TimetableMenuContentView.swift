@@ -57,6 +57,9 @@ struct TimetableMenuContentView: View {
                 loadingView
             }
         }
+        .task {
+            try? await viewModel.refreshTimetableList()
+        }
         .sheet(
             isPresented: isCreateTimetableSheetPresented,
             onDismiss: {

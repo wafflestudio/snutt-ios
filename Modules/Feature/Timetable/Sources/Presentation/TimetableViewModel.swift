@@ -147,6 +147,11 @@ public class TimetableViewModel: TimetableViewModelProtocol {
         }
     }
 
+    func refreshTimetableList() async throws {
+        let metadataList = try await timetableRepository.fetchTimetableMetadataList()
+        metadataLoadState = .loaded(metadataList)
+    }
+
     func selectTimetable(timetableID: TimetableID) async throws {
         let timetable = try await timetableUseCase.selectTimetable(timetableID: timetableID)
         timetableLoadState = .loaded(timetable)
@@ -171,12 +176,23 @@ public class TimetableViewModel: TimetableViewModelProtocol {
 
     func setPrimaryTimetable(timetableID: TimetableID) async throws {
         try await timetableRepository.setPrimaryTimetable(timetableID: timetableID)
-        try await loadTimetableList()
+        updatePrimaryState(timetableID: timetableID, isPrimary: true)
     }
 
     func unsetPrimaryTimetable(timetableID: TimetableID) async throws {
         try await timetableRepository.unsetPrimaryTimetable(timetableID: timetableID)
-        try await loadTimetableList()
+        updatePrimaryState(timetableID: timetableID, isPrimary: false)
+    }
+
+    private func updatePrimaryState(timetableID: TimetableID, isPrimary: Bool) {
+        guard case let .loaded(metadataList) = metadataLoadState else { return }
+        metadataLoadState = .loaded(
+            metadataList.map {
+                var metadata = $0
+                metadata.isPrimary = isPrimary && metadata.id == timetableID
+                return metadata
+            }
+        )
     }
 
     func isLectureInCurrentTimetable(lecture: Lecture) -> Bool {

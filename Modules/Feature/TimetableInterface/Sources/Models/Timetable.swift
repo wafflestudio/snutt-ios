@@ -28,7 +28,7 @@ public struct TimetableMetadata: Identifiable, Sendable, Codable, Equatable {
     public let title: String
     public let quarter: Quarter
     public let totalCredit: Int
-    public let isPrimary: Bool
+    public var isPrimary: Bool
 }
 
 public enum Semester: Int, Sendable, Codable, Equatable {

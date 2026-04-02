@@ -68,6 +68,10 @@ final class TimetableMenuViewModel {
         }
     }
 
+    func refreshTimetableList() async throws {
+        try await timetableViewModel.refreshTimetableList()
+    }
+
     func selectTimetable(timetableID: TimetableID) async throws {
         try await timetableViewModel.selectTimetable(timetableID: timetableID)
     }
