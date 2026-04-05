@@ -7,6 +7,7 @@
 
 import SwiftUI
 import UIKit
+import UIKitUtility
 
 public class SystemUITabBarController<T: TabItem>: UITabBarController, UITabBarControllerDelegate {
     private let tabItems: [T]
@@ -56,6 +57,12 @@ public class SystemUITabBarController<T: TabItem>: UITabBarController, UITabBarC
         delegate = self
     }
 
+    @available(iOS 26, *)
+    private func disableReturnKeyAutomatically() {
+        guard let textField = view.findDescendant(ofType: UISearchTextField.self) else { return }
+        textField.enablesReturnKeyAutomatically = false
+    }
+
     public func tabBarController(
         _ tabBarController: UITabBarController,
         didSelect viewController: UIViewController
@@ -65,6 +72,12 @@ public class SystemUITabBarController<T: TabItem>: UITabBarController, UITabBarC
             index < tabItems.count
         else { return }
         selectedTabItem = tabItems[index]
+
+        if #available(iOS 26, *), selectedTabItem.isSearchRole {
+            Task {
+                disableReturnKeyAutomatically()
+            }
+        }
     }
 }
 

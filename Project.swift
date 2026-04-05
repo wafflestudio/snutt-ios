@@ -387,6 +387,7 @@ let project = Project.app(
                 .target(name: "SwiftUIUtility"),
                 .target(name: "DependenciesUtility"),
                 .target(name: "FoundationUtility"),
+                .target(name: "UIKitUtility"),
                 .external(name: "MemberwiseInit"),
                 .external(name: "SwiftUIIntrospect"),
             ]
