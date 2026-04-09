@@ -44,10 +44,11 @@ public struct TimetableGridLayer: View {
 
     /// 하루 간격의 수직선
     var verticalPaths: Path {
+        let leadingInset = geometry.safeAreaInsets.leading
         let weekWidth = painter.getWeekWidth(in: geometry.size)
         return Path { path in
             for i in 0..<painter.weekCount {
-                let x = painter.hourWidth + CGFloat(i) * weekWidth
+                let x = leadingInset + painter.hourWidth + CGFloat(i) * weekWidth
                 path.move(to: CGPoint(x: x, y: 0))
                 path.addLine(to: CGPoint(x: x, y: geometry.extendedContainerSize.height))
             }
@@ -62,7 +63,7 @@ public struct TimetableGridLayer: View {
                 let y = painter.weekdayHeight + CGFloat(i) * metrics.hourHeight
                 guard y <= geometry.extendedContainerSize.height else { break }
                 path.move(to: CGPoint(x: 0, y: y))
-                path.addLine(to: CGPoint(x: geometry.size.width, y: y))
+                path.addLine(to: CGPoint(x: geometry.extendedContainerSize.width, y: y))
             }
         }
     }
@@ -74,8 +75,8 @@ public struct TimetableGridLayer: View {
             for i in 0...metrics.displayHourCount {
                 let y = painter.weekdayHeight + CGFloat(i) * metrics.hourHeight + metrics.hourHeight / 2
                 guard y <= geometry.extendedContainerSize.height else { break }
-                path.move(to: CGPoint(x: 0 + painter.hourWidth, y: y))
-                path.addLine(to: CGPoint(x: geometry.size.width, y: y))
+                path.move(to: CGPoint(x: geometry.safeAreaInsets.leading + painter.hourWidth, y: y))
+                path.addLine(to: CGPoint(x: geometry.extendedContainerSize.width, y: y))
             }
         }
     }
@@ -94,7 +95,8 @@ public struct TimetableGridLayer: View {
                     .frame(height: painter.weekdayHeight)
             }
         }
-        .padding(.leading, painter.hourWidth)
+        .frame(width: geometry.size.width - painter.hourWidth, alignment: .leading)
+        .padding(.leading, geometry.safeAreaInsets.leading + painter.hourWidth)
     }
 
     /// 시간표 맨 왼쪽, 시간들을 나타내는 행
@@ -111,6 +113,7 @@ public struct TimetableGridLayer: View {
                     .frame(width: painter.hourWidth, height: metrics.hourHeight, alignment: .top)
             }
         }
+        .padding(.leading, geometry.safeAreaInsets.leading)
         .padding(.top, painter.weekdayHeight)
     }
 }
