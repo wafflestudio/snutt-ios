@@ -16,22 +16,24 @@ struct SearchFilterSheet: View {
     @Environment(\.errorAlertHandler) private var errorAlertHandler
 
     var body: some View {
-        GeometryReader { _ in
-            VStack(spacing: 0) {
-                HStack(alignment: .top) {
+        VStack(spacing: 0) {
+            HStack(alignment: .top) {
+                ScrollView {
                     filterCategoryColumn
-                        .frame(width: 120)
-                    Divider()
-                    filterSelectionColumn
                 }
-                .frame(maxHeight: .infinity)
-                .padding(.horizontal, 5)
-                Spacer()
-                filterApplyButton
+                .withResponsiveTouch()
+                .frame(width: 120)
+                Divider()
+                filterSelectionColumn
             }
-            .padding(.top, 30)
+            .frame(maxHeight: .infinity)
+            .padding(.horizontal, 5)
+            filterApplyButton
+                .padding(.vertical)
         }
-        .presentationDetents([.height(450)])
+        .padding(.top, 30)
+        .presentationDetents([.medium, .large])
+        .presentationCompactAdaptation(horizontal: .sheet, vertical: .sheet)
         .analyticsScreen(.searchFilter)
     }
 

@@ -7,6 +7,7 @@
 
 import SharedUIComponents
 import SwiftUI
+import SwiftUIUtility
 
 struct FriendRequestByNicknameSheet: View {
     let viewModel: FriendRequestViewModel
@@ -34,53 +35,49 @@ struct FriendRequestByNicknameSheet: View {
     }
 
     var body: some View {
-        GeometryReader { _ in
-            VStack(spacing: 20) {
-                SheetTopBar(
-                    cancel: {
+        VStack(spacing: 20) {
+            SheetTopBar(
+                cancel: {
+                    dismiss()
+                },
+                confirm: {
+                    await errorAlertHandler.withAlert {
+                        try await viewModel.requestFriend(nickname: nickname)
                         dismiss()
-                    },
-                    confirm: {
-                        await errorAlertHandler.withAlert {
-                            try await viewModel.requestFriend(nickname: nickname)
-                            dismiss()
-                            // TODO: Show success alert
-                        }
-                    },
-                    isConfirmDisabled: isConfirmDisabled
+                        // TODO: Show success alert
+                    }
+                },
+                isConfirmDisabled: isConfirmDisabled
+            )
+
+            VStack(alignment: .leading, spacing: 8) {
+                AnimatableTextField(
+                    label: FriendsStrings.friendRequestNicknameLabel,
+                    placeholder: FriendsStrings.friendRequestNicknamePlaceholder,
+                    text: $nickname
                 )
-
-                VStack(alignment: .leading, spacing: 8) {
-                    AnimatableTextField(
-                        label: FriendsStrings.friendRequestNicknameLabel,
-                        placeholder: FriendsStrings.friendRequestNicknamePlaceholder,
-                        text: $nickname
-                    )
-                    .focused($isFocused)
-                    .onAppear {
-                        isFocused = true
-                    }
-
-                    if let message = validationMessage {
-                        HStack(spacing: 4) {
-                            Image(systemName: "exclamationmark.triangle.fill")
-                                .font(.system(size: 12))
-                            Text(message)
-                                .font(.system(size: 12))
-                        }
-                        .foregroundColor(
-                            nickname.isEmpty
-                                ? Color(uiColor: .secondaryLabel)
-                                : Color(uiColor: .systemRed)
-                        )
-                    }
+                .focused($isFocused)
+                .onAppear {
+                    isFocused = true
                 }
-                .padding(.horizontal)
 
-                Spacer()
+                if let message = validationMessage {
+                    HStack(spacing: 4) {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .font(.system(size: 12))
+                        Text(message)
+                            .font(.system(size: 12))
+                    }
+                    .foregroundColor(
+                        nickname.isEmpty
+                            ? Color(uiColor: .secondaryLabel)
+                            : Color(uiColor: .systemRed)
+                    )
+                }
             }
+            .padding(.horizontal)
         }
-        .presentationDetents([.height(160)])
+        .presentationSizingFitted()
         .observeErrors()
     }
 }
