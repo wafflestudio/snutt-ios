@@ -90,7 +90,7 @@ struct EditLectureDiaryScene: View {
         }
         .analyticsScreen(.diaryWrite)
         .task {
-            await viewModel.getClassTypes()
+            getClassTypes()
         }
         .fullScreenCover(isPresented: $showConfirmView) {
             LectureDiaryConfirmView(displayMode: .reviewDone)
@@ -264,6 +264,12 @@ struct EditLectureDiaryScene: View {
         }
         .foregroundStyle(Color.setNotificationLabel)
         .padding(.bottom, 16)
+    }
+
+    private func getClassTypes() {
+        errorAlertHandler.withAlert {
+            try await viewModel.getClassTypes()
+        }
     }
 
     private func submitDiary() {
