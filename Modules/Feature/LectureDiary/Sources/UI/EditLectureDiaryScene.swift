@@ -88,6 +88,7 @@ struct EditLectureDiaryScene: View {
                 }
             }
         }
+        .analyticsScreen(.diaryWrite)
         .task {
             await viewModel.getClassTypes()
         }

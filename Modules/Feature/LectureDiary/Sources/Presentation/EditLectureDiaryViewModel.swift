@@ -6,6 +6,7 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
+import AnalyticsInterface
 import Dependencies
 import Foundation
 import Observation
@@ -17,6 +18,9 @@ public final class EditLectureDiaryViewModel {
     @ObservationIgnored
     @Dependency(\.lectureDiaryRepository) private var repository
 
+    @ObservationIgnored
+    @Dependency(\.analyticsLogger) private var analyticsLogger
+
     private(set) var questionnaireState: QuestionnaireState = .loading
     var classTypes: [AnswerOption] = []
     var selectedClassTypes: ClassTypeSelection = .init()
@@ -27,6 +31,17 @@ public final class EditLectureDiaryViewModel {
     let lectureTitle: String
 
     var nextLecture: NextLecture? = nil
+
+    var canSubmit: Bool {
+        !selectedClassTypes.selected.isEmpty && allQuestionsAnswered
+    }
+
+    private var allQuestionsAnswered: Bool {
+        guard case .loaded(let questions) = questionnaireState else {
+            return false
+        }
+        return questions.allSatisfy { selectedAnswers[$0.id] != nil }
+    }
 
     public init(lectureID: LectureID, lectureTitle: String) {
         self.lectureID = lectureID
@@ -45,6 +60,7 @@ public final class EditLectureDiaryViewModel {
         questionnaireState = .loading
 
         do {
+            analyticsLogger.logEvent(AnalyticsAction.diaryFirstSectionDone)
             let questionnaire = try await repository.fetchQuestionnaire(
                 for: lectureID,
                 with: selectedClassTypes.selected
@@ -68,17 +84,6 @@ public final class EditLectureDiaryViewModel {
         selectedAnswers[questionID] = answerIndex
     }
 
-    var canSubmit: Bool {
-        !selectedClassTypes.selected.isEmpty && allQuestionsAnswered
-    }
-
-    private var allQuestionsAnswered: Bool {
-        guard case .loaded(let questions) = questionnaireState else {
-            return false
-        }
-        return questions.allSatisfy { selectedAnswers[$0.id] != nil }
-    }
-
     func submitDiary() async throws {
         let questionAnswers = selectedAnswers.map { questionID, answerIndex in
             QuestionAnswer(questionID: questionID, answerIndex: answerIndex)
@@ -91,6 +96,7 @@ public final class EditLectureDiaryViewModel {
             comment: extraComment.isEmpty ? nil : extraComment
         )
 
+        analyticsLogger.logEvent(AnalyticsAction.diarySubmitted)
         try await repository.submitDiary(submission)
     }
 }
