@@ -48,12 +48,8 @@ public final class EditLectureDiaryViewModel {
         self.lectureTitle = lectureTitle
     }
 
-    func getClassTypes() async {
-        do {
-            classTypes = try await repository.fetchClassTypeList()
-        } catch {
-
-        }
+    func getClassTypes() async throws {
+        classTypes = try await repository.fetchClassTypeList()
     }
 
     func loadQuestionnaire() async {
