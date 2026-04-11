@@ -54,7 +54,7 @@ public struct LectureDiaryListView: View {
             .multilineTextAlignment(.center)
             Button {
                 Task {
-                    let available = await viewModel.getLectureForDiary()
+                    let available = await viewModel.navigateToDiaryWrite()
                     if !available {
                         showDiaryNotAvailableAlert = true
                     }

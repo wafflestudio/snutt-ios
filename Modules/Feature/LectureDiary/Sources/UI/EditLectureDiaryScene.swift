@@ -15,7 +15,7 @@ import TimetableInterface
 
 extension View {
     public func overlayLectureDiarySheet(
-        _ item: Binding<DiaryEditContext?>,
+        _ item: Binding<DiaryTargetLecture?>,
         onDismiss: @escaping () -> Void = {}
     ) -> some View {
         fullScreenCover(item: item, onDismiss: onDismiss) { context in

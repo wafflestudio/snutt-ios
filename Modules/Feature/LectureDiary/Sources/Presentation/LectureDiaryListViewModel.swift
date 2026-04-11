@@ -57,9 +57,7 @@ public final class LectureDiaryListViewModel {
             } else {
                 diaryListState = .loaded(diaries)
                 availableQuarters = extractQuarters(from: diaries)
-                if let current = selectedQuarter, availableQuarters.contains(current) {
-                    // preserve the currently selected quarter
-                } else {
+                if !availableQuarters.contains(where: { $0 == selectedQuarter }) {
                     selectedQuarter = availableQuarters.first
                 }
             }
@@ -87,7 +85,7 @@ public final class LectureDiaryListViewModel {
         diaryListState = updatedDiaries.isEmpty ? .empty : .loaded(updatedDiaries)
     }
 
-    func getLectureForDiary() async -> Bool {
+    func navigateToDiaryWrite() async -> Bool {
         do {
             let context = try await diaryRepository.fetchTargetLecture()
             notificationCenter.post(

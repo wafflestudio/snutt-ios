@@ -16,7 +16,7 @@ struct LectureDiaryAPIRepository: LectureDiaryRepository {
 
     init() {}
 
-    func fetchTargetLecture() async throws -> DiaryEditContext {
+    func fetchTargetLecture() async throws -> DiaryTargetLecture {
         let semesterStatus = try await apiClient.getSemesterStatus().ok.body.json
         let yearAndSemester = semesterStatus.current ?? semesterStatus.next
         let responseDto = try await apiClient.getRandomTargetLecture(

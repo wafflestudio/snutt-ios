@@ -75,9 +75,12 @@ struct MainContentView: View {
         .overlayPopup()
         .overlayADPopup()
         #if FEATURE_LECTURE_DIARY
-        .overlayLectureDiarySheet($viewModel.diaryEditContext) {
-            viewModel.notificationCenter.post(RefreshLectureDiaryListMessage())
-        }
+        .overlayLectureDiarySheet(
+            $viewModel.diaryTargetLecture,
+            onDismiss: {
+                viewModel.notificationCenter.post(RefreshLectureDiaryListMessage())
+            }
+        )
         #endif
         .task {
             for await message in viewModel.notificationCenter.messages(of: ToastNotificationMessage.self) {

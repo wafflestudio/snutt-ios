@@ -1,6 +1,6 @@
 #if FEATURE_LECTURE_DIARY
 //
-//  DiaryEditContext.swift
+//  DiaryTargetLecture.swift
 //  SNUTT
 //
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
@@ -9,7 +9,7 @@
 import Foundation
 import TimetableInterface
 
-public struct DiaryEditContext: Sendable, Identifiable {
+public struct DiaryTargetLecture: Sendable, Identifiable {
 
     public let id = UUID()
     public let lectureID: LectureID
