@@ -6,11 +6,15 @@
 //  Copyright © 2025 wafflestudio.com. All rights reserved.
 //
 
+import AnalyticsInterface
+import Dependencies
 import SharedUIComponents
 import SwiftUI
 
 public struct LectureDiaryConfirmView: View {
     @Environment(\.dismiss) private var dismiss
+
+    @Dependency(\.analyticsLogger) private var analyticsLogger
 
     let displayMode: DisplayMode
 
@@ -36,6 +40,8 @@ public struct LectureDiaryConfirmView: View {
 
             if displayMode != .reviewDone {
                 Button {
+                    let action: DiaryAfterSubmitParameter = .init(action: displayMode == .reviewMore ? .next : .review)
+                    analyticsLogger.logEvent(AnalyticsAction.diaryAfterSubmit(action))
                     dismiss()
                 } label: {
                     HStack(spacing: 4) {
@@ -58,6 +64,7 @@ public struct LectureDiaryConfirmView: View {
                 label: LectureDiaryStrings.lectureDiaryConfirmHome,
                 type: .medium
             ) {
+                analyticsLogger.logEvent(AnalyticsAction.diaryAfterSubmit(.init(action: .home)))
                 dismiss()
             }
         }
