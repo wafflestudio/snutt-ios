@@ -35,7 +35,7 @@ final class MainContentViewModel {
     private var cancellables: Set<AnyCancellable> = []
 
     #if FEATURE_LECTURE_DIARY
-    var diaryEditContext: DiaryEditContext?
+    var diaryTargetLecture: DiaryTargetLecture?
     #endif
 
     let themeViewModel: ThemeViewModel
@@ -108,7 +108,7 @@ final class MainContentViewModel {
             to: self,
             subscribing: notificationCenter.messages(of: NavigateToLectureDiaryMessage.self)
         ) { @MainActor viewModel, nextLecture in
-            viewModel.diaryEditContext = .init(
+            viewModel.diaryTargetLecture = .init(
                 lectureID: nextLecture.lectureID,
                 lectureTitle: nextLecture.lectureTitle
             )
