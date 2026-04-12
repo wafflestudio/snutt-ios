@@ -52,12 +52,13 @@ struct TimetableSettingView: View {
                 )
             } header: {
                 Text(SettingsStrings.displayTableInfo)
+                    .font(.system(size: 13))
             } footer: {
                 Text(SettingsStrings.displayTableInfoWarning)
             }
 
             if !viewModel.configuration.autoFit {
-                Section(SettingsStrings.displayTableRange) {
+                Section {
                     SettingsNavigationLink(
                         title: SettingsStrings.displayTableDaySelection,
                         value: SettingsPathType.timetableRange,
@@ -73,11 +74,14 @@ struct TimetableSettingView: View {
                         )
                         .frame(height: 40)
                     }
+                } header: {
+                    Text(SettingsStrings.displayTableRange)
+                        .font(.system(size: 13))
                 }
             }
 
             if let timetable = viewModel.timetable {
-                Section(SettingsStrings.displayTablePreview) {
+                Section {
                     timetableUIProvider.timetableView(
                         timetable: timetable,
                         configuration: viewModel.configuration,
@@ -93,6 +97,9 @@ struct TimetableSettingView: View {
                             .shadow(color: .black.opacity(0.05), radius: 3)
                     )
                     .padding(.vertical, 10)
+                } header: {
+                    Text(SettingsStrings.displayTablePreview)
+                        .font(.system(size: 13))
                 }
             }
         }
