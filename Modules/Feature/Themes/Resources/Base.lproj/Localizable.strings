@@ -19,9 +19,15 @@
  - Add comments to provide context for translators.
 */
 
-/* Add your translations below */
+/* Theme Settings Scene */
+"settings.title" = "시간표 테마";
+"settings.custom" = "커스텀 테마";
+"settings.downloaded" = "담은 테마";
+"settings.basic" = "제공 테마";
 
-"hello_world" = "Hello, world!";
+"settings.howto.question" = "테마는 어떻게 적용하나요?";
+"settings.howto.answer1" = "시간표 적용은 시간표 목록 > 더보기 버튼 > 테마 설정에서 개별적으로 적용할 수 있어요.";
+"settings.howto.answer2" = "새로운 시간표에는 가장 최근 편집한 커스텀 테마가 적용돼요.";
 
 /* Theme Edit Detail Scene */
 "newTheme" = "새 테마";

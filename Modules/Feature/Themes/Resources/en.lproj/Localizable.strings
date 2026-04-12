@@ -19,9 +19,15 @@
  - Add comments to provide context for translators.
 */
 
-/* Add your translations below */
+/* Theme Settings Scene */
+"settings.title" = "Timetable Theme";
+"settings.custom" = "Custom Themes";
+"settings.downloaded" = "Downloaded Themes";
+"settings.basic" = "Basic Themes";
 
-"hello_world" = "Hello, world!";
+"settings.howto.question" = "How do I apply a theme?";
+"settings.howto.answer1" = "You can apply a theme individually by going to Timetable List > More button > Theme Settings.";
+"settings.howto.answer2" = "The most recently edited custom theme will be applied to new timetables.";
 
 /* Theme Edit Detail Scene */
 "newTheme" = "New Theme";
