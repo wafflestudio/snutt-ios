@@ -11,6 +11,10 @@ import TimetableInterface
 import TimetableUIComponents
 
 struct SwiftUITimetableImageRenderer: TimetableImageRenderer {
+    private enum Layout {
+        static let aspectRatio: CGFloat = 1.5
+    }
+
     @MainActor
     func render(
         timetable: Timetable,
@@ -25,16 +29,19 @@ struct SwiftUITimetableImageRenderer: TimetableImageRenderer {
             availableThemes: availableThemes,
             configuration: configuration
         )
-        let screenSize = UIScreen.main.bounds.size
-        let timetableView = TimetableForCapture(
-            painter: painter,
-            size: .init(width: screenSize.width, height: screenSize.width * 1.5)
-        )
-        .frame(width: screenSize.width, height: screenSize.height)
-        .background(Color(uiColor: .systemBackground))
-        .environment(\.colorScheme, colorScheme)
+        guard
+            let scene = UIApplication.shared.connectedScenes
+                .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
+        else { throw RenderingError() }
+
+        let screenWidth = scene.screen.bounds.width
+        let timetableSize = CGSize(width: screenWidth, height: screenWidth * Layout.aspectRatio)
+        let timetableView = TimetableForCapture(painter: painter, size: timetableSize)
+            .frame(width: timetableSize.width, height: timetableSize.height)
+            .background(Color(uiColor: .systemBackground))
+            .environment(\.colorScheme, colorScheme)
         let renderer = ImageRenderer(content: timetableView)
-        renderer.scale = UIScreen.main.scale
+        renderer.scale = scene.screen.scale
         guard let image = renderer.uiImage else { throw RenderingError() }
         return image
     }
