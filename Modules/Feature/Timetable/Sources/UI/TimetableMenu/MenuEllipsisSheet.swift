@@ -58,7 +58,7 @@ struct MenuEllipsisSheet: View {
                 menuSheetDismiss()
                 viewModel.presentThemeSheet()
             }
-            ActionSheetItem(image: Menu.delete.image, title: Menu.delete.text) {
+            ActionSheetItem(image: Menu.delete.image, title: Menu.delete.text, role: .destructive) {
                 dismiss()
                 errorAlertHandler.withAlert {
                     try await viewModel.deleteTimetable(timetableID: metadata.id)
