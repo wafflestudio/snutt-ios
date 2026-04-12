@@ -28,7 +28,7 @@ struct NetworkLogPresentationModifier: ViewModifier {
                     .presentationContentInteraction(.scrolls)
                 }
         } else {
-            EmptyView()
+            content
         }
     }
 }
