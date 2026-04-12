@@ -25,7 +25,7 @@ struct ThemeHorizontalScrollView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 80, height: 80)
-                            Text("새 테마")
+                            Text(ThemesStrings.newTheme)
                                 .font(.system(size: 14))
                                 .padding(.top, 5)
                         }
