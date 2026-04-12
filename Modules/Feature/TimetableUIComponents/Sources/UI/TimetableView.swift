@@ -22,17 +22,21 @@ public struct TimetableView: View {
         GeometryReader { reader in
             let geometry = TimetableGeometry(reader)
             ScrollView {
-                ZStack(alignment: .top) {
+                ZStack(alignment: .topLeading) {
                     TimetableGridLayer(painter: painter, geometry: geometry)
-                        .frame(width: geometry.size.width, height: geometry.extendedContainerSize.height)
+                        .frame(
+                            width: geometry.extendedContainerSize.width,
+                            height: geometry.extendedContainerSize.height
+                        )
                     TimetableBlocksLayer(painter: painter, geometry: geometry)
                         .frame(width: geometry.size.width, height: geometry.size.height)
+                        .padding(.leading, geometry.safeAreaInsets.leading)
                 }
                 .animation(.defaultSpring, value: painter.currentTimetable?.id)
                 .animation(.defaultSpring, value: painter.selectedLecture?.id)
             }
             .withResponsiveTouch()
-            .ignoresSafeArea(edges: .bottom)
+            .ignoresSafeArea(edges: [.bottom, .horizontal])
             .scrollBounceBehavior(.basedOnSize)
         }
         .ignoresSafeArea(.keyboard)

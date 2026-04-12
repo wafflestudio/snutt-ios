@@ -1,5 +1,6 @@
 import SharedUIComponents
 import SwiftUI
+import SwiftUIUtility
 import TimetableInterface
 
 struct CreateTimetableSheet: View {
@@ -23,58 +24,56 @@ struct CreateTimetableSheet: View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        GeometryReader { _ in
-            VStack(spacing: 20) {
-                SheetTopBar(
-                    cancel: {
-                        dismiss()
-                    },
-                    confirm: {
-                        let targetQuarter =
-                            switch presentationType {
-                            case .picker:
-                                selectedQuarter
-                            case .fixed(let quarter):
-                                quarter
-                            }
-                        guard let targetQuarter else { return }
-                        isCreateLoading = true
-                        errorAlertHandler.withAlert {
-                            try await viewModel.createTimetable(
-                                title: title,
-                                quarter: targetQuarter
-                            )
+        VStack(spacing: 20) {
+            SheetTopBar(
+                cancel: {
+                    dismiss()
+                },
+                confirm: {
+                    let targetQuarter =
+                        switch presentationType {
+                        case .picker:
+                            selectedQuarter
+                        case .fixed(let quarter):
+                            quarter
                         }
-                        isCreateLoading = false
-                        dismiss()
-                    },
-                    isConfirmDisabled: isCreateLoading || title.isEmpty
-                        || (!hasQuarterPicker ? false : selectedQuarter == nil)
-                )
-
-                AnimatableTextField(
-                    label: TimetableStrings.timetableMenuTitleLabel,
-                    placeholder: TimetableStrings.timetableMenuTitlePlaceholder,
-                    text: $title
-                )
-                .focused($titleFocus)
-                .onAppear {
-                    titleFocus = true
-                }
-                .padding(.horizontal)
-
-                if hasQuarterPicker, !viewModel.availableQuarters.isEmpty {
-                    Picker(TimetableStrings.timetableMenuSemesterPicker, selection: $selectedQuarter) {
-                        ForEach(viewModel.availableQuarters, id: \.id) { quarter in
-                            Text(quarterDisplayName(quarter)).tag(quarter as Quarter?)
-                        }
+                    guard let targetQuarter else { return }
+                    isCreateLoading = true
+                    errorAlertHandler.withAlert {
+                        try await viewModel.createTimetable(
+                            title: title,
+                            quarter: targetQuarter
+                        )
                     }
-                    .pickerStyle(.wheel)
-                    .padding(.horizontal)
+                    isCreateLoading = false
+                    dismiss()
+                },
+                isConfirmDisabled: isCreateLoading || title.isEmpty
+                    || (!hasQuarterPicker ? false : selectedQuarter == nil)
+            )
+
+            AnimatableTextField(
+                label: TimetableStrings.timetableMenuTitleLabel,
+                placeholder: TimetableStrings.timetableMenuTitlePlaceholder,
+                text: $title
+            )
+            .focused($titleFocus)
+            .onAppear {
+                titleFocus = true
+            }
+            .padding(.horizontal)
+
+            if hasQuarterPicker, !viewModel.availableQuarters.isEmpty {
+                Picker(TimetableStrings.timetableMenuSemesterPicker, selection: $selectedQuarter) {
+                    ForEach(viewModel.availableQuarters, id: \.id) { quarter in
+                        Text(quarterDisplayName(quarter)).tag(quarter as Quarter?)
+                    }
                 }
+                .pickerStyle(.wheel)
+                .padding(.horizontal)
             }
         }
-        .presentationDetents([.height(hasQuarterPicker ? 300 : 150)])
+        .presentationSizingFitted()
         .observeErrors()
         .onAppear {
             if hasQuarterPicker {

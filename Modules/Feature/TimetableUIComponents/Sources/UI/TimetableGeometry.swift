@@ -23,6 +23,9 @@ public struct TimetableGeometry: Sendable {
     }
 
     public var extendedContainerSize: CGSize {
-        .init(width: size.width, height: size.height + safeAreaInsets.bottom)
+        .init(
+            width: size.width + safeAreaInsets.leading + safeAreaInsets.trailing,
+            height: size.height + safeAreaInsets.bottom
+        )
     }
 }

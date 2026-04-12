@@ -52,31 +52,29 @@ struct MenuThemeSelectionSheet: View {
     }
 
     var body: some View {
-        GeometryReader { _ in
-            VStack(spacing: 0) {
-                SheetTopBar(
-                    cancel: {
+        VStack(spacing: 0) {
+            SheetTopBar(
+                cancel: {
+                    dismiss()
+                },
+                confirm: {
+                    errorAlertHandler.withAlert {
+                        try await themeViewModel.saveSelectedTheme()
                         dismiss()
-                    },
-                    confirm: {
-                        errorAlertHandler.withAlert {
-                            try await themeViewModel.saveSelectedTheme()
-                            dismiss()
-                        }
                     }
-                )
-
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 20) {
-                        ForEach(selections) { selection in
-                            selectionButton(for: selection)
-                        }
-                    }
-                    .padding(.horizontal, 20)
                 }
-                .withResponsiveTouch()
-                .padding(.vertical)
+            )
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 20) {
+                    ForEach(selections) { selection in
+                        selectionButton(for: selection)
+                    }
+                }
+                .padding(.horizontal, 20)
             }
+            .withResponsiveTouch()
+            .padding(.vertical)
         }
         .sheet(isPresented: $isNewThemePresented) {
             NavigationStack {
@@ -84,7 +82,7 @@ struct MenuThemeSelectionSheet: View {
             }
             .presentationDetents([.large])
         }
-        .presentationDetents([.height(160)])
+        .presentationSizingFitted()
         .observeErrors()
         .onAppear {
             if let initialSelectedTheme = themeViewModel.availableThemes

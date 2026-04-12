@@ -50,10 +50,8 @@ struct DateTimeEditor: View {
                 endTime: $temporaryTimePlace.endTime
             )
             .padding()
-            Spacer()
         }
-        .ignoresSafeArea()
-        .presentationDetents([.height(280)])
+        .presentationSizingFitted()
     }
 }
 

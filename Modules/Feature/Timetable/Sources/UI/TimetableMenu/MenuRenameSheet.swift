@@ -7,6 +7,7 @@
 
 import SharedUIComponents
 import SwiftUI
+import SwiftUIUtility
 import TimetableInterface
 
 struct MenuRenameSheet: View {
@@ -20,36 +21,34 @@ struct MenuRenameSheet: View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        GeometryReader { _ in
-            VStack(spacing: 20) {
-                SheetTopBar(
-                    cancel: {
-                        dismiss()
-                    },
-                    confirm: {
-                        dismiss()
-                        isRenameLoading = true
-                        errorAlertHandler.withAlert {
-                            try await viewModel.renameTimetable(timetableID: metadata.id, title: title)
-                        }
-                        isRenameLoading = false
-                    },
-                    isConfirmDisabled: isRenameLoading
-                )
+        VStack(spacing: 20) {
+            SheetTopBar(
+                cancel: {
+                    dismiss()
+                },
+                confirm: {
+                    dismiss()
+                    isRenameLoading = true
+                    errorAlertHandler.withAlert {
+                        try await viewModel.renameTimetable(timetableID: metadata.id, title: title)
+                    }
+                    isRenameLoading = false
+                },
+                isConfirmDisabled: isRenameLoading
+            )
 
-                AnimatableTextField(
-                    label: TimetableStrings.timetableMenuTitleLabel,
-                    placeholder: TimetableStrings.timetableMenuTitlePlaceholder,
-                    text: $title
-                )
-                .focused($searchFocus)
-                .onAppear {
-                    searchFocus = true
-                }
-                .padding()
+            AnimatableTextField(
+                label: TimetableStrings.timetableMenuTitleLabel,
+                placeholder: TimetableStrings.timetableMenuTitlePlaceholder,
+                text: $title
+            )
+            .focused($searchFocus)
+            .onAppear {
+                searchFocus = true
             }
+            .padding()
         }
-        .presentationDetents([.height(160)])
+        .presentationSizingFitted()
         .observeErrors()
     }
 }
