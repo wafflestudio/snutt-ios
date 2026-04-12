@@ -33,7 +33,7 @@ public struct ActionSheet: View {
         .mask {
             ContainerRelativeShape().inset(by: Design.padding).ignoresSafeArea(edges: .bottom)
         }
-        .presentationDetents([.height(ActionSheetLabel.rowHeight * CGFloat(items.count) + 20)])
+        .presentationDetents([.height(ActionSheetLabel.rowHeight * CGFloat(items.count) + Design.padding * 2)])
         .presentationCompactAdaptation(horizontal: .sheet, vertical: .sheet)
     }
 }
