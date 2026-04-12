@@ -5,6 +5,7 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import SharedUIComponents
 import SwiftUI
 import ThemesInterface
 
@@ -15,7 +16,7 @@ struct ThemeSettingsScene: View {
 
     var body: some View {
         Form {
-            Section(header: Text("Custom Themes")) {
+            Section {
                 ThemeHorizontalScrollView(
                     themes: customThemes,
                     onTapCreateButton: {
@@ -31,30 +32,40 @@ struct ThemeSettingsScene: View {
                     }
                     .presentationDetents([.large])
                 }
+            } header: {
+                Text(ThemesStrings.settingsCustom)
+                    .font(.system(size: 13))
             }
 
             if !downloadedThemes.isEmpty {
-                Section(header: Text("Downloaded Themes")) {
+                Section {
                     ThemeHorizontalScrollView(
                         themes: downloadedThemes,
                         onTapTheme: { theme in
                             themeForBottomSheet = theme
                         }
                     )
+                } header: {
+                    Text(ThemesStrings.downloadedTheme)
+                        .font(.system(size: 13))
                 }
             }
 
-            Section(header: Text("Basic Themes"), footer: HowToApplyThemeInfoView()) {
+            Section {
                 ThemeHorizontalScrollView(
                     themes: basicThemes,
                     onTapTheme: { theme in
                         themeForBottomSheet = theme
                     }
                 )
+            } header: {
+                Text(ThemesStrings.settingsBasic)
+                    .font(.system(size: 13))
+            } footer: {
+                HowToApplyThemeInfoView()
             }
-
         }
-        .navigationTitle("시간표 테마")
+        .navigationTitle(ThemesStrings.settingsTitle)
         .navigationBarTitleDisplayMode(.inline)
         .sheet(item: $themeForBottomSheet) { theme in
             ThemeDetailSheet(theme: theme)
@@ -81,20 +92,23 @@ struct ThemeSettingsScene: View {
 
 private struct HowToApplyThemeInfoView: View {
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 6) {
                 Image(systemName: "info.circle")
                     .resizable()
                     .frame(width: 14, height: 14)
-                Text("테마는 어떻게 적용하나요?")
+                Text(ThemesStrings.settingsHowtoQuestion)
                     .font(.system(size: 12, weight: .bold))
             }
-            Text("시간표 적용은 시간표 목록 > 더보기 버튼 > 테마 설정에서 개별적으로 적용할 수 있어요.")
-                .font(.system(size: 12))
-                .lineSpacing(1.3)
-            Text("새로운 시간표에는 가장 최근 편집한 커스텀 테마가 적용돼요.")
-                .font(.system(size: 12))
+            Group {
+                Text(ThemesStrings.settingsHowtoAnswer1)
+                    .lineSpacing(1.3)
+                Text(ThemesStrings.settingsHowtoAnswer2)
+            }
+            .font(.system(size: 12))
         }
-        .padding(.top, 25)
+        .padding(.top, 24)
+        .padding(.bottom, 40)
+        .foregroundStyle(SharedUIComponentsAsset.gray2.swiftUIColor)
     }
 }
