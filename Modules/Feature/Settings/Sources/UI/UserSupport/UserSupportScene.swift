@@ -18,21 +18,26 @@ struct UserSupportScene: View {
 
     var body: some View {
         Form {
-            Section(header: Text(SettingsStrings.feedbackEmailHeader)) {
+            Section {
                 TextField(SettingsStrings.feedbackEmailPlaceholder, text: $viewModel.email)
                     .foregroundColor(viewModel.hasEmail ? .secondary : .primary)
                     .disabled(viewModel.hasEmail)
                     .textInputAutocapitalization(.never)
                     .keyboardType(.emailAddress)
+            } header: {
+                Text(SettingsStrings.feedbackEmailHeader)
+                    .font(.system(size: 13))
             }
 
-            Section(
-                header: Text(SettingsStrings.feedbackContentHeader),
-                footer: Text(SettingsStrings.feedbackContentFooter)
-            ) {
+            Section {
                 TextEditor(text: $viewModel.content)
                     .frame(minHeight: 300)
                     .focused($isFocused)
+            } header: {
+                Text(SettingsStrings.feedbackContentHeader)
+                    .font(.system(size: 13))
+            } footer: {
+                Text(SettingsStrings.feedbackContentFooter)
             }
         }
         .navigationBarTitleDisplayMode(.inline)

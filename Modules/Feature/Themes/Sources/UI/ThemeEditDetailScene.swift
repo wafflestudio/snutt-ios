@@ -71,17 +71,20 @@ struct ThemeEditDetailScene: View {
     }
 
     private var themeNameSection: some View {
-        Section(ThemesStrings.themeName) {
+        Section {
             if viewModel.isThemeEditable {
                 TextField(ThemesStrings.themeName, text: $viewModel.editableTheme.name)
             } else {
                 Text(viewModel.editableTheme.name)
             }
+        } header: {
+            Text(ThemesStrings.themeName)
+                .font(.system(size: 13))
         }
     }
 
     private var colorCombinationSection: some View {
-        Section(ThemesStrings.colorCombination) {
+        Section {
             ForEach(Array(viewModel.identifiableColors.enumerated()), id: \.element.id) { index, identifiableColor in
                 if viewModel.isThemeEditable {
                     editableColorRow(index: index, identifiableColor: identifiableColor)
@@ -99,6 +102,9 @@ struct ThemeEditDetailScene: View {
                     Label(ThemesStrings.addColor, systemImage: "plus")
                 }
             }
+        } header: {
+            Text(ThemesStrings.colorCombination)
+                .font(.system(size: 13))
         }
     }
 
@@ -165,12 +171,15 @@ struct ThemeEditDetailScene: View {
     @ViewBuilder
     private var previewSection: some View {
         if let timetable = viewModel.timetable {
-            Section(ThemesStrings.preview) {
+            Section {
                 TimetableThemePreview(
                     timetable: timetable,
                     configuration: viewModel.configuration,
                     theme: viewModel.editableTheme
                 )
+            } header: {
+                Text(ThemesStrings.preview)
+                    .font(.system(size: 13))
             }
         }
     }
