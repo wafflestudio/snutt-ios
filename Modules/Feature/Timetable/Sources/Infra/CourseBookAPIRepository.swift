@@ -17,13 +17,13 @@ struct CourseBookAPIRepository: CourseBookRepository {
     func fetchCourseBookList() async throws -> [CourseBook] {
         let response = try await apiClient.getCoursebooks_1()
         let courseBooks = try response.ok.body.json
-        return courseBooks.map { CourseBook(from: $0) }
+        return try courseBooks.map { try CourseBook(from: $0) }
     }
 
     func fetchRecentCourseBook() async throws -> CourseBook {
         let response = try await apiClient.getLatestCoursebook()
         let courseBook = try response.ok.body.json
-        return .init(from: courseBook)
+        return try .init(from: courseBook)
     }
 
     func fetchSyllabusURL(year: Int, semester: Int, lecture: Lecture) async throws -> Syllabus {
@@ -41,22 +41,11 @@ struct CourseBookAPIRepository: CourseBookRepository {
 }
 
 extension CourseBook {
-    init(from dto: Components.Schemas.CoursebookResponse) {
-        self.init(
-            quarter: Quarter(year: Int(dto.year), semester: Semester(from: dto.semester)),
+    init(from dto: Components.Schemas.CoursebookResponse) throws {
+        try self.init(
+            quarter: Quarter(year: Int(dto.year), semester: require(Semester(rawValue: dto.semester.rawValue))),
             updatedAt: dto.updated_at
         )
-    }
-}
-
-extension Semester {
-    init(from dto: Components.Schemas.CoursebookResponse.semesterPayload) {
-        switch dto {
-        case ._1: self = .first
-        case ._2: self = .second
-        case ._3: self = .summer
-        case ._4: self = .winter
-        }
     }
 }
 
