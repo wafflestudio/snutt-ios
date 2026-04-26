@@ -29,7 +29,7 @@ struct TimetableSettingView: View {
                 )
             } footer: {
                 if viewModel.configuration.compactMode {
-                    Text(SettingsStrings.displayTableInfoWarning)
+                    FormSectionFooter(SettingsStrings.displayTableInfoWarning)
                 }
             }
 
@@ -51,10 +51,9 @@ struct TimetableSettingView: View {
                     isOn: $viewModel.configuration.visibilityOptions.isInstructorEnabled
                 )
             } header: {
-                Text(SettingsStrings.displayTableInfo)
-                    .font(.system(size: 13))
+                FormSectionHeader(SettingsStrings.displayTableInfo)
             } footer: {
-                Text(SettingsStrings.displayTableInfoWarning)
+                FormSectionFooter(SettingsStrings.displayTableInfoWarning)
             }
 
             if !viewModel.configuration.autoFit {
@@ -75,8 +74,7 @@ struct TimetableSettingView: View {
                         .frame(height: 40)
                     }
                 } header: {
-                    Text(SettingsStrings.displayTableRange)
-                        .font(.system(size: 13))
+                    FormSectionHeader(SettingsStrings.displayTableRange)
                 }
             }
 
@@ -98,8 +96,7 @@ struct TimetableSettingView: View {
                     )
                     .padding(.vertical, 10)
                 } header: {
-                    Text(SettingsStrings.displayTablePreview)
-                        .font(.system(size: 13))
+                    FormSectionHeader(SettingsStrings.displayTablePreview)
                 }
             }
         }

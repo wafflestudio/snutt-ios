@@ -33,8 +33,7 @@ struct ThemeSettingsScene: View {
                     .presentationDetents([.large])
                 }
             } header: {
-                Text(ThemesStrings.settingsCustom)
-                    .font(.system(size: 13))
+                FormSectionHeader(ThemesStrings.settingsCustom)
             }
 
             if !downloadedThemes.isEmpty {
@@ -46,8 +45,7 @@ struct ThemeSettingsScene: View {
                         }
                     )
                 } header: {
-                    Text(ThemesStrings.downloadedTheme)
-                        .font(.system(size: 13))
+                    FormSectionHeader(ThemesStrings.downloadedTheme)
                 }
             }
 
@@ -59,8 +57,7 @@ struct ThemeSettingsScene: View {
                     }
                 )
             } header: {
-                Text(ThemesStrings.settingsBasic)
-                    .font(.system(size: 13))
+                FormSectionHeader(ThemesStrings.settingsBasic)
             } footer: {
                 HowToApplyThemeInfoView()
             }
