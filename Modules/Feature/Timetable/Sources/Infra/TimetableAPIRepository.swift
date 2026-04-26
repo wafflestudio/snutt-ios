@@ -221,7 +221,8 @@ extension Components.Schemas.TimetableLectureLegacyDto {
             wasFull: false,
             registrationCount: 0,
             quota: quota,
-            freshmenQuota: freshman_quota
+            freshmenQuota: freshman_quota,
+            categoryPre2025: categoryPre2025
         )
     }
 }

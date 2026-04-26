@@ -99,7 +99,8 @@ extension Components.Schemas.LectureDto {
             wasFull: wasFull,
             registrationCount: registrationCount,
             quota: quota,
-            freshmenQuota: freshmanQuota
+            freshmenQuota: freshmanQuota,
+            categoryPre2025: categoryPre2025
         )
     }
 }
