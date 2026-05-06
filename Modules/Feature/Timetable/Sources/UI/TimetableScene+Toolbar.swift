@@ -116,7 +116,7 @@ extension TimetableScene {
                     Label {
                         Text(TimetableStrings.timetableAddMenuDiaryList)
                     } icon: {
-                        TimetableAsset.navMenuList.swiftUIImage
+                        TimetableAsset.navLectureDiary.swiftUIImage
                     }
                 }
                 #endif
