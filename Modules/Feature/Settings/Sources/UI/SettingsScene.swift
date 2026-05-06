@@ -32,7 +32,7 @@ public struct SettingsScene: View {
                     .padding(.vertical, 12)
                 }
 
-                Section(SettingsStrings.notification) {
+                Section {
                     SettingsNavigationLink(
                         title: SettingsStrings.notificationInbox,
                         value: SettingsPathType.notificationInbox,
@@ -42,9 +42,11 @@ public struct SettingsScene: View {
                         title: SettingsStrings.servicePushNotification,
                         value: SettingsPathType.pushNotificationSettings
                     )
+                } header: {
+                    FormSectionHeader(SettingsStrings.notification)
                 }
 
-                Section(SettingsStrings.display) {
+                Section {
                     SettingsNavigationLink(
                         title: SettingsStrings.displayColorMode,
                         value: SettingsPathType.appearance,
@@ -58,9 +60,11 @@ public struct SettingsScene: View {
                         title: SettingsStrings.displayTheme,
                         value: SettingsPathType.timetableTheme
                     )
+                } header: {
+                    FormSectionHeader(SettingsStrings.display)
                 }
 
-                Section(SettingsStrings.service) {
+                Section {
                     SettingsNavigationLink(
                         title: SettingsStrings.serviceVacancy,
                         value: SettingsPathType.vacancyNotification
@@ -79,9 +83,11 @@ public struct SettingsScene: View {
                         title: SettingsStrings.serviceThemeMarket,
                         value: SettingsPathType.themeMarket
                     )
+                } header: {
+                    FormSectionHeader(SettingsStrings.service)
                 }
 
-                Section(SettingsStrings.info) {
+                Section {
                     SettingsMenuButton(
                         title: SettingsStrings.infoVersion,
                         detail: viewModel.appVersion
@@ -98,6 +104,8 @@ public struct SettingsScene: View {
                         title: SettingsStrings.privacyPolicy,
                         value: SettingsPathType.privacyPolicy
                     )
+                } header: {
+                    FormSectionHeader(SettingsStrings.info)
                 }
 
                 Section {
@@ -116,11 +124,13 @@ public struct SettingsScene: View {
                 }
 
                 #if DEBUG
-                Section(SettingsStrings.debug) {
+                Section {
                     SettingsNavigationLink(
                         title: SettingsStrings.debugLog,
                         value: SettingsPathType.networkLogs
                     )
+                } header: {
+                    FormSectionHeader(SettingsStrings.debug)
                 }
                 #endif
 
