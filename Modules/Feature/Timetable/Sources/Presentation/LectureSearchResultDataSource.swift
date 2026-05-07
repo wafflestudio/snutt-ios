@@ -59,7 +59,7 @@ class LectureSearchResultDataSource {
         searchQuery = query
         self.quarter = quarter
         self.predicates = predicates
-        searchState = .searched(lectures)
+        searchState = .searched(lectures.removingDuplicateIDs())
     }
 
     func fetchMoreSearchResult() async throws {
@@ -75,7 +75,7 @@ class LectureSearchResultDataSource {
             quarter: quarter,
             predicates: predicates
         )
-        searchState = .searched(currentLectures + lectures)
+        searchState = .searched((currentLectures + lectures).removingDuplicateIDs())
     }
 
     func reset() {
@@ -84,5 +84,12 @@ class LectureSearchResultDataSource {
         canFetchMore = true
         searchQuery = ""
         quarter = nil
+    }
+}
+
+extension Array where Element == Lecture {
+    fileprivate func removingDuplicateIDs() -> [Lecture] {
+        var seenIDs = Set<Lecture.ID>()
+        return filter { seenIDs.insert($0.id).inserted }
     }
 }
