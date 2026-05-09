@@ -21,7 +21,7 @@ struct TimetableMenuSectionRow: View {
     @Environment(\.errorAlertHandler) private var errorHandler
 
     private enum Design {
-        static let detailFont = Font.system(size: 12)
+        static let detailFont = Font.system(size: 14)
     }
 
     var body: some View {
