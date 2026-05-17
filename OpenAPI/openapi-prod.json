@@ -539,14 +539,11 @@
       },
       "DiaryQuestionnaireDto" : {
         "properties" : {
-          "lectureTitle" : {
+          "courseTitle" : {
             "type" : "string"
           },
-          "nextLectureId" : {
-            "type" : "string"
-          },
-          "nextLectureTitle" : {
-            "type" : "string"
+          "nextLecture" : {
+            "$ref" : "#/components/schemas/DiaryTargetLectureDto"
           },
           "questions" : {
             "items" : {
@@ -556,7 +553,7 @@
           }
         },
         "required" : [
-          "lectureTitle",
+          "courseTitle",
           "questions"
         ],
         "type" : "object"
@@ -652,6 +649,9 @@
           "comment" : {
             "type" : "string"
           },
+          "courseTitle" : {
+            "type" : "string"
+          },
           "date" : {
             "format" : "date-time",
             "type" : "string"
@@ -660,9 +660,6 @@
             "type" : "string"
           },
           "lectureId" : {
-            "type" : "string"
-          },
-          "lectureTitle" : {
             "type" : "string"
           },
           "shortQuestionReplies" : {
@@ -674,11 +671,26 @@
         },
         "required" : [
           "comment",
+          "courseTitle",
           "date",
           "id",
           "lectureId",
-          "lectureTitle",
           "shortQuestionReplies"
+        ],
+        "type" : "object"
+      },
+      "DiaryTargetLectureDto" : {
+        "properties" : {
+          "courseTitle" : {
+            "type" : "string"
+          },
+          "lectureId" : {
+            "type" : "string"
+          }
+        },
+        "required" : [
+          "courseTitle",
+          "lectureId"
         ],
         "type" : "object"
       },
@@ -1445,6 +1457,23 @@
           "imageUri",
           "image_url",
           "key"
+        ],
+        "type" : "object"
+      },
+      "PostConfigRequest" : {
+        "properties" : {
+          "data" : {
+            "$ref" : "#/components/schemas/JsonNode"
+          },
+          "maxVersion" : {
+            "$ref" : "#/components/schemas/ConfigVersionDto"
+          },
+          "minVersion" : {
+            "$ref" : "#/components/schemas/ConfigVersionDto"
+          }
+        },
+        "required" : [
+          "data"
         ],
         "type" : "object"
       },
@@ -2716,7 +2745,9 @@
         "requestBody" : {
           "content" : {
             "application/json" : {
-
+              "schema" : {
+                "$ref" : "#/components/schemas/PostConfigRequest"
+              }
             }
           },
           "required" : true
@@ -4104,6 +4135,52 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DiaryQuestionnaireDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [
+          "diary-controller"
+        ]
+      }
+    },
+    "/v1/diary/target" : {
+      "get" : {
+        "operationId" : "getRandomTargetLecture",
+        "parameters" : [
+          {
+            "in" : "query",
+            "name" : "year",
+            "required" : true,
+            "schema" : {
+              "format" : "int32",
+              "type" : "integer"
+            }
+          },
+          {
+            "in" : "query",
+            "name" : "semester",
+            "required" : true,
+            "schema" : {
+              "enum" : [
+                1,
+                2,
+                3,
+                4
+              ],
+              "format" : "int32",
+              "type" : "integer"
+            }
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DiaryTargetLectureDto"
                 }
               }
             },

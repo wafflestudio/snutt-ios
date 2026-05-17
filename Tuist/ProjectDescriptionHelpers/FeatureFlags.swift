@@ -18,7 +18,7 @@ public enum CompilationConditions {
         case .dev:
             [.lectureDiary]
         case .prod:
-            []
+            [.lectureDiary]
         default:
             []
         }
