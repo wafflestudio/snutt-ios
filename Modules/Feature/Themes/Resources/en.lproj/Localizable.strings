@@ -19,6 +19,9 @@
  - Add comments to provide context for translators.
 */
 
+/* Theme Market Scene */
+"market.title" = "Theme Market";
+
 /* Theme Settings Scene */
 "settings.title" = "Timetable Theme";
 "settings.custom" = "Custom Themes";

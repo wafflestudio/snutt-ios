@@ -19,6 +19,9 @@
  - Add comments to provide context for translators.
 */
 
+/* Theme Market Scene */
+"market.title" = "테마 마켓";
+
 /* Theme Settings Scene */
 "settings.title" = "시간표 테마";
 "settings.custom" = "커스텀 테마";

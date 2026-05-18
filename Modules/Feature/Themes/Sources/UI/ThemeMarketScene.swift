@@ -15,5 +15,7 @@ public struct ThemeMarketScene: View {
     public var body: some View {
         SwiftUIWebView(url: viewModel.baseURL, cookies: viewModel.webCookies)
             .analyticsScreen(.themeMarket)
+            .ignoresSafeArea()
+            .navigationTitle(ThemesStrings.marketTitle)
     }
 }

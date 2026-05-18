@@ -14,6 +14,7 @@ struct PrivacyPolicyView: View {
 
     var body: some View {
         SwiftUIWebView(url: url)
+            .ignoresSafeArea()
     }
 
     private var url: URL {

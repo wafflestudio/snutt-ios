@@ -13,6 +13,7 @@ struct TermsOfServiceView: View {
     @Dependency(\.appMetadata) private var appMetadata
     var body: some View {
         SwiftUIWebView(url: url)
+            .ignoresSafeArea()
     }
 
     private var url: URL {

@@ -35,9 +35,9 @@ public struct ReviewsWebScene: View {
                 webView.setColorScheme(colorScheme: colorScheme)
             }
         )
+        .ignoresSafeArea()
     }
 }
-
 extension WKWebView {
     func setColorScheme(colorScheme: ColorScheme) {
         guard let domain = url?.host(),
