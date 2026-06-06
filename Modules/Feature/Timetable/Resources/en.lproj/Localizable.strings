@@ -137,6 +137,7 @@
 "search.predicate.credit.suffix" = "credits";
 "search.predicate.etc.english" = "English";
 "search.predicate.etc.army" = "Military";
+"search.predicate.etc.recommended" = "Recommended";
 "search.predicate.time.emptySlots" = "Search Empty Time Slots";
 "search.predicate.time.directSelection" = "Select Time Manually";
 "search.time.selection.title" = "Select Time Slots";
