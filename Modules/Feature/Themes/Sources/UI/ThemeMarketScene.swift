@@ -11,11 +11,18 @@ import WebKit
 
 public struct ThemeMarketScene: View {
     @State private var viewModel = ThemeMarketViewModel()
+    @Environment(\.colorScheme) private var colorScheme
     public init() {}
     public var body: some View {
-        SwiftUIWebView(url: viewModel.baseURL, cookies: viewModel.webCookies)
-            .analyticsScreen(.themeMarket)
-            .ignoresSafeArea()
-            .navigationTitle(ThemesStrings.marketTitle)
+        SwiftUIWebView(
+            url: viewModel.baseURL,
+            cookies: viewModel.webCookies,
+            onUpdate: { webView in
+                webView.setColorScheme(colorScheme: colorScheme)
+            }
+        )
+        .ignoresSafeArea()
+        .navigationTitle(ThemesStrings.marketTitle)
+        .analyticsScreen(.themeMarket)
     }
 }

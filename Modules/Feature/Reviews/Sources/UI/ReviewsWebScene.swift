@@ -38,27 +38,3 @@ public struct ReviewsWebScene: View {
         .ignoresSafeArea()
     }
 }
-extension WKWebView {
-    func setColorScheme(colorScheme: ColorScheme) {
-        guard let domain = url?.host(),
-            let themeCookie = HTTPCookie(properties: [
-                .name: "theme",
-                .value: colorScheme.descriptionForWebView,
-                .domain: domain,
-                .path: "/",
-            ])
-        else { return }
-        configuration.websiteDataStore.httpCookieStore.setCookie(themeCookie)
-        evaluateJavaScript("changeTheme('\(colorScheme.descriptionForWebView)')")
-    }
-}
-
-extension ColorScheme {
-    var descriptionForWebView: String {
-        switch self {
-        case .light: "light"
-        case .dark: "dark"
-        default: "light"
-        }
-    }
-}

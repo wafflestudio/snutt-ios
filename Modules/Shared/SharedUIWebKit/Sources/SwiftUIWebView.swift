@@ -95,3 +95,28 @@ extension SwiftUIWebView.Coordinator: WKScriptMessageHandler {
         }
     }
 }
+
+extension WKWebView {
+    public func setColorScheme(colorScheme: ColorScheme) {
+        guard let domain = url?.host(),
+            let themeCookie = HTTPCookie(properties: [
+                .name: "theme",
+                .value: colorScheme.descriptionForWebView,
+                .domain: domain,
+                .path: "/",
+            ])
+        else { return }
+        configuration.websiteDataStore.httpCookieStore.setCookie(themeCookie)
+        evaluateJavaScript("changeTheme('\(colorScheme.descriptionForWebView)')")
+    }
+}
+
+extension ColorScheme {
+    public var descriptionForWebView: String {
+        switch self {
+        case .light: "light"
+        case .dark: "dark"
+        default: "light"
+        }
+    }
+}
