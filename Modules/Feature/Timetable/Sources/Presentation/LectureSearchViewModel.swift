@@ -415,26 +415,28 @@ extension SearchPredicate {
 
     var localizedDescription: String {
         switch self {
-        case let .sortCriteria(value),
-            let .department(value),
-            let .academicYear(value),
-            let .category(value),
-            let .categoryPre2025(value),
-            let .instructor(value),
-            let .classification(value):
+        case .sortCriteria(let value),
+            .department(let value),
+            .academicYear(let value),
+            .category(let value),
+            .categoryPre2025(let value),
+            .instructor(let value),
+            .classification(let value):
             value
-        case let .credit(value):
+        case .credit(let value):
             "\(value)\(TimetableStrings.searchPredicateCreditSuffix)"
         case .timeInclude:
             TimetableStrings.searchPredicateTimeDirectSelection
         case .timeExclude:
             TimetableStrings.searchPredicateTimeEmptySlots
-        case let .etc(value):
+        case .etc(let value):
             switch value {
             case .english:
                 TimetableStrings.searchPredicateEtcEnglish
             case .army:
                 TimetableStrings.searchPredicateEtcArmy
+            case .recommended:
+                TimetableStrings.searchPredicateEtcRecommended
             }
         }
     }

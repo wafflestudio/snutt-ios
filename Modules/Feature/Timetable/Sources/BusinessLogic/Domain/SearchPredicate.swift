@@ -28,6 +28,7 @@ struct SearchTimeRange: Codable, Hashable, Sendable {
 enum EtcType: String, Sendable {
     case english
     case army
+    case recommended
 
     var code: String {
         switch self {
@@ -35,6 +36,8 @@ enum EtcType: String, Sendable {
             return "E"
         case .army:
             return "MO"
+        case .recommended:
+            return "R"
         }
     }
 }

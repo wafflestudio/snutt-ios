@@ -34,23 +34,23 @@ struct LectureSearchAPIRepository: LectureSearchRepository {
 
         for predicate in predicates {
             switch predicate {
-            case let .sortCriteria(string):
+            case .sortCriteria(let string):
                 sortCriteria = string
-            case let .classification(string):
+            case .classification(let string):
                 classification.append(string)
-            case let .department(string):
+            case .department(let string):
                 department.append(string)
-            case let .academicYear(string):
+            case .academicYear(let string):
                 academicYear.append(string)
-            case let .credit(int):
+            case .credit(let int):
                 credit.append(Int32(int))
             case .instructor:
                 continue  // not supported
-            case let .categoryPre2025(string):
+            case .categoryPre2025(let string):
                 categoryPre2025.append(string)
-            case let .category(string):
+            case .category(let string):
                 category.append(string)
-            case let .timeInclude(searchTimeRange):
+            case .timeInclude(let searchTimeRange):
                 if let day = Components.Schemas.SearchTimeDto.dayPayload(rawValue: searchTimeRange.day) {
                     times.append(
                         .init(
@@ -60,7 +60,7 @@ struct LectureSearchAPIRepository: LectureSearchRepository {
                         )
                     )
                 }
-            case let .timeExclude(searchTimeRange):
+            case .timeExclude(let searchTimeRange):
                 if let day = Components.Schemas.SearchTimeDto.dayPayload(rawValue: searchTimeRange.day) {
                     timesToExclude.append(
                         .init(
@@ -70,7 +70,7 @@ struct LectureSearchAPIRepository: LectureSearchRepository {
                         )
                     )
                 }
-            case let .etc(etcType):
+            case .etc(let etcType):
                 etc.append(etcType.code)
             }
         }
@@ -123,6 +123,7 @@ struct LectureSearchAPIRepository: LectureSearchRepository {
         searchPredicates.append(contentsOf: json.instructor.map { .instructor($0) })
         searchPredicates.append(.etc(.english))
         searchPredicates.append(.etc(.army))
+        searchPredicates.append(.etc(.recommended))
         return searchPredicates
     }
 }
