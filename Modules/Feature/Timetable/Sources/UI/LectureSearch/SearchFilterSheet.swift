@@ -45,7 +45,7 @@ struct SearchFilterSheet: View {
                     viewModel.selectedCategory = category
                 } label: {
                     Text(category.localizedDescription)
-                        .font(.system(size: 18, weight: .semibold))
+                        .font(.system(size: 17, weight: .semibold))
                         .foregroundStyle(isSelected ? Color(.label) : Color(.label).opacity(0.5))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.vertical, 6)
@@ -85,19 +85,16 @@ struct SearchFilterSheet: View {
     }
 
     private var filterApplyButton: some View {
-        Button {
+        RoundedRectButton(
+            label: TimetableStrings.searchFilterApply,
+            type: .max
+        ) {
             dismiss()
             errorAlertHandler.withAlert {
                 try await viewModel.fetchInitialSearchResult()
             }
-        } label: {
-            Text(TimetableStrings.searchFilterApply)
-                .frame(maxWidth: .infinity)
-                .font(.system(size: 17, weight: .semibold))
         }
         .padding(.horizontal)
-        .buttonStyle(.borderedProminent)
-        .tint(SharedUIComponentsAsset.cyanSecondary.swiftUIColor)
     }
 }
 
@@ -116,12 +113,12 @@ struct FilterOptionButton: View {
                 if #available(iOS 26.0, *) {
                     Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
                         .font(.system(size: 15, weight: .semibold))
+                        .symbolRenderingMode(.monochrome)
                         .foregroundStyle(
                             isSelected
                                 ? SharedUIComponentsAsset.cyanSecondary.swiftUIColor
                                 : Color(.secondaryLabel)
                         )
-                        .symbolRenderingMode(.multicolor)
                         .contentTransition(
                             .symbolEffect(.replace.magic(fallback: .downUp.byLayer), options: .nonRepeating)
                         )
