@@ -113,6 +113,25 @@ extension Color {
 
     // MARK: - Components: OptionChip
 
+    static var selectedOptionChipBorder: Color {
+        Color(
+            UIColor {
+                $0.userInterfaceStyle == .dark
+                    ? SharedUIComponentsAsset.darkMint2.color : SharedUIComponentsAsset.cyan.color
+            }
+        )
+    }
+
+    static var unselectedOptionChipBorder: Color {
+        Color(
+            UIColor {
+                $0.userInterfaceStyle == .dark
+                    ? SharedUIComponentsAsset.alternative.color.withAlphaComponent(0.8)
+                    : SharedUIComponentsAsset.neutral95.color
+            }
+        )
+    }
+
     static var selectedOptionChipLabel: Color {
         Color(
             UIColor {
@@ -135,9 +154,10 @@ extension Color {
         Color(
             UIColor {
                 $0.userInterfaceStyle == .dark
-                    ? SharedUIComponentsAsset.darkMint2.color : SharedUIComponentsAsset.cyan.color
+                    ? SharedUIComponentsAsset.darkMint2.color.withAlphaComponent(0.08)
+                    : SharedUIComponentsAsset.cyan.color.withAlphaComponent(0.06)
             }
-        ).opacity(0.08)
+        )
     }
 
     // MARK: - Components: SemesterChip

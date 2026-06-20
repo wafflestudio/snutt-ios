@@ -34,7 +34,7 @@ struct OptionChip: View {
                 .overlay(
                     Capsule()
                         .stroke(
-                            isSelected ? Color.cyan : Color.gray.opacity(0.3),
+                            isSelected ? Color.selectedOptionChipBorder : Color.unselectedOptionChipBorder,
                             lineWidth: isSelected ? 1.0 : 0.6
                         )
                 )
