@@ -59,13 +59,13 @@
 "search.result.empty.description" = "Please try again with different search terms";
 "search.bookmark.empty.title" = "No bookmarked courses.";
 "search.bookmark.empty.description" = "Add courses you're considering\nto your bookmarks to manage them.";
-"search.tips.title" = "SNUTT Search Tips 🍯";
+"search.tips.title" = "SNUTT Search Tips 🍯\n(Korean only)";
 "search.tips.combination.title" = "Try searching with various combinations.";
-"search.tips.combination.example" = "ex) 2nd year CS required / Business English";
+"search.tips.combination.example" = "ex) 2학년 컴공 전필 / 경영 영강";
 "search.tips.abbreviation.title" = "Try searching with abbreviations.";
-"search.tips.abbreviation.example" = "ex) Scientific Understanding of Death Yoo Seong-ho → 죽과이 유성호";
+"search.tips.abbreviation.example" = "ex) 죽음의 과학적 이해 유성호 → 죽과이 유성호";
 "search.tips.location.title" = "Try searching by classroom location.";
-"search.tips.location.example" = "ex) Building 26 / 302-108 / Daegul2 43-1";
+"search.tips.location.example" = "ex) 26동 / 302-108 / 대글2 43-1동";
 "search.bookmark.title" = "Bookmarks";
 "search.title" = "Search";
 

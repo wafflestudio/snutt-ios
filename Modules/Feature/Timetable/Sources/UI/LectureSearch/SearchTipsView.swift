@@ -52,6 +52,7 @@ struct SearchTipsView: View {
             Spacer()
         }
         .padding(.horizontal)
+        .multilineTextAlignment(.center)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .contentShape(Rectangle())
         .foregroundColor(.white.opacity(0.9))
