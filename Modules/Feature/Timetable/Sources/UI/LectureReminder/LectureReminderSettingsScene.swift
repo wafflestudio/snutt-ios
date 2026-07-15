@@ -46,36 +46,17 @@ public struct LectureReminderSettingsScene: View {
     private var contentView: some View {
         Group {
             switch viewModel.loadState {
-            case .loading, .loaded:
-                Form {
-                    Section {
-                        switch viewModel.loadState {
-                        case .loading:
-                            ProgressView()
-                                .frame(maxWidth: .infinity, alignment: .center)
-                        case .loaded:
-                            ForEach(viewModel.sortedReminderViewModels, id: \.lectureReminder.timetableLectureID) {
-                                reminderViewModel in
-                                reminderRow(for: reminderViewModel)
-                            }
-                        default:
-                            EmptyView()
-                        }
-                    } header: {
-                        Text(TimetableStrings.reminderSettingsHeader)
-                            .foregroundStyle(SharedUIComponentsAsset.gray30.swiftUIColor)
-                            .font(.system(size: 13))
-                    } footer: {
-                        Text(TimetableStrings.reminderSettingsFooter.asMarkdown())
-                            .font(.systemFont(ofSize: 13), lineHeightMultiple: 1.4)
-                            .foregroundStyle(SharedUIComponentsAsset.gray30.swiftUIColor)
-                            .padding(.top, 16)
-                            .padding(.bottom, 48)
-                            .listRowInsets(EdgeInsets())
-                    }
-                }
+            case .loading:
+                reminderForm { ProgressView().frame(maxWidth: .infinity, alignment: .center) }
             case .loaded(let array) where array.isEmpty:
                 LectureReminderEmptyView()
+            case .loaded:
+                reminderForm {
+                    ForEach(viewModel.sortedReminderViewModels, id: \.lectureReminder.timetableLectureID) {
+                        reminderViewModel in
+                        reminderRow(for: reminderViewModel)
+                    }
+                }
             case .failed:
                 errorStateView
             }
@@ -86,6 +67,25 @@ public struct LectureReminderSettingsScene: View {
             }
         }
         .animation(.defaultSpring, value: viewModel.loadState.isLoading)
+    }
+
+    private func reminderForm(@ViewBuilder content: () -> some View) -> some View {
+        Form {
+            Section {
+                content()
+            } header: {
+                Text(TimetableStrings.reminderSettingsHeader)
+                    .foregroundStyle(SharedUIComponentsAsset.gray30.swiftUIColor)
+                    .font(.system(size: 13))
+            } footer: {
+                Text(TimetableStrings.reminderSettingsFooter.asMarkdown())
+                    .font(.systemFont(ofSize: 13), lineHeightMultiple: 1.4)
+                    .foregroundStyle(SharedUIComponentsAsset.gray30.swiftUIColor)
+                    .padding(.top, 16)
+                    .padding(.bottom, 48)
+                    .listRowInsets(EdgeInsets())
+            }
+        }
     }
 
     private func reminderRow(for reminderViewModel: LectureReminderViewModel) -> some View {
