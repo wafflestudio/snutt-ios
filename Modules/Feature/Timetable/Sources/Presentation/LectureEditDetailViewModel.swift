@@ -314,7 +314,7 @@ extension LectureEditDetailViewModel {
         }
 
         public var previewOptions: LectureDetailPreviewOptions? {
-            if case let .preview(options, _) = self {
+            if case .preview(let options, _) = self {
                 return options
             }
             return nil
@@ -342,12 +342,7 @@ extension LectureEditDetailViewModel {
 
 extension Lecture {
     var quotaDescription: String? {
-        get {
-            if let quota, let freshmenQuota {
-                return "\(quota)(\(freshmenQuota))"
-            }
-            return nil
-        }
+        get { quota.map { "\($0)(\($0 - (freshmenQuota ?? 0)))" } }
         set {}
     }
 }
