@@ -27,7 +27,10 @@ public struct OnboardScene: View {
 
                     VStack(spacing: 0) {
                         VStack(spacing: 8) {
-                            ProminentButton(label: AuthStrings.onboardLoginButton) {
+                            ProminentButton(
+                                label: AuthStrings.onboardLoginButton,
+                                font: .systemFont(ofSize: 15, weight: .bold)
+                            ) {
                                 viewModel.paths.append(.loginLocal)
                             }
 
@@ -113,11 +116,11 @@ public struct OnboardScene: View {
                     FindLocalIDScene(viewModel: viewModel)
                 case .resetLocalPassword:
                     ResetPasswordScene(viewModel: viewModel)
-                case let .verificationCode(email, mode, localID):
+                case .verificationCode(let email, let mode, let localID):
                     VerificationCodeScene(viewModel: viewModel, email: email, mode: mode, localID: localID)
-                case let .enterNewPassword(localID, verificationCode):
+                case .enterNewPassword(let localID, let verificationCode):
                     EnterNewPasswordScene(viewModel: viewModel, localID: localID, verificationCode: verificationCode)
-                case let .emailVerification(email):
+                case .emailVerification(let email):
                     EmailVerificationPromptScene(viewModel: viewModel, email: email)
                 case .userSupport:
                     UserSupportScene(viewModel: viewModel)

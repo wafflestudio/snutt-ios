@@ -132,7 +132,7 @@ struct ThemeEditDetailScene: View {
                 supportsOpacity: false
             )
         } label: {
-            HStack(spacing: 15) {
+            HStack(spacing: 16) {
                 LectureColorPreview(lectureColor: identifiableColor.color)
                     .frame(height: 25)
                 Text(ThemesStrings.colorNumber(index + 1))
@@ -156,6 +156,7 @@ struct ThemeEditDetailScene: View {
                 }
                 .buttonStyle(.plain)
             }
+            .padding(.trailing, 4)
         }
     }
 

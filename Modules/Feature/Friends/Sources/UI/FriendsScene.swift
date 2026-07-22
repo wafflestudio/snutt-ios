@@ -61,6 +61,7 @@ public struct FriendsScene: View {
                     timetableView(friendContent: nil).opacity(0.5)
                 }
             }
+            .frame(maxWidth: .infinity)
             .background(FriendsAsset.timetableBackground.swiftUIColor)
             .animation(.defaultSpring, value: viewModel.selectedFriend?.id)
             .customPopup(
