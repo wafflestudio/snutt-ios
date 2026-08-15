@@ -128,10 +128,6 @@ module Constants
     WIDGET_EXTENSION = "SNUTTWidgetExtension"
   end
 
-  # Slack
-  module Slack
-    CHANNEL = "#team-snutt-deploy"
-  end
 
   # Export method
   EXPORT_METHOD_APPSTORE = "app-store"
@@ -308,7 +304,7 @@ platform :ios do
       upload_build(app_config, upload_target, api_key, marketing_version, build_number)
 
       UI.success("Successfully deployed #{app_config.scheme} (build #{build_number}) to #{upload_target.display_name}!")
-      send_slack_notification(
+      send_discord_notification(
         success: true,
         config: app_config,
         target: upload_target,
@@ -317,7 +313,7 @@ platform :ios do
         tag: git_tag_name
       )
     rescue => exception
-      send_slack_notification(
+      send_discord_notification(
         success: false,
         config: app_config,
         target: upload_target,
@@ -424,19 +420,19 @@ platform :ios do
     UI.error("Error in lane #{lane}: #{exception.message}")
   end
 
-  def send_slack_notification(success:, config:, target:, version:, tag:, build: nil, error: nil)
-    webhook = ENV["SLACK_WEBHOOK"]
+  # Discord webhooks accept Slack's legacy payload format via the `/slack` suffix
+  def send_discord_notification(success:, config:, target:, version:, tag:, build: nil, error: nil)
+    webhook = ENV["DISCORD_WEBHOOK"]
     return if webhook.nil? || webhook.empty?
 
     message = success ?
       "iOS app successfully uploaded to #{target.display_name} 🎉" :
       "iOS deployment to #{target.display_name} failed 😢"
 
-    fields = build_slack_fields(config, target, version, build, tag, error)
+    fields = build_discord_fields(config, target, version, build, tag, error)
 
     slack(
       message: message,
-      channel: Constants::Slack::CHANNEL,
       slack_url: webhook,
       success: success,
       attachment_properties: {
@@ -447,7 +443,7 @@ platform :ios do
     )
   end
 
-  def build_slack_fields(config, target, version, build, tag, error)
+  def build_discord_fields(config, target, version, build, tag, error)
     github_actions_run_url = ENV["GITHUB_ACTIONS_RUN_URL"]
 
     fields = [
