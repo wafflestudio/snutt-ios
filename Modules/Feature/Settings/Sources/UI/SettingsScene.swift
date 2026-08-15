@@ -60,6 +60,14 @@ public struct SettingsScene: View {
                         title: SettingsStrings.displayTheme,
                         value: SettingsPathType.timetableTheme
                     )
+                    SettingsMenuButton(
+                        title: SettingsStrings.displayLanguage,
+                        onTap: {
+                            guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+                            UIApplication.shared.open(url)
+                        },
+                        detail: currentLanguageDisplayName
+                    )
                 } header: {
                     FormSectionHeader(SettingsStrings.display)
                 }
@@ -156,6 +164,11 @@ public struct SettingsScene: View {
             }
         }
         .analyticsScreen(.settingsHome)
+    }
+
+    private var currentLanguageDisplayName: String {
+        let code = Bundle.main.preferredLocalizations.first ?? "en"
+        return Locale.current.localizedString(forLanguageCode: code) ?? code
     }
 }
 
