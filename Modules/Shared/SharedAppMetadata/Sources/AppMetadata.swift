@@ -48,6 +48,8 @@ public struct AppMetadata: Sendable {
             buildVersion
         case .apiURL:
             Bundle.main.object(forInfoDictionaryKey: "API_SERVER_URL") as! String
+        case .language:
+            Bundle.main.preferredLocalizations.first?.hasPrefix("en") == true ? "en" : "ko"
         }
     }
 
@@ -62,7 +64,7 @@ extension AppMetadata: DependencyKey {
 }
 
 public enum AppMetadataKey: CaseIterable {
-    case appVersion, appType, osType, osVersion, apiKey, buildNumber, deviceID, deviceModel, apiURL
+    case appVersion, appType, osType, osVersion, apiKey, buildNumber, deviceID, deviceModel, apiURL, language
 
     public var keyForHeader: String? {
         switch self {
@@ -82,6 +84,8 @@ public enum AppMetadataKey: CaseIterable {
             "x-device-id"
         case .deviceModel:
             "x-device-model"
+        case .language:
+            "x-language"
         case .apiURL:
             nil
         }
