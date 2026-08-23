@@ -53,6 +53,16 @@ public class SystemUITabBarController<T: TabItem>: UITabBarController, UITabBarC
     override public func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
+        if #unavailable(iOS 26) {
+            preventTabBarTransparency()
+        }
+    }
+
+    private func preventTabBarTransparency() {
+        let appearance = UITabBarAppearance()
+        appearance.configureWithDefaultBackground()
+        tabBar.standardAppearance = appearance
+        tabBar.scrollEdgeAppearance = appearance
     }
 
     @available(iOS 26, *)
