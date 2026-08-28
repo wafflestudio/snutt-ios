@@ -23,10 +23,6 @@ public enum Weekday: Int, Sendable, Identifiable, Codable, CaseIterable {
     public var shortSymbol: String {
         Calendar.current.shortWeekdaySymbols[sundayIndexedId]
     }
-
-    public var veryShortSymbol: String {
-        Calendar.current.veryShortWeekdaySymbols[sundayIndexedId]
-    }
 }
 
 extension Date {

@@ -17,7 +17,7 @@ public struct TimePlace: Sendable, Codable, Equatable, Identifiable, CustomStrin
     public var place: String
     public let isCustom: Bool
     public var description: String {
-        "\(day.veryShortSymbol)(\(startTime.description)~\(endTime.description))"
+        "\(day.shortSymbol)(\(startTime.description)~\(endTime.description))"
     }
 
     public init(
