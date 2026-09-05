@@ -17,7 +17,7 @@ extension View {
                 .font(Font(font))
                 .lineHeight(.multiple(factor: lineHeightMultiple))
         } else {
-            let extra = font.pointSize * lineHeightMultiple
+            let extra = font.pointSize * (lineHeightMultiple - 1)
             let spacing = (extra * 0.5)
             return
                 self
