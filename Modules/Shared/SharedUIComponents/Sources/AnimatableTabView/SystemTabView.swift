@@ -26,13 +26,18 @@ public class SystemUITabBarController<T: TabItem>: UITabBarController, UITabBarC
             }
             let hostingController = UIHostingController(rootView: rootView)
             let tabItem = scene.tabItem
-            let uiTabItem =
-                if tabItem.isSearchRole {
-                    UITabBarItem(tabBarSystemItem: .search, tag: tabItem.viewIndex())
-                } else {
-                    UITabBarItem()
-                }
-            if UIDevice.current.userInterfaceIdiom == .pad {
+            let isPad = UIDevice.current.userInterfaceIdiom == .pad
+            let uiTabItem: UITabBarItem
+            if isPad, tabItem.isSearchRole {
+                uiTabItem = UITabBarItem(tabBarSystemItem: .search, tag: tabItem.viewIndex())
+            } else if #available(iOS 26, *), tabItem.isSearchRole {
+                uiTabItem = UITabBarItem(tabBarSystemItem: .search, tag: tabItem.viewIndex())
+            } else {
+                // A system search item's title can't be cleared on iOS < 26, so use a
+                // plain item there instead to actually hide the label.
+                uiTabItem = UITabBarItem()
+            }
+            if isPad {
                 uiTabItem.title = tabItem.title
             } else if #unavailable(iOS 26) {
                 uiTabItem.title = nil
