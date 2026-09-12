@@ -26,7 +26,7 @@ public class SystemUITabBarController<T: TabItem>: UITabBarController, UITabBarC
             }
             let hostingController = UIHostingController(rootView: rootView)
             let tabItem = scene.tabItem
-            let isPad = UIDevice.current.userInterfaceIdiom == .pad
+            let isPad = traitCollection.userInterfaceIdiom == .pad
             let uiTabItem: UITabBarItem
             if isPad, tabItem.isSearchRole {
                 uiTabItem = UITabBarItem(tabBarSystemItem: .search, tag: tabItem.viewIndex())
