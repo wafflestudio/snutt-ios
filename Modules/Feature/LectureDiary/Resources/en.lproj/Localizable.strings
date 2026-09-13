@@ -1,3 +1,10 @@
+/* Lecture Diary List */
+"quarter" = "%@-%@";
+"semester1" = "S";
+"semester2" = "F";
+"semesterWinter" = "W";
+"semesterSummer" = "S";
+
 /* Lecture Diary Feature */
 "lecture_diary.title" = "Lecture Diary";
 "lecture_diary.empty.title" = "Your lecture diary is empty.";

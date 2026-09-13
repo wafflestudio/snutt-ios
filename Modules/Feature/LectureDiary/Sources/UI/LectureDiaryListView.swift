@@ -9,6 +9,7 @@
 import SharedUIComponents
 import SwiftUI
 import SwiftUIUtility
+import TimetableInterface
 
 public struct LectureDiaryListView: View {
 
@@ -87,7 +88,7 @@ public struct LectureDiaryListView: View {
                     HStack(spacing: 8) {
                         ForEach(viewModel.availableQuarters, id: \.self) { quarter in
                             SemesterChip(
-                                semester: quarter.shortDescription,
+                                semester: quarter.localizedDescription,
                                 isSelected: viewModel.selectedQuarter == quarter,
                                 onTap: {
                                     viewModel.selectQuarter(quarter)
@@ -122,6 +123,27 @@ public struct LectureDiaryListView: View {
     private func deleteDiary(_ id: String) {
         errorAlertHandler.withAlert {
             try await viewModel.deleteDiary(id: id)
+        }
+    }
+}
+
+extension Quarter {
+    var localizedDescription: String {
+        LectureDiaryStrings.quarter(String(year).suffix(2), semester.localizedDescription)
+    }
+}
+
+extension Semester {
+    var localizedDescription: String {
+        switch self {
+        case .first:
+            LectureDiaryStrings.semester1
+        case .summer:
+            LectureDiaryStrings.semesterSummer
+        case .second:
+            LectureDiaryStrings.semester2
+        case .winter:
+            LectureDiaryStrings.semesterWinter
         }
     }
 }
