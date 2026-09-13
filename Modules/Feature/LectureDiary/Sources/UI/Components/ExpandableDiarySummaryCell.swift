@@ -42,7 +42,6 @@ struct ExpandableDiarySummaryCell: View {
     var body: some View {
         VStack(spacing: 8) {
             headerView
-
             if isExpanded {
                 VStack(spacing: 16) {
                     ForEach(diaryList) { diary in
