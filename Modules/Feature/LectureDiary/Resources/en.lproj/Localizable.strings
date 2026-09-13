@@ -1,7 +1,7 @@
 /* Lecture Diary List */
 "quarter" = "%@-%@";
-"semester1" = "S";
-"semester2" = "F";
+"semester1" = "1";
+"semester2" = "2";
 "semesterWinter" = "W";
 "semesterSummer" = "S";
 
