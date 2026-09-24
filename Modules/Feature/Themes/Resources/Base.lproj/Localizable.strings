@@ -34,7 +34,7 @@
 
 /* Theme Edit Detail Scene */
 "newTheme" = "새 테마";
-"builtinTheme" = "내장 테마";
+"builtinTheme" = "기본 테마";
 "customTheme" = "커스텀 테마";
 "downloadedTheme" = "담은 테마";
 "themeName" = "테마명";

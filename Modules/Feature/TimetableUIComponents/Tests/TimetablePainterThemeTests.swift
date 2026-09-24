@@ -42,7 +42,7 @@ struct TimetablePainterThemeTests {
         #expect(color == Theme.fall.colors[1])
     }
 
-    @Test("내장 테마에서 colorIndex가 0이고 customColor가 있으면 customColor를 사용한다")
+    @Test("기본 테마에서 colorIndex가 0이고 customColor가 있으면 customColor를 사용한다")
     func builtInThemeCustomColor() {
         let customColor = LectureColor(fgHex: "#000000", bgHex: "#FF0000")
         let lecture = Lecture.stub(timetableLectureID: "1", colorIndex: 0, customColor: customColor)
@@ -52,7 +52,7 @@ struct TimetablePainterThemeTests {
         #expect(color == customColor)
     }
 
-    @Test("내장 테마에서 colorIndex가 1 이상이면 테마의 (colorIndex - 1) 색상을 사용한다")
+    @Test("기본 테마에서 colorIndex가 1 이상이면 테마의 (colorIndex - 1) 색상을 사용한다")
     func builtInThemeColorIndex() {
         let lecture = Lecture.stub(timetableLectureID: "1", colorIndex: 3)
         let timetable = Timetable.stub(lectures: [lecture], theme: .builtInTheme(.fall))
@@ -61,7 +61,7 @@ struct TimetablePainterThemeTests {
         #expect(color == Theme.fall.colors[2])
     }
 
-    @Test("내장 테마에서 colorIndex가 0이지만 customColor가 없으면 temporary 색상을 반환한다")
+    @Test("기본 테마에서 colorIndex가 0이지만 customColor가 없으면 temporary 색상을 반환한다")
     func builtInThemeColorIndexZeroNoCustom() {
         let lecture = Lecture.stub(timetableLectureID: "1", colorIndex: 0, customColor: nil)
         let timetable = Timetable.stub(lectures: [lecture], theme: .builtInTheme(.ice))

@@ -32,7 +32,7 @@ public struct Theme: Identifiable, Sendable, Codable, Equatable {
         case customPrivate
         /// 공개 커스텀 테마
         case customPublished
-        /// 내장 테마
+        /// 기본 테마
         case builtIn
     }
 }
