@@ -35,6 +35,6 @@ public struct ReviewsWebScene: View {
                 webView.setColorScheme(colorScheme: colorScheme)
             }
         )
-        .ignoresSafeArea()
+        .ignoresSafeArea(edges: [.horizontal, .bottom])
     }
 }
