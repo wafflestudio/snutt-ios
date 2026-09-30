@@ -97,14 +97,14 @@ private struct HowToApplyThemeInfoView: View {
                 Text(ThemesStrings.settingsHowtoQuestion)
                     .font(.system(size: 12, weight: .bold))
             }
-            Group {
+            VStack(alignment: .leading, spacing: 2) {
                 Text(ThemesStrings.settingsHowtoAnswer1)
-                    .lineSpacing(1.3)
+                    .font(.systemFont(ofSize: 12), lineHeightMultiple: 1.4)
                 Text(ThemesStrings.settingsHowtoAnswer2)
+                    .font(.system(size: 12))
             }
-            .font(.system(size: 12))
         }
-        .padding(.top, 24)
+        .padding(.top, 20)
         .padding(.bottom, 40)
         .foregroundStyle(SharedUIComponentsAsset.gray2.swiftUIColor)
     }
