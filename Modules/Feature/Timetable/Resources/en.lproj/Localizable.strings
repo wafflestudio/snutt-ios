@@ -93,12 +93,12 @@
 "edit.field.color" = "Color";
 "edit.field.department" = "Department";
 "edit.field.academicYear" = "Academic Year";
-"edit.field.classification" = "Classification";
+"edit.field.classification" = "Classi-\nfication";
 "edit.field.category" = "Category";
-"edit.field.categoryPre2025" = "Category (~2024)";
+"edit.field.categoryPre2025" = "Category\n(~2024)";
 "edit.field.courseNumber" = "Course Number";
 "edit.field.lectureNumber" = "Lecture Number";
-"edit.field.quota" = "Quota (Students)";
+"edit.field.quota" = "Quota\n(Enrolled)";
 "edit.field.remark" = "Remark";
 
 "edit.timePlace.title" = "Time & Place";

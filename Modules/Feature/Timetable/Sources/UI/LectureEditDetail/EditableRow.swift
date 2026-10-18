@@ -106,9 +106,9 @@ struct DetailLabel: View {
             Text(text)
                 .padding(.trailing, 10)
                 .padding(.top, 2.5)
-                .font(.system(size: 14))
+                .font(.system(size: 13))
                 .foregroundColor(Color(uiColor: .label.withAlphaComponent(0.6)))
-                .lineLimit(1)
+                .lineLimit(2)
                 .frame(maxWidth: 84, maxHeight: .infinity, alignment: .topLeading)
         }
     }
