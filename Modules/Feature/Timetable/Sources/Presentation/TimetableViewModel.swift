@@ -65,7 +65,7 @@ public class TimetableViewModel: TimetableViewModelProtocol {
     private(set) var courseBookState: CourseBookState = .loading
 
     public var currentTimetable: Timetable? {
-        if case let .loaded(timetable) = timetableLoadState {
+        if case .loaded(let timetable) = timetableLoadState {
             return timetable
         }
         return nil
@@ -89,7 +89,7 @@ public class TimetableViewModel: TimetableViewModelProtocol {
 
     var availableQuarters: [Quarter] {
         switch courseBookState {
-        case let .loaded(courseBooks):
+        case .loaded(let courseBooks):
             return courseBooks.map { $0.quarter }.sorted { $0 > $1 }
         default:
             return []
@@ -112,9 +112,15 @@ public class TimetableViewModel: TimetableViewModelProtocol {
 
     func loadTimetable() async throws {
         switch timetableLoadState {
-        case let .loaded(currentTimetable):
+        case .loaded(let currentTimetable):
             // Already loaded, refresh the current timetable
-            try await selectTimetable(timetableID: currentTimetable.id)
+            do {
+                try await selectTimetable(timetableID: currentTimetable.id)
+            } catch {
+                // Cached timetable may be stale (e.g. deleted on another device), fall back to recent timetable
+                let timetable = try await timetableUseCase.fetchRecentTimetable()
+                timetableLoadState = .loaded(timetable)
+            }
         case .loading, .failed:
             // Not loaded yet or failed, fetch recent timetable
             do {
@@ -163,7 +169,7 @@ public class TimetableViewModel: TimetableViewModelProtocol {
     }
 
     func deleteTimetable(timetableID: TimetableID) async throws {
-        guard case let .loaded(metadataList) = metadataLoadState,
+        guard case .loaded(let metadataList) = metadataLoadState,
             let originalIndex = metadataList.firstIndex(where: { $0.id == timetableID })
         else { throw LocalizedErrorCode.timetableNotFound }
         let newMetadataList = try await timetableRepository.deleteTimetable(timetableID: timetableID)
@@ -185,7 +191,7 @@ public class TimetableViewModel: TimetableViewModelProtocol {
     }
 
     private func updatePrimaryState(timetableID: TimetableID, isPrimary: Bool) {
-        guard case let .loaded(metadataList) = metadataLoadState else { return }
+        guard case .loaded(let metadataList) = metadataLoadState else { return }
         metadataLoadState = .loaded(
             metadataList.map {
                 var metadata = $0
@@ -326,13 +332,13 @@ public enum TimetableDetailSceneTypes: Hashable {
             true
         case (.notificationList, .notificationList):
             true
-        case let (.lectureCreate(lhs), .lectureCreate(rhs)):
+        case (.lectureCreate(let lhs), .lectureCreate(let rhs)):
             lhs.id == rhs.id
-        case let (.lectureColorSelection(lhs), .lectureColorSelection(rhs)):
+        case (.lectureColorSelection(let lhs), .lectureColorSelection(let rhs)):
             lhs.lectureID == rhs.lectureID
-        case let (.lectureDetail(lhs, _), .lectureDetail(rhs, _)):
+        case (.lectureDetail(let lhs, _), .lectureDetail(let rhs, _)):
             lhs.id == rhs.id
-        case let (.lecturePreview(lhs, _), .lecturePreview(rhs, _)):
+        case (.lecturePreview(let lhs, _), .lecturePreview(let rhs, _)):
             lhs.id == rhs.id
         #if FEATURE_LECTURE_DIARY
         case (.lectureDiaryList, .lectureDiaryList):
@@ -351,16 +357,16 @@ public enum TimetableDetailSceneTypes: Hashable {
             hasher.combine(1)
         case .notificationList:
             hasher.combine(2)
-        case let .lectureDetail(lecture, _):
+        case .lectureDetail(let lecture, _):
             hasher.combine(3)
             hasher.combine(lecture.id)
-        case let .lecturePreview(lecture, _):
+        case .lecturePreview(let lecture, _):
             hasher.combine(4)
             hasher.combine(lecture.id)
-        case let .lectureCreate(lecture):
+        case .lectureCreate(let lecture):
             hasher.combine(5)
             hasher.combine(lecture.id)
-        case let .lectureColorSelection(viewModel):
+        case .lectureColorSelection(let viewModel):
             hasher.combine(6)
             hasher.combine(viewModel.lectureID)
         #if FEATURE_LECTURE_DIARY
