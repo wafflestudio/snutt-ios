@@ -47,14 +47,24 @@ struct EditableRow<Value: Sendable>: View {
             Group {
                 switch container {
                 case let container as ValueContainer<String?> where multiline:
-                    PlaceholderTextEditor(
-                        placeholder: container.placeholderText,
-                        text: container.bindingNonOptional
+                    TextField(
+                        label,
+                        text: container.bindingNonOptional,
+                        prompt: Text(container.placeholderText),
+                        axis: .vertical
                     )
                 case let container as ValueContainer<String>:
-                    TextField(label, text: container.binding, prompt: Text(container.placeholderText))
+                    TextField(
+                        label,
+                        text: container.binding,
+                        prompt: Text(container.placeholderText)
+                    )
                 case let container as ValueContainer<String?>:
-                    TextField(label, text: container.bindingNonOptional, prompt: Text(container.placeholderText))
+                    TextField(
+                        label,
+                        text: container.bindingNonOptional,
+                        prompt: Text(container.placeholderText)
+                    )
                 case let container as ValueContainer<Int64?>:
                     TextField(
                         label,
