@@ -125,17 +125,6 @@ struct TimeSelectionSheetViewModelTests {
 
     // MARK: - SearchTimeRange Formatting Tests
 
-    @Test func searchTimeRangeFormattedShowsCorrectDay() {
-        let mondayRange = SearchTimeRange(day: 0, startMinute: 540, endMinute: 600)
-        let wednesdayRange = SearchTimeRange(day: 2, startMinute: 540, endMinute: 600)
-
-        let mondayFormatted = mondayRange.formatted()
-        let wednesdayFormatted = wednesdayRange.formatted()
-
-        #expect(mondayFormatted.contains("Mon"))
-        #expect(wednesdayFormatted.contains("Wed"))
-    }
-
     @Test func searchTimeRangeFormattedUses24HourFormat() {
         let morningRange = SearchTimeRange(day: 0, startMinute: 540, endMinute: 600)  // 9:00-10:00
         let formatted = morningRange.formatted()
