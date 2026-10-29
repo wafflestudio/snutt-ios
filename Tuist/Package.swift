@@ -41,7 +41,9 @@ let packageSettings = PackageSettings(
 let package = Package(
     name: "SNUTT",
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.7.0"),
+        // 1.10.0 adds a built-in `\.notificationCenter` that clashes with swift-dependencies-additions,
+        // and 1.17.0 drops the XCTestDynamicOverlay re-export that swift-dependencies-additions relies on
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", "1.7.0"..<"1.10.0"),
         .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.4.0"),
         .package(url: "https://github.com/apple/swift-openapi-urlsession", from: "1.0.1"),
         .package(url: "https://github.com/apple/swift-http-types.git", from: "1.0.0"),
