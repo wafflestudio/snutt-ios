@@ -4,12 +4,12 @@ import AnalyticsInterface
 import Auth
 import AuthInterface
 import Dependencies
+import Evaluations
 import FoundationUtility
 import Friends
 import Notifications
 import NotificationsInterface
 import Popup
-import Reviews
 import Settings
 import SharedUIComponents
 import SwiftUI

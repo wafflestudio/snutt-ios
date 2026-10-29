@@ -5,7 +5,7 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
-import ReviewsInterface
+import EvaluationsInterface
 import SharedUIComponents
 import SwiftUI
 import TimetableInterface
@@ -14,7 +14,7 @@ import UIKit
 struct LectureSearchResultScene: View {
     @Bindable var viewModel: LectureSearchViewModel
     @Environment(\.errorAlertHandler) var errorAlertHandler
-    @Environment(\.reviewsUIProvider) var reviewsUIProvider
+    @Environment(\.evaluationsUIProvider) var evaluationsUIProvider
     @Environment(\.isSearching) var isSearching
 
     var body: some View {
@@ -86,7 +86,7 @@ struct LectureSearchResultScene: View {
             )
         ) {
             if let evLectureID = viewModel.targetForLectureReview?.evLecture?.evLectureID {
-                reviewsUIProvider.makeReviewsScene(for: evLectureID)
+                evaluationsUIProvider.makeEvaluationsScene(for: evLectureID)
             }
         }
         .onAppear {

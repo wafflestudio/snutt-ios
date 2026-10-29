@@ -6,10 +6,10 @@
 //
 
 import AnalyticsInterface
+import Evaluations
 import Friends
 import Notifications
 import NotificationsInterface
-import Reviews
 import Settings
 import SharedUIComponents
 import SwiftUI
@@ -51,8 +51,7 @@ struct MainContentView: View {
                 )
                 TabScene(
                     tabItem: TabItem.review,
-                    rootView: ReviewsWebScene()
-                        .modifier(AnalyticsScreenModifier(screen: Reviews.AnalyticsScreen.reviewHome))
+                    rootView: reviewRootView
                 )
                 TabScene(
                     tabItem: TabItem.friends,
@@ -99,5 +98,15 @@ struct MainContentView: View {
                 try? await viewModel.handleURLScheme(url)
             }
         }
+    }
+
+    private var reviewRootView: some View {
+        #if DEBUG
+        EvaluationScene()
+            .modifier(AnalyticsScreenModifier(screen: Evaluations.AnalyticsScreen.reviewHome))
+        #else
+        EvaluationHomeScene()
+            .modifier(AnalyticsScreenModifier(screen: Evaluations.AnalyticsScreen.reviewHome))
+        #endif
     }
 }
