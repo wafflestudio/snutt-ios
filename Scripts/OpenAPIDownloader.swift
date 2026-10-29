@@ -110,6 +110,7 @@ struct OpenAPIDownloader: Sendable {
             )
         case .ev:
             validatedObject.fixEvLectureSummaryParameterSchemaIfNeeded()
+            validatedObject.replaceWildcardJsonContentTypesRecursively()
         }
         validatedObject.transformJsonEnumTypesRecursively()
         return validatedObject
@@ -202,6 +203,30 @@ extension Dictionary where Key == String, Value == Any {
         lectureSummary["get"] = get
         paths["/v1/lectures/snutt-summary"] = lectureSummary
         self["paths"] = paths
+    }
+
+    mutating func replaceWildcardJsonContentTypesRecursively() {
+        for key in keys {
+            if var nestedDict = self[key] as? [String: Any] {
+                nestedDict.replaceWildcardJsonContentTypesRecursively()
+                self[key] = nestedDict
+            } else if var nestedArray = self[key] as? [[String: Any]] {
+                for index in nestedArray.indices {
+                    nestedArray[index].replaceWildcardJsonContentTypesRecursively()
+                }
+                self[key] = nestedArray
+            }
+        }
+        guard var content = self["content"] as? [String: Any],
+            let wildcardContent = content["*/*"] as? [String: Any],
+            wildcardContent["schema"] != nil,
+            content["application/json"] == nil
+        else {
+            return
+        }
+        content["application/json"] = wildcardContent
+        content.removeValue(forKey: "*/*")
+        self["content"] = content
     }
 
     mutating func transformJsonEnumTypesRecursively() {
