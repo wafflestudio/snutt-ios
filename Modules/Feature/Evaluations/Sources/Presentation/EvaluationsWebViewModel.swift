@@ -1,5 +1,5 @@
 //
-//  ReviewsWebViewModel.swift
+//  EvaluationsWebViewModel.swift
 //  SNUTT
 //
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
@@ -13,7 +13,7 @@ import SharedAppMetadata
 
 @MainActor
 @Observable
-final class ReviewsWebViewModel {
+final class EvaluationsWebViewModel {
     @ObservationIgnored
     @Dependency(\.appMetadata) private var appMetadata
 

@@ -8,8 +8,8 @@
 import AppReviewPromptInterface
 import DependenciesAdditions
 import DependenciesUtility
+import EvaluationsInterface
 import MemberwiseInit
-import ReviewsInterface
 import SharedUIComponents
 import SwiftUI
 import ThemesInterface
@@ -27,7 +27,7 @@ struct LectureEditDetailScene: View {
     @State private var showDeleteConfirmation: Bool = false
     @State private var syllabusURL: URL?
     @State private var showSyllabusWebView: Bool = false
-    @State private var showReviewsScene: Bool = false
+    @State private var showEvaluationsScene: Bool = false
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
@@ -35,7 +35,7 @@ struct LectureEditDetailScene: View {
     @Environment(\.timetableViewModel) var timetableViewModel: any TimetableViewModelProtocol
     @Environment(\.errorAlertHandler) var errorAlertHandler
     @Environment(\.lectureTimeConflictHandler) var conflictHandler
-    @Environment(\.reviewsUIProvider) private var reviewsUIProvider
+    @Environment(\.evaluationsUIProvider) private var evaluationsUIProvider
     @Environment(\.presentToast) var presentToast
     @Dependency(\.notificationCenter) var notificationCenter
     @Dependency(\.appReviewService) var appReviewService
@@ -135,9 +135,9 @@ struct LectureEditDetailScene: View {
                     .analyticsScreen(.lectureSyllabus(.init(lectureID: viewModel.entryLecture.id)))
             }
         }
-        .sheet(isPresented: $showReviewsScene) {
+        .sheet(isPresented: $showEvaluationsScene) {
             if let evLectureID = viewModel.entryLecture.evLecture?.evLectureID {
-                reviewsUIProvider.makeReviewsScene(for: evLectureID)
+                evaluationsUIProvider.makeEvaluationsScene(for: evLectureID)
                     .analyticsScreen(
                         .reviewDetail(.init(lectureID: viewModel.entryLecture.id, referrer: .lectureDetail))
                     )
@@ -290,7 +290,7 @@ struct LectureEditDetailScene: View {
                 }
 
                 ActionButton(TimetableStrings.lectureActionReview) {
-                    showReviewsScene = true
+                    showEvaluationsScene = true
                 }
             }
 

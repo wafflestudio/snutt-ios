@@ -16,7 +16,7 @@ let project = Project.app(
                 .target(name: "TimetableUIComponents"),
                 .target(name: "TimetableInterface"),
                 .target(name: "ThemesInterface"),
-                .target(name: "ReviewsInterface"),
+                .target(name: "EvaluationsInterface"),
                 .target(name: "NotificationsInterface"),
                 .target(name: "VacancyInterface"),
                 .target(name: "LectureDiaryInterface"),
@@ -200,17 +200,26 @@ let project = Project.app(
             ],
         ),
         .module(
-            name: "Reviews",
+            name: "Evaluations",
             category: .feature,
             dependencies: [
                 .target(name: "AnalyticsInterface"),
                 .target(name: "SharedUIWebKit"),
+                .target(name: "SharedUIComponents"),
+                .target(name: "SwiftUIUtility"),
+                .target(name: "SwiftUtility"),
                 .target(name: "AuthInterface"),
-                .target(name: "ReviewsInterface"),
+                .target(name: "EvaluationsInterface"),
                 .target(name: "SharedAppMetadata"),
+                .target(name: "TimetableInterface"),
                 .external(name: "Dependencies"),
                 .external(name: "OpenAPIRuntime"),
                 .external(name: "OpenAPIURLSession"),
+                .external(name: "MemberwiseInit"),
+                .external(name: "Tagged"),
+            ],
+            testDependencies: [
+                .external(name: "Dependencies")
             ]
         ),
         .module(
@@ -357,10 +366,11 @@ let project = Project.app(
             additionalResources: ["OpenAPI/**", "Modules/Feature/APIClientInterface/Resources/**"]
         ),
         .module(
-            name: "ReviewsInterface",
+            name: "EvaluationsInterface",
             category: .featureInterface,
             dependencies: [
-                .external(name: "Dependencies")
+                .external(name: "Dependencies"),
+                .external(name: "Tagged"),
             ]
         ),
         .module(
