@@ -12,7 +12,7 @@ fi
 
 TYPES_OUTPUT_DIR="Modules/Feature/APIClientInterface/Sources/Generated"
 CLIENT_OUTPUT_DIR="Modules/Feature/APIClient/Sources/Generated"
-EV_OUTPUT_DIR="Modules/Feature/Reviews/Sources/Infra/Generated"
+EV_OUTPUT_DIR="Modules/Feature/Evaluations/Sources/Infra/Generated"
 
 generate_main_for_config() {
     local config=$1
