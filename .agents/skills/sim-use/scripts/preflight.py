@@ -1,0 +1,281 @@
+#!/usr/bin/env python3
+# SPDX-License-Identifier: Apache-2.0
+"""
+sim-use preflight check.
+
+Verifies that sim-use is installed, the target device is reachable,
+and the daemon is healthy. Run before first interaction with a device.
+
+Usage:
+    python3 preflight.py --device <UDID>
+    python3 preflight.py                    # auto-resolve single device
+"""
+
+import argparse
+import json
+import re
+import shutil
+import subprocess
+import sys
+from dataclasses import dataclass, field
+from typing import Callable, Optional
+
+
+MINIMUM_SIM_USE_VERSION = (0, 16, 0)
+
+
+# ---------------------------------------------------------------------------
+# Check framework
+# ---------------------------------------------------------------------------
+
+@dataclass
+class Check:
+    id: str
+    description: str
+    run: Callable[["Ctx"], bool]
+    on_fail: str = "abort"  # abort | auto | prompt
+    autofix: Optional[Callable[["Ctx"], bool]] = None
+    fix_hint: str = ""
+
+
+@dataclass
+class Ctx:
+    device: Optional[str] = None
+    sim_use_bin: str = "sim-use"
+    platform: Optional[str] = None  # "ios" or "android", detected
+    content_warning: Optional[str] = None  # "remote_content_recovery" or "empty_outline"
+    ui_is_ios_simulator: bool = False
+    errors: list = field(default_factory=list)
+
+    def run_sim_use(self, *args: str, check: bool = False) -> subprocess.CompletedProcess:
+        cmd = [self.sim_use_bin] + list(args)
+        if self.device:
+            cmd.extend(["--device", self.device])
+        return subprocess.run(cmd, capture_output=True, text=True, check=check)
+
+    def run_sim_use_json(self, *args: str) -> Optional[dict]:
+        result = self.run_sim_use(*args, "--json")
+        if result.returncode != 0:
+            return None
+        try:
+            return json.loads(result.stdout)
+        except json.JSONDecodeError:
+            return None
+
+
+def run_checks(checks: list[Check], ctx: Ctx) -> bool:
+    all_passed = True
+    for c in checks:
+        passed = c.run(ctx)
+        if passed:
+            print(f"  PASS  {c.description}")
+            continue
+
+        if c.on_fail == "auto" and c.autofix:
+            print(f"  FIX   {c.description} -- attempting autofix...")
+            if c.autofix(ctx) and c.run(ctx):
+                print(f"  PASS  {c.description} (after autofix)")
+                continue
+
+        print(f"  FAIL  {c.description}")
+        if c.fix_hint:
+            print(f"        hint: {c.fix_hint}")
+        ctx.errors.append(c.id)
+        all_passed = False
+
+        if c.on_fail == "abort":
+            print("\n  Aborting -- later checks depend on this one.")
+            break
+
+    return all_passed
+
+
+# ---------------------------------------------------------------------------
+# Checks
+# ---------------------------------------------------------------------------
+
+def check_sim_use_installed(ctx: Ctx) -> bool:
+    return shutil.which(ctx.sim_use_bin) is not None
+
+
+def parse_version(value: str) -> Optional[tuple[int, ...]]:
+    match = re.fullmatch(r"v?(\d+)\.(\d+)\.(\d+)", value.strip())
+    return tuple(int(part) for part in match.groups()) if match else None
+
+
+def check_sim_use_compatible(ctx: Ctx) -> bool:
+    result = subprocess.run(
+        [ctx.sim_use_bin, "--version"],
+        capture_output=True, text=True,
+    )
+    if result.returncode != 0:
+        return False
+    version = parse_version(result.stdout or result.stderr)
+    # Dev and dirty stamps are unparseable by design. Only release builds are
+    # gated, matching the Swift-side ReleaseVersion / BridgeClient behavior.
+    return version is None or version >= MINIMUM_SIM_USE_VERSION
+
+
+def check_device_listed(ctx: Ctx) -> bool:
+    result = subprocess.run(
+        [ctx.sim_use_bin, "devices", "--json"],
+        capture_output=True, text=True,
+    )
+    if result.returncode != 0:
+        return False
+    try:
+        data = json.loads(result.stdout)
+        devices = data.get("data", {}).get("devices", [])
+    except (json.JSONDecodeError, AttributeError):
+        return False
+
+    if not ctx.device:
+        booted = [d for d in devices if d.get("state", "").lower() in ("booted", "device")]
+        if len(booted) == 1:
+            ctx.device = booted[0].get("deviceId") or booted[0].get("udid")
+            ctx.platform = booted[0].get("platform")
+            return True
+        if len(booted) > 1:
+            names = [f"{d.get('name')} ({d.get('deviceId') or d.get('udid')})" for d in booted]
+            print(f"        Multiple devices found: {', '.join(names)}")
+            print("        Re-run with --device <UDID> to pick one.")
+        return False
+
+    for d in devices:
+        # `deviceId` is the canonical key; `udid` covers older sim-use
+        # binaries that predate the rename.
+        did = d.get("deviceId") or d.get("udid", "")
+        if did == ctx.device:
+            ctx.platform = d.get("platform")
+            return True
+    return False
+
+
+def autofix_boot_simulator(ctx: Ctx) -> bool:
+    if not ctx.device:
+        return False
+    result = subprocess.run(
+        ["xcrun", "simctl", "boot", ctx.device],
+        capture_output=True, text=True,
+    )
+    if result.returncode == 0:
+        import time
+        time.sleep(2)
+    return result.returncode == 0
+
+
+def check_ui_responds(ctx: Ctx) -> bool:
+    ctx.content_warning = None
+    envelope = ctx.run_sim_use_json("ui")
+    if envelope is None or envelope.get("ok") is not True:
+        return False
+    data = envelope.get("data")
+    if not isinstance(data, dict):
+        data = {}
+    is_ios = data.get("platform") == "ios"
+    is_physical_ios = is_ios and data.get("kind") == "physical"
+    ctx.ui_is_ios_simulator = is_ios and not is_physical_ios
+    advisory = envelope.get("advisory")
+    if isinstance(advisory, dict) and advisory.get("kind") == "remote_content_recovery":
+        ctx.content_warning = "remote_content_recovery"
+    # Physical iOS reads always carry an empty `entries` list; the outline
+    # text is their payload, so they are the only reads not checked.
+    elif not is_physical_ios and data.get("entries") == []:
+        ctx.content_warning = "empty_outline"
+    return True
+
+
+def print_content_warning(ctx: Ctx) -> None:
+    if ctx.content_warning == "remote_content_recovery":
+        print("  WARN  UI content: remote_content_recovery")
+        print("        The app tree was empty; content was recovered from other processes.")
+        print("        This can be normal for a system picker.")
+    else:
+        print("  WARN  UI content: empty outline")
+        print("        The read succeeded, but the outline contains no elements.")
+    print("        Compare the outline with the visible screen.")
+    if ctx.ui_is_ios_simulator:
+        print("        If visible app controls are missing, check ApplicationAccessibilityEnabled")
+        print("        in com.apple.Accessibility before an app relaunch.")
+    print("        See 'Missing app controls in the outline' in references/pitfalls.md.")
+
+
+def autofix_daemon_restart(ctx: Ctx) -> bool:
+    # `daemon stop --all` is mutually exclusive with `--device`, so bypass
+    # run_sim_use (which appends --device when a device is set and would make
+    # the command fail with "Specify either --device <id> or --all").
+    subprocess.run(
+        [ctx.sim_use_bin, "daemon", "stop", "--all"],
+        capture_output=True, text=True,
+    )
+    return True
+
+
+def shared_checks() -> list[Check]:
+    return [
+        Check(
+            id="sim_use_installed",
+            description="sim-use is on PATH",
+            run=check_sim_use_installed,
+            on_fail="abort",
+            fix_hint="Install sim-use: brew tap lycorp-jp/tap && brew install lycorp-jp/tap/sim-use (run 'brew trust lycorp-jp/tap' first if you see an untrusted-tap error)",
+        ),
+        Check(
+            id="sim_use_compatible",
+            description="sim-use version is compatible with this skill",
+            run=check_sim_use_compatible,
+            on_fail="abort",
+            fix_hint=(
+                f"Upgrade sim-use to >= {'.'.join(map(str, MINIMUM_SIM_USE_VERSION))}: "
+                "brew update && brew upgrade lycorp-jp/tap/sim-use"
+            ),
+        ),
+        Check(
+            id="device_listed",
+            description="target device is listed and reachable",
+            run=check_device_listed,
+            on_fail="abort",
+            fix_hint="Boot a simulator, connect and unlock a physical iPhone/iPad, or connect an Android device, then retry.",
+        ),
+        Check(
+            id="ui_responds",
+            description="sim-use ui returns a valid response",
+            run=check_ui_responds,
+            on_fail="auto",
+            autofix=autofix_daemon_restart,
+            fix_hint="Try: sim-use daemon stop --all, then retry.",
+        ),
+    ]
+
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
+def main():
+    parser = argparse.ArgumentParser(description="sim-use preflight check")
+    parser.add_argument("--device", help="Device UDID or serial (auto-detected if omitted)")
+    parser.add_argument("--sim-use-bin", default="sim-use", help="Path to sim-use binary")
+    args = parser.parse_args()
+
+    ctx = Ctx(device=args.device, sim_use_bin=args.sim_use_bin)
+
+    print("sim-use preflight\n")
+    passed = run_checks(shared_checks(), ctx)
+    if passed and ctx.content_warning:
+        print_content_warning(ctx)
+    print()
+
+    if passed:
+        device_label = ctx.device or "(auto-resolved)"
+        platform_label = ctx.platform or "unknown"
+        summary = "Preflight passed with a content warning" if ctx.content_warning else "All checks passed"
+        print(f"{summary}. Device: {device_label} ({platform_label})")
+        sys.exit(0)
+    else:
+        print(f"Preflight failed: {', '.join(ctx.errors)}")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
