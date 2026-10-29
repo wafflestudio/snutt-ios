@@ -87,3 +87,7 @@ Use `@Entry` for simple environment values.
 - The app's Info.plist is defined in `Tuist/ProjectDescriptionHelpers/InfoPlist.swift`.
 - API hosts: Dev → `snutt-api-dev.wafflestudio.com`, Prod → `snutt-api.wafflestudio.com`
 - The widget extension lives in `SNUTTWidget/` and mostly uses Timetable functionality.
+
+## Additional Instructions
+
+@~/.claude/snutt-ios.local.md
