@@ -3,12 +3,14 @@
 ## Table of Contents
 
 - [View Structure Principles](#view-structure-principles)
-- [Recommended View File Structure](#recommended-view-file-structure)
+- [View File Structure (optional readability suggestion)](#view-file-structure-optional-readability-suggestion)
 - [Struct or Method / Computed Property?](#struct-or-method--computed-property)
-- [Prefer Modifiers Over Conditional Views](#prefer-modifiers-over-conditional-views)
 - [Extract Subviews, Not Computed Properties](#extract-subviews-not-computed-properties)
 - [@ViewBuilder](#viewbuilder)
+- [SDK 27 `@ContentBuilder`](#sdk-27-contentbuilder)
 - [Keep View Body Simple and Avoid High-Cost Operations](#keep-view-body-simple-and-avoid-high-cost-operations)
+- [Keep View `init` Cheap](#keep-view-init-cheap)
+- [Single-Child Group](#single-child-group)
 - [When to Extract Subviews](#when-to-extract-subviews)
 - [Container View Pattern](#container-view-pattern)
 - [Utilize Lazy Containers for Large Data Sets](#utilize-lazy-containers-for-large-data-sets)
@@ -26,16 +28,9 @@
 
 SwiftUI's diffing algorithm compares view hierarchies to determine what needs updating. Proper view composition directly impacts performance.
 
-## Recommended View File Structure
+## View File Structure (optional readability suggestion)
 
-Use a consistent order when declaring SwiftUI views:
-
-1. Environment Properties
-2. State Properties
-3. Private Properties
-4. Initializer (if needed)
-5. Body
-6. Computed Properties/Methods for Subviews
+Property ordering has no effect on correctness or performance, so treat this as a personal/team readability preference rather than a rule. Some developers find a consistent order easier to scan — for example, environment, then state, then passed-in properties, then `init`, body, and helper subviews. Adopt it only if your team wants the consistency; never reorder existing code solely to match it.
 
 ```swift
 struct ContentView: View {
@@ -90,13 +85,13 @@ struct ContentView: View {
     var titleView: some View {
         Text("Hello from Property")
             .font(.largeTitle)
-            .foregroundColor(.blue)
+            .foregroundStyle(.blue)
     }
 
     func messageView(text: String, color: Color) -> some View {
         Text(text)
             .font(.title)
-            .foregroundColor(color)
+            .foregroundStyle(color)
             .padding()
     }
 
@@ -109,73 +104,13 @@ struct ContentView: View {
 }
 ```
 
-## Prefer Modifiers Over Conditional Views
-
-**Prefer "no-effect" modifiers over conditionally including views.** When you introduce a branch, consider whether you're representing multiple views or two states of the same view.
-
-### Use Opacity Instead of Conditional Inclusion
-
-```swift
-// Good - same view, different states
-SomeView()
-    .opacity(isVisible ? 1 : 0)
-
-// Avoid - creates/destroys view identity
-if isVisible {
-    SomeView()
-}
-```
-
-**Why**: Conditional view inclusion can cause loss of state, poor animation performance, and breaks view identity. Using modifiers maintains view identity across state changes.
-
-### When Conditionals Are Appropriate
-
-Use conditionals when you truly have **different views**, not different states:
-
-```swift
-// Correct - fundamentally different views
-if isLoggedIn {
-    DashboardView()
-} else {
-    LoginView()
-}
-
-// Correct - optional content
-if let user {
-    UserProfileView(user: user)
-}
-```
-
-### Conditional View Modifier Extensions Break Identity
-
-A common pattern is an `if`-based `View` extension for conditional modifiers. This changes the view's return type between branches, which destroys view identity and breaks animations:
-
-```swift
-// Problematic -- different return types per branch
-extension View {
-    @ViewBuilder func `if`<T: View>(_ condition: Bool, transform: (Self) -> T) -> some View {
-        if condition {
-            transform(self)  // Returns T
-        } else {
-            self              // Returns Self
-        }
-    }
-}
-```
-
-Prefer applying the modifier directly with a ternary or always-present modifier:
-
-```swift
-// Good -- same view identity maintained
-Text("Hello")
-    .opacity(isHighlighted ? 1 : 0.5)
-
-// Good -- modifier always present, value changes
-Text("Hello")
-    .foregroundStyle(isError ? .red : .primary)
-```
+For conditional modifier composition and `AnyShapeStyle`, consult `references/modifier-patterns.md`.
 
 ## Extract Subviews, Not Computed Properties
+
+A view is SwiftUI's unit of invalidation. When an input changes, SwiftUI re-runs the body of the smallest enclosing **view type** that depends on it — every conditional, modifier chain, and string interpolation in that body, even if only one leaf actually depends on what changed. A computed property or `@ViewBuilder` helper is inlined into the parent's body, so it shares the parent's invalidation boundary and does not reduce update cost; it only reorganizes the code. A separate `View` type with narrow inputs becomes its own boundary and re-runs only when its own inputs change.
+
+This is why "split your body for readability" is also a performance tool — but only when you split into real `View` types, not computed properties.
 
 ### The Problem with @ViewBuilder Functions
 
@@ -245,6 +180,31 @@ struct ComplexSection: View {
 2. Since nothing changed, SwiftUI skips calling `ComplexSection.body`
 3. The complex view code never executes unnecessarily
 
+### Multi-section detail views
+
+The most common place this rule gets dropped is a detail screen with several distinct sections — `header + gallery + description + reviews`, `header + ingredients + steps`, `hero + specs + related`. The tempting shape is one big view with `private var header: some View`, `private var gallery: some View`, and so on. That shape shares one invalidation boundary, so a change that affects one section re-evaluates all of them. Factor each named section into its own `View` type that takes only the fields it renders, and keep the parent thin — it just composes the sections.
+
+```swift
+// PREFER: each section is its own type with narrow inputs.
+struct ProductDetailView: View {
+    let product: Product
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 24) {
+                ProductHeader(name: product.name, price: product.price)
+                ProductGallery(images: product.imageURLs)
+                ProductDescription(text: product.descriptionText)
+                ProductReviews(average: product.averageStars, count: product.reviewCount)
+            }
+            .padding()
+        }
+    }
+}
+```
+
+This generalizes to every `*DetailView`: one `View` type per section, narrow inputs each, a thin parent that composes them. Small `@ViewBuilder` fragments reused two or three times within the same body are still fine — the rule targets factoring done for organization or to manage body length, where a real `View` type does the right thing.
+
 ## @ViewBuilder
 
 Use `@ViewBuilder` functions for small, simple sections (a few views, no expensive computation) that don't affect performance. They work particularly well for static content that doesn't depend on any `@State` or `@Binding`, since SwiftUI won't need to diff them independently. Extract to a separate `struct` when the section is complex, depends on state, or needs to be skipped during re-evaluation.
@@ -282,6 +242,21 @@ Prefer `@ViewBuilder` when:
 - there is conditional branching between multiple view types
 - extracting a separate `struct` would not provide meaningful separation
 
+## SDK 27 `@ContentBuilder`
+
+SDK 27 unifies many SwiftUI result builders under `@ContentBuilder`. Block contents are no longer constrained to `View`, so previously compiling source can become ambiguous. Choose the narrow fix matching the diagnostic. Do not broadly rewrite working builders or rename unrelated types.
+
+- For ambiguous `ShapeStyle.opacity` or `blendMode` passed directly to `overlay` or `background`, select the builder overload:
+  ```swift
+  Rectangle().overlay {
+      Color.blue.opacity(0.3).blendMode(.overlay)
+  }
+  ```
+- Fully qualify a shadowed SwiftUI type, such as `SwiftUI.Color.clear`.
+- Avoid spelling concrete `TupleView` or `TupleContent` generic structures; prefer opaque `some View`. If a concrete SDK 27 type is unavoidable, the builder now produces `TupleContent`. When the deployment target is below OS 27 and a concrete `TupleView` constraint is unavoidable, construct `TupleView((...))` explicitly inside the builder as a back-deployment fallback.
+- If an empty nested builder is ambiguous, provide `EmptyContent()` or `EmptyView()`. This can occur with MapKit in the dependency graph even when the file does not import MapKit, if member-import visibility is disabled. It also occurs with a conditional-compilation branch that becomes empty.
+- For deeply branching Charts content that times out only when back-deployed (typically around 10+ `if`/`else if` or `switch` branches), extract the branches into an `@ChartContentBuilder` helper.
+
 ## Keep View Body Simple and Avoid High-Cost Operations
 
 Refrain from performing complex operations within the `body` of your view. Instead of passing a ready-to-use sequence with filtering, mapping, or sorting directly into `ForEach`, prepare the sequence outside the body.
@@ -298,26 +273,18 @@ var body: some View {
 }
 ```
 
-Prefer:
+Prefer already-prepared values. `init` is not a one-time filter — it reruns whenever the parent re-evaluates, so treat it as a constant-time copy of inputs. Cache derived collections on the model (or in `@State` updated from `.onChange`) and pass the prepared sequence in:
 
 ```swift
 struct FilteredListView: View {
-    private let filteredValues: [Int]
-
-    init(values: [Int]) {
-        self.filteredValues = values.filter { $0 > 0 } // Perform filtering once
-    }
+    let filteredValues: [Int]
 
     var body: some View {
         List {
-            content
-        }
-    }
-
-    private var content: some View {
-        ForEach(filteredValues, id: \.self) { value in
-            Text(String(value))
-                .padding()
+            ForEach(filteredValues, id: \.self) { value in
+                Text(String(value))
+                    .padding()
+            }
         }
     }
 }
@@ -330,7 +297,52 @@ General guidance:
 - avoid filtering, sorting, and mapping inline in `body`
 - avoid constructing expensive formatters in `body`
 - avoid heavy branching in large view trees
-- move data preparation into init, model layer, or dedicated helpers
+- move data preparation into the model layer or dedicated helpers; do not filter in `init`
+
+## Keep View `init` Cheap
+
+A view's `init` runs every time the parent re-evaluates its body, which can be many times per second for views inside `List`, `LazyVStack`, scroll containers, or animated parents. Treat `init` as a constant-time copy of inputs into stored properties. Don't decode JSON, build a `DateFormatter`, touch the file system, or allocate large structures there — that work repeats on every parent body pass even when the inputs are identical.
+
+```swift
+// AVOID: decoding and formatting on every init
+init(rawJSON: Data, date: Date) {
+    self.summary = try! JSONDecoder().decode(WeatherSummary.self, from: rawJSON)
+    let formatter = DateFormatter()
+    formatter.dateStyle = .medium
+    self.formattedDate = formatter.string(from: date)
+}
+
+// PREFER: take already-prepared values; format lazily in body
+let summary: WeatherSummary
+let date: Date
+
+var body: some View {
+    VStack {
+        Text(summary.headline)
+        Text(date, format: .dateTime.day().month().year())  // cached, locale-aware
+    }
+}
+```
+
+If a derived value genuinely needs to be computed once and kept, store it on an `@State`-owned `@Observable` model or compute it asynchronously in `.task` — not in `init`. `init` is not a one-time setup hook; it runs as often as the parent's body does.
+
+## Single-Child Group
+
+`Group { SomeView() }` — a `Group` with exactly one concrete child — wraps the view in an extra `Group<SomeView>` type for no visual benefit. Every modifier chained after it must be type-checked against that wrapper, adding avoidable type-checking overhead in long chains. Drop the `Group` and chain modifiers directly on the child.
+
+```swift
+// AVOID: single concrete child wrapped in Group
+Group { Text(status) }
+    .padding(.horizontal, 8)
+    .background(.thinMaterial, in: Capsule())
+
+// PREFER: chain directly on the child
+Text(status)
+    .padding(.horizontal, 8)
+    .background(.thinMaterial, in: Capsule())
+```
+
+The rule is specifically about one concrete view. A `Group` whose content is a `ForEach`, multiple sibling views, or an `if`/`else` (which produces `_ConditionalContent`) is doing real work — applying a shared modifier across siblings or both branches — and is fine.
 
 ## When to Extract Subviews
 
@@ -689,6 +701,8 @@ struct MapView: UIViewRepresentable {
 
 ### Debug SwiftUI Renderings
 
+> See `references/performance-patterns.md` (item #8) for the `_printChanges()` vs `_logChanges()` comparison and the `@self`/`@identity` output meaning. The snippets below show the call sites.
+
 If it is needed to debug render cycles and read console output you can leverage the `_printChanges()` or `_logChanges()` methods on `View`. These methods print information about when the view is being evaluated and what changes are triggering updates. This can be very helpful when your view body is called multiple times and you want to know why.
 
 ```swift
@@ -759,13 +773,13 @@ Ways to fix it:
 
 ## Summary Checklist
 
-- [ ] Follow a consistent view file structure (Environment → State → Private → Init → Body → Subviews)
-- [ ] Prefer modifiers over conditional views for state changes
-- [ ] Avoid `if`-based conditional modifier extensions (they break view identity)
 - [ ] Extract complex views into separate subviews, not computed properties
 - [ ] Keep views small for readability and performance
 - [ ] Use `@ViewBuilder` only where it actually adds value
-- [ ] Avoid heavy filtering, mapping, sorting, or formatter creation inside `body`
+- [ ] Avoid heavy filtering, mapping, sorting, or formatter creation inside `body` or `init`
+- [ ] Keep view `init` cheap (constant-time input copy; it runs on every parent body pass)
+- [ ] Resolve SDK 27 `@ContentBuilder` ambiguity with the matching narrow fix
+- [ ] Avoid single-child `Group { OneView() }` (chain modifiers directly on the child)
 - [ ] Use lazy containers for large data sets
 - [ ] Container views use `@ViewBuilder let content: Content`
 - [ ] Prefer `overlay` / `background` for decoration and `ZStack` for peer composition
