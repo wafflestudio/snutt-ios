@@ -25,18 +25,14 @@ struct SearchPredicateScrollView: View {
                                     deselect(tag)
                                 }
                             } label: {
-                                HStack(spacing: 5) {
-                                    Text(tag.localizedDescription)
-                                        .font(.system(size: 14))
-                                    Image(uiImage: TimetableAsset.xmark.image)
-                                        .renderingMode(.template)
-                                        .resizable()
-                                        .frame(width: 10, height: 10)
-                                }
-                                .foregroundStyle(.white)
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 8)
-                                .background(Capsule().fill(tag.category.backgroundColor))
+                                SearchFilterChip(
+                                    title: tag.localizedDescription,
+                                    foregroundColor: .white,
+                                    backgroundColor: tag.category.backgroundColor,
+                                    font: .system(size: 14),
+                                    icon: Image(uiImage: TimetableAsset.xmark.image),
+                                    iconSize: CGSize(width: 10, height: 10)
+                                )
                             }
                             .buttonStyle(.animatable(scale: 0.95, hapticFeedback: true))
                             .id(tag.localizedDescription)
