@@ -17,7 +17,7 @@ just openapi-dev           # Download OpenAPI spec and generate code
 - **Rerun `tuist generate --no-open`** after adding, deleting, or moving files, or changing `Project.swift`, Tuist config, or resources with generated accessors (Localizable.strings, assets).
 - **Always pass a scheme to `tuist build`.** Without one it builds every scheme.
 - **Run `tuist build` in the foreground, synchronously.** Never in the background.
-- OpenAPI output (`**/Generated/`) is gitignored. On a fresh checkout, if the build fails on missing generated types, run `just openapi-dev` first. Output locations: `APIClientInterface/Sources/Generated` (types), `APIClient/Sources/Generated` (client).
+- OpenAPI output (`**/Generated/`) is gitignored. On a fresh checkout, if the build fails on missing generated types, run `just openapi-dev` first. Output locations: `APIClientInterface/Sources/Generated` (types), `APIClient/Sources/Generated` (client), `Evaluations/Sources/Infra/Generated` (evaluation server).
 - A pre-commit hook runs swift-format (120 columns, 4-space indent, `.swift-format`).
 
 ### Schemes
