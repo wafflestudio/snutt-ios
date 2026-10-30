@@ -219,6 +219,8 @@ let project = Project.app(
             category: .feature,
             dependencies: [
                 .target(name: "AnalyticsInterface"),
+                .target(name: "APIClientInterface"),
+                .target(name: "DependenciesUtility"),
                 .target(name: "SharedUIWebKit"),
                 .target(name: "SharedUIComponents"),
                 .target(name: "SwiftUIUtility"),

@@ -8,19 +8,29 @@
 /// A data access contract for the native evaluation flow.
 protocol EvaluationRepository: Sendable {
     func fetchMainSorts() async throws -> [EvaluationSort]
-    func fetchEvaluations(sort: EvaluationSort, cursor: String?) async throws -> EvaluationPage
-    func fetchTakenLectures() async throws -> [TakenLectureSummary]
+    func fetchEvaluations(sort: EvaluationSort, cursor: String?) async throws -> CursorPage<EvaluationWithLecture>
+    func fetchTakenLectures() async throws -> [TakenLecture]
+
+    func fetchLectureSummary(lectureID: EvaluationLectureID) async throws -> LectureEvaluationSummary
+    func fetchLectureEvaluations(
+        lectureID: EvaluationLectureID,
+        cursor: String?
+    ) async throws -> CursorPage<LectureEvaluation>
+    func fetchMyLectureEvaluations(lectureID: EvaluationLectureID) async throws -> [LectureEvaluation]
+    func fetchMyEvaluations(cursor: String?) async throws -> CursorPage<EvaluationWithLecture>
+
+    func fetchSearchTagGroups() async throws -> [SearchTagGroup]
+    func searchLectures(query: LectureSearchQuery, page: Int) async throws -> LectureSearchPage
+
+    func fetchWriteTarget(lectureID: EvaluationLectureID) async throws -> EvaluationWriteTarget
+    func createEvaluation(_ submission: EvaluationSubmission) async throws -> EvaluationID
+    func deleteEvaluation(id: EvaluationID) async throws
+    func setLiked(_ isLiked: Bool, evaluationID: EvaluationID) async throws
+    func reportEvaluation(id: EvaluationID, reason: String) async throws
 }
 
-/// A page of lecture evaluations returned by the evaluation repository.
-struct EvaluationPage: Equatable, Sendable {
-    let evaluations: [LectureEvaluation]
-    let cursor: String?
-    let isLast: Bool
-
-    init(evaluations: [LectureEvaluation], cursor: String?, isLast: Bool) {
-        self.evaluations = evaluations
-        self.cursor = cursor
-        self.isLast = isLast
-    }
+/// Persists the lecture search filters so they survive app launches.
+protocol EvaluationSearchFilterStore: Sendable {
+    func loadTags() -> [SearchTag]
+    func saveTags(_ tags: [SearchTag])
 }
