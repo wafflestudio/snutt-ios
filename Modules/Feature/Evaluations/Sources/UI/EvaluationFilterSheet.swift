@@ -88,6 +88,7 @@ struct EvaluationFilterSheet: View {
             }
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
+            .softTopScrollEdge()
             .id(selectedGroup?.id)
         }
         .animation(.defaultSpring, value: selectedGroup?.id)
@@ -146,6 +147,7 @@ private struct EvaluationFilterCategoryColumn: View {
         }
         .frame(width: columnWidth)
         .scrollIndicators(.hidden)
+        .softTopScrollEdge()
     }
 }
 
@@ -177,4 +179,16 @@ private struct EvaluationFilterOptionRow: View {
         .sheet(isPresented: .constant(true)) {
             EvaluationFilterSheet(selectedTags: [EvaluationPreviewFixtures.tagGroups[0].tags[0]], onApply: { _ in })
         }
+}
+
+extension View {
+    /// Both columns scroll on their own, and the automatic style draws each one as a hard edge on iOS 27.
+    @ViewBuilder
+    fileprivate func softTopScrollEdge() -> some View {
+        if #available(iOS 26, *) {
+            scrollEdgeEffectStyle(.soft, for: .top)
+        } else {
+            self
+        }
+    }
 }
