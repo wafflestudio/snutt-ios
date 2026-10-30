@@ -14,6 +14,7 @@ struct EvaluationWriteScene: View {
     @State private var viewModel: EvaluationWriteViewModel
     @State private var isDiscardConfirmationPresented = false
     @FocusState private var isContentFocused: Bool
+    @ScaledMetric private var contentEditorHeight = 140.0
     @Environment(\.dismiss) private var dismiss
     @Environment(\.errorAlertHandler) private var errorAlertHandler
     private let onComplete: (EvaluationID) -> Void
@@ -91,6 +92,32 @@ struct EvaluationWriteScene: View {
     }
 
     private func form(target: EvaluationWriteTarget) -> some View {
+        ScrollViewReader { proxy in
+            formScrollView(target: target)
+                .onChange(of: isContentFocused) { _, isFocused in
+                    guard isFocused else { return }
+                    revealContentEditor(using: proxy)
+                }
+                // The keyboard shrinks the safe area after focus moves, so reveal the editor again once it settles.
+                .onGeometryChange(for: CGFloat.self) {
+                    $0.safeAreaInsets.bottom
+                } action: { _ in
+                    guard isContentFocused else { return }
+                    revealContentEditor(using: proxy)
+                }
+        }
+    }
+
+    /// Scrolls so the whole review editor, including its counter, sits above the keyboard.
+    private func revealContentEditor(using proxy: ScrollViewProxy) {
+        withAnimation(.smooth) {
+            proxy.scrollTo(Self.contentEditorID, anchor: .bottom)
+        }
+    }
+
+    private static let contentEditorID = "contentEditor"
+
+    private func formScrollView(target: EvaluationWriteTarget) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 VStack(alignment: .leading, spacing: 4) {
@@ -153,14 +180,15 @@ struct EvaluationWriteScene: View {
 
     private var contentEditor: some View {
         VStack(alignment: .trailing, spacing: 8) {
-            TextField(
-                EvaluationsStrings.writeContentPlaceholder,
-                text: $viewModel.draft.content,
-                axis: .vertical
+            // A fixed-height editor scrolls inside itself to keep the caret visible while typing.
+            PlaceholderTextEditor(
+                placeholder: EvaluationsStrings.writeContentPlaceholder,
+                text: $viewModel.draft.content
             )
             .font(.subheadline)
-            .lineLimit(6...)
+            .frame(height: contentEditorHeight)
             .focused($isContentFocused)
+            .accessibilityLabel(EvaluationsStrings.writeContentSection)
             .padding(14)
             .background(
                 Color(uiColor: .secondarySystemBackground),
@@ -190,6 +218,8 @@ struct EvaluationWriteScene: View {
             .contentTransition(.numericText(value: Double(viewModel.draft.contentLength)))
             .animation(.default, value: viewModel.draft.contentLength)
         }
+        .padding(.bottom, 8)
+        .id(Self.contentEditorID)
     }
 
     @ViewBuilder
