@@ -11,153 +11,75 @@ import Observation
 @MainActor
 @Observable
 final class EvaluationSeeAllViewModel {
-    var loadState: LoadState<[LectureEvaluation]> = .loading
-    var selectedSort: EvaluationSort
+    private(set) var feedState: LoadState<PagedContent<EvaluationWithLecture>> = .loading
+    private(set) var selectedSort: EvaluationSort
     let availableSorts: [EvaluationSort]
 
     @ObservationIgnored
-    private let useCase: EvaluationHomeUseCase
-    private var cursor: String?
-    private var canLoadMore = true
+    @Dependency(\.evaluationRepository) private var repository
+
+    @ObservationIgnored
     private var isLoadingMore = false
-    private var firstPageRequestID = 0
 
-    var loadedEvaluations: [LectureEvaluation] {
-        guard case .loaded(let evaluations) = loadState else {
-            return []
-        }
-        return evaluations
-    }
-
-    init(
-        initialSortKind: EvaluationSort.Kind,
-        availableSorts: [EvaluationSort]
-    ) {
-        let initialSort =
-            availableSorts.first { $0.kind == initialSortKind }
-            ?? availableSorts.first
-            ?? EvaluationSort(id: -1, kind: initialSortKind)
-
+    init(initialSort: EvaluationSort, availableSorts: [EvaluationSort]) {
         self.selectedSort = initialSort
-        self.availableSorts = availableSorts.isEmpty ? [initialSort] : availableSorts
-
-        @Dependency(\.evaluationRepository) var evaluationRepository
-        self.useCase = EvaluationHomeUseCase(repository: evaluationRepository)
+        self.availableSorts = availableSorts
     }
 
     func load() async throws {
-        let requestedSort = selectedSort
-        let requestID = nextFirstPageRequestID()
-        loadState = .loading
-        cursor = nil
-        canLoadMore = true
-        isLoadingMore = false
-
-        let page = try await useCase.loadEvaluations(sort: requestedSort, cursor: nil)
-        guard selectedSort == requestedSort,
-            firstPageRequestID == requestID
-        else { return }
-        cursor = page.cursor
-        canLoadMore = !page.isLast
-        loadState = .loaded(page.evaluations)
+        let sort = selectedSort
+        let page = try await repository.fetchEvaluations(sort: sort, cursor: nil)
+        guard selectedSort == sort else { return }
+        feedState = .loaded(PagedContent(page))
     }
 
-    func refresh() async throws {
-        let requestedSort = selectedSort
-        let requestID = nextFirstPageRequestID()
-        let page = try await useCase.loadEvaluations(sort: requestedSort, cursor: nil)
-        guard selectedSort == requestedSort,
-            firstPageRequestID == requestID
-        else { return }
-        cursor = page.cursor
-        canLoadMore = !page.isLast
-        isLoadingMore = false
-        loadState = .loaded(page.evaluations)
-    }
-
+    /// Switches sorts optimistically, keeping the previous feed visible until the new one arrives.
     func selectSort(_ sort: EvaluationSort) async throws {
-        guard case .loaded(let previousEvaluations) = loadState,
-            selectedSort != sort
-        else { return }
-
+        guard selectedSort != sort else { return }
         let previousSort = selectedSort
-        let previousCursor = cursor
-        let previousCanLoadMore = canLoadMore
-        let previousFirstPageRequestID = firstPageRequestID
-
         selectedSort = sort
-        let requestID = nextFirstPageRequestID()
-        loadState = .loading
-        cursor = nil
-        canLoadMore = true
-        isLoadingMore = false
-
         do {
-            let page = try await useCase.loadEvaluations(sort: sort, cursor: nil)
-            guard selectedSort == sort,
-                firstPageRequestID == requestID
-            else { return }
-            cursor = page.cursor
-            canLoadMore = !page.isLast
-            loadState = .loaded(page.evaluations)
+            try await load()
         } catch {
-            guard selectedSort == sort,
-                firstPageRequestID == requestID
-            else { return }
-            selectedSort = previousSort
-            loadState = .loaded(previousEvaluations)
-            cursor = previousCursor
-            canLoadMore = previousCanLoadMore
-            isLoadingMore = false
-            firstPageRequestID = previousFirstPageRequestID
+            if selectedSort == sort { selectedSort = previousSort }
             throw error
         }
     }
 
-    func loadMoreIfNeeded(current evaluation: LectureEvaluation) async {
-        let currentEvaluations = loadedEvaluations
-        guard canLoadMore,
-            !isLoadingMore,
-            currentEvaluations.last?.id == evaluation.id
+    /// Pagination is driven by scrolling, so failures stay silent and the next scroll retries.
+    func loadMoreIfNeeded(after item: EvaluationWithLecture) async {
+        guard case .loaded(let content) = feedState,
+            let cursor = content.nextCursor,
+            content.items.suffix(5).contains(where: { $0.id == item.id }),
+            !isLoadingMore
         else { return }
 
-        let requestedSort = selectedSort
-        let requestedCursor = cursor
-        let requestID = firstPageRequestID
-
         isLoadingMore = true
-        defer {
-            isLoadingMore = false
-        }
+        defer { isLoadingMore = false }
 
+        let sort = selectedSort
+        guard let page = try? await repository.fetchEvaluations(sort: sort, cursor: cursor),
+            selectedSort == sort,
+            case .loaded(let currentContent) = feedState,
+            currentContent.nextCursor == cursor
+        else { return }
+        feedState = .loaded(currentContent.appending(page))
+    }
+
+    func toggleLike(_ evaluation: LectureEvaluation) async throws {
+        let toggledLike = evaluation.like.toggled()
+        updateEvaluation(evaluation.id) { $0.like = toggledLike }
         do {
-            let page = try await useCase.loadEvaluations(
-                sort: requestedSort,
-                cursor: requestedCursor
-            )
-            guard selectedSort == requestedSort,
-                cursor == requestedCursor,
-                firstPageRequestID == requestID
-            else { return }
-
-            let mergedEvaluations = (loadedEvaluations + page.evaluations).removingDuplicateIDs()
-            cursor = page.cursor
-            canLoadMore = !page.isLast
-            loadState = .loaded(mergedEvaluations)
+            try await repository.setLiked(toggledLike.isLiked, evaluationID: evaluation.id)
         } catch {
-            // Pagination failures stay visually silent; a later bottom-near trigger retries.
+            updateEvaluation(evaluation.id) { $0.like = evaluation.like }
+            throw error
         }
     }
 
-    private func nextFirstPageRequestID() -> Int {
-        firstPageRequestID += 1
-        return firstPageRequestID
-    }
-}
-
-extension Array where Element == LectureEvaluation {
-    fileprivate func removingDuplicateIDs() -> [LectureEvaluation] {
-        var seenIDs = Set<EvaluationID>()
-        return filter { seenIDs.insert($0.id).inserted }
+    private func updateEvaluation(_ id: EvaluationID, _ transform: (inout LectureEvaluation) -> Void) {
+        guard case .loaded(var content) = feedState else { return }
+        content.update(id) { transform(&$0.evaluation) }
+        feedState = .loaded(content)
     }
 }

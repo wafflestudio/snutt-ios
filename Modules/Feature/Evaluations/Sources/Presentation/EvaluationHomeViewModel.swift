@@ -11,97 +11,127 @@ import Observation
 @MainActor
 @Observable
 final class EvaluationHomeViewModel {
-    var homeState: LoadState<EvaluationHomeContent> = .loading
+    private(set) var homeState: LoadState<EvaluationHomeContent> = .loading
     var path: [EvaluationDestination] = []
+    var writeRequest: EvaluationWriteRequest?
 
     @ObservationIgnored
-    private let useCase: EvaluationHomeUseCase
+    @Dependency(\.evaluationRepository) private var repository
 
-    init() {
-        @Dependency(\.evaluationRepository) var evaluationRepository
-        self.useCase = EvaluationHomeUseCase(repository: evaluationRepository)
+    private var useCase: EvaluationHomeUseCase {
+        EvaluationHomeUseCase(repository: repository)
     }
 
     func load() async throws {
-        homeState = .loading
-        let data = try await useCase.loadHome()
-        homeState = .loaded(data)
+        homeState = .loaded(try await useCase.loadHome())
     }
 
-    func refresh() async throws {
-        let data = try await useCase.loadHome()
-        homeState = .loaded(data)
-    }
-
-    func selectSort(_ sort: EvaluationSort) async throws {
-        guard case .loaded(let previousState) = homeState, previousState.selectedSort != sort else { return }
-
-        let requestedSort = sort
+    func reloadTakenLectures() async throws {
+        let groups = try await useCase.loadTakenLectureGroups()
+        guard case .loaded(let content) = homeState else { return }
         homeState = .loaded(
-            .init(
-                selectedSort: sort,
-                availableSorts: previousState.availableSorts,
-                mainFeed: previousState.mainFeed,
-                takenLectureFeed: previousState.takenLectureFeed
+            EvaluationHomeContent(
+                selectedSort: content.selectedSort,
+                availableSorts: content.availableSorts,
+                mainFeed: content.mainFeed,
+                takenLectureGroups: groups
             )
         )
+    }
+
+    /// Switches the feed optimistically and rolls back if the request fails.
+    func selectSort(_ sort: EvaluationSort) async throws {
+        guard case .loaded(let previousContent) = homeState, previousContent.selectedSort != sort else { return }
+
+        var content = previousContent
+        content.selectedSort = sort
+        homeState = .loaded(content)
 
         do {
-            let page = try await useCase.loadEvaluations(sort: sort, cursor: nil)
-            guard case .loaded(let currentState) = homeState,
-                currentState.selectedSort == requestedSort
-            else { return }
-            homeState = .loaded(
-                .init(
-                    selectedSort: requestedSort,
-                    availableSorts: currentState.availableSorts,
-                    mainFeed: EvaluationFeedContent(
-                        evaluations: page.evaluations,
-                        cursor: page.cursor,
-                        canLoadMore: !page.isLast
-                    ),
-                    takenLectureFeed: currentState.takenLectureFeed
-                )
-            )
+            let page = try await repository.fetchEvaluations(sort: sort, cursor: nil)
+            guard case .loaded(var currentContent) = homeState, currentContent.selectedSort == sort else { return }
+            currentContent.mainFeed = page.items
+            homeState = .loaded(currentContent)
         } catch {
-            guard case .loaded(let currentState) = homeState,
-                currentState.selectedSort == requestedSort
-            else { return }
-            homeState = .loaded(previousState)
+            guard case .loaded(let currentContent) = homeState, currentContent.selectedSort == sort else { return }
+            homeState = .loaded(previousContent)
             throw error
         }
     }
 
-    func openSearch() {
-        path.append(.search)
+    func toggleLike(_ evaluation: LectureEvaluation) async throws {
+        let toggledLike = evaluation.like.toggled()
+        updateEvaluation(evaluation.id) { $0.like = toggledLike }
+        do {
+            try await repository.setLiked(toggledLike.isLiked, evaluationID: evaluation.id)
+        } catch {
+            updateEvaluation(evaluation.id) { $0.like = evaluation.like }
+            throw error
+        }
     }
 
-    func openFilter() {
-        path.append(.filter)
+    func deleteEvaluation(_ id: EvaluationID) async throws {
+        try await repository.deleteEvaluation(id: id)
+        try await reloadTakenLectures()
     }
 
-    func openEvaluationDetail(_ id: EvaluationID) {
-        path.append(.evaluationDetail(id))
+    func reportEvaluation(_ id: EvaluationID, reason: String) async throws {
+        try await repository.reportEvaluation(id: id, reason: reason)
     }
+
+    /// Shows the new evaluation in its lecture's detail and refreshes the taken lecture section.
+    func didCreateEvaluation(_ evaluationID: EvaluationID, for lectureID: EvaluationLectureID) async throws {
+        path.append(.lectureDetail(lectureID, highlighting: evaluationID))
+        try await reloadTakenLectures()
+    }
+
+    // MARK: Navigation
 
     func openLectureDetail(_ id: EvaluationLectureID) {
         path.append(.lectureDetail(id))
     }
 
     func openWriteEvaluation(_ id: EvaluationLectureID) {
-        path.append(.writeEvaluation(id))
+        writeRequest = EvaluationWriteRequest(lectureID: id)
     }
 
     func openMyEvaluations() {
         path.append(.myEvaluations)
     }
 
-    func openAllEvaluations(sort: EvaluationSort.Kind) {
-        path.append(.allEvaluations(sort: sort))
+    func openAllEvaluations() {
+        guard case .loaded(let content) = homeState else { return }
+        path.append(.allEvaluations(initialSort: content.selectedSort, availableSorts: content.availableSorts))
+    }
+
+    private func updateEvaluation(_ id: EvaluationID, _ transform: (inout LectureEvaluation) -> Void) {
+        guard case .loaded(var content) = homeState else { return }
+        content.updateEvaluation(id, transform)
+        homeState = .loaded(content)
     }
 }
 
-enum LoadState<Value: Equatable & Sendable>: Equatable, Sendable {
-    case loading
-    case loaded(Value)
+extension EvaluationHomeContent {
+    fileprivate mutating func updateEvaluation(_ id: EvaluationID, _ transform: (inout LectureEvaluation) -> Void) {
+        mainFeed = mainFeed.map { item in
+            guard item.id == id else { return item }
+            var item = item
+            transform(&item.evaluation)
+            return item
+        }
+        takenLectureGroups = takenLectureGroups.map { group in
+            var group = group
+            group.lectures = group.lectures.map { lecture in
+                var lecture = lecture
+                lecture.myEvaluations = lecture.myEvaluations.map { evaluation in
+                    guard evaluation.id == id else { return evaluation }
+                    var evaluation = evaluation
+                    transform(&evaluation)
+                    return evaluation
+                }
+                return lecture
+            }
+            return group
+        }
+    }
 }
