@@ -1,737 +1,521 @@
 import Dependencies
 import Foundation
-import SwiftUtility
 import Testing
 import TimetableInterface
 
 @testable import Evaluations
 
+// MARK: - Domain
+
+@Suite struct EvaluationDomainTests {
+    @Test func draftRequiresEveryFieldBeforeSubmission() {
+        var draft = EvaluationDraft()
+        #expect(draft.submission == nil)
+
+        draft.semesterLectureID = 10
+        draft.rating = 4.5
+        draft.scores = [.gradeSatisfaction: 3, .teachingSkill: 4, .gains: 5]
+        draft.content = String(repeating: "가", count: EvaluationDraft.minimumContentLength)
+        #expect(draft.submission == nil)
+
+        draft.scores[.lifeBalance] = 2.5
+        let submission = try? #require(draft.submission)
+        #expect(submission?.semesterLectureID == 10)
+        #expect(submission?.scores.lifeBalance == 2.5)
+    }
+
+    @Test func draftCountsContentWithoutSurroundingWhitespace() {
+        var draft = EvaluationDraft()
+        draft.content = "   " + String(repeating: "a", count: EvaluationDraft.minimumContentLength - 1) + "\n\n"
+        #expect(!draft.meetsMinimumContentLength)
+        draft.content += "b"
+        #expect(draft.meetsMinimumContentLength)
+    }
+
+    @Test func likeToggleAdjustsCount() {
+        let like = EvaluationLike(count: 3, isLiked: false)
+        #expect(like.toggled() == EvaluationLike(count: 4, isLiked: true))
+        #expect(like.toggled().toggled() == like)
+        #expect(EvaluationLike(count: 0, isLiked: true).toggled().count == 0)
+    }
+
+    @Test func pagedContentAppendsWithoutDuplicates() {
+        let first = LectureEvaluation.stub(id: 1)
+        let second = LectureEvaluation.stub(id: 2)
+        let content = PagedContent(CursorPage(items: [first], nextCursor: "a"))
+            .appending(CursorPage(items: [first, second], nextCursor: nil))
+
+        #expect(content.items.map(\.id) == [1, 2])
+        #expect(!content.canLoadMore)
+    }
+
+    @Test func searchQueryNeedsTextOrTags() {
+        #expect(!LectureSearchQuery(text: "  ", tags: []).isSearchable)
+        #expect(LectureSearchQuery(text: "인공지능", tags: []).isSearchable)
+        #expect(LectureSearchQuery(text: "", tags: [SearchTag(id: 6, name: "1학년")]).isSearchable)
+    }
+}
+
+// MARK: - Use Case
+
 @Suite struct EvaluationHomeUseCaseTests {
-    @Test func loadHomeUsesRecommendedFeedAndTakenLectures() async throws {
-        let recommendedSort = EvaluationSort(id: 1, kind: .recommended)
-        let latestSort = EvaluationSort(id: 2, kind: .latest)
-        let evaluation = LectureEvaluation.preview()
-        let takenLecture = TakenLectureSummary.preview()
-        let repository = FakeEvaluationRepository(
-            sorts: [latestSort, recommendedSort],
-            evaluationPages: [
-                EvaluationRequest(sort: recommendedSort, cursor: nil): EvaluationPage(
-                    evaluations: [evaluation],
-                    cursor: "next",
-                    isLast: false
-                )
+    @Test func loadHomeUsesRecommendedFeedAndGroupsTakenLectures() async throws {
+        let repository = StubEvaluationRepository(
+            takenLectures: [
+                .stub(id: 1, quarter: Quarter(year: 2025, semester: .first)),
+                .stub(id: 2, quarter: Quarter(year: 2025, semester: .second)),
+                .stub(id: 3, quarter: Quarter(year: 2025, semester: .first)),
             ],
-            takenLectures: [takenLecture]
+            averageRatings: [1: 4.5],
+            myEvaluations: [2: [.stub(id: 20, lectureID: 2)]]
         )
-        let useCase = EvaluationHomeUseCase(repository: repository)
 
-        let home = try await useCase.loadHome()
+        let home = try await EvaluationHomeUseCase(repository: repository).loadHome()
 
-        #expect(home.selectedSort == recommendedSort)
-        #expect(home.availableSorts == [recommendedSort, latestSort])
-        #expect(home.mainFeed.evaluations == [evaluation])
-        #expect(home.mainFeed.cursor == "next")
-        #expect(home.mainFeed.canLoadMore)
-        #expect(home.takenLectureFeed?.takenQuarter == Quarter(year: 2025, semester: .first))
-        #expect(home.takenLectureFeed?.lectures == [takenLecture])
+        #expect(home.selectedSort.kind == .recommended)
+        #expect(home.availableSorts.map(\.kind) == [.recommended, .latest])
+        #expect(home.mainFeed == repository.feeds[.recommended])
+        #expect(
+            home.takenLectureGroups.map(\.quarter) == [
+                Quarter(year: 2025, semester: .second), Quarter(year: 2025, semester: .first),
+            ]
+        )
+        #expect(home.takenLectureGroups[1].lectures.map(\.id) == [1, 3])
+        #expect(home.takenLectureGroups[1].lectures[0].averageRating == 4.5)
+        #expect(home.takenLectureGroups[0].lectures[0].myEvaluations.map(\.id) == [20])
     }
 
-    @Test func loadHomeUsesLatestTakenLectureQuarterAsFeedQuarter() async throws {
-        let recommendedSort = EvaluationSort(id: 1, kind: .recommended)
-        let latestSort = EvaluationSort(id: 2, kind: .latest)
-        let oldTakenLecture = TakenLectureSummary.preview(
-            lectureID: 10,
-            takenQuarter: Quarter(year: 2024, semester: .summer)
-        )
-        let latestTakenLecture = TakenLectureSummary.preview(
-            lectureID: 20,
-            takenQuarter: Quarter(year: 2025, semester: .first)
-        )
-        let repository = FakeEvaluationRepository(
-            sorts: [latestSort, recommendedSort],
-            evaluationPages: [
-                EvaluationRequest(sort: recommendedSort, cursor: nil): EvaluationPage(
-                    evaluations: [],
-                    cursor: nil,
-                    isLast: true
-                )
-            ],
-            takenLectures: [oldTakenLecture, latestTakenLecture]
-        )
-        let useCase = EvaluationHomeUseCase(repository: repository)
+    @Test func loadHomeFailsWithoutRequiredSorts() async {
+        let repository = StubEvaluationRepository(sorts: [EvaluationSort(id: 1, kind: .latest)])
 
-        let home = try await useCase.loadHome()
-
-        #expect(home.takenLectureFeed?.takenQuarter == Quarter(year: 2025, semester: .first))
-        #expect(home.takenLectureFeed?.lectures == [oldTakenLecture, latestTakenLecture])
-    }
-
-    @Test func loadHomeDoesNotCreateTakenLectureFeedWithoutTakenLectures() async throws {
-        let recommendedSort = EvaluationSort(id: 1, kind: .recommended)
-        let latestSort = EvaluationSort(id: 2, kind: .latest)
-        let repository = FakeEvaluationRepository(
-            sorts: [latestSort, recommendedSort],
-            evaluationPages: [
-                EvaluationRequest(sort: recommendedSort, cursor: nil): EvaluationPage(
-                    evaluations: [],
-                    cursor: nil,
-                    isLast: true
-                )
-            ],
-            takenLectures: []
-        )
-        let useCase = EvaluationHomeUseCase(repository: repository)
-
-        let home = try await useCase.loadHome()
-
-        #expect(home.takenLectureFeed == nil)
-    }
-
-    @Test func loadHomeFailsWithoutRecommendedSort() async throws {
-        let latestSort = EvaluationSort(id: 2, kind: .latest)
-        let repository = FakeEvaluationRepository(sorts: [latestSort])
-        let useCase = EvaluationHomeUseCase(repository: repository)
-
-        await #expect(throws: EvaluationError.missingRequiredSort("추천")) {
-            try await useCase.loadHome()
+        await #expect(throws: EvaluationError.missingRequiredSort) {
+            try await EvaluationHomeUseCase(repository: repository).loadHome()
         }
     }
 }
 
+// MARK: - View Models
+
 @MainActor
 @Suite struct EvaluationHomeViewModelTests {
-    private func makeViewModel(repository: any EvaluationRepository) -> EvaluationHomeViewModel {
-        withDependencies {
+    @Test func selectSortReplacesFeed() async throws {
+        let repository = StubEvaluationRepository()
+        let viewModel = withDependencies {
             $0.evaluationRepository = repository
         } operation: {
             EvaluationHomeViewModel()
         }
-    }
-
-    @Test func loadSetsLoadedHomeState() async throws {
-        let recommendedSort = EvaluationSort(id: 1, kind: .recommended)
-        let latestSort = EvaluationSort(id: 2, kind: .latest)
-        let evaluation = LectureEvaluation.preview()
-        let takenLecture = TakenLectureSummary.preview()
-        let repository = FakeEvaluationRepository(
-            sorts: [latestSort, recommendedSort],
-            evaluationPages: [
-                EvaluationRequest(sort: recommendedSort, cursor: nil): EvaluationPage(
-                    evaluations: [evaluation],
-                    cursor: "next",
-                    isLast: false
-                )
-            ],
-            takenLectures: [takenLecture]
-        )
-        let viewModel = makeViewModel(repository: repository)
-
         try await viewModel.load()
-
-        #expect(
-            viewModel.homeState
-                == .loaded(
-                    .init(
-                        selectedSort: recommendedSort,
-                        availableSorts: [recommendedSort, latestSort],
-                        mainFeed: EvaluationFeedContent(
-                            evaluations: [evaluation],
-                            cursor: "next",
-                            canLoadMore: true
-                        ),
-                        takenLectureFeed: TakenLectureFeedContent(
-                            takenQuarter: Quarter(year: 2025, semester: .first),
-                            lectures: [takenLecture]
-                        )
-                    )
-                )
-        )
-    }
-
-    @Test func selectSortLoadsSelectedFeed() async throws {
-        let recommendedSort = EvaluationSort(id: 1, kind: .recommended)
-        let latestSort = EvaluationSort(id: 2, kind: .latest)
-        let recommendedEvaluation = LectureEvaluation.preview(id: 1)
-        let latestEvaluation = LectureEvaluation.preview(id: 2)
-        let repository = FakeEvaluationRepository(
-            sorts: [recommendedSort, latestSort],
-            evaluationPages: [
-                EvaluationRequest(sort: recommendedSort, cursor: nil): EvaluationPage(
-                    evaluations: [recommendedEvaluation],
-                    cursor: nil,
-                    isLast: true
-                ),
-                EvaluationRequest(sort: latestSort, cursor: nil): EvaluationPage(
-                    evaluations: [latestEvaluation],
-                    cursor: nil,
-                    isLast: true
-                ),
-            ]
-        )
-        let viewModel = makeViewModel(repository: repository)
-        try await viewModel.load()
+        let latestSort = try #require(viewModel.homeState.value?.availableSorts.last)
 
         try await viewModel.selectSort(latestSort)
 
-        guard case .loaded(let home) = viewModel.homeState else {
-            Issue.record("Expected loaded home state")
-            return
-        }
-        #expect(home.selectedSort == latestSort)
-        #expect(home.mainFeed.evaluations == [latestEvaluation])
-        #expect(await repository.evaluationRequests.last == EvaluationRequest(sort: latestSort, cursor: nil))
+        #expect(viewModel.homeState.value?.selectedSort == latestSort)
+        #expect(viewModel.homeState.value?.mainFeed == repository.feeds[.latest])
     }
 
-    @Test func selectSortIgnoresStaleResult() async throws {
-        let recommendedSort = EvaluationSort(id: 1, kind: .recommended)
-        let latestSort = EvaluationSort(id: 2, kind: .latest)
-        let recommendedEvaluation = LectureEvaluation.preview(id: 1)
-        let latestEvaluation = LectureEvaluation.preview(id: 2)
-        let repository = FakeEvaluationRepository(
-            sorts: [recommendedSort, latestSort],
-            evaluationPages: [
-                EvaluationRequest(sort: recommendedSort, cursor: nil): EvaluationPage(
-                    evaluations: [recommendedEvaluation],
-                    cursor: nil,
-                    isLast: true
-                ),
-                EvaluationRequest(sort: latestSort, cursor: nil): EvaluationPage(
-                    evaluations: [latestEvaluation],
-                    cursor: nil,
-                    isLast: true
-                ),
-            ],
-            delayedRequests: [
-                EvaluationRequest(sort: latestSort, cursor: nil)
-            ]
-        )
-        let viewModel = makeViewModel(repository: repository)
+    @Test func selectSortRollsBackOnFailure() async throws {
+        let repository = StubEvaluationRepository()
+        let viewModel = withDependencies {
+            $0.evaluationRepository = repository
+        } operation: {
+            EvaluationHomeViewModel()
+        }
+        try await viewModel.load()
+        let previousContent = try #require(viewModel.homeState.value)
+        repository.failingSortKinds.setValue([.latest])
+
+        await #expect(throws: StubError.self) {
+            try await viewModel.selectSort(previousContent.availableSorts[1])
+        }
+        #expect(viewModel.homeState.value == previousContent)
+    }
+
+    @Test func toggleLikeUpdatesOptimisticallyAndRollsBackOnFailure() async throws {
+        let repository = StubEvaluationRepository()
+        let viewModel = withDependencies {
+            $0.evaluationRepository = repository
+        } operation: {
+            EvaluationHomeViewModel()
+        }
+        try await viewModel.load()
+        let evaluation = try #require(viewModel.homeState.value?.mainFeed.first?.evaluation)
+
+        try await viewModel.toggleLike(evaluation)
+        #expect(viewModel.homeState.value?.mainFeed.first?.evaluation.like == evaluation.like.toggled())
+        #expect(repository.likeRequests.value == [LikeRequest(id: evaluation.id, isLiked: true)])
+
+        repository.failsLike.setValue(true)
+        let likedEvaluation = try #require(viewModel.homeState.value?.mainFeed.first?.evaluation)
+        await #expect(throws: StubError.self) {
+            try await viewModel.toggleLike(likedEvaluation)
+        }
+        #expect(viewModel.homeState.value?.mainFeed.first?.evaluation.like == likedEvaluation.like)
+    }
+
+    @Test func createdEvaluationOpensHighlightedLectureDetail() async throws {
+        let viewModel = withDependencies {
+            $0.evaluationRepository = StubEvaluationRepository()
+        } operation: {
+            EvaluationHomeViewModel()
+        }
         try await viewModel.load()
 
-        let latestTask = Task { try await viewModel.selectSort(latestSort) }
-        try await Task.sleep(for: .milliseconds(20))
-        try await viewModel.selectSort(recommendedSort)
-        try await latestTask.value
+        try await viewModel.didCreateEvaluation(99, for: 7)
 
-        guard case .loaded(let home) = viewModel.homeState else {
-            Issue.record("Expected loaded home state")
-            return
-        }
-        #expect(home.selectedSort == recommendedSort)
-        #expect(home.mainFeed.evaluations == [recommendedEvaluation])
-    }
-
-    @Test func navigationMethodsAppendDestinations() {
-        let recommendedSort = EvaluationSort(id: 1, kind: .recommended)
-        let viewModel = makeViewModel(repository: FakeEvaluationRepository())
-
-        viewModel.openSearch()
-        viewModel.openFilter()
-        viewModel.openEvaluationDetail(EvaluationID(1))
-        viewModel.openLectureDetail(EvaluationLectureID(2))
-        viewModel.openWriteEvaluation(EvaluationLectureID(3))
-        viewModel.openMyEvaluations()
-        viewModel.openAllEvaluations(sort: recommendedSort.kind)
-
-        #expect(
-            viewModel.path == [
-                .search,
-                .filter,
-                .evaluationDetail(EvaluationID(1)),
-                .lectureDetail(EvaluationLectureID(2)),
-                .writeEvaluation(EvaluationLectureID(3)),
-                .myEvaluations,
-                .allEvaluations(sort: .recommended),
-            ]
-        )
+        #expect(viewModel.path == [.lectureDetail(7, highlighting: 99)])
     }
 }
 
 @MainActor
-@Suite struct EvaluationSeeAllViewModelTests {
-    private func makeViewModel(
-        repository: any EvaluationRepository,
-        initialSortKind: EvaluationSort.Kind = .recommended,
-        availableSorts: [EvaluationSort]
-    ) -> EvaluationSeeAllViewModel {
+@Suite struct EvaluationSearchViewModelTests {
+    @Test func searchLoadsResultsAndResetsWhenQueryIsCleared() async throws {
+        let viewModel = makeViewModel(store: StubFilterStore())
+        viewModel.queryText = "인공지능"
+
+        try await viewModel.search()
+        guard case .loaded(let results) = viewModel.resultState else {
+            Issue.record("Expected loaded results")
+            return
+        }
+        #expect(results.query.text == "인공지능")
+        #expect(results.nextPage == 1)
+
+        viewModel.queryText = ""
+        #expect(viewModel.resultState == .idle)
+    }
+
+    @Test func applyingFiltersPersistsAndSearches() async throws {
+        let store = StubFilterStore()
+        let viewModel = makeViewModel(store: store)
+        let tag = SearchTag(id: 25, name: "3학점")
+
+        try await viewModel.applyFilterTags([tag])
+
+        #expect(viewModel.isPresented)
+        #expect(store.tags.value == [tag])
+        guard case .loaded(let results) = viewModel.resultState else {
+            Issue.record("Expected loaded results")
+            return
+        }
+        #expect(results.query.tags == [tag])
+    }
+
+    @Test func restoresPersistedFilters() {
+        let tag = SearchTag(id: 6, name: "1학년")
+        let viewModel = makeViewModel(store: StubFilterStore(tags: [tag]))
+        #expect(viewModel.filterTags == [tag])
+    }
+
+    private func makeViewModel(store: StubFilterStore) -> EvaluationSearchViewModel {
         withDependencies {
-            $0.evaluationRepository = repository
+            $0.evaluationRepository = StubEvaluationRepository()
+            $0.evaluationSearchFilterStore = store
         } operation: {
-            EvaluationSeeAllViewModel(
-                initialSortKind: initialSortKind,
-                availableSorts: availableSorts
+            EvaluationSearchViewModel()
+        }
+    }
+}
+
+@MainActor
+@Suite struct EvaluationWriteViewModelTests {
+    @Test func loadSelectsMostRecentWritableSemester() async throws {
+        let viewModel = withDependencies {
+            $0.evaluationRepository = StubEvaluationRepository()
+        } operation: {
+            EvaluationWriteViewModel(lectureID: 1)
+        }
+
+        try await viewModel.load()
+
+        #expect(viewModel.draft.semesterLectureID == 2)
+        #expect(!viewModel.canSubmit)
+    }
+}
+
+@MainActor
+@Suite struct MyEvaluationsViewModelTests {
+    @Test func groupsConsecutiveEvaluationsBySemester() async throws {
+        let viewModel = withDependencies {
+            $0.evaluationRepository = StubEvaluationRepository(
+                myEvaluationFeed: [
+                    .stub(id: 1, quarter: Quarter(year: 2025, semester: .second)),
+                    .stub(id: 2, quarter: Quarter(year: 2025, semester: .second)),
+                    .stub(id: 3, quarter: Quarter(year: 2025, semester: .first)),
+                ]
             )
+        } operation: {
+            MyEvaluationsViewModel()
         }
-    }
-
-    @Test func loadUsesInitialSort() async throws {
-        let recommendedSort = EvaluationSort(id: 1, kind: .recommended)
-        let latestSort = EvaluationSort(id: 2, kind: .latest)
-        let evaluation = LectureEvaluation.preview(id: 1)
-        let repository = FakeEvaluationRepository(
-            evaluationPages: [
-                EvaluationRequest(sort: latestSort, cursor: nil): EvaluationPage(
-                    evaluations: [evaluation],
-                    cursor: "next",
-                    isLast: false
-                )
-            ]
-        )
-        let viewModel = makeViewModel(
-            repository: repository,
-            initialSortKind: .latest,
-            availableSorts: [recommendedSort, latestSort]
-        )
 
         try await viewModel.load()
 
-        #expect(viewModel.selectedSort == latestSort)
-        #expect(viewModel.loadedEvaluations == [evaluation])
-        #expect(await repository.evaluationRequests == [EvaluationRequest(sort: latestSort, cursor: nil)])
-    }
-
-    @Test func selectSortReloadsFirstPage() async throws {
-        let recommendedSort = EvaluationSort(id: 1, kind: .recommended)
-        let latestSort = EvaluationSort(id: 2, kind: .latest)
-        let recommendedEvaluation = LectureEvaluation.preview(id: 1)
-        let latestEvaluation = LectureEvaluation.preview(id: 2)
-        let repository = FakeEvaluationRepository(
-            evaluationPages: [
-                EvaluationRequest(sort: recommendedSort, cursor: nil): EvaluationPage(
-                    evaluations: [recommendedEvaluation],
-                    cursor: "recommended-next",
-                    isLast: false
-                ),
-                EvaluationRequest(sort: latestSort, cursor: nil): EvaluationPage(
-                    evaluations: [latestEvaluation],
-                    cursor: nil,
-                    isLast: true
-                ),
-            ]
-        )
-        let viewModel = makeViewModel(
-            repository: repository,
-            availableSorts: [recommendedSort, latestSort]
-        )
-        try await viewModel.load()
-
-        try await viewModel.selectSort(latestSort)
-
-        #expect(viewModel.selectedSort == latestSort)
-        #expect(viewModel.loadedEvaluations == [latestEvaluation])
+        let sections = try #require(viewModel.sections)
+        #expect(sections.map(\.items.count) == [2, 1])
         #expect(
-            await repository.evaluationRequests == [
-                EvaluationRequest(sort: recommendedSort, cursor: nil),
-                EvaluationRequest(sort: latestSort, cursor: nil),
+            sections.map(\.quarter) == [
+                Quarter(year: 2025, semester: .second), Quarter(year: 2025, semester: .first),
             ]
         )
-    }
-
-    @Test func refreshIgnoresStaleFirstPageResult() async throws {
-        let recommendedSort = EvaluationSort(id: 1, kind: .recommended)
-        let latestSort = EvaluationSort(id: 2, kind: .latest)
-        let recommendedEvaluation = LectureEvaluation.preview(id: 1)
-        let latestEvaluation = LectureEvaluation.preview(id: 2)
-        let repository = FakeEvaluationRepository(
-            evaluationPages: [
-                EvaluationRequest(sort: recommendedSort, cursor: nil): EvaluationPage(
-                    evaluations: [recommendedEvaluation],
-                    cursor: nil,
-                    isLast: true
-                ),
-                EvaluationRequest(sort: latestSort, cursor: nil): EvaluationPage(
-                    evaluations: [latestEvaluation],
-                    cursor: nil,
-                    isLast: true
-                ),
-            ],
-            delayedRequests: [
-                EvaluationRequest(sort: latestSort, cursor: nil)
-            ]
-        )
-        let viewModel = makeViewModel(
-            repository: repository,
-            initialSortKind: .latest,
-            availableSorts: [recommendedSort, latestSort]
-        )
-
-        try await viewModel.load()
-
-        let latestTask = Task { try await viewModel.refresh() }
-        try await Task.sleep(for: .milliseconds(20))
-        try await viewModel.selectSort(recommendedSort)
-        try await latestTask.value
-
-        #expect(viewModel.selectedSort == recommendedSort)
-        #expect(viewModel.loadedEvaluations == [recommendedEvaluation])
-    }
-
-    @Test func loadMoreAppendsNextPage() async throws {
-        let recommendedSort = EvaluationSort(id: 1, kind: .recommended)
-        let firstEvaluation = LectureEvaluation.preview(id: 1)
-        let nextEvaluation = LectureEvaluation.preview(id: 2)
-        let repository = FakeEvaluationRepository(
-            evaluationPages: [
-                EvaluationRequest(sort: recommendedSort, cursor: nil): EvaluationPage(
-                    evaluations: [firstEvaluation],
-                    cursor: "next",
-                    isLast: false
-                ),
-                EvaluationRequest(sort: recommendedSort, cursor: "next"): EvaluationPage(
-                    evaluations: [nextEvaluation],
-                    cursor: nil,
-                    isLast: true
-                ),
-            ]
-        )
-        let viewModel = makeViewModel(
-            repository: repository,
-            availableSorts: [recommendedSort]
-        )
-        try await viewModel.load()
-
-        await viewModel.loadMoreIfNeeded(current: firstEvaluation)
-
-        #expect(viewModel.loadedEvaluations == [firstEvaluation, nextEvaluation])
-        #expect(
-            await repository.evaluationRequests == [
-                EvaluationRequest(sort: recommendedSort, cursor: nil),
-                EvaluationRequest(sort: recommendedSort, cursor: "next"),
-            ]
-        )
-    }
-
-    @Test func loadMoreIgnoresDuplicateWhileLoading() async throws {
-        let recommendedSort = EvaluationSort(id: 1, kind: .recommended)
-        let firstEvaluation = LectureEvaluation.preview(id: 1)
-        let nextEvaluation = LectureEvaluation.preview(id: 2)
-        let repository = FakeEvaluationRepository(
-            evaluationPages: [
-                EvaluationRequest(sort: recommendedSort, cursor: nil): EvaluationPage(
-                    evaluations: [firstEvaluation],
-                    cursor: "next",
-                    isLast: false
-                ),
-                EvaluationRequest(sort: recommendedSort, cursor: "next"): EvaluationPage(
-                    evaluations: [nextEvaluation],
-                    cursor: nil,
-                    isLast: true
-                ),
-            ],
-            delayedRequests: [
-                EvaluationRequest(sort: recommendedSort, cursor: "next")
-            ]
-        )
-        let viewModel = makeViewModel(
-            repository: repository,
-            availableSorts: [recommendedSort]
-        )
-        try await viewModel.load()
-
-        let loadMoreTask = Task {
-            await viewModel.loadMoreIfNeeded(current: firstEvaluation)
-        }
-        try await Task.sleep(for: .milliseconds(20))
-        await viewModel.loadMoreIfNeeded(current: firstEvaluation)
-        await loadMoreTask.value
-
-        #expect(viewModel.loadedEvaluations == [firstEvaluation, nextEvaluation])
-        #expect(
-            await repository.evaluationRequests == [
-                EvaluationRequest(sort: recommendedSort, cursor: nil),
-                EvaluationRequest(sort: recommendedSort, cursor: "next"),
-            ]
-        )
-    }
-
-    @Test func loadMoreFailureKeepsExistingEvaluations() async throws {
-        let recommendedSort = EvaluationSort(id: 1, kind: .recommended)
-        let firstEvaluation = LectureEvaluation.preview(id: 1)
-        let repository = FakeEvaluationRepository(
-            evaluationPages: [
-                EvaluationRequest(sort: recommendedSort, cursor: nil): EvaluationPage(
-                    evaluations: [firstEvaluation],
-                    cursor: "next",
-                    isLast: false
-                )
-            ]
-        )
-        let viewModel = makeViewModel(
-            repository: repository,
-            availableSorts: [recommendedSort]
-        )
-        try await viewModel.load()
-
-        await viewModel.loadMoreIfNeeded(current: firstEvaluation)
-
-        #expect(viewModel.loadedEvaluations == [firstEvaluation])
     }
 }
 
-@Suite struct EvaluationAPIModelsTests {
-    @Test func mainTagMapsToSupportedSortsOnly() throws {
-        let tagGroup = Components.Schemas.TagGroupDto(
-            id: 10,
-            name: "메인",
-            ordering: 0,
+// MARK: - API Mapping
+
+@Suite struct EvaluationAPIMappingTests {
+    @Test func decodesSnakeCaseEvaluationFeed() throws {
+        let json = """
+            {
+              "content": [{
+                "id": 33931, "user_id": "185189", "content": "좋은 수업",
+                "grade_satisfaction": 3.0, "teaching_skill": 4.0, "gains": 5.0, "life_balance": 2.5,
+                "rating": 4.0, "like_count": 2, "is_hidden": false, "is_reported": false, "is_liked": true,
+                "from_snuev": false, "year": 2026, "semester": 1,
+                "lecture": {"id": 49268, "title": "창의적통합설계2 ", "instructor": "Chenglin Fan"},
+                "is_modifiable": false, "is_reportable": true
+              }],
+              "cursor": "next", "last": false, "size": 20
+            }
+            """
+        let response = try JSONDecoder().decode(
+            Components.Schemas.CursorPaginationResponseEvaluationWithLectureResponse.self,
+            from: Data(json.utf8)
+        )
+
+        let page = try response.evaluationPage()
+        let item = try #require(page.items.first)
+
+        #expect(page.nextCursor == "next")
+        #expect(item.lecture.title == "창의적통합설계2")
+        #expect(item.evaluation.quarter == Quarter(year: 2026, semester: .first))
+        #expect(item.evaluation.scores?.lifeBalance == 2.5)
+        #expect(item.evaluation.like == EvaluationLike(count: 2, isLiked: true))
+        #expect(item.evaluation.permissions == .report)
+    }
+
+    @Test func lastPageHasNoNextCursor() throws {
+        let json = #"{"content": [], "cursor": "ignored", "last": true, "size": 20}"#
+        let response = try JSONDecoder().decode(
+            Components.Schemas.CursorPaginationResponseEvaluationWithLectureResponse.self,
+            from: Data(json.utf8)
+        )
+        #expect(try response.evaluationPage().nextCursor == nil)
+    }
+
+    @Test func legacyEvaluationsWithoutScoresMapToNilScores() throws {
+        let json = """
+            {
+              "id": 1, "user_id": "u", "content": "c", "rating": 3.5, "like_count": 0,
+              "is_hidden": false, "is_reported": false, "is_liked": false, "from_snuev": true,
+              "year": 2019, "semester": 3, "lecture_id": 7, "is_modifiable": true, "is_reportable": false
+            }
+            """
+        let evaluation = try JSONDecoder().decode(
+            Components.Schemas.EvaluationWithSemesterResponse.self,
+            from: Data(json.utf8)
+        ).lectureEvaluation()
+
+        #expect(evaluation.scores == nil)
+        #expect(evaluation.quarter == Quarter(year: 2019, semester: .second))
+        #expect(evaluation.permissions == .modify)
+    }
+
+    @Test func decodesLectureSummaryWithEvaluationCount() throws {
+        let json = """
+            {
+              "id": 49268, "title": "창의적통합설계2", "instructor": "Chenglin Fan", "department": "컴퓨터공학부",
+              "course_number": "M1522.000300", "credit": 3, "academic_year": "4학년", "classification": "전선",
+              "evaluation": {
+                "avg_grade_satisfaction": 3.0, "avg_teaching_skill": 3.5, "avg_gains": 4.0,
+                "avg_life_balance": 2.0, "avg_rating": 4.0, "evaluation_count": 12
+              }
+            }
+            """
+        let summary = try JSONDecoder().decode(
+            Components.Schemas.LectureEvaluationSummaryResponse.self,
+            from: Data(json.utf8)
+        ).lectureEvaluationSummary
+
+        #expect(summary.evaluationCount == 12)
+        #expect(summary.averageRating == 4.0)
+        #expect(summary.averageScores?.teachingSkill == 3.5)
+        #expect(summary.info.metadataText == "컴퓨터공학부 · 전선 · \(EvaluationsStrings.lectureCredit(3))")
+    }
+
+    @Test func mainTagsMapToSupportedSortsInServerOrder() {
+        let group = Components.Schemas.TagGroupDto(
+            id: 1,
+            name: "main",
+            ordering: -1,
             tags: [
-                Components.Schemas.TagDto(id: 1, name: "추천", ordering: 0),
-                Components.Schemas.TagDto(id: 2, name: "교양", ordering: 1),
-                Components.Schemas.TagDto(id: 3, name: "최신", ordering: 2),
-                Components.Schemas.TagDto(id: 4, name: "명강", ordering: 3),
+                .init(id: 2, name: "추천", ordering: 3),
+                .init(id: 1, name: "최신", ordering: 1),
+                .init(id: 3, name: "명강", ordering: 4),
             ]
         )
-        let sorts = tagGroup.evaluationSorts
-
         #expect(
-            sorts == [
-                EvaluationSort(id: 1, kind: .recommended),
-                EvaluationSort(id: 3, kind: .latest),
+            group.evaluationSorts == [
+                EvaluationSort(id: 1, kind: .latest), EvaluationSort(id: 2, kind: .recommended),
             ]
         )
-    }
-
-    @Test func mainTagUsesDeterministicOrderWhenOrderingTies() throws {
-        let tagGroup = Components.Schemas.TagGroupDto(
-            id: 10,
-            name: "메인",
-            ordering: 0,
-            tags: [
-                Components.Schemas.TagDto(id: 3, name: "최신", ordering: 1),
-                Components.Schemas.TagDto(id: 1, name: "추천", ordering: 1),
-            ]
-        )
-
-        #expect(
-            tagGroup.evaluationSorts == [
-                EvaluationSort(id: 1, kind: .recommended),
-                EvaluationSort(id: 3, kind: .latest),
-            ]
-        )
-    }
-
-    @Test func evaluationPageMapsToDomainPage() throws {
-        let response = Components.Schemas.CursorPaginationResponseEvaluationWithLectureResponse(
-            content: [
-                Components.Schemas.EvaluationWithLectureResponse(
-                    content: "Good structure and practical examples",
-                    fromSnuev: false,
-                    id: 5001,
-                    isHidden: false,
-                    isLiked: true,
-                    isModifiable: false,
-                    isReportable: true,
-                    isReported: false,
-                    lecture: Components.Schemas.SimpleLectureDto(
-                        id: 1001,
-                        instructor: "Kim",
-                        title: "Algorithms"
-                    ),
-                    likeCount: 7,
-                    rating: 4.5,
-                    semester: 2,
-                    userId: "user-1",
-                    year: 2025
-                )
-            ],
-            cursor: "cursor-2",
-            last: false,
-            size: 1,
-            totalCount: 10
-        )
-        let page = response.evaluationPage
-
-        #expect(page.cursor == "cursor-2")
-        #expect(page.isLast == false)
-        #expect(page.evaluations.count == 1)
-        #expect(page.evaluations[0].id == 5001)
-        #expect(page.evaluations[0].lecture.id == 1001)
-        #expect(page.evaluations[0].lecture.title == "Algorithms")
-        #expect(page.evaluations[0].lecture.instructor == "Kim")
-        #expect(page.evaluations[0].rating == 4.5)
-        #expect(page.evaluations[0].content == "Good structure and practical examples")
-        #expect(page.evaluations[0].year == 2025)
-        #expect(page.evaluations[0].semester == 2)
-        #expect(page.evaluations[0].likeCount == 7)
-        #expect(page.evaluations[0].isLiked)
-        #expect(page.evaluations[0].isReportable)
-    }
-
-    @Test func takenLecturesMapToDomainSummaries() throws {
-        let response = Components.Schemas.ListResponseLectureTakenByUserResponse(
-            content: [
-                Components.Schemas.LectureTakenByUserResponse(
-                    academicYear: "3",
-                    category: "일반",
-                    classification: .교양,
-                    courseNumber: "M1522.000100",
-                    credit: 3,
-                    department: "Computer Science",
-                    id: 1001,
-                    instructor: "Kim",
-                    takenSemester: 1,
-                    takenYear: 2025,
-                    title: "Algorithms"
-                )
-            ],
-            totalCount: 1
-        )
-        let lectures = try response.takenLectureSummaries()
-
-        #expect(lectures.count == 1)
-        #expect(lectures[0].lecture.id == 1001)
-        #expect(lectures[0].lecture.title == "Algorithms")
-        #expect(lectures[0].lecture.instructor == "Kim")
-        #expect(lectures[0].department == "Computer Science")
-        #expect(lectures[0].courseNumber == "M1522.000100")
-        #expect(lectures[0].credit == 3)
-        #expect(lectures[0].academicYear == "3")
-        #expect(lectures[0].classification == "교양")
-        #expect(lectures[0].takenQuarter == Quarter(year: 2025, semester: .first))
-    }
-
-    @Test func takenLecturesThrowWhenTitleIsMissing() throws {
-        let response = Components.Schemas.ListResponseLectureTakenByUserResponse(
-            content: [
-                Components.Schemas.LectureTakenByUserResponse(
-                    academicYear: "3",
-                    category: "일반",
-                    classification: .교양,
-                    courseNumber: "M1522.000100",
-                    credit: 3,
-                    department: "Computer Science",
-                    id: 1001,
-                    instructor: "Kim",
-                    takenSemester: 1,
-                    takenYear: 2025
-                )
-            ],
-            totalCount: 1
-        )
-
-        #expect(throws: OptionalError.self) {
-            try response.takenLectureSummaries()
-        }
     }
 }
 
-@Suite struct EvaluationFakeRepositoryTests {
-    @Test func fakeRepositoryProvidesHomeAndPaginatedEvaluationData() async throws {
-        let repository = EvaluationFakeRepository()
-        let sorts = try await repository.fetchMainSorts()
-        let recommendedSort = try #require(sorts.first { $0.kind == .recommended })
-        let latestSort = try #require(sorts.first { $0.kind == .latest })
+// MARK: - Test Doubles
 
-        let recommendedFirstPage = try await repository.fetchEvaluations(sort: recommendedSort, cursor: nil)
-        let recommendedNextPage = try await repository.fetchEvaluations(
-            sort: recommendedSort,
-            cursor: try #require(recommendedFirstPage.cursor)
-        )
-        let latestFirstPage = try await repository.fetchEvaluations(sort: latestSort, cursor: nil)
-        let takenLectures = try await repository.fetchTakenLectures()
+private struct StubError: Error {}
 
-        #expect(sorts.map(\.kind) == [.recommended, .latest])
-        #expect(recommendedFirstPage.evaluations.count >= 5)
-        #expect(recommendedFirstPage.isLast == false)
-        #expect(recommendedNextPage.evaluations.isEmpty == false)
-        #expect(recommendedNextPage.isLast == false)
-        #expect(latestFirstPage.evaluations.first != recommendedFirstPage.evaluations.first)
-        #expect(takenLectures.isEmpty == false)
-    }
+private struct LikeRequest: Equatable {
+    let id: EvaluationID
+    let isLiked: Bool
 }
 
-private actor FakeEvaluationRepository: EvaluationRepository {
-    var evaluationRequests: [EvaluationRequest] = []
+private final class StubEvaluationRepository: EvaluationRepository, @unchecked Sendable {
+    let sorts: [EvaluationSort]
+    let feeds: [EvaluationSort.Kind: [EvaluationWithLecture]]
+    let takenLectures: [TakenLecture]
+    let averageRatings: [EvaluationLectureID: Double]
+    let myEvaluations: [EvaluationLectureID: [LectureEvaluation]]
+    let myEvaluationFeed: [EvaluationWithLecture]
 
-    private let sorts: [EvaluationSort]
-    private let evaluationPages: [EvaluationRequest: EvaluationPage]
-    private let takenLectures: [TakenLectureSummary]
-    private let delayedRequests: Set<EvaluationRequest>
+    let failingSortKinds = LockIsolated<Set<EvaluationSort.Kind>>([])
+    let failsLike = LockIsolated(false)
+    let likeRequests = LockIsolated<[LikeRequest]>([])
 
     init(
-        sorts: [EvaluationSort] = [],
-        evaluationPages: [EvaluationRequest: EvaluationPage] = [:],
-        takenLectures: [TakenLectureSummary] = [],
-        delayedRequests: Set<EvaluationRequest> = []
+        sorts: [EvaluationSort] = [EvaluationSort(id: 2, kind: .recommended), EvaluationSort(id: 1, kind: .latest)],
+        takenLectures: [TakenLecture] = [],
+        averageRatings: [EvaluationLectureID: Double] = [:],
+        myEvaluations: [EvaluationLectureID: [LectureEvaluation]] = [:],
+        myEvaluationFeed: [EvaluationWithLecture] = []
     ) {
         self.sorts = sorts
-        self.evaluationPages = evaluationPages
+        self.feeds = [
+            .recommended: [.stub(id: 1), .stub(id: 2)],
+            .latest: [.stub(id: 3)],
+        ]
         self.takenLectures = takenLectures
-        self.delayedRequests = delayedRequests
+        self.averageRatings = averageRatings
+        self.myEvaluations = myEvaluations
+        self.myEvaluationFeed = myEvaluationFeed
     }
 
-    func fetchMainSorts() async throws -> [EvaluationSort] {
-        sorts
+    func fetchMainSorts() async throws -> [EvaluationSort] { sorts }
+
+    func fetchEvaluations(sort: EvaluationSort, cursor: String?) async throws -> CursorPage<EvaluationWithLecture> {
+        if failingSortKinds.value.contains(sort.kind) { throw StubError() }
+        return CursorPage(items: feeds[sort.kind] ?? [], nextCursor: nil)
     }
 
-    func fetchEvaluations(sort: EvaluationSort, cursor: String?) async throws -> EvaluationPage {
-        let request = EvaluationRequest(sort: sort, cursor: cursor)
-        evaluationRequests.append(request)
-        if delayedRequests.contains(request) {
-            try await Task.sleep(for: .milliseconds(50))
-        }
-        guard let page = evaluationPages[request] else {
-            throw FakeEvaluationRepositoryError.unexpectedEvaluationRequest
-        }
-        return page
+    func fetchTakenLectures() async throws -> [TakenLecture] { takenLectures }
+
+    func fetchLectureSummary(lectureID: EvaluationLectureID) async throws -> LectureEvaluationSummary {
+        LectureEvaluationSummary(
+            info: .stub(id: lectureID),
+            averageRating: averageRatings[lectureID],
+            averageScores: nil,
+            evaluationCount: 0
+        )
     }
 
-    func fetchTakenLectures() async throws -> [TakenLectureSummary] {
-        takenLectures
+    func fetchLectureEvaluations(
+        lectureID: EvaluationLectureID,
+        cursor: String?
+    ) async throws -> CursorPage<LectureEvaluation> {
+        CursorPage(items: [], nextCursor: nil)
     }
+
+    func fetchMyLectureEvaluations(lectureID: EvaluationLectureID) async throws -> [LectureEvaluation] {
+        myEvaluations[lectureID] ?? []
+    }
+
+    func fetchMyEvaluations(cursor: String?) async throws -> CursorPage<EvaluationWithLecture> {
+        CursorPage(items: myEvaluationFeed, nextCursor: nil)
+    }
+
+    func fetchSearchTagGroups() async throws -> [SearchTagGroup] { [] }
+
+    func searchLectures(query: LectureSearchQuery, page: Int) async throws -> LectureSearchPage {
+        LectureSearchPage(results: [], page: page, isLast: false)
+    }
+
+    func fetchWriteTarget(lectureID: EvaluationLectureID) async throws -> EvaluationWriteTarget {
+        EvaluationWriteTarget(
+            lecture: EvaluationLectureBrief(id: lectureID, title: "강의", instructor: nil),
+            semesterLectures: [
+                SemesterLecture(id: 3, quarter: Quarter(year: 2026, semester: .first), hasMyEvaluation: true),
+                SemesterLecture(id: 2, quarter: Quarter(year: 2025, semester: .second), hasMyEvaluation: false),
+            ]
+        )
+    }
+
+    func createEvaluation(_ submission: EvaluationSubmission) async throws -> EvaluationID { 1 }
+    func deleteEvaluation(id: EvaluationID) async throws {}
+
+    func setLiked(_ isLiked: Bool, evaluationID: EvaluationID) async throws {
+        if failsLike.value { throw StubError() }
+        likeRequests.withValue { $0.append(LikeRequest(id: evaluationID, isLiked: isLiked)) }
+    }
+
+    func reportEvaluation(id: EvaluationID, reason: String) async throws {}
 }
 
-private struct EvaluationRequest: Equatable, Hashable, Sendable {
-    let sort: EvaluationSort
-    let cursor: String?
+private struct StubFilterStore: EvaluationSearchFilterStore {
+    let tags: LockIsolated<[SearchTag]>
 
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(sort.id)
-        hasher.combine(sort.kind)
-        hasher.combine(cursor)
+    init(tags: [SearchTag] = []) {
+        self.tags = LockIsolated(tags)
     }
 
-    static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.sort == rhs.sort && lhs.cursor == rhs.cursor
-    }
-}
-
-private enum FakeEvaluationRepositoryError: Error {
-    case unexpectedEvaluationRequest
+    func loadTags() -> [SearchTag] { tags.value }
+    func saveTags(_ tags: [SearchTag]) { self.tags.setValue(tags) }
 }
 
 extension LectureEvaluation {
-    fileprivate static func preview(
-        id: EvaluationID = 1,
-        lectureID: EvaluationLectureID = 10
-    ) -> Self {
-        Self(
+    fileprivate static func stub(
+        id: EvaluationID,
+        lectureID: EvaluationLectureID = 1,
+        quarter: Quarter = Quarter(year: 2025, semester: .second)
+    ) -> LectureEvaluation {
+        LectureEvaluation(
             id: id,
-            lecture: EvaluationLectureBrief(id: lectureID, title: "Algorithms", instructor: "Kim"),
-            rating: 4.5,
-            content: "Useful lecture",
-            year: 2025,
-            semester: 1,
-            likeCount: 3,
-            isLiked: false,
-            isReportable: true
+            lectureID: lectureID,
+            rating: 4,
+            scores: nil,
+            content: "내용",
+            quarter: quarter,
+            like: EvaluationLike(count: 0, isLiked: false),
+            permissions: .report
         )
     }
 }
 
-extension TakenLectureSummary {
-    fileprivate static func preview(
-        lectureID: EvaluationLectureID = 10,
-        takenQuarter: Quarter = Quarter(year: 2025, semester: .first)
-    ) -> Self {
-        Self(
-            lecture: EvaluationLectureBrief(id: lectureID, title: "Algorithms", instructor: "Kim"),
-            department: "Computer Science",
-            courseNumber: "M1522.000100",
-            credit: 3,
-            academicYear: "3",
-            classification: "Major",
-            takenQuarter: takenQuarter
+extension EvaluationWithLecture {
+    fileprivate static func stub(
+        id: EvaluationID,
+        quarter: Quarter = Quarter(year: 2025, semester: .second)
+    ) -> EvaluationWithLecture {
+        EvaluationWithLecture(
+            evaluation: .stub(id: id, lectureID: EvaluationLectureID(id.rawValue), quarter: quarter),
+            lecture: EvaluationLectureBrief(id: EvaluationLectureID(id.rawValue), title: "강의 \(id)", instructor: nil)
         )
+    }
+}
+
+extension EvaluationLectureInfo {
+    fileprivate static func stub(id: EvaluationLectureID) -> EvaluationLectureInfo {
+        EvaluationLectureInfo(
+            brief: EvaluationLectureBrief(id: id, title: "강의 \(id)", instructor: nil),
+            department: nil,
+            academicYear: nil,
+            classification: nil,
+            credit: nil
+        )
+    }
+}
+
+extension TakenLecture {
+    fileprivate static func stub(id: EvaluationLectureID, quarter: Quarter) -> TakenLecture {
+        TakenLecture(info: .stub(id: id), takenQuarter: quarter, averageRating: nil, myEvaluations: [])
     }
 }
