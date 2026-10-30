@@ -43,8 +43,9 @@ struct EvaluationFilterSheet: View {
         }
         .presentationDetents([.medium])
         .onLoad {
-            await errorAlertHandler.withAlert {
-                try await viewModel.load()
+            // The skeleton has no failed state to recover from, so close the sheet and let the alert explain.
+            if await errorAlertHandler.withAlert(operation: { try await viewModel.load() }) == nil {
+                dismiss()
             }
         }
     }
@@ -59,6 +60,7 @@ struct EvaluationFilterSheet: View {
             )
             .redacted(reason: .placeholder)
             .allowsHitTesting(false)
+            .accessibilityHidden(true)
         case .loaded(let groups):
             filterColumns(groups: groups, selectedGroup: viewModel.selectedGroup)
         }

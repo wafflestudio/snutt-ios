@@ -61,7 +61,7 @@ struct EvaluationLectureDetailScene: View {
         .background(Color(uiColor: .systemBackground))
         .safeAreaInset(edge: .bottom, spacing: 0) {
             EvaluationWriteFloatingButton {
-                viewModel.openWriteEvaluation()
+                viewModel.writeRequest = EvaluationWriteRequest(lectureID: viewModel.lectureID)
             }
             .padding(.bottom, 12)
         }

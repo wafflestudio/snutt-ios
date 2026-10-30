@@ -28,15 +28,23 @@ final class EvaluationHomeViewModel {
 
     func reloadTakenLectures() async throws {
         let groups = try await useCase.loadTakenLectureGroups()
+        guard case .loaded(var content) = homeState else { return }
+        content.takenLectureGroups = groups
+        homeState = .loaded(content)
+    }
+
+    /// Reloads the feed and taken lectures in place, keeping the selected sort, to pick up
+    /// evaluations written, deleted, or liked on pushed screens.
+    func refresh() async throws {
         guard case .loaded(let content) = homeState else { return }
-        homeState = .loaded(
-            EvaluationHomeContent(
-                selectedSort: content.selectedSort,
-                availableSorts: content.availableSorts,
-                mainFeed: content.mainFeed,
-                takenLectureGroups: groups
-            )
-        )
+        let sort = content.selectedSort
+        async let page = repository.fetchEvaluations(sort: sort, cursor: nil)
+        async let groups = useCase.loadTakenLectureGroups()
+        let (mainFeed, takenLectureGroups) = try await (page.items, groups)
+        guard case .loaded(var currentContent) = homeState, currentContent.selectedSort == sort else { return }
+        currentContent.mainFeed = mainFeed
+        currentContent.takenLectureGroups = takenLectureGroups
+        homeState = .loaded(currentContent)
     }
 
     /// Switches the feed optimistically and rolls back if the request fails.
@@ -86,18 +94,6 @@ final class EvaluationHomeViewModel {
     }
 
     // MARK: Navigation
-
-    func openLectureDetail(_ id: EvaluationLectureID) {
-        path.append(.lectureDetail(id))
-    }
-
-    func openWriteEvaluation(_ id: EvaluationLectureID) {
-        writeRequest = EvaluationWriteRequest(lectureID: id)
-    }
-
-    func openMyEvaluations() {
-        path.append(.myEvaluations)
-    }
 
     func openAllEvaluations() {
         guard case .loaded(let content) = homeState else { return }

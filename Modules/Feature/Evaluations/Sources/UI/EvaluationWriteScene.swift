@@ -32,6 +32,7 @@ struct EvaluationWriteScene: View {
                     form(target: EvaluationPreviewFixtures.writeTarget)
                         .redacted(reason: .placeholder)
                         .allowsHitTesting(false)
+                        .accessibilityHidden(true)
                 case .loaded(let target):
                     form(target: target)
                 }
@@ -66,8 +67,9 @@ struct EvaluationWriteScene: View {
         }
         .interactiveDismissDisabled(viewModel.hasUnsavedChanges)
         .onLoad {
-            await errorAlertHandler.withAlert {
-                try await viewModel.load()
+            // The skeleton has no failed state to recover from, so close the form and let the alert explain.
+            if await errorAlertHandler.withAlert(operation: { try await viewModel.load() }) == nil {
+                dismiss()
             }
         }
     }
@@ -96,25 +98,23 @@ struct EvaluationWriteScene: View {
             formScrollView(target: target)
                 .onChange(of: isContentFocused) { _, isFocused in
                     guard isFocused else { return }
-                    revealContentEditor(using: proxy)
+                    withAnimation(.smooth) {
+                        proxy.scrollTo(Self.contentEditorID, anchor: .bottom)
+                    }
                 }
                 // The keyboard shrinks the safe area after focus moves, so reveal the editor again once it settles.
                 .onGeometryChange(for: CGFloat.self) {
                     $0.safeAreaInsets.bottom
                 } action: { _ in
                     guard isContentFocused else { return }
-                    revealContentEditor(using: proxy)
+                    withAnimation(.smooth) {
+                        proxy.scrollTo(Self.contentEditorID, anchor: .bottom)
+                    }
                 }
         }
     }
 
-    /// Scrolls so the whole review editor, including its counter, sits above the keyboard.
-    private func revealContentEditor(using proxy: ScrollViewProxy) {
-        withAnimation(.smooth) {
-            proxy.scrollTo(Self.contentEditorID, anchor: .bottom)
-        }
-    }
-
+    /// Scrolled to with a bottom anchor so the whole review editor, including its counter, sits above the keyboard.
     private static let contentEditorID = "contentEditor"
 
     private func formScrollView(target: EvaluationWriteTarget) -> some View {

@@ -50,14 +50,15 @@ public struct EvaluationHomeScene: View {
                         Label(EvaluationsStrings.homeMyEvaluations, systemImage: "person.text.rectangle")
                     }
                 }
-                ToolbarItem(placement: .topBarTrailing) {
-                    EvaluationFilterToolbarButton(activeFilterCount: searchViewModel.filterTags.count) {
-                        isFilterSheetPresented = true
-                    }
-                }
             }
             .navigationDestination(for: EvaluationDestination.self) { destination in
                 destinationView(for: destination)
+            }
+        }
+        .onChange(of: viewModel.path.isEmpty) { _, isAtRoot in
+            guard isAtRoot else { return }
+            errorAlertHandler.withAlert {
+                try await viewModel.refresh()
             }
         }
         .sheet(isPresented: $isFilterSheetPresented) {
@@ -114,7 +115,7 @@ public struct EvaluationHomeScene: View {
                 try await viewModel.load()
             }
         }
-        .animation(.defaultSpring, value: viewModel.homeState)
+        .animation(.defaultSpring, value: viewModel.homeState.value == nil)
     }
 
     private var homeActions: EvaluationHomeFeed.Actions {
@@ -130,7 +131,7 @@ public struct EvaluationHomeScene: View {
                 }
             },
             openSeeAll: viewModel.openAllEvaluations,
-            writeEvaluation: viewModel.openWriteEvaluation,
+            writeEvaluation: { viewModel.writeRequest = EvaluationWriteRequest(lectureID: $0) },
             selectMenuAction: { menuAction = $0 }
         )
     }
@@ -148,7 +149,7 @@ public struct EvaluationHomeScene: View {
                 }
             },
             onSelectResult: { result in
-                viewModel.openLectureDetail(result.id)
+                viewModel.path.append(.lectureDetail(result.id))
             },
             onResultAppear: { result in
                 Task {
@@ -217,25 +218,6 @@ struct EvaluationHomeFeed: View {
             }
         }
         .padding(.bottom, 24)
-    }
-}
-
-/// A toolbar button that opens the search filters and reflects whether any are active.
-struct EvaluationFilterToolbarButton: View {
-    let activeFilterCount: Int
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            Image(systemName: "line.3.horizontal.decrease")
-                .symbolVariant(activeFilterCount > 0 ? .circle.fill : .none)
-                .foregroundStyle(activeFilterCount > 0 ? EvaluationDesignColor.accent : .primary)
-                .contentTransition(.symbolEffect(.replace))
-        }
-        .accessibilityLabel(EvaluationsStrings.filterTitle)
-        .accessibilityValue(
-            activeFilterCount > 0 ? EvaluationsStrings.filterActiveAccessibility(activeFilterCount) : ""
-        )
     }
 }
 

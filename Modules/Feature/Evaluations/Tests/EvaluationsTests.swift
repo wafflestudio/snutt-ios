@@ -165,6 +165,39 @@ import TimetableInterface
 
         #expect(viewModel.path == [.lectureDetail(7, highlighting: 99)])
     }
+
+    @Test func refreshKeepsSelectedSort() async throws {
+        let repository = StubEvaluationRepository()
+        let viewModel = withDependencies {
+            $0.evaluationRepository = repository
+        } operation: {
+            EvaluationHomeViewModel()
+        }
+        try await viewModel.load()
+        let latestSort = try #require(viewModel.homeState.value?.availableSorts.last)
+        try await viewModel.selectSort(latestSort)
+
+        try await viewModel.refresh()
+
+        #expect(viewModel.homeState.value?.selectedSort == latestSort)
+        #expect(viewModel.homeState.value?.mainFeed == repository.feeds[.latest])
+    }
+}
+
+@MainActor
+@Suite struct EvaluationLectureDetailViewModelTests {
+    @Test func createdEvaluationIsHighlightedOnceReloaded() async throws {
+        let viewModel = withDependencies {
+            $0.evaluationRepository = StubEvaluationRepository()
+        } operation: {
+            EvaluationLectureDetailViewModel(lectureID: 1)
+        }
+
+        try await viewModel.didCreateEvaluation(99)
+
+        #expect(viewModel.contentState.value != nil)
+        #expect(viewModel.highlightedEvaluationID == 99)
+    }
 }
 
 @MainActor
@@ -282,7 +315,7 @@ import TimetableInterface
             from: Data(json.utf8)
         )
 
-        let page = try response.evaluationPage()
+        let page = response.evaluationPage()
         let item = try #require(page.items.first)
 
         #expect(page.nextCursor == "next")
@@ -293,13 +326,40 @@ import TimetableInterface
         #expect(item.evaluation.permissions == .report)
     }
 
+    @Test func malformedItemsAreSkippedInsteadOfFailingThePage() throws {
+        let json = """
+            {
+              "content": [{
+                "id": 1, "content": "학기 값이 잘못됨", "rating": 4.0, "like_count": 0, "is_liked": false, "user_id": "1",
+                "is_hidden": false, "is_reported": false, "from_snuev": false,
+                "year": 2026, "semester": 9,
+                "lecture": {"id": 10, "title": "강의", "instructor": ""},
+                "is_modifiable": false, "is_reportable": true
+              }, {
+                "id": 2, "content": "정상", "rating": 4.0, "like_count": 0, "is_liked": false, "user_id": "1",
+                "is_hidden": false, "is_reported": false, "from_snuev": false,
+                "year": 2026, "semester": 1,
+                "lecture": {"id": 11, "title": "강의", "instructor": ""},
+                "is_modifiable": false, "is_reportable": true
+              }],
+              "last": true, "size": 20
+            }
+            """
+        let response = try JSONDecoder().decode(
+            Components.Schemas.CursorPaginationResponseEvaluationWithLectureResponse.self,
+            from: Data(json.utf8)
+        )
+
+        #expect(response.evaluationPage().items.map(\.id) == [2])
+    }
+
     @Test func lastPageHasNoNextCursor() throws {
         let json = #"{"content": [], "cursor": "ignored", "last": true, "size": 20}"#
         let response = try JSONDecoder().decode(
             Components.Schemas.CursorPaginationResponseEvaluationWithLectureResponse.self,
             from: Data(json.utf8)
         )
-        #expect(try response.evaluationPage().nextCursor == nil)
+        #expect(response.evaluationPage().nextCursor == nil)
     }
 
     @Test func legacyEvaluationsWithoutScoresMapToNilScores() throws {

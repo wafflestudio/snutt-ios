@@ -15,7 +15,7 @@ final class MyEvaluationsViewModel {
     /// The user's evaluations written in one semester.
     struct Section: Equatable, Identifiable {
         let quarter: Quarter
-        let items: [EvaluationWithLecture]
+        var items: [EvaluationWithLecture]
 
         var id: Quarter { quarter }
     }
@@ -33,8 +33,8 @@ final class MyEvaluationsViewModel {
         guard case .loaded(let content) = evaluationsState else { return nil }
         return content.items.reduce(into: []) { sections, item in
             let quarter = item.evaluation.quarter
-            if let lastSection = sections.last, lastSection.quarter == quarter {
-                sections[sections.count - 1] = Section(quarter: quarter, items: lastSection.items + [item])
+            if sections.last?.quarter == quarter {
+                sections[sections.count - 1].items.append(item)
             } else {
                 sections.append(Section(quarter: quarter, items: [item]))
             }

@@ -55,11 +55,9 @@ struct EvaluationStarGlyph: View {
                 Image(systemName: "star.fill")
                     .font(.system(size: size))
                     .foregroundStyle(EvaluationDesignColor.star)
-                    .mask(alignment: .leading) {
-                        GeometryReader { proxy in
-                            Rectangle()
-                                .frame(width: proxy.size.width * fillFraction)
-                        }
+                    .mask {
+                        Rectangle()
+                            .scaleEffect(x: fillFraction, y: 1, anchor: .leading)
                     }
             }
     }

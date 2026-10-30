@@ -92,13 +92,10 @@ final class EvaluationLectureDetailViewModel {
         try await repository.reportEvaluation(id: id, reason: reason)
     }
 
-    func openWriteEvaluation() {
-        writeRequest = EvaluationWriteRequest(lectureID: lectureID)
-    }
-
+    /// Highlights only after reloading, so the scene scrolls to a row that already exists.
     func didCreateEvaluation(_ id: EvaluationID) async throws {
-        highlightedEvaluationID = id
         try await load()
+        highlightedEvaluationID = id
     }
 
     func clearHighlight() {
