@@ -1,3 +1,4 @@
+import AuthInterface
 import Dependencies
 import Foundation
 import Testing
@@ -321,6 +322,37 @@ import TimetableInterface
                 Quarter(year: 2025, semester: .second), Quarter(year: 2025, semester: .first),
             ]
         )
+    }
+}
+
+@MainActor
+@Suite struct EvaluationEmailVerificationViewModelTests {
+    @Test func verifiesWithCodeSentToSNUEmail() async throws {
+        let authRepository = AuthRepositorySpy()
+        authRepository.fetchIsEmailVerifiedReturnValue = false
+        let now = Date(timeIntervalSince1970: 0)
+        let viewModel = withDependencies {
+            $0.authRepository = authRepository
+            $0.date.now = now
+        } operation: {
+            EvaluationEmailVerificationViewModel()
+        }
+
+        await viewModel.checkStatus()
+        #expect(viewModel.status == .unverified)
+
+        viewModel.emailID = " snutt "
+        try await viewModel.requestCode()
+        #expect(authRepository.sendVerificationCodeEmailReceivedEmail == "snutt@snu.ac.kr")
+        #expect(viewModel.codeRecipient == "snutt@snu.ac.kr")
+
+        viewModel.code = "123456"
+        #expect(viewModel.canVerify(at: now.addingTimeInterval(179)))
+        #expect(!viewModel.canVerify(at: now.addingTimeInterval(180)))
+
+        try await viewModel.verify()
+        #expect(authRepository.confirmEmailVerificationCodeReceivedCode == "123456")
+        #expect(viewModel.status == .verified)
     }
 }
 

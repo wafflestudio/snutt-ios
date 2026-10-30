@@ -19,6 +19,43 @@ public struct EvaluationHomeScene: View {
     public init() {}
 
     public var body: some View {
+        EvaluationEmailVerificationGate {
+            home
+        } placeholder: {
+            homeSkeleton
+        }
+    }
+
+    /// The home as it looks while loading, so the verification check flows straight into the feed's own loading.
+    private var homeSkeleton: some View {
+        NavigationStack {
+            ScrollView {
+                feedSkeleton
+            }
+            .background(Color(uiColor: .systemBackground))
+            .navigationTitle(EvaluationsStrings.homeTitle)
+            .navigationBarTitleDisplayMode(.inline)
+            .searchable(
+                text: .constant(""),
+                placement: .navigationBarDrawer(displayMode: .always),
+                prompt: EvaluationsStrings.searchPrompt
+            )
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(EvaluationsStrings.homeMyEvaluations, systemImage: "person.text.rectangle") {}
+                }
+            }
+        }
+    }
+
+    private var feedSkeleton: some View {
+        EvaluationHomeFeed(content: EvaluationPreviewFixtures.homeContent, actions: .disabled)
+            .redacted(reason: .placeholder)
+            .allowsHitTesting(false)
+            .accessibilityHidden(true)
+    }
+
+    private var home: some View {
         NavigationStack(path: $viewModel.path) {
             ZStack {
                 if searchViewModel.isPresented {
@@ -107,10 +144,7 @@ public struct EvaluationHomeScene: View {
         ScrollView {
             switch viewModel.homeState {
             case .loading:
-                EvaluationHomeFeed(content: EvaluationPreviewFixtures.homeContent, actions: .disabled)
-                    .redacted(reason: .placeholder)
-                    .allowsHitTesting(false)
-                    .accessibilityHidden(true)
+                feedSkeleton
             case .loaded(let content):
                 EvaluationHomeFeed(content: content, actions: homeActions)
             }

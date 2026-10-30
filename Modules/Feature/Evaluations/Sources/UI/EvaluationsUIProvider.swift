@@ -25,15 +25,17 @@ private struct EvaluationLectureDetailSheet: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        NavigationStack {
-            EvaluationLectureDetailScene(lectureID: lectureID)
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button(EvaluationsStrings.close, systemImage: "xmark") {
-                            dismiss()
+        EvaluationEmailVerificationGate(onClose: { dismiss() }) {
+            NavigationStack {
+                EvaluationLectureDetailScene(lectureID: lectureID)
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button(EvaluationsStrings.close, systemImage: "xmark") {
+                                dismiss()
+                            }
                         }
                     }
-                }
+            }
         }
     }
 }

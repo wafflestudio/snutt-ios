@@ -16,6 +16,7 @@ public enum AnalyticsScreen: AnalyticsLogEvent {
     case myReviews
     case reviewWrite(evLectureID: Int64)
     case reviewEdit(evaluationID: Int64)
+    case reviewEmailVerification
 
     public var eventName: String {
         switch self {
@@ -35,12 +36,14 @@ public enum AnalyticsScreen: AnalyticsLogEvent {
             "review_write"
         case .reviewEdit:
             "review_edit"
+        case .reviewEmailVerification:
+            "review_email_verification"
         }
     }
 
     public var parameters: [String: String]? {
         switch self {
-        case .reviewHome, .reviewSearch, .reviewFilter, .myReviews:
+        case .reviewHome, .reviewSearch, .reviewFilter, .myReviews, .reviewEmailVerification:
             nil
         case .reviewDetail(let evLectureID, let referrer):
             ["evLectureID": evLectureID.description, "referrer": referrer.description]

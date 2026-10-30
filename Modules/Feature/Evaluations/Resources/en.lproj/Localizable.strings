@@ -128,6 +128,23 @@
 "edit.discard.keepEditing" = "Keep Editing";
 "edit.likeResetNotice" = "Editing this review resets its %d likes.";
 
+/* Email verification */
+"verify.title" = "Email Verification";
+"verify.headline" = "Verify your email\nto see course reviews";
+"verify.description" = "We'll send a code to your SNU email.";
+"verify.email" = "Email";
+"verify.email.placeholder" = "mySNU ID";
+"verify.requestCode" = "Send Code";
+"verify.requestCodeAgain" = "Resend";
+"verify.code" = "Verification Code";
+"verify.code.placeholder" = "6-digit code";
+"verify.code.sent" = "We sent a code to %@.";
+"verify.code.expired" = "The code has expired. Please request a new one.";
+"verify.code.remaining.accessibility" = "%@ remaining";
+"verify.submit" = "Verify";
+"verify.alreadyUsed.title" = "Seeing \"Email already in use\"?";
+"verify.alreadyUsed.description" = "Another account has already been verified with this email. Log out and use [Log In > Find ID] to find that account. If that doesn't work, email snutt@wafflestudio.com from your SNU mail.";
+
 /* Errors */
 "error.loadFailed" = "Couldn't Load Reviews";
 "error.retrySuggestion" = "Please try again later.";

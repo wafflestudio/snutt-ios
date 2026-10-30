@@ -128,6 +128,23 @@
 "edit.discard.keepEditing" = "계속 수정하기";
 "edit.likeResetNotice" = "강의평을 수정하면 받은 추천 %d개가 초기화돼요.";
 
+/* Email verification */
+"verify.title" = "이메일 인증";
+"verify.headline" = "강의평을 보려면\n이메일 인증이 필요해요";
+"verify.description" = "서울대학교 이메일로 인증번호를 보내드릴게요.";
+"verify.email" = "이메일";
+"verify.email.placeholder" = "마이스누 아이디";
+"verify.requestCode" = "인증번호 받기";
+"verify.requestCodeAgain" = "다시 받기";
+"verify.code" = "인증번호";
+"verify.code.placeholder" = "인증번호 6자리";
+"verify.code.sent" = "%@로 인증번호를 보냈어요.";
+"verify.code.expired" = "인증 시간이 지났어요. 인증번호를 다시 받아 주세요.";
+"verify.code.remaining.accessibility" = "남은 시간 %@";
+"verify.submit" = "인증하기";
+"verify.alreadyUsed.title" = "이미 사용 중인 이메일이라고 나오나요?";
+"verify.alreadyUsed.description" = "다른 계정에서 이 이메일로 인증을 마친 경우예요. 로그아웃한 뒤 [로그인 > 아이디 찾기]로 그 계정을 찾을 수 있어요. 찾기 어렵다면 마이스누 메일로 snutt@wafflestudio.com에 연락해 주세요.";
+
 /* Errors */
 "error.loadFailed" = "강의평을 불러오지 못했어요";
 "error.retrySuggestion" = "잠시 후 다시 시도해 주세요.";

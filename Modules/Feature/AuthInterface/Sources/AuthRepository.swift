@@ -35,6 +35,10 @@ public protocol AuthRepository: Sendable {
     func resetPassword(localID: Username, password: String, code: String) async throws
     func findLocalID(email: String) async throws
 
+    // Email verification (the code is requested with `sendVerificationCode(email:)`)
+    func fetchIsEmailVerified() async throws -> Bool
+    func confirmEmailVerification(code: String) async throws
+
     // Feedback
     func sendFeedback(email: String?, message: String) async throws
 }
@@ -88,6 +92,7 @@ public enum AuthRepositoryKey: TestDependencyKey {
             local: .unlinked
         )
         spy.getLinkedEmailLocalIDReturnValue = ""
+        spy.fetchIsEmailVerifiedReturnValue = true
         return spy
     }()
 }

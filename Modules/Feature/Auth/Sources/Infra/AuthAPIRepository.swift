@@ -130,6 +130,16 @@ extension AuthAPIRepository {
         _ = try result.ok.body.json
     }
 
+    public func fetchIsEmailVerified() async throws -> Bool {
+        let result = try await apiClient.getEmailVerification()
+        return try result.ok.body.json.is_email_verified
+    }
+
+    public func confirmEmailVerification(code: String) async throws {
+        let result = try await apiClient.confirmEmailVerification(body: .json(.init(code: code)))
+        _ = try result.ok.body.json
+    }
+
     public func sendResetPasswordCode(email: String) async throws {
         let result = try await apiClient.sendResetPasswordCode(body: .json(.init(email: email)))
         _ = try result.ok.body.json

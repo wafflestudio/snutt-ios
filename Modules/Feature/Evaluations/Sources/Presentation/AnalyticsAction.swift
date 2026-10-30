@@ -14,6 +14,7 @@ enum AnalyticsAction: AnalyticsLogEvent {
     case deleteReview(evaluationID: EvaluationID)
     case reportReview(evaluationID: EvaluationID)
     case likeReview(evaluationID: EvaluationID, isLiked: Bool)
+    case verifyEmail
 
     var eventName: String {
         switch self {
@@ -29,6 +30,8 @@ enum AnalyticsAction: AnalyticsLogEvent {
             "report_review"
         case .likeReview(_, let isLiked):
             isLiked ? "like_review" : "unlike_review"
+        case .verifyEmail:
+            "verify_email"
         }
     }
 
@@ -43,6 +46,8 @@ enum AnalyticsAction: AnalyticsLogEvent {
             .reportReview(let evaluationID),
             .likeReview(let evaluationID, _):
             ["evaluationID": evaluationID.description]
+        case .verifyEmail:
+            nil
         }
     }
 }
