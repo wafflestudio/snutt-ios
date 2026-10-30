@@ -18,18 +18,43 @@ struct EvaluationSearchContent: View {
     let onResultAppear: (LectureSearchResult) -> Void
 
     var body: some View {
-        VStack(spacing: 0) {
-            EvaluationFilterChipBar(tags: filterTags, onOpenFilters: onOpenFilters, onRemove: onRemoveFilterTag)
-                .padding(.vertical, 8)
-            results
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        results
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .topBar {
+                EvaluationFilterChipBar(tags: filterTags, onOpenFilters: onOpenFilters, onRemove: onRemoveFilterTag)
+                    .padding(.vertical, 8)
+            }
+            .animation(.defaultSpring, value: filterTags)
+            .animation(.smooth(duration: 0.25), value: resultState)
+    }
+
+    /// One list for every state, so the scroll view (and the bar attached to it) keeps its identity
+    /// while results reload; only the rows and the overlaid placeholder change.
+    private var results: some View {
+        List {
+            switch resultState {
+            case .idle:
+                EmptyView()
+            case .loading:
+                resultRows(EvaluationPreviewFixtures.searchResults)
+                    .redacted(reason: .placeholder)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
+            case .loaded(let searchResults):
+                resultRows(searchResults.results)
+            }
         }
-        .animation(.defaultSpring, value: filterTags)
-        .animation(.smooth(duration: 0.25), value: resultState)
+        .listStyle(.plain)
+        .listSectionSeparator(.hidden, edges: .top)
+        .scrollDismissesKeyboard(.immediately)
+        .overlay {
+            placeholder
+                .transition(.opacity)
+        }
     }
 
     @ViewBuilder
-    private var results: some View {
+    private var placeholder: some View {
         switch resultState {
         case .idle:
             ContentUnavailableView {
@@ -37,44 +62,29 @@ struct EvaluationSearchContent: View {
             } description: {
                 Text(EvaluationsStrings.searchIdleDescription)
             }
-            .transition(.opacity)
-
-        case .loading:
-            resultList(EvaluationPreviewFixtures.searchResults)
-                .redacted(reason: .placeholder)
-                .allowsHitTesting(false)
-                .accessibilityHidden(true)
-
         case .loaded(let searchResults) where searchResults.results.isEmpty:
             ContentUnavailableView {
                 Label(EvaluationsStrings.searchEmptyTitle, systemImage: "exclamationmark.magnifyingglass")
             } description: {
                 Text(EvaluationsStrings.searchEmptyDescription)
             }
-            .transition(.opacity)
-
-        case .loaded(let searchResults):
-            resultList(searchResults.results)
+        case .loading, .loaded:
+            EmptyView()
         }
     }
 
-    private func resultList(_ results: [LectureSearchResult]) -> some View {
-        List {
-            ForEach(results) { result in
-                Button {
-                    onSelectResult(result)
-                } label: {
-                    EvaluationSearchResultRow(result: result)
-                }
-                .listRowInsets(EdgeInsets(top: 12, leading: 20, bottom: 12, trailing: 20))
-                .onAppear {
-                    onResultAppear(result)
-                }
+    private func resultRows(_ results: [LectureSearchResult]) -> some View {
+        ForEach(results) { result in
+            Button {
+                onSelectResult(result)
+            } label: {
+                EvaluationSearchResultRow(result: result)
+            }
+            .listRowInsets(EdgeInsets(top: 12, leading: 20, bottom: 12, trailing: 20))
+            .onAppear {
+                onResultAppear(result)
             }
         }
-        .listStyle(.plain)
-        .listSectionSeparator(.hidden, edges: .top)
-        .scrollDismissesKeyboard(.immediately)
     }
 }
 
@@ -136,37 +146,99 @@ struct EvaluationFilterChipBar: View {
                     }
                     .font(.footnote.weight(.semibold))
                     .foregroundStyle(.primary)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 6)
-                    .background(Color(uiColor: .secondarySystemFill), in: .capsule)
+                    .filterChipStyle(fallbackFill: Color(uiColor: .secondarySystemFill))
                 }
-                .buttonStyle(.animatable(scale: 0.94))
                 .accessibilityValue(tags.isEmpty ? "" : EvaluationsStrings.filterActiveAccessibility(tags.count))
 
                 ForEach(tags) { tag in
                     Button {
                         onRemove(tag)
                     } label: {
-                        SearchFilterChip(
-                            title: tag.name,
-                            foregroundColor: EvaluationDesignColor.accent,
-                            backgroundColor: EvaluationDesignColor.accentBackground,
-                            borderColor: EvaluationDesignColor.accent.opacity(0.5),
-                            font: .footnote.weight(.medium),
-                            iconFont: .caption2.weight(.semibold),
-                            spacing: 4,
-                            horizontalPadding: 12,
-                            verticalPadding: 6
+                        HStack(spacing: 4) {
+                            Text(tag.name)
+                                .font(.footnote.weight(.medium))
+                                .lineLimit(1)
+                            Image(systemName: "xmark")
+                                .font(.caption2.weight(.semibold))
+                        }
+                        .foregroundStyle(EvaluationDesignColor.accent)
+                        .filterChipStyle(
+                            tint: EvaluationDesignColor.accent,
+                            fallbackFill: EvaluationDesignColor.accentBackground
                         )
                     }
-                    .buttonStyle(.animatable(scale: 0.94))
                     .accessibilityLabel(EvaluationsStrings.filterRemoveAccessibility(tag.name))
                     .transition(.scale(scale: 0.8).combined(with: .opacity))
                 }
             }
+            .filterChipButtonStyle()
+            .glassEffectContainerIfAvailable(spacing: 8)
             .padding(.horizontal, 20)
         }
         .scrollIndicators(.hidden)
+        // Leaves room for the chips' glass shadows, which a horizontal scroll view would otherwise clip.
+        .scrollClipDisabled()
+    }
+}
+
+extension View {
+    /// Places bar content above a scrolling view: as a bar with the system scroll edge effect on iOS 26,
+    /// and as an opaque inset before that.
+    @ViewBuilder
+    fileprivate func topBar(@ViewBuilder _ content: () -> some View) -> some View {
+        if #available(iOS 26, *) {
+            safeAreaBar(edge: .top, content: content)
+        } else {
+            safeAreaInset(edge: .top, spacing: 0) {
+                content()
+                    .background(Color(uiColor: .systemBackground))
+            }
+        }
+    }
+
+    /// A capsule chip: Liquid Glass (optionally tinted) on iOS 26, a flat fill with a hairline before that.
+    @ViewBuilder
+    fileprivate func filterChipStyle(tint: Color? = nil, fallbackFill: Color) -> some View {
+        let chip = fixedSize()
+            .padding(.horizontal, 12)
+            .padding(.vertical, 6)
+        if #available(iOS 26, *) {
+            chip
+                .glassEffect(
+                    tint.map { Glass.regular.tint($0.opacity(0.18)) }?.interactive() ?? .regular.interactive(),
+                    in: .capsule
+                )
+        } else {
+            chip
+                .background(fallbackFill, in: .capsule)
+                .overlay {
+                    if let tint {
+                        Capsule()
+                            .strokeBorder(tint.opacity(0.5))
+                    }
+                }
+        }
+    }
+
+    /// Interactive glass already reacts to touches, so chips only scale themselves before iOS 26.
+    @ViewBuilder
+    fileprivate func filterChipButtonStyle() -> some View {
+        if #available(iOS 26, *) {
+            buttonStyle(.plain)
+        } else {
+            buttonStyle(.animatable(scale: 0.94))
+        }
+    }
+
+    @ViewBuilder
+    fileprivate func glassEffectContainerIfAvailable(spacing: CGFloat) -> some View {
+        if #available(iOS 26, *) {
+            GlassEffectContainer(spacing: spacing) {
+                self
+            }
+        } else {
+            self
+        }
     }
 }
 
