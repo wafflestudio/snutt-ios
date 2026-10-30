@@ -2,6 +2,8 @@ import ProjectDescription
 
 public enum FeatureFlag: String, Sendable {
     case lectureDiary = "FEATURE_LECTURE_DIARY"
+    /// Shows the native evaluation screens; without it, the review tab and timetable fall back to the SNUEV web view.
+    case nativeEvaluations = "FEATURE_NATIVE_EVALUATIONS"
 }
 
 public enum CompilationConditions {
@@ -16,9 +18,9 @@ public enum CompilationConditions {
     ) -> [FeatureFlag] {
         switch configuration {
         case .dev:
-            [.lectureDiary]
+            [.lectureDiary, .nativeEvaluations]
         case .prod:
-            [.lectureDiary]
+            [.lectureDiary, .nativeEvaluations]
         default:
             []
         }

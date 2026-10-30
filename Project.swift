@@ -221,6 +221,7 @@ let project = Project.app(
                 .target(name: "AnalyticsInterface"),
                 .target(name: "APIClientInterface"),
                 .target(name: "DependenciesUtility"),
+                .target(name: "SharedUIWebKit"),
                 .target(name: "SharedUIComponents"),
                 .target(name: "SwiftUIUtility"),
                 .target(name: "AuthInterface"),

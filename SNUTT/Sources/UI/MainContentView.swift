@@ -49,11 +49,19 @@ struct MainContentView: View {
                         timetableViewModel: viewModel.timetableViewModel
                     )
                 )
+                #if FEATURE_NATIVE_EVALUATIONS
                 TabScene(
                     tabItem: TabItem.review,
                     rootView: EvaluationHomeScene()
                         .modifier(AnalyticsScreenModifier(screen: Evaluations.AnalyticsScreen.reviewHome))
                 )
+                #else
+                TabScene(
+                    tabItem: TabItem.review,
+                    rootView: EvaluationsWebScene()
+                        .modifier(AnalyticsScreenModifier(screen: Evaluations.AnalyticsScreen.reviewHome))
+                )
+                #endif
                 TabScene(
                     tabItem: TabItem.friends,
                     rootView: FriendsScene()

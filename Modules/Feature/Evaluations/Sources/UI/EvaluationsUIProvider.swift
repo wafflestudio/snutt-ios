@@ -11,7 +11,11 @@ import SwiftUI
 public struct EvaluationsUIProvider: EvaluationsUIProvidable {
     public nonisolated init() {}
     public func makeEvaluationsScene(for evLectureID: Int) -> AnyView {
+        #if FEATURE_NATIVE_EVALUATIONS
         AnyView(EvaluationLectureDetailSheet(lectureID: EvaluationLectureID(Int64(evLectureID))))
+        #else
+        AnyView(EvaluationsWebScene(evLectureID: evLectureID))
+        #endif
     }
 }
 
