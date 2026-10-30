@@ -1,5 +1,5 @@
 {
-  "originHash" : "51cdbc58ca634c286ba14f728e23efcd2cc9415107d99f6c531829b0ba956a41",
+  "originHash" : "9cbdf6fc8f4d9c8e4d4b0ad7813b72552411573ab60fdac081f3d5a82609d05c",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -204,8 +204,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-collections",
       "state" : {
-        "revision" : "f96b909e1a9e469620bc5037c1e24e00153f376f",
-        "version" : "1.7.5"
+        "revision" : "7b847a3b7008b2dc2f47ca3110d8c782fb2e5c7e",
+        "version" : "1.3.0"
       }
     },
     {

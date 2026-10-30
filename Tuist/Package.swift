@@ -46,6 +46,9 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-dependencies", "1.7.0"..<"1.10.0"),
         .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.4.0"),
         .package(url: "https://github.com/apple/swift-openapi-urlsession", from: "1.0.1"),
+        // 1.4.0 adopts `Span` in DequeModule, which needs libswiftCompatibilitySpan.dylib below iOS 26,
+        // and Xcode doesn't embed it for the dynamic DequeModule framework, crashing the app at launch on iOS 18
+        .package(url: "https://github.com/apple/swift-collections", "1.0.0"..<"1.4.0"),
         .package(url: "https://github.com/apple/swift-http-types.git", from: "1.0.0"),
         .package(url: "https://github.com/SnapKit/SnapKit.git", .upToNextMajor(from: "5.7.1")),
         .package(url: "https://github.com/Matejkob/swift-spyable", .upToNextMajor(from: "0.8.0")),
