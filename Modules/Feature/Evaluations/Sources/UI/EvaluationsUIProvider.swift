@@ -13,8 +13,4 @@ public struct EvaluationsUIProvider: EvaluationsUIProvidable {
     public func makeEvaluationsScene(for evLectureID: Int) -> AnyView {
         AnyView(EvaluationsWebScene(evLectureID: evLectureID))
     }
-
-    public func makeEvaluationScene(for evLectureID: EvLectureID) -> AnyView {
-        AnyView(EvaluationLectureDetailScene(lectureID: EvaluationLectureID(evLectureID.rawValue)))
-    }
 }

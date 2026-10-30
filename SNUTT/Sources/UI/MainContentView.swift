@@ -51,7 +51,8 @@ struct MainContentView: View {
                 )
                 TabScene(
                     tabItem: TabItem.review,
-                    rootView: reviewRootView
+                    rootView: EvaluationHomeScene()
+                        .modifier(AnalyticsScreenModifier(screen: Evaluations.AnalyticsScreen.reviewHome))
                 )
                 TabScene(
                     tabItem: TabItem.friends,
@@ -98,10 +99,5 @@ struct MainContentView: View {
                 try? await viewModel.handleURLScheme(url)
             }
         }
-    }
-
-    private var reviewRootView: some View {
-        EvaluationHomeScene()
-            .modifier(AnalyticsScreenModifier(screen: Evaluations.AnalyticsScreen.reviewHome))
     }
 }

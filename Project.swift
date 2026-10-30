@@ -224,7 +224,6 @@ let project = Project.app(
                 .target(name: "SharedUIWebKit"),
                 .target(name: "SharedUIComponents"),
                 .target(name: "SwiftUIUtility"),
-                .target(name: "SwiftUtility"),
                 .target(name: "AuthInterface"),
                 .target(name: "EvaluationsInterface"),
                 .target(name: "SharedAppMetadata"),
@@ -232,7 +231,6 @@ let project = Project.app(
                 .external(name: "Dependencies"),
                 .external(name: "OpenAPIRuntime"),
                 .external(name: "OpenAPIURLSession"),
-                .external(name: "MemberwiseInit"),
                 .external(name: "Tagged"),
             ],
             testDependencies: [
@@ -389,8 +387,7 @@ let project = Project.app(
             name: "EvaluationsInterface",
             category: .featureInterface,
             dependencies: [
-                .external(name: "Dependencies"),
-                .external(name: "Tagged"),
+                .external(name: "Dependencies")
             ]
         ),
         .module(

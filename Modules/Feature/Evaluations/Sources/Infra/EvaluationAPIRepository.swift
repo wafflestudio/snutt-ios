@@ -13,12 +13,12 @@ import HTTPTypes
 import OpenAPIRuntime
 import OpenAPIURLSession
 import SharedAppMetadata
-import SwiftUtility
 import TimetableInterface
 
 struct EvaluationAPIRepository: EvaluationRepository {
     @Dependency(\.appMetadata) private var appMetadata
     @Dependency(\.authState) private var authState
+    @Dependency(\.authSecureRepository) private var secureRepository
 
     func fetchMainSorts() async throws -> [EvaluationSort] {
         try await client.getMainTags().ok.body.json.evaluationSorts
@@ -29,12 +29,12 @@ struct EvaluationAPIRepository: EvaluationRepository {
             path: .init(id: sort.id),
             query: .init(cursor: cursor)
         ).ok.body.json
-        return try response.evaluationPage()
+        return response.evaluationPage()
     }
 
     func fetchTakenLectures() async throws -> [TakenLecture] {
         let response = try await client.getLecturesTakenByCurrentUser().ok.body.json
-        return try response.content.map { try $0.takenLecture() }
+        return response.content.compactMap { try? $0.takenLecture() }
     }
 
     func fetchLectureSummary(lectureID: EvaluationLectureID) async throws -> LectureEvaluationSummary {
@@ -51,14 +51,14 @@ struct EvaluationAPIRepository: EvaluationRepository {
             query: .init(cursor: cursor)
         ).ok.body.json
         return CursorPage(
-            items: try response.content.map { try $0.lectureEvaluation() },
+            items: response.content.compactMap { try? $0.lectureEvaluation() },
             nextCursor: response.last ? nil : response.cursor
         )
     }
 
     func fetchMyLectureEvaluations(lectureID: EvaluationLectureID) async throws -> [LectureEvaluation] {
         try await client.getLectureEvaluationsOfMe(path: .init(id: lectureID.rawValue)).ok.body.json
-            .evaluations.map { try $0.lectureEvaluation() }
+            .evaluations.compactMap { try? $0.lectureEvaluation() }
     }
 
     func fetchMyEvaluations(cursor: String?) async throws -> CursorPage<EvaluationWithLecture> {
@@ -131,48 +131,17 @@ struct EvaluationAPIRepository: EvaluationRepository {
             serverURL: appMetadata.apiURL.appending(path: "v1/ev-service"),
             transport: URLSessionTransport(),
             middlewares: [
-                EvaluationErrorDecodingMiddleware(),
-                EvaluationAuthenticationMiddleware(
+                AuthenticationMiddleware(
                     appMetadata: appMetadata,
-                    accessToken: authState.get(.accessToken)
+                    accessToken: authState.get(.accessToken),
+                    handleUnauthenticated: { [authState, secureRepository] in
+                        authState.clear()
+                        try? secureRepository.clear()
+                    }
                 ),
+                EvaluationErrorDecodingMiddleware(),
             ]
         )
-    }
-}
-
-private struct EvaluationAuthenticationMiddleware: ClientMiddleware {
-    private let appMetadata: AppMetadata
-    private let accessToken: @Sendable () -> String?
-
-    init(
-        appMetadata: AppMetadata,
-        accessToken: @autoclosure @escaping @Sendable () -> String?
-    ) {
-        self.appMetadata = appMetadata
-        self.accessToken = accessToken
-    }
-
-    func intercept(
-        _ request: HTTPRequest,
-        body: HTTPBody?,
-        baseURL: URL,
-        operationID _: String,
-        next: @Sendable (HTTPRequest, HTTPBody?, URL) async throws -> (HTTPResponse, HTTPBody?)
-    ) async throws -> (HTTPResponse, HTTPBody?) {
-        var request = request
-        if let accessToken = accessToken(),
-            let accessTokenKey = HTTPField.Name("x-access-token")
-        {
-            request.headerFields[accessTokenKey] = accessToken
-        }
-        for item in AppMetadataKey.allCases {
-            guard let key = item.keyForHeader,
-                let headerKey = HTTPField.Name(key)
-            else { continue }
-            request.headerFields[headerKey] = appMetadata[item]
-        }
-        return try await next(request, body, baseURL)
     }
 }
 
@@ -246,9 +215,10 @@ extension Components.Schemas.TagDto {
 }
 
 extension Components.Schemas.CursorPaginationResponseEvaluationWithLectureResponse {
-    func evaluationPage() throws -> CursorPage<EvaluationWithLecture> {
+    /// Skips malformed items so one bad record doesn't fail the whole page, as ``writeTarget`` does.
+    func evaluationPage() -> CursorPage<EvaluationWithLecture> {
         CursorPage(
-            items: try content.map { try $0.evaluationWithLecture() },
+            items: content.compactMap { try? $0.evaluationWithLecture() },
             nextCursor: last ? nil : cursor
         )
     }
@@ -309,11 +279,12 @@ extension Components.Schemas.SimpleLectureDto {
 
 extension Components.Schemas.LectureTakenByUserResponse {
     func takenLecture() throws -> TakenLecture {
-        TakenLecture(
+        guard let title else { throw EvaluationError.invalidResponse }
+        return TakenLecture(
             info: EvaluationLectureInfo(
                 brief: EvaluationLectureBrief(
                     id: EvaluationLectureID(id),
-                    title: try title.unwrapped().trimmingCharacters(in: .whitespaces),
+                    title: title.trimmingCharacters(in: .whitespaces),
                     instructor: instructor?.nilIfBlank
                 ),
                 department: department?.nilIfBlank,
@@ -421,7 +392,8 @@ extension LectureEvaluation.Permissions {
 
 extension Quarter {
     fileprivate init(year: some BinaryInteger, semester: some BinaryInteger) throws {
-        self.init(year: Int(year), semester: try Semester(rawValue: Int(semester)).unwrapped())
+        guard let semester = Semester(rawValue: Int(semester)) else { throw EvaluationError.invalidResponse }
+        self.init(year: Int(year), semester: semester)
     }
 }
 
