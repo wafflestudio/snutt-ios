@@ -22,7 +22,7 @@ struct EvaluationSearchContent: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .topBar {
                 EvaluationFilterChipBar(tags: filterTags, onOpenFilters: onOpenFilters, onRemove: onRemoveFilterTag)
-                    .padding(.vertical, 8)
+                    .padding(.bottom, 8)
             }
             .animation(.defaultSpring, value: filterTags)
             .animation(.smooth(duration: 0.25), value: resultState)
@@ -81,6 +81,8 @@ struct EvaluationSearchContent: View {
                 EvaluationSearchResultRow(result: result)
             }
             .listRowInsets(EdgeInsets(top: 12, leading: 20, bottom: 12, trailing: 20))
+            // Hiding a top edge also hides the separator shared with the previous row, so only the first row hides it.
+            .listRowSeparator(result.id == results.first?.id ? .hidden : .automatic, edges: .top)
             .onAppear {
                 onResultAppear(result)
             }
@@ -173,7 +175,8 @@ struct EvaluationFilterChipBar: View {
             }
             .filterChipButtonStyle()
             .glassEffectContainerIfAvailable(spacing: 8)
-            .padding(.horizontal, 20)
+            // Lines the chips up with the search field above them.
+            .padding(.horizontal, 16)
         }
         .scrollIndicators(.hidden)
         // Leaves room for the chips' glass shadows, which a horizontal scroll view would otherwise clip.
@@ -185,7 +188,7 @@ extension View {
     /// Places bar content above a scrolling view: as a bar with the system scroll edge effect on iOS 26,
     /// and as an opaque inset before that.
     @ViewBuilder
-    fileprivate func topBar(@ViewBuilder _ content: () -> some View) -> some View {
+    func topBar(@ViewBuilder _ content: () -> some View) -> some View {
         if #available(iOS 26, *) {
             safeAreaBar(edge: .top, content: content)
         } else {
@@ -198,7 +201,7 @@ extension View {
 
     /// A capsule chip: Liquid Glass (optionally tinted) on iOS 26, a flat fill with a hairline before that.
     @ViewBuilder
-    fileprivate func filterChipStyle(tint: Color? = nil, fallbackFill: Color) -> some View {
+    func filterChipStyle(tint: Color? = nil, fallbackFill: Color) -> some View {
         let chip = fixedSize()
             .padding(.horizontal, 12)
             .padding(.vertical, 6)
@@ -222,7 +225,7 @@ extension View {
 
     /// Interactive glass already reacts to touches, so chips only scale themselves before iOS 26.
     @ViewBuilder
-    fileprivate func filterChipButtonStyle() -> some View {
+    func filterChipButtonStyle() -> some View {
         if #available(iOS 26, *) {
             buttonStyle(.plain)
         } else {
@@ -231,7 +234,7 @@ extension View {
     }
 
     @ViewBuilder
-    fileprivate func glassEffectContainerIfAvailable(spacing: CGFloat) -> some View {
+    func glassEffectContainerIfAvailable(spacing: CGFloat) -> some View {
         if #available(iOS 26, *) {
             GlassEffectContainer(spacing: spacing) {
                 self

@@ -22,7 +22,6 @@ struct EvaluationMainFeedSection: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             EvaluationSortToggle(sorts: availableSorts, selectedSort: selectedSort, onSelect: onSelectSort)
-                .padding(.top, 4)
 
             if items.isEmpty {
                 Text(EvaluationsStrings.homeFeedEmpty)
@@ -77,8 +76,9 @@ struct EvaluationSortToggle: View {
                     }
                     .font(.subheadline.weight(isSelected ? .semibold : .regular))
                     .foregroundStyle(isSelected ? AnyShapeStyle(.primary) : AnyShapeStyle(.tertiary))
-                    .frame(minHeight: 36)
-                    .contentShape(.rect)
+                    .frame(minHeight: 24)
+                    // Keeps a comfortable touch target without spreading the toggle's rows apart.
+                    .contentShape(.rect.inset(by: -8))
                 }
                 .buttonStyle(.animatable(hapticFeedback: true))
                 .accessibilityAddTraits(isSelected ? .isSelected : [])

@@ -21,30 +21,15 @@ struct EvaluationSeeAllScene: View {
 
     var body: some View {
         ScrollView {
-            LazyVStack(alignment: .leading, spacing: 0, pinnedViews: .sectionHeaders) {
-                Section {
-                    switch viewModel.feedState {
-                    case .loading:
-                        rows(EvaluationPreviewFixtures.feed)
-                            .redacted(reason: .placeholder)
-                            .allowsHitTesting(false)
-                            .accessibilityHidden(true)
-                    case .loaded(let content):
-                        rows(content.items)
-                    }
-                } header: {
-                    EvaluationSortToggle(
-                        sorts: viewModel.availableSorts,
-                        selectedSort: viewModel.selectedSort,
-                        onSelect: { sort in
-                            errorAlertHandler.withAlert {
-                                try await viewModel.selectSort(sort)
-                            }
-                        }
-                    )
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 4)
-                    .background(Color(uiColor: .systemBackground))
+            LazyVStack(alignment: .leading, spacing: 0) {
+                switch viewModel.feedState {
+                case .loading:
+                    rows(EvaluationPreviewFixtures.feed)
+                        .redacted(reason: .placeholder)
+                        .allowsHitTesting(false)
+                        .accessibilityHidden(true)
+                case .loaded(let content):
+                    rows(content.items)
                 }
             }
         }
@@ -53,6 +38,20 @@ struct EvaluationSeeAllScene: View {
             await errorAlertHandler.withAlert {
                 try await viewModel.load()
             }
+        }
+        // A bar, like the search filter chips, so the feed scrolls under it with the system edge effect.
+        .topBar {
+            EvaluationSortChipBar(
+                sorts: viewModel.availableSorts,
+                selectedSort: viewModel.selectedSort,
+                onSelect: { sort in
+                    errorAlertHandler.withAlert {
+                        try await viewModel.selectSort(sort)
+                    }
+                }
+            )
+            .padding(.horizontal, 20)
+            .padding(.vertical, 8)
         }
         .animation(.defaultSpring, value: viewModel.feedState)
         .background(Color(uiColor: .systemBackground))
@@ -82,6 +81,38 @@ struct EvaluationSeeAllScene: View {
             Divider()
                 .padding(.horizontal, 20)
         }
+    }
+}
+
+/// Feed orderings as chips, styled like the search filter chips.
+private struct EvaluationSortChipBar: View {
+    let sorts: [EvaluationSort]
+    let selectedSort: EvaluationSort
+    let onSelect: (EvaluationSort) -> Void
+
+    var body: some View {
+        HStack(spacing: 8) {
+            ForEach(sorts) { sort in
+                let isSelected = sort == selectedSort
+                Button {
+                    onSelect(sort)
+                } label: {
+                    Text(sort.kind.displayTitle)
+                        .font(.footnote.weight(isSelected ? .semibold : .medium))
+                        .foregroundStyle(isSelected ? EvaluationDesignColor.accent : .secondary)
+                        .filterChipStyle(
+                            tint: isSelected ? EvaluationDesignColor.accent : nil,
+                            fallbackFill: isSelected
+                                ? EvaluationDesignColor.accentBackground : Color(uiColor: .secondarySystemFill)
+                        )
+                }
+                .accessibilityAddTraits(isSelected ? .isSelected : [])
+            }
+            Spacer(minLength: 0)
+        }
+        .filterChipButtonStyle()
+        .glassEffectContainerIfAvailable(spacing: 8)
+        .animation(.defaultSpring, value: selectedSort)
     }
 }
 
