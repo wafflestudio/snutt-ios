@@ -22,3 +22,106 @@
 /* Add your translations below */
 
 "hello_world" = "Hello, world!";
+
+/* Home */
+"home.title" = "Reviews";
+"home.seeAll" = "See All Reviews";
+"home.feed.empty" = "No reviews yet.";
+"home.takenLectures.title" = "Courses Taken in %@";
+"home.myEvaluations" = "My Reviews";
+
+/* Sort */
+"sort.recommended" = "Most Helpful";
+"sort.latest" = "Latest";
+
+/* Search */
+"search.prompt" = "Search courses or professors";
+"search.idle.title" = "Search Reviews";
+"search.idle.description" = "Add filters to find the reviews you want more easily.";
+"search.empty.title" = "No Results";
+"search.empty.description" = "Try a different search term or filter.";
+
+/* Filter */
+"filter.title" = "Filters";
+"filter.apply" = "Apply";
+"filter.remove.accessibility" = "Remove %@ filter";
+"filter.active.accessibility" = "%d filters applied";
+"filter.selectedCount" = "%d selected";
+
+/* Lecture */
+"lecture.instructor.unknown" = "Unknown professor";
+"lecture.credit" = "%d credits";
+"quarter" = "%2$@ '%1$@";
+"semester.first" = "Spring";
+"semester.summer" = "Summer";
+"semester.second" = "Fall";
+"semester.winter" = "Winter";
+
+/* Rating */
+"rating.accessibility" = "Rated %@ out of 5";
+"rating.none" = "No ratings";
+"rating.evaluationCount.accessibility" = "%d reviews";
+"criterion.gradeSatisfaction" = "Grades";
+"criterion.teachingSkill" = "Teaching";
+"criterion.gains" = "Usefulness";
+"criterion.lifeBalance" = "Workload";
+
+/* Evaluation Actions */
+"like.accessibility" = "Like";
+"like.count.accessibility" = "%d";
+"content.more" = "More";
+"menu.more" = "More Options";
+"menu.report" = "Report";
+"menu.delete" = "Delete";
+"report.title" = "Report Review";
+"report.message" = "Tell us why you are reporting this review.";
+"report.placeholder" = "Reason";
+"report.submit" = "Report";
+"delete.title" = "Delete this review?";
+"delete.message" = "Deleted reviews cannot be restored.";
+"delete.confirm" = "Delete";
+"cancel" = "Cancel";
+
+/* Taken Lectures */
+"write.button" = "Write a Review";
+"write.completed" = "Reviewed";
+"taken.empty.prompt" = "Leave the first review!";
+
+/* Lecture Detail */
+"detail.title" = "Course Details";
+"detail.empty.title" = "No Reviews Yet";
+"detail.empty.description" = "Be the first to review this course.";
+
+/* See All */
+"seeAll.title" = "All Reviews";
+
+/* My Evaluations */
+"myEvaluations.title" = "My Reviews";
+"myEvaluations.count" = "%d";
+"myEvaluations.empty.title" = "No Reviews";
+"myEvaluations.empty.description" = "Write reviews for courses you have taken.";
+
+/* Write */
+"write.title" = "Write a Review";
+"write.submit" = "Done";
+"write.semester" = "Semester Taken";
+"write.semester.unavailable" = "No semesters available";
+"write.semester.written" = "%@ (Reviewed)";
+"write.overall.section" = "Overall";
+"write.overall" = "Overall Rating";
+"write.criterion.gradeSatisfaction" = "Were you satisfied with your grade?";
+"write.criterion.teachingSkill" = "Was the teaching effective?";
+"write.criterion.gains" = "Was the course content useful?";
+"write.criterion.lifeBalance" = "Was the workload reasonable?";
+"write.content.section" = "Review";
+"write.content.placeholder" = "Share an honest review of this course.\ne.g. assignments, attendance, exams, team projects";
+"write.content.counter" = "%1$d characters (min. %2$d)";
+"write.starRating.accessibility" = "%@ stars";
+"write.discard.title" = "Discard this review?";
+"write.discard.confirm" = "Discard";
+"write.discard.keepEditing" = "Keep Editing";
+
+/* Errors */
+"error.loadFailed" = "Couldn't Load Reviews";
+"error.retrySuggestion" = "Please try again later.";
+"error.requestFailed" = "Request Failed";

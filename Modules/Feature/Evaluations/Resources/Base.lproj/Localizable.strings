@@ -22,3 +22,106 @@
 /* Add your translations below */
 
 "hello_world" = "Hello, world!";
+
+/* Home */
+"home.title" = "강의평";
+"home.seeAll" = "강의평 전체보기";
+"home.feed.empty" = "아직 등록된 강의평이 없어요.";
+"home.takenLectures.title" = "%@ 수강한 강의";
+"home.myEvaluations" = "나의 강의평";
+
+/* Sort */
+"sort.recommended" = "추천순";
+"sort.latest" = "최신순";
+
+/* Search */
+"search.prompt" = "강의명, 교수명으로 검색";
+"search.idle.title" = "강의명 또는 교수명을 검색하세요";
+"search.idle.description" = "필터를 설정하면 원하는 강의평을 더 쉽게 찾을 수 있어요.";
+"search.empty.title" = "검색 결과가 없어요";
+"search.empty.description" = "다른 검색어나 필터로 다시 시도해 보세요.";
+
+/* Filter */
+"filter.title" = "필터";
+"filter.apply" = "적용";
+"filter.remove.accessibility" = "%@ 필터 제거";
+"filter.active.accessibility" = "필터 %d개 적용됨";
+"filter.selectedCount" = "%d개 선택됨";
+
+/* Lecture */
+"lecture.instructor.unknown" = "교수 정보 없음";
+"lecture.credit" = "%d학점";
+"quarter" = "%1$@년 %2$@";
+"semester.first" = "1학기";
+"semester.summer" = "여름학기";
+"semester.second" = "2학기";
+"semester.winter" = "겨울학기";
+
+/* Rating */
+"rating.accessibility" = "별점 5점 만점에 %@점";
+"rating.none" = "평가 없음";
+"rating.evaluationCount.accessibility" = "강의평 %d개";
+"criterion.gradeSatisfaction" = "성적";
+"criterion.teachingSkill" = "강의력";
+"criterion.gains" = "유익함";
+"criterion.lifeBalance" = "널널함";
+
+/* Evaluation Actions */
+"like.accessibility" = "좋아요";
+"like.count.accessibility" = "%d개";
+"content.more" = "더보기";
+"menu.more" = "옵션";
+"menu.report" = "신고하기";
+"menu.delete" = "삭제하기";
+"report.title" = "강의평 신고";
+"report.message" = "신고 사유를 입력해 주세요.";
+"report.placeholder" = "신고 사유";
+"report.submit" = "신고";
+"delete.title" = "강의평을 삭제할까요?";
+"delete.message" = "삭제한 강의평은 복구할 수 없어요.";
+"delete.confirm" = "삭제";
+"cancel" = "취소";
+
+/* Taken Lectures */
+"write.button" = "강의평 작성";
+"write.completed" = "작성 완료";
+"taken.empty.prompt" = "첫 강의평을 남겨보세요!";
+
+/* Lecture Detail */
+"detail.title" = "강의 상세";
+"detail.empty.title" = "아직 강의평이 없어요";
+"detail.empty.description" = "이 강의의 첫 강의평을 남겨보세요.";
+
+/* See All */
+"seeAll.title" = "강의평 전체보기";
+
+/* My Evaluations */
+"myEvaluations.title" = "나의 강의평";
+"myEvaluations.count" = "%d건";
+"myEvaluations.empty.title" = "작성한 강의평이 없어요";
+"myEvaluations.empty.description" = "수강한 강의의 강의평을 남겨보세요.";
+
+/* Write */
+"write.title" = "강의평 작성";
+"write.submit" = "완료";
+"write.semester" = "수강 학기 선택";
+"write.semester.unavailable" = "작성 가능한 학기가 없어요";
+"write.semester.written" = "%@ (작성 완료)";
+"write.overall.section" = "강의 총평";
+"write.overall" = "총점";
+"write.criterion.gradeSatisfaction" = "성적이 만족스러웠나요?";
+"write.criterion.teachingSkill" = "교수님의 강의력이 좋았나요?";
+"write.criterion.gains" = "수업 내용이 유익했나요?";
+"write.criterion.lifeBalance" = "과제량이 적절했나요?";
+"write.content.section" = "강의 리뷰";
+"write.content.placeholder" = "강의에 대한 솔직한 리뷰를 남겨주세요.\nex) 과제, 출석, 교수님, 시험 난이도, 팀플 유무 등";
+"write.content.counter" = "%1$d자 (최소 %2$d자)";
+"write.starRating.accessibility" = "%@점";
+"write.discard.title" = "작성 중인 강의평을 삭제할까요?";
+"write.discard.confirm" = "삭제";
+"write.discard.keepEditing" = "계속 작성하기";
+
+/* Errors */
+"error.loadFailed" = "강의평을 불러오지 못했어요";
+"error.retrySuggestion" = "잠시 후 다시 시도해 주세요.";
+"error.requestFailed" = "요청을 처리하지 못했어요";

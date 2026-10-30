@@ -12,122 +12,84 @@ import SwiftUIUtility
 struct EvaluationSeeAllScene: View {
     @State private var viewModel: EvaluationSeeAllViewModel
     @Environment(\.errorAlertHandler) private var errorAlertHandler
-    private let onSearch: () -> Void
-    private let onSelectEvaluation: (EvaluationID) -> Void
 
-    init(
-        initialSortKind: EvaluationSort.Kind,
-        availableSorts: [EvaluationSort],
-        onSearch: @escaping () -> Void,
-        onSelectEvaluation: @escaping (EvaluationID) -> Void
-    ) {
+    init(initialSort: EvaluationSort, availableSorts: [EvaluationSort]) {
         _viewModel = State(
-            initialValue: EvaluationSeeAllViewModel(
-                initialSortKind: initialSortKind,
-                availableSorts: availableSorts
-            )
+            initialValue: EvaluationSeeAllViewModel(initialSort: initialSort, availableSorts: availableSorts)
         )
-        self.onSearch = onSearch
-        self.onSelectEvaluation = onSelectEvaluation
     }
 
     var body: some View {
-        content
-            .background(Color(uiColor: .systemBackground))
-            .onLoad {
-                await errorAlertHandler.withAlert {
-                    try await viewModel.load()
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: 0, pinnedViews: .sectionHeaders) {
+                Section {
+                    switch viewModel.feedState {
+                    case .loading:
+                        rows(EvaluationPreviewFixtures.feed)
+                            .redacted(reason: .placeholder)
+                            .allowsHitTesting(false)
+                            .accessibilityHidden(true)
+                    case .loaded(let content):
+                        rows(content.items)
+                    }
+                } header: {
+                    EvaluationSortToggle(
+                        sorts: viewModel.availableSorts,
+                        selectedSort: viewModel.selectedSort,
+                        onSelect: { sort in
+                            errorAlertHandler.withAlert {
+                                try await viewModel.selectSort(sort)
+                            }
+                        }
+                    )
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 4)
+                    .background(Color(uiColor: .systemBackground))
                 }
             }
-    }
-
-    @ViewBuilder
-    private var content: some View {
-        switch viewModel.loadState {
-        case .loading:
-            loadingContent
-
-        case .loaded(let evaluations):
-            loadedContent(evaluations)
         }
-    }
-
-    private var loadingContent: some View {
-        ScrollView {
-            LazyVStack(alignment: .leading, spacing: 0) {
-                searchEntry
-
-                ProgressView()
-                    .frame(maxWidth: .infinity)
-                    .padding(.top, 80)
+        .withResponsiveTouch()
+        .refreshable {
+            await errorAlertHandler.withAlert {
+                try await viewModel.load()
             }
         }
-        .refreshable {
+        .animation(.defaultSpring, value: viewModel.feedState)
+        .background(Color(uiColor: .systemBackground))
+        .navigationTitle(EvaluationsStrings.seeAllTitle)
+        .navigationBarTitleDisplayMode(.inline)
+        .onLoad {
             await errorAlertHandler.withAlert {
                 try await viewModel.load()
             }
         }
     }
 
-    private func loadedContent(_ evaluations: [LectureEvaluation]) -> some View {
-        ScrollView {
-            LazyVStack(alignment: .leading, spacing: 0) {
-                searchEntry
-
-                EvaluationMainFeedSection(
-                    mode: .loaded(
-                        feed: EvaluationFeedContent(
-                            evaluations: evaluations,
-                            cursor: nil,
-                            canLoadMore: true
-                        ),
-                        selectedSort: viewModel.selectedSort,
-                        availableSorts: viewModel.availableSorts
-                    ),
-                    onSelectSort: { sort in
-                        errorAlertHandler.withAlert {
-                            try await viewModel.selectSort(sort)
-                        }
-                    },
-                    onSelectEvaluation: onSelectEvaluation,
-                    onOpenSeeAll: {},
-                    maximumEvaluationCount: nil,
-                    showsSeeAllLink: false,
-                    onEvaluationAppear: { evaluation in
-                        Task {
-                            await viewModel.loadMoreIfNeeded(current: evaluation)
-                        }
-                    }
-                )
+    private func rows(_ items: [EvaluationWithLecture]) -> some View {
+        ForEach(items) { item in
+            FeedEvaluationRow(item: item) {
+                errorAlertHandler.withAlert {
+                    try await viewModel.toggleLike(item.evaluation)
+                }
             }
-        }
-        .withResponsiveTouch()
-        .refreshable {
-            await errorAlertHandler.withAlert {
-                try await viewModel.refresh()
+            .padding(.horizontal, 20)
+            .onAppear {
+                Task {
+                    await viewModel.loadMoreIfNeeded(after: item)
+                }
             }
+
+            Divider()
+                .padding(.horizontal, 20)
         }
-        .animation(.defaultSpring, value: viewModel.selectedSort)
-        .animation(.defaultSpring, value: evaluations.map(\.id))
     }
-
-    private var searchEntry: some View {
-        EvaluationSearchEntryView(
-            onSearch: onSearch,
-            onFilter: onSearch
-        )
-        .padding(.horizontal, 20)
-        .padding(.top, 16)
-        .padding(.bottom, 18)
-    }
-
 }
 
-#Preview("See All") {
-    EvaluationSeeAllScene(
-        initialSortKind: .recommended,
-        availableSorts: EvaluationPreviewFixtures.sorts,
-        onSearch: {},
-        onSelectEvaluation: { _ in }
-    )
+#Preview {
+    NavigationStack {
+        EvaluationSeeAllScene(
+            initialSort: EvaluationPreviewFixtures.sorts[0],
+            availableSorts: EvaluationPreviewFixtures.sorts
+        )
+    }
 }

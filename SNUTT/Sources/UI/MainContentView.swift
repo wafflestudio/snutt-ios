@@ -101,12 +101,7 @@ struct MainContentView: View {
     }
 
     private var reviewRootView: some View {
-        #if DEBUG
-        EvaluationScene()
-            .modifier(AnalyticsScreenModifier(screen: Evaluations.AnalyticsScreen.reviewHome))
-        #else
         EvaluationHomeScene()
             .modifier(AnalyticsScreenModifier(screen: Evaluations.AnalyticsScreen.reviewHome))
-        #endif
     }
 }

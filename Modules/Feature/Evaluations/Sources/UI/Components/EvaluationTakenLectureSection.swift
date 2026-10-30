@@ -7,123 +7,198 @@
 
 import SharedUIComponents
 import SwiftUI
-import TimetableInterface
 
+/// Lectures the user took in one semester, each with the user's own evaluations or a prompt to write one.
 struct EvaluationTakenLectureSection: View {
-    enum Mode: Equatable {
-        case loading
-        case loaded(TakenLectureFeedContent)
-
-        var isLoading: Bool {
-            if case .loading = self { true } else { false }
-        }
-    }
-
-    let mode: Mode
-    let onOpenMyEvaluations: () -> Void
-    let onSelectLecture: (EvaluationLectureID) -> Void
+    let group: TakenLectureGroup
     let onWriteEvaluation: (EvaluationLectureID) -> Void
-
-    private var feed: TakenLectureFeedContent {
-        switch mode {
-        case .loading:
-            .placeholder
-        case .loaded(let feed):
-            feed
-        }
-    }
+    let onToggleLike: (LectureEvaluation) -> Void
+    let onSelectMenuAction: (EvaluationMenuAction) -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             header
 
-            ForEach(feed.lectures) { lecture in
+            ForEach(group.lectures) { lecture in
                 TakenLectureCell(
                     lecture: lecture,
-                    onTap: {
-                        onSelectLecture(lecture.id)
-                    },
-                    onWrite: {
-                        onWriteEvaluation(lecture.id)
-                    }
+                    onWrite: { onWriteEvaluation(lecture.id) },
+                    onToggleLike: onToggleLike,
+                    onSelectMenuAction: onSelectMenuAction
                 )
                 .padding(.horizontal, 20)
 
-                Divider()
-                    .padding(.horizontal, 20)
+                if lecture.id != group.lectures.last?.id {
+                    Divider()
+                        .padding(.horizontal, 20)
+                }
             }
         }
-        .redacted(reason: mode.isLoading ? .placeholder : [])
     }
 
     private var header: some View {
         HStack(spacing: 12) {
-            Text(feed.title)
-                .font(.system(size: 15, weight: .semibold))
-                .foregroundStyle(EvaluationDesignColor.mint)
+            Text(EvaluationsStrings.homeTakenLecturesTitle(group.quarter.evaluationDisplayText))
+                .font(.subheadline.weight(.semibold))
+                .foregroundStyle(EvaluationDesignColor.accent)
                 .lineLimit(1)
-                .minimumScaleFactor(0.85)
+                .accessibilityAddTraits(.isHeader)
 
             Spacer(minLength: 8)
 
-            Button {
-                onOpenMyEvaluations()
-            } label: {
-                HStack(spacing: 4) {
-                    Text("나의 강의평")
-                        .font(.system(size: 13, weight: .medium))
-
+            NavigationLink(value: EvaluationDestination.myEvaluations) {
+                HStack(spacing: 2) {
+                    Text(EvaluationsStrings.homeMyEvaluations)
                     Image(systemName: "chevron.right")
-                        .font(.system(size: 11, weight: .semibold))
+                        .imageScale(.small)
                 }
-                .foregroundStyle(Color(uiColor: .tertiaryLabel))
-                .contentShape(Rectangle())
+                .font(.footnote.weight(.medium))
+                .foregroundStyle(.secondary)
+                .frame(minHeight: 44)
+                .contentShape(.rect)
             }
-            .buttonStyle(.animatable())
+            .buttonStyle(.animatable)
         }
         .padding(.horizontal, 20)
-        .frame(height: 40)
-        .background(EvaluationDesignColor.mintBackground)
+        .background(EvaluationDesignColor.accentBackground)
     }
 }
 
-extension TakenLectureFeedContent {
-    fileprivate var title: String {
-        "\(takenQuarter.year % 100)년 \(takenQuarter.semester.takenLectureSectionDisplayTitle) 수강한 강의"
-    }
-}
+struct TakenLectureCell: View {
+    let lecture: TakenLecture
+    let onWrite: () -> Void
+    let onToggleLike: (LectureEvaluation) -> Void
+    let onSelectMenuAction: (EvaluationMenuAction) -> Void
 
-extension Semester {
-    fileprivate var takenLectureSectionDisplayTitle: String {
-        switch self {
-        case .first:
-            "1학기"
-        case .summer:
-            "여름학기"
-        case .second:
-            "2학기"
-        case .winter:
-            "겨울학기"
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            header
+
+            if lecture.myEvaluations.isEmpty {
+                TakenLectureEmptyPrompt(lectureTitle: lecture.info.brief.title, action: onWrite)
+            } else {
+                ForEach(lecture.myEvaluations) { evaluation in
+                    EvaluationRow(
+                        evaluation: evaluation,
+                        contentLineLimit: 3,
+                        onToggleLike: { onToggleLike(evaluation) },
+                        onSelectMenuAction: onSelectMenuAction
+                    )
+                }
+            }
+        }
+        .padding(.vertical, 20)
+    }
+
+    private var header: some View {
+        HStack(alignment: .top, spacing: 12) {
+            NavigationLink(value: EvaluationDestination.lectureDetail(lecture.id)) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(lecture.info.brief.title)
+                        .font(.callout.weight(.semibold))
+                        .foregroundStyle(.primary)
+                        .lineLimit(2)
+                        .multilineTextAlignment(.leading)
+
+                    HStack(spacing: 4) {
+                        EvaluationAverageRatingLabel(averageRating: lecture.averageRating)
+                        Text("·")
+                            .foregroundStyle(.tertiary)
+                            .accessibilityHidden(true)
+                        Text(lecture.info.brief.instructorDisplayText)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(1)
+                    }
+                    .font(.footnote)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(.rect)
+            }
+            .buttonStyle(.animatable(scale: 0.98))
+            .accessibilityElement(children: .combine)
+
+            TakenLectureWriteButton(isCompleted: !lecture.myEvaluations.isEmpty, action: onWrite)
         }
     }
 }
 
-#Preview("Taken Lecture Loading") {
-    EvaluationTakenLectureSection(
-        mode: .loading,
-        onOpenMyEvaluations: {},
-        onSelectLecture: { _ in },
-        onWriteEvaluation: { _ in }
-    )
-    .background(Color(uiColor: .systemBackground))
+private struct TakenLectureWriteButton: View {
+    let isCompleted: Bool
+    let action: () -> Void
+
+    var body: some View {
+        if isCompleted {
+            chip(EvaluationsStrings.writeCompleted, systemImage: "checkmark")
+                .foregroundStyle(.tertiary)
+                .background(Color(uiColor: .tertiarySystemFill), in: chipShape)
+        } else {
+            Button(action: action) {
+                chip(EvaluationsStrings.writeButton, systemImage: "pencil")
+                    .foregroundStyle(.white)
+                    .background(EvaluationDesignColor.accent, in: chipShape)
+                    // Keeps a comfortable touch target around the compact chip.
+                    .contentShape(.rect.inset(by: -8))
+            }
+            .buttonStyle(.animatable(scale: 0.95, hapticFeedback: true))
+        }
+    }
+
+    private var chipShape: some Shape {
+        .rect(cornerRadius: 6, style: .continuous)
+    }
+
+    private func chip(_ title: String, systemImage: String) -> some View {
+        Label(title, systemImage: systemImage)
+            .labelStyle(.titleAndIcon)
+            .font(.caption.weight(.semibold))
+            .imageScale(.small)
+            .padding(.horizontal, 10)
+            .frame(minHeight: 26)
+    }
 }
 
-#Preview("Taken Lecture Loaded") {
-    EvaluationTakenLectureSection(
-        mode: .loaded(EvaluationPreviewFixtures.takenLectureFeed),
-        onOpenMyEvaluations: {},
-        onSelectLecture: { _ in },
-        onWriteEvaluation: { _ in }
-    )
-    .background(Color(uiColor: .systemBackground))
+private struct TakenLectureEmptyPrompt: View {
+    let lectureTitle: String
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            VStack(spacing: 8) {
+                Image(systemName: "pencil")
+                    .font(.footnote.weight(.bold))
+                    .foregroundStyle(EvaluationDesignColor.accent)
+                    .frame(width: 32, height: 32)
+                    .background(EvaluationDesignColor.accent.opacity(0.14), in: .circle)
+
+                VStack(spacing: 2) {
+                    Text(lectureTitle)
+                        .foregroundStyle(EvaluationDesignColor.accent)
+                        .lineLimit(1)
+                    Text(EvaluationsStrings.takenEmptyPrompt)
+                        .foregroundStyle(.secondary)
+                }
+                .font(.subheadline.weight(.semibold))
+            }
+            .padding(.horizontal, 16)
+            .frame(maxWidth: .infinity, minHeight: 112)
+            .background(EvaluationDesignColor.accentBackground, in: .rect(cornerRadius: 12, style: .continuous))
+            .contentShape(.rect)
+        }
+        .buttonStyle(.animatable(scale: 0.98))
+        .accessibilityElement(children: .combine)
+        .accessibilityHint(EvaluationsStrings.writeButton)
+    }
+}
+
+#Preview {
+    NavigationStack {
+        ScrollView {
+            EvaluationTakenLectureSection(
+                group: EvaluationPreviewFixtures.takenLectureGroups[0],
+                onWriteEvaluation: { _ in },
+                onToggleLike: { _ in },
+                onSelectMenuAction: { _ in }
+            )
+        }
+    }
 }

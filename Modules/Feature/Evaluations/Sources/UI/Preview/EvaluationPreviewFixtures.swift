@@ -7,260 +7,193 @@
 
 import TimetableInterface
 
+/// Sample data for previews and for the redacted skeletons shown while content loads.
 enum EvaluationPreviewFixtures {
-    static let recommendedSort = EvaluationSort(id: 1, kind: .recommended)
-    static let latestSort = EvaluationSort(id: 2, kind: .latest)
-    static let sorts = [recommendedSort, latestSort]
-    static let scoreSet = [
-        LectureEvaluationScore(title: "성적", value: 2.0),
-        LectureEvaluationScore(title: "유익함", value: 5.0),
-        LectureEvaluationScore(title: "강의력", value: 4.5),
-        LectureEvaluationScore(title: "널널함", value: 3.5),
+    static let sorts = [
+        EvaluationSort(id: 2, kind: .recommended),
+        EvaluationSort(id: 1, kind: .latest),
     ]
 
-    static let homeContent = EvaluationHomeContent(
-        selectedSort: recommendedSort,
-        availableSorts: sorts,
-        mainFeed: EvaluationFeedContent(
-            evaluations: evaluations,
-            cursor: "preview-next",
-            canLoadMore: true
-        ),
-        takenLectureFeed: takenLectureFeed
-    )
-
-    static let evaluations: [LectureEvaluation] = [
-        lectureEvaluation(
-            id: 1,
-            lectureID: 101,
-            title: "컴퓨터의 개념 및 실습",
-            instructor: "김민석",
-            rating: 4.5,
-            content: "매주 실습으로 개념을 확인해서 따라가기 좋습니다. 코딩 경험이 적어도 과제 피드백을 받으며 익숙해질 수 있습니다.",
-            likeCount: 12,
-            isLiked: true
-        ),
-        lectureEvaluation(
-            id: 2,
-            lectureID: 102,
-            title: "자료구조",
-            instructor: "이서현",
+    static let feed: [EvaluationWithLecture] = [
+        feedItem(
+            id: 101,
+            lecture: lecture(id: 1101, title: "인공지능 신뢰성", instructor: "박상철"),
             rating: 4.0,
-            content: "스택, 트리, 그래프를 구현 과제로 다룹니다. 시험은 강의 노트 중심이라 복습을 꾸준히 하면 안정적입니다.",
-            likeCount: 7,
-            isLiked: false
+            content: "논문을 읽고 모델의 실패 사례를 토론하는 시간이 많습니다. 수식보다 사례 중심이라 신뢰성 이슈를 처음 접해도 따라갈 수 있습니다.",
+            likeCount: 18
         ),
-        lectureEvaluation(
-            id: 3,
-            lectureID: 103,
-            title: "인공지능의 이해",
-            instructor: "박상철",
-            rating: 4.8,
-            content: "모델 원리를 깊게 파기보다 활용 사례와 한계를 폭넓게 봅니다. 발표 토론이 많아 수업 참여가 중요합니다.",
+        feedItem(
+            id: 102,
+            lecture: lecture(id: 1102, title: "모빌리티디자인프로젝트", instructor: "이도현"),
+            rating: 4.5,
+            content: "사용자 리서치와 프로토타입 제작이 빠르게 반복됩니다. 팀원과 자주 만나야 하지만 포트폴리오에 넣을 만한 결과물이 나옵니다.",
             likeCount: 24,
             isLiked: true
         ),
+        feedItem(
+            id: 103,
+            lecture: lecture(id: 1103, title: "디자인과 AI", instructor: "한서연"),
+            rating: 3.5,
+            content: "생성형 AI 도구를 실제 디자인 프로세스에 붙여보는 과제가 많습니다. 툴 사용 경험보다 결과를 설명하는 논리가 중요합니다.",
+            likeCount: 9
+        ),
     ]
 
-    static let takenLectureFeed = TakenLectureFeedContent(
-        takenQuarter: Quarter(year: 2025, semester: .second),
-        lectures: [
-            takenLecture(
-                lectureID: 201,
-                title: "편집디자인",
-                instructor: "김민지",
-                averageRating: 4.6,
-                evaluations: [
-                    lectureEvaluation(
-                        id: 21,
-                        lectureID: 201,
-                        title: "편집디자인",
-                        instructor: "김민지",
-                        rating: 4.0,
-                        content: "매주 작업물을 가져가면 피드백이 아주 구체적으로 돌아옵니다. 편집의 기준을 잡고 싶은 학생에게 잘 맞는 수업입니다.",
-                        likeCount: 12,
-                        isLiked: false,
-                        scores: scoreSet
-                    )
-                ]
-            ),
-            takenLecture(
-                lectureID: 202,
-                title: "죽음의 과학적 이해",
-                instructor: "정세윤",
-                averageRating: nil,
-                evaluations: []
-            ),
-            takenLecture(
-                lectureID: 203,
-                title: "모빌리티디자인프로젝트",
-                instructor: "이도현",
-                averageRating: 4.2,
-                evaluations: [
-                    lectureEvaluation(
-                        id: 23,
-                        lectureID: 203,
-                        title: "모빌리티디자인프로젝트",
-                        instructor: "이도현",
-                        rating: 4.5,
-                        content: "문제 정의부터 프로토타입 발표까지 한 학기 동안 길게 이어집니다. 팀 프로젝트 비중이 커서 일정 관리는 필요하지만 결과물이 남습니다.",
-                        likeCount: 12,
-                        isLiked: false,
-                        scores: scoreSet
-                    )
-                ]
-            ),
+    static let takenLectures: [TakenLecture] = [
+        TakenLecture(
+            info: lectureInfo(id: 201, title: "편집디자인", instructor: "김민지"),
+            takenQuarter: Quarter(year: 2025, semester: .second),
+            averageRating: 4.6,
+            myEvaluations: [
+                evaluation(
+                    id: 301,
+                    lectureID: 201,
+                    rating: 4.0,
+                    content: "매주 작업물을 가져가면 피드백이 아주 구체적으로 돌아옵니다. 편집의 기준을 잡고 싶은 학생에게 잘 맞는 수업입니다.",
+                    likeCount: 12
+                )
+            ]
+        ),
+        TakenLecture(
+            info: lectureInfo(id: 202, title: "죽음의 과학적 이해", instructor: "정세윤"),
+            takenQuarter: Quarter(year: 2025, semester: .second),
+            averageRating: nil,
+            myEvaluations: []
+        ),
+    ]
+
+    static var takenLectureGroups: [TakenLectureGroup] {
+        [TakenLectureGroup(quarter: Quarter(year: 2025, semester: .second), lectures: takenLectures)]
+    }
+
+    static var homeContent: EvaluationHomeContent {
+        EvaluationHomeContent(
+            selectedSort: sorts[0],
+            availableSorts: sorts,
+            mainFeed: feed,
+            takenLectureGroups: takenLectureGroups
+        )
+    }
+
+    static let summary = LectureEvaluationSummary(
+        info: lectureInfo(id: 1101, title: "인공지능 신뢰성", instructor: "박상철"),
+        averageRating: 3.8,
+        averageScores: scores,
+        evaluationCount: 3
+    )
+
+    static let searchResults: [LectureSearchResult] = [
+        LectureSearchResult(
+            info: lectureInfo(id: 1101, title: "인공지능 신뢰성", instructor: "박상철"),
+            averageRating: 3.0,
+            evaluationCount: 3
+        ),
+        LectureSearchResult(
+            info: lectureInfo(id: 1104, title: "인공지능과 생활", instructor: "최유진"),
+            averageRating: nil,
+            evaluationCount: 0
+        ),
+        LectureSearchResult(
+            info: lectureInfo(id: 1105, title: "인공지능", instructor: "장병탁"),
+            averageRating: 4.6,
+            evaluationCount: 15
+        ),
+    ]
+
+    static let tagGroups: [SearchTagGroup] = [
+        SearchTagGroup(
+            id: 1,
+            name: "학년",
+            tags: ["1학년", "2학년", "3학년", "4학년"].enumerated().map { tag(id: 6 + $0.offset, name: $0.element) }
+        ),
+        SearchTagGroup(
+            id: 2,
+            name: "구분",
+            tags: ["교양", "전필", "전선", "일선"].enumerated().map { tag(id: 16 + $0.offset, name: $0.element) }
+        ),
+        SearchTagGroup(
+            id: 3,
+            name: "학점",
+            tags: ["1학점", "2학점", "3학점", "4학점"].enumerated().map { tag(id: 23 + $0.offset, name: $0.element) }
+        ),
+        SearchTagGroup(
+            id: 4,
+            name: "학과",
+            tags: ["AI융합교육학과", "건축학과", "간호학과", "건설환경공학부", "디자인과", "컴퓨터공학부"]
+                .enumerated().map { tag(id: 30 + $0.offset, name: $0.element) }
+        ),
+    ]
+
+    static let writeTarget = EvaluationWriteTarget(
+        lecture: lecture(id: 1101, title: "인공지능 신뢰성", instructor: "박상철"),
+        semesterLectures: [
+            SemesterLecture(id: 3, quarter: Quarter(year: 2026, semester: .first), hasMyEvaluation: false),
+            SemesterLecture(id: 2, quarter: Quarter(year: 2025, semester: .second), hasMyEvaluation: false),
+            SemesterLecture(id: 1, quarter: Quarter(year: 2025, semester: .first), hasMyEvaluation: true),
         ]
     )
 
-    static var placeholderFeed: EvaluationFeedContent {
-        EvaluationFeedContent(
-            evaluations: [
-                lectureEvaluation(
-                    id: -1,
-                    lectureID: -101,
-                    title: "컴퓨터의 개념 및 실습",
-                    instructor: "김교수",
-                    rating: 4.5,
-                    content: "과제가 실습 위주라 시간이 조금 걸리지만 수업 내용을 이해하는 데 도움이 됩니다.",
-                    likeCount: 12,
-                    isLiked: true,
-                    scores: scoreSet
-                ),
-                lectureEvaluation(
-                    id: -2,
-                    lectureID: -102,
-                    title: "자료구조와 알고리즘",
-                    instructor: "이교수",
-                    rating: 4.0,
-                    content: "수업 자료가 잘 정리되어 있고 예제가 충분해 따라가기 좋습니다.",
-                    likeCount: 8,
-                    isLiked: false,
-                    scores: scoreSet
-                ),
-                lectureEvaluation(
-                    id: -3,
-                    lectureID: -103,
-                    title: "인공지능의 이해",
-                    instructor: "박교수",
-                    rating: 4.8,
-                    content: "프로젝트 중심으로 진행되어 실제 적용 경험을 쌓을 수 있습니다.",
-                    likeCount: 20,
-                    isLiked: true,
-                    scores: scoreSet
-                ),
-            ],
-            cursor: nil,
-            canLoadMore: false
+    static let scores = EvaluationScores(gradeSatisfaction: 2.0, teachingSkill: 4.5, gains: 5.0, lifeBalance: 3.5)
+
+    // MARK: Builders
+
+    private static func lecture(id: EvaluationLectureID, title: String, instructor: String) -> EvaluationLectureBrief {
+        EvaluationLectureBrief(id: id, title: title, instructor: instructor)
+    }
+
+    private static func lectureInfo(id: EvaluationLectureID, title: String, instructor: String) -> EvaluationLectureInfo
+    {
+        EvaluationLectureInfo(
+            brief: lecture(id: id, title: title, instructor: instructor),
+            department: "컴퓨터공학부",
+            academicYear: "3학년",
+            classification: "전선",
+            credit: 3
         )
     }
 
-    static var placeholderTakenLectureFeed: TakenLectureFeedContent {
-        TakenLectureFeedContent(
-            takenQuarter: Quarter(year: 2025, semester: .second),
-            lectures: [
-                takenLecture(
-                    lectureID: -201,
-                    title: "편집디자인",
-                    instructor: "김민지",
-                    averageRating: 4.6,
-                    evaluations: [
-                        lectureEvaluation(
-                            id: -21,
-                            lectureID: -201,
-                            title: "편집디자인",
-                            instructor: "김민지",
-                            rating: 4.0,
-                            content: "매주 작업물을 가져가면 피드백이 아주 구체적으로 돌아옵니다.",
-                            likeCount: 12,
-                            isLiked: false,
-                            scores: scoreSet
-                        )
-                    ]
-                ),
-                takenLecture(
-                    lectureID: -202,
-                    title: "죽음의 과학적 이해",
-                    instructor: "정세윤",
-                    averageRating: nil,
-                    evaluations: []
-                ),
-            ]
-        )
+    private static func tag(id: Int, name: String) -> SearchTag {
+        SearchTag(id: SearchTagID(Int64(id)), name: name)
     }
 
-    private static func lectureEvaluation(
+    private static func evaluation(
         id: EvaluationID,
         lectureID: EvaluationLectureID,
-        title: String,
-        instructor: String,
         rating: Double,
         content: String,
         likeCount: Int,
-        isLiked: Bool,
-        scores: [LectureEvaluationScore] = []
+        isLiked: Bool = false
     ) -> LectureEvaluation {
         LectureEvaluation(
             id: id,
-            lecture: EvaluationLectureBrief(
-                id: lectureID,
-                title: title,
-                instructor: instructor
-            ),
+            lectureID: lectureID,
             rating: rating,
+            scores: scores,
             content: content,
-            year: 2025,
-            semester: 2,
-            likeCount: likeCount,
-            isLiked: isLiked,
-            isReportable: true,
-            scores: scores
+            quarter: Quarter(year: 2025, semester: .second),
+            like: EvaluationLike(count: likeCount, isLiked: isLiked),
+            permissions: .report
         )
     }
 
-    private static func takenLecture(
-        lectureID: EvaluationLectureID,
-        title: String,
-        instructor: String,
-        averageRating: Double? = nil,
-        evaluations: [LectureEvaluation] = []
-    ) -> TakenLectureSummary {
-        TakenLectureSummary(
-            lecture: EvaluationLectureBrief(
-                id: lectureID,
-                title: title,
-                instructor: instructor
+    private static func feedItem(
+        id: EvaluationID,
+        lecture: EvaluationLectureBrief,
+        rating: Double,
+        content: String,
+        likeCount: Int,
+        isLiked: Bool = false
+    ) -> EvaluationWithLecture {
+        EvaluationWithLecture(
+            evaluation: evaluation(
+                id: id,
+                lectureID: lecture.id,
+                rating: rating,
+                content: content,
+                likeCount: likeCount,
+                isLiked: isLiked
             ),
-            department: "컴퓨터공학부",
-            courseNumber: "M1522.000100",
-            credit: 3,
-            academicYear: "3",
-            classification: "전공선택",
-            takenQuarter: Quarter(year: 2025, semester: .second),
-            averageRating: averageRating,
-            evaluations: evaluations
+            lecture: lecture
         )
-    }
-}
-
-extension EvaluationSort {
-    static var placeholderRecommended: Self {
-        EvaluationPreviewFixtures.recommendedSort
-    }
-
-    static var placeholderLatest: Self {
-        EvaluationPreviewFixtures.latestSort
-    }
-}
-
-extension EvaluationFeedContent {
-    static var placeholder: Self {
-        EvaluationPreviewFixtures.placeholderFeed
-    }
-}
-
-extension TakenLectureFeedContent {
-    static var placeholder: Self {
-        EvaluationPreviewFixtures.placeholderTakenLectureFeed
     }
 }
