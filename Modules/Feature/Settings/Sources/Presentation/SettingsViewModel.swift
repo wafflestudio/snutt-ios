@@ -29,6 +29,9 @@ final class SettingsViewModel {
     @Dependency(\.authUseCase) private var authUseCase
 
     @ObservationIgnored
+    @Dependency(\.authState) private var authState
+
+    @ObservationIgnored
     @Dependency(\.notificationCenter) var notificationCenter
 
     @ObservationIgnored
@@ -79,6 +82,8 @@ final class SettingsViewModel {
     }
 
     func loadUnreadNotificationCount() async throws {
+        // This screen can reload once more after logging out clears the token, which would fail with an auth error.
+        guard authState.isAuthenticated else { return }
         unreadNotificationCount = try await notificationCountRepository.fetchUnreadNotificationCount()
     }
 
