@@ -5,6 +5,7 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AnalyticsInterface
 import Dependencies
 import Observation
 import TimetableInterface
@@ -24,6 +25,9 @@ final class MyEvaluationsViewModel {
 
     @ObservationIgnored
     @Dependency(\.evaluationRepository) private var repository
+
+    @ObservationIgnored
+    @Dependency(\.analyticsLogger) private var analyticsLogger
 
     @ObservationIgnored
     private var isLoadingMore = false
@@ -68,6 +72,9 @@ final class MyEvaluationsViewModel {
         updateEvaluation(evaluation.id) { $0.like = toggledLike }
         do {
             try await repository.setLiked(toggledLike.isLiked, evaluationID: evaluation.id)
+            analyticsLogger.logEvent(
+                AnalyticsAction.likeReview(evaluationID: evaluation.id, isLiked: toggledLike.isLiked)
+            )
         } catch {
             updateEvaluation(evaluation.id) { $0.like = evaluation.like }
             throw error
@@ -76,6 +83,7 @@ final class MyEvaluationsViewModel {
 
     func deleteEvaluation(_ id: EvaluationID) async throws {
         try await repository.deleteEvaluation(id: id)
+        analyticsLogger.logEvent(AnalyticsAction.deleteReview(evaluationID: id))
         guard case .loaded(var content) = evaluationsState else { return }
         content.remove(id)
         evaluationsState = .loaded(content)

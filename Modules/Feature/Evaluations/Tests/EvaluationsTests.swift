@@ -163,7 +163,7 @@ import TimetableInterface
 
         try await viewModel.didCreateEvaluation(99, for: 7)
 
-        #expect(viewModel.path == [.lectureDetail(7, highlighting: 99)])
+        #expect(viewModel.path == [.lectureDetail(7, highlighting: 99, referrer: .write)])
     }
 
     @Test func refreshKeepsSelectedSort() async throws {
@@ -193,7 +193,7 @@ import TimetableInterface
             EvaluationLectureDetailViewModel(lectureID: 1)
         }
 
-        try await viewModel.didCreateEvaluation(99)
+        try await viewModel.didSaveEvaluation(99)
 
         #expect(viewModel.contentState.value != nil)
         #expect(viewModel.highlightedEvaluationID == 99)
@@ -263,6 +263,37 @@ import TimetableInterface
 
         #expect(viewModel.draft.semesterLectureID == 2)
         #expect(!viewModel.canSubmit)
+    }
+
+    @Test func editingKeepsOriginalSemesterAndSubmitsOnlyChanges() async throws {
+        let repository = StubEvaluationRepository()
+        let evaluation = LectureEvaluation(
+            id: 42,
+            lectureID: 1,
+            rating: 4,
+            scores: EvaluationScores(gradeSatisfaction: 3, teachingSkill: 4, gains: 5, lifeBalance: 2),
+            content: String(repeating: "가", count: EvaluationDraft.minimumContentLength),
+            quarter: Quarter(year: 2026, semester: .first),
+            like: EvaluationLike(count: 3, isLiked: false),
+            permissions: .modify
+        )
+        let viewModel = withDependencies {
+            $0.evaluationRepository = repository
+        } operation: {
+            EvaluationWriteViewModel(lectureID: 1, editing: evaluation)
+        }
+
+        try await viewModel.load()
+
+        #expect(viewModel.draft.semesterLectureID == 3)
+        #expect(!viewModel.hasUnsavedChanges)
+        #expect(!viewModel.canSubmit)
+
+        viewModel.draft.rating = 5
+        let savedID = try await viewModel.submit()
+
+        #expect(savedID == 42)
+        #expect(repository.updateRequests.value == [42])
     }
 }
 
@@ -441,6 +472,7 @@ private final class StubEvaluationRepository: EvaluationRepository, @unchecked S
     let failingSortKinds = LockIsolated<Set<EvaluationSort.Kind>>([])
     let failsLike = LockIsolated(false)
     let likeRequests = LockIsolated<[LikeRequest]>([])
+    let updateRequests = LockIsolated<[EvaluationID]>([])
 
     init(
         sorts: [EvaluationSort] = [EvaluationSort(id: 2, kind: .recommended), EvaluationSort(id: 1, kind: .latest)],
@@ -510,6 +542,11 @@ private final class StubEvaluationRepository: EvaluationRepository, @unchecked S
     }
 
     func createEvaluation(_ submission: EvaluationSubmission) async throws -> EvaluationID { 1 }
+
+    func updateEvaluation(id: EvaluationID, _ submission: EvaluationSubmission) async throws {
+        updateRequests.withValue { $0.append(id) }
+    }
+
     func deleteEvaluation(id: EvaluationID) async throws {}
 
     func setLiked(_ isLiked: Bool, evaluationID: EvaluationID) async throws {

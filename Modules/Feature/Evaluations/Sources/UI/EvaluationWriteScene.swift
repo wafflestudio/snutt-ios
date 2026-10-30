@@ -9,7 +9,7 @@ import SharedUIComponents
 import SwiftUI
 import SwiftUIUtility
 
-/// The evaluation form, presented modally so it can be confirmed or discarded as a unit.
+/// The evaluation form for writing or editing, presented modally so it can be confirmed or discarded as a unit.
 struct EvaluationWriteScene: View {
     @State private var viewModel: EvaluationWriteViewModel
     @State private var isDiscardConfirmationPresented = false
@@ -19,8 +19,12 @@ struct EvaluationWriteScene: View {
     @Environment(\.errorAlertHandler) private var errorAlertHandler
     private let onComplete: (EvaluationID) -> Void
 
-    init(lectureID: EvaluationLectureID, onComplete: @escaping (EvaluationID) -> Void) {
-        _viewModel = State(initialValue: EvaluationWriteViewModel(lectureID: lectureID))
+    init(
+        lectureID: EvaluationLectureID,
+        editing evaluation: LectureEvaluation? = nil,
+        onComplete: @escaping (EvaluationID) -> Void
+    ) {
+        _viewModel = State(initialValue: EvaluationWriteViewModel(lectureID: lectureID, editing: evaluation))
         self.onComplete = onComplete
     }
 
@@ -38,7 +42,9 @@ struct EvaluationWriteScene: View {
                 }
             }
             .animation(.defaultSpring, value: viewModel.targetState)
-            .navigationTitle(EvaluationsStrings.writeTitle)
+            .navigationTitle(
+                viewModel.editedEvaluation == nil ? EvaluationsStrings.writeTitle : EvaluationsStrings.editTitle
+            )
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -50,14 +56,24 @@ struct EvaluationWriteScene: View {
                         }
                     }
                     .confirmationDialog(
-                        EvaluationsStrings.writeDiscardTitle,
+                        viewModel.editedEvaluation == nil
+                            ? EvaluationsStrings.writeDiscardTitle : EvaluationsStrings.editDiscardTitle,
                         isPresented: $isDiscardConfirmationPresented,
                         titleVisibility: .visible
                     ) {
-                        Button(EvaluationsStrings.writeDiscardConfirm, role: .destructive) {
+                        Button(
+                            viewModel.editedEvaluation == nil
+                                ? EvaluationsStrings.writeDiscardConfirm : EvaluationsStrings.editDiscardConfirm,
+                            role: .destructive
+                        ) {
                             dismiss()
                         }
-                        Button(EvaluationsStrings.writeDiscardKeepEditing, role: .cancel) {}
+                        Button(
+                            viewModel.editedEvaluation == nil
+                                ? EvaluationsStrings.writeDiscardKeepEditing
+                                : EvaluationsStrings.editDiscardKeepEditing,
+                            role: .cancel
+                        ) {}
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
@@ -66,6 +82,10 @@ struct EvaluationWriteScene: View {
             }
         }
         .interactiveDismissDisabled(viewModel.hasUnsavedChanges)
+        .analyticsScreen(
+            viewModel.editedEvaluation.map { .reviewEdit(evaluationID: $0.id.rawValue) }
+                ?? .reviewWrite(evLectureID: viewModel.lectureID.rawValue)
+        )
         .onLoad {
             // The skeleton has no failed state to recover from, so close the form and let the alert explain.
             if await errorAlertHandler.withAlert(operation: { try await viewModel.load() }) == nil {
@@ -161,6 +181,11 @@ struct EvaluationWriteScene: View {
 
                 formGroup(EvaluationsStrings.writeContentSection) {
                     contentEditor
+                    if let likeCount = viewModel.editedEvaluation?.like.count, likeCount > 0 {
+                        Label(EvaluationsStrings.editLikeResetNotice(likeCount), systemImage: "info.circle")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                    }
                 }
                 .formSectionPadding()
             }
@@ -224,7 +249,7 @@ struct EvaluationWriteScene: View {
 
     @ViewBuilder
     private func semesterPicker(target: EvaluationWriteTarget) -> some View {
-        if target.writableSemesterLectures.isEmpty {
+        if !target.semesterLectures.contains(where: viewModel.isSelectable) {
             Text(EvaluationsStrings.writeSemesterUnavailable)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
@@ -234,7 +259,7 @@ struct EvaluationWriteScene: View {
                     ForEach(target.semesterLectures) { semesterLecture in
                         Text(semesterTitle(semesterLecture))
                             .tag(Optional(semesterLecture.id))
-                            .selectionDisabled(semesterLecture.hasMyEvaluation)
+                            .selectionDisabled(!viewModel.isSelectable(semesterLecture))
                     }
                 }
             } label: {
@@ -267,7 +292,7 @@ struct EvaluationWriteScene: View {
 
     private func semesterTitle(_ semesterLecture: SemesterLecture) -> String {
         let title = semesterLecture.quarter.evaluationDisplayText
-        return semesterLecture.hasMyEvaluation ? EvaluationsStrings.writeSemesterWritten(title) : title
+        return viewModel.isSelectable(semesterLecture) ? title : EvaluationsStrings.writeSemesterWritten(title)
     }
 
     private func ratingRow(title: String, rating: Binding<Double?>, starSize: CGFloat) -> some View {
@@ -299,5 +324,16 @@ extension View {
     Color.clear
         .sheet(isPresented: .constant(true)) {
             EvaluationWriteScene(lectureID: 1101, onComplete: { _ in })
+        }
+}
+
+#Preview("Editing") {
+    Color.clear
+        .sheet(isPresented: .constant(true)) {
+            EvaluationWriteScene(
+                lectureID: 1101,
+                editing: EvaluationPreviewFixtures.feed[0].evaluation,
+                onComplete: { _ in }
+            )
         }
 }

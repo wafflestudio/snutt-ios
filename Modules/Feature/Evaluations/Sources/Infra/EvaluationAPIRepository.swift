@@ -107,6 +107,23 @@ struct EvaluationAPIRepository: EvaluationRepository {
         return EvaluationID(response.id)
     }
 
+    func updateEvaluation(id: EvaluationID, _ submission: EvaluationSubmission) async throws {
+        _ = try await client.updateLectureEvaluation(
+            path: .init(id: id.rawValue),
+            body: .json(
+                .init(
+                    content: submission.content,
+                    gains: submission.scores.gains,
+                    gradeSatisfaction: submission.scores.gradeSatisfaction,
+                    lifeBalance: submission.scores.lifeBalance,
+                    rating: submission.rating,
+                    semesterLectureId: submission.semesterLectureID.rawValue,
+                    teachingSkill: submission.scores.teachingSkill
+                )
+            )
+        ).ok
+    }
+
     func deleteEvaluation(id: EvaluationID) async throws {
         _ = try await client.deleteLectureEvaluation(path: .init(id: id.rawValue)).ok
     }

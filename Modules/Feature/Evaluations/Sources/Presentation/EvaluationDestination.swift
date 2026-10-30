@@ -7,7 +7,7 @@
 
 enum EvaluationDestination: Hashable {
     /// A lecture's evaluations, optionally scrolling to and highlighting one of them.
-    case lectureDetail(EvaluationLectureID, highlighting: EvaluationID? = nil)
+    case lectureDetail(EvaluationLectureID, highlighting: EvaluationID? = nil, referrer: ReviewDetailReferrer)
     case myEvaluations
     case allEvaluations(initialSort: EvaluationSort, availableSorts: [EvaluationSort])
 }
@@ -19,10 +19,9 @@ struct EvaluationWriteRequest: Identifiable, Hashable {
     var id: EvaluationLectureID { lectureID }
 }
 
-/// A destructive or moderation action the user picked from an evaluation's menu.
-enum EvaluationMenuAction: Identifiable, Hashable {
+/// An action the user picked from an evaluation's menu.
+enum EvaluationMenuAction: Equatable {
+    case edit(LectureEvaluation)
     case report(EvaluationID)
     case delete(EvaluationID)
-
-    var id: Self { self }
 }

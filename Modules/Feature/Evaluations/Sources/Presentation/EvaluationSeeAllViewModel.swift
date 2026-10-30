@@ -5,6 +5,7 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AnalyticsInterface
 import Dependencies
 import Observation
 
@@ -17,6 +18,9 @@ final class EvaluationSeeAllViewModel {
 
     @ObservationIgnored
     @Dependency(\.evaluationRepository) private var repository
+
+    @ObservationIgnored
+    @Dependency(\.analyticsLogger) private var analyticsLogger
 
     @ObservationIgnored
     private var isLoadingMore = false
@@ -71,6 +75,9 @@ final class EvaluationSeeAllViewModel {
         updateEvaluation(evaluation.id) { $0.like = toggledLike }
         do {
             try await repository.setLiked(toggledLike.isLiked, evaluationID: evaluation.id)
+            analyticsLogger.logEvent(
+                AnalyticsAction.likeReview(evaluationID: evaluation.id, isLiked: toggledLike.isLiked)
+            )
         } catch {
             updateEvaluation(evaluation.id) { $0.like = evaluation.like }
             throw error

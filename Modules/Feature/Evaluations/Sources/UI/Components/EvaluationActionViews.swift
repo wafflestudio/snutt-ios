@@ -61,6 +61,9 @@ struct EvaluationMenuButton: View {
                     }
                 }
                 if evaluation.permissions.contains(.modify) {
+                    Button(EvaluationsStrings.menuEdit, systemImage: "pencil") {
+                        onSelect(.edit(evaluation))
+                    }
                     Button(EvaluationsStrings.menuDelete, systemImage: "trash", role: .destructive) {
                         onSelect(.delete(evaluation.id))
                     }
@@ -78,19 +81,21 @@ struct EvaluationMenuButton: View {
 }
 
 extension View {
-    /// Presents the confirmation for a picked ``EvaluationMenuAction``: a reason prompt for reports,
+    /// Handles a picked ``EvaluationMenuAction``: the edit form for edits, a reason prompt for reports,
     /// and a destructive confirmation for deletions.
-    func evaluationMenuActionAlerts(
+    func evaluationMenuActions(
         _ action: Binding<EvaluationMenuAction?>,
+        onEdit: @escaping (EvaluationID) -> Void,
         onReport: @escaping (EvaluationID, String) -> Void,
         onDelete: @escaping (EvaluationID) -> Void
     ) -> some View {
-        modifier(EvaluationMenuActionAlerts(action: action, onReport: onReport, onDelete: onDelete))
+        modifier(EvaluationMenuActions(action: action, onEdit: onEdit, onReport: onReport, onDelete: onDelete))
     }
 }
 
-private struct EvaluationMenuActionAlerts: ViewModifier {
+private struct EvaluationMenuActions: ViewModifier {
     @Binding var action: EvaluationMenuAction?
+    let onEdit: (EvaluationID) -> Void
     let onReport: (EvaluationID, String) -> Void
     let onDelete: (EvaluationID) -> Void
 
@@ -98,6 +103,14 @@ private struct EvaluationMenuActionAlerts: ViewModifier {
 
     func body(content: Content) -> some View {
         content
+            .sheet(
+                item: Binding(
+                    get: { action?.editedEvaluation },
+                    set: { if $0 == nil { action = nil } }
+                )
+            ) { evaluation in
+                EvaluationWriteScene(lectureID: evaluation.lectureID, editing: evaluation, onComplete: onEdit)
+            }
             .alert(
                 EvaluationsStrings.reportTitle,
                 isPresented: isPresented(\.reportedEvaluationID),
@@ -140,6 +153,10 @@ private struct EvaluationMenuActionAlerts: ViewModifier {
 }
 
 extension EvaluationMenuAction {
+    fileprivate var editedEvaluation: LectureEvaluation? {
+        if case .edit(let evaluation) = self { evaluation } else { nil }
+    }
+
     fileprivate var reportedEvaluationID: EvaluationID? {
         if case .report(let id) = self { id } else { nil }
     }

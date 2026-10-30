@@ -11,6 +11,25 @@ import SwiftUI
 public struct EvaluationsUIProvider: EvaluationsUIProvidable {
     public nonisolated init() {}
     public func makeEvaluationsScene(for evLectureID: Int) -> AnyView {
-        AnyView(EvaluationsWebScene(evLectureID: evLectureID))
+        AnyView(EvaluationLectureDetailSheet(lectureID: EvaluationLectureID(Int64(evLectureID))))
+    }
+}
+
+/// A lecture's evaluations presented modally from outside the evaluation tab.
+private struct EvaluationLectureDetailSheet: View {
+    let lectureID: EvaluationLectureID
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        NavigationStack {
+            EvaluationLectureDetailScene(lectureID: lectureID)
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button(EvaluationsStrings.close, systemImage: "xmark") {
+                            dismiss()
+                        }
+                    }
+                }
+        }
     }
 }

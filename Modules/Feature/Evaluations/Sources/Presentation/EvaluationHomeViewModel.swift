@@ -5,6 +5,7 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AnalyticsInterface
 import Dependencies
 import Observation
 
@@ -17,6 +18,9 @@ final class EvaluationHomeViewModel {
 
     @ObservationIgnored
     @Dependency(\.evaluationRepository) private var repository
+
+    @ObservationIgnored
+    @Dependency(\.analyticsLogger) private var analyticsLogger
 
     private var useCase: EvaluationHomeUseCase {
         EvaluationHomeUseCase(repository: repository)
@@ -72,6 +76,9 @@ final class EvaluationHomeViewModel {
         updateEvaluation(evaluation.id) { $0.like = toggledLike }
         do {
             try await repository.setLiked(toggledLike.isLiked, evaluationID: evaluation.id)
+            analyticsLogger.logEvent(
+                AnalyticsAction.likeReview(evaluationID: evaluation.id, isLiked: toggledLike.isLiked)
+            )
         } catch {
             updateEvaluation(evaluation.id) { $0.like = evaluation.like }
             throw error
@@ -80,16 +87,18 @@ final class EvaluationHomeViewModel {
 
     func deleteEvaluation(_ id: EvaluationID) async throws {
         try await repository.deleteEvaluation(id: id)
+        analyticsLogger.logEvent(AnalyticsAction.deleteReview(evaluationID: id))
         try await reloadTakenLectures()
     }
 
     func reportEvaluation(_ id: EvaluationID, reason: String) async throws {
         try await repository.reportEvaluation(id: id, reason: reason)
+        analyticsLogger.logEvent(AnalyticsAction.reportReview(evaluationID: id))
     }
 
     /// Shows the new evaluation in its lecture's detail and refreshes the taken lecture section.
     func didCreateEvaluation(_ evaluationID: EvaluationID, for lectureID: EvaluationLectureID) async throws {
-        path.append(.lectureDetail(lectureID, highlighting: evaluationID))
+        path.append(.lectureDetail(lectureID, highlighting: evaluationID, referrer: .write))
         try await reloadTakenLectures()
     }
 

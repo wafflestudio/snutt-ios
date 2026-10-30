@@ -72,6 +72,7 @@
 "content.more" = "More";
 "menu.more" = "More Options";
 "menu.report" = "Report";
+"menu.edit" = "Edit";
 "menu.delete" = "Delete";
 "report.title" = "Report Review";
 "report.message" = "Tell us why you are reporting this review.";
@@ -81,6 +82,7 @@
 "delete.message" = "Deleted reviews cannot be restored.";
 "delete.confirm" = "Delete";
 "cancel" = "Cancel";
+"close" = "Close";
 
 /* Taken Lectures */
 "write.button" = "Write a Review";
@@ -120,6 +122,11 @@
 "write.discard.title" = "Discard this review?";
 "write.discard.confirm" = "Discard";
 "write.discard.keepEditing" = "Keep Editing";
+"edit.title" = "Edit Review";
+"edit.discard.title" = "Leave without saving your changes?";
+"edit.discard.confirm" = "Leave";
+"edit.discard.keepEditing" = "Keep Editing";
+"edit.likeResetNotice" = "Editing this review resets its %d likes.";
 
 /* Errors */
 "error.loadFailed" = "Couldn't Load Reviews";

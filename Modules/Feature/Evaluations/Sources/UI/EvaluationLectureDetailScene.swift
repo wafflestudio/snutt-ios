@@ -70,12 +70,17 @@ struct EvaluationLectureDetailScene: View {
         .sheet(item: $viewModel.writeRequest) { request in
             EvaluationWriteScene(lectureID: request.lectureID) { evaluationID in
                 errorAlertHandler.withAlert {
-                    try await viewModel.didCreateEvaluation(evaluationID)
+                    try await viewModel.didSaveEvaluation(evaluationID)
                 }
             }
         }
-        .evaluationMenuActionAlerts(
+        .evaluationMenuActions(
             $menuAction,
+            onEdit: { evaluationID in
+                errorAlertHandler.withAlert {
+                    try await viewModel.didSaveEvaluation(evaluationID)
+                }
+            },
             onReport: { id, reason in
                 errorAlertHandler.withAlert {
                     try await viewModel.reportEvaluation(id, reason: reason)

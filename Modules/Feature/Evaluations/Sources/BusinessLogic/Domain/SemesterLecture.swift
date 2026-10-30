@@ -19,8 +19,4 @@ struct EvaluationWriteTarget: Equatable, Sendable {
     let lecture: EvaluationLectureBrief
     /// Offered semesters, most recent first.
     let semesterLectures: [SemesterLecture]
-
-    var writableSemesterLectures: [SemesterLecture] {
-        semesterLectures.filter { !$0.hasMyEvaluation }
-    }
 }

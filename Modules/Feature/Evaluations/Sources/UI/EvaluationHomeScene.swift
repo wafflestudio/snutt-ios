@@ -30,6 +30,7 @@ public struct EvaluationHomeScene: View {
                 }
             }
             .animation(.smooth(duration: 0.25), value: searchViewModel.isPresented)
+            .analyticsScreen(.reviewSearch, condition: searchViewModel.isPresented)
             .background(Color(uiColor: .systemBackground))
             .navigationTitle(EvaluationsStrings.homeTitle)
             .navigationBarTitleDisplayMode(.inline)
@@ -75,8 +76,13 @@ public struct EvaluationHomeScene: View {
                 }
             }
         }
-        .evaluationMenuActionAlerts(
+        .evaluationMenuActions(
             $menuAction,
+            onEdit: { _ in
+                errorAlertHandler.withAlert {
+                    try await viewModel.refresh()
+                }
+            },
             onReport: { id, reason in
                 errorAlertHandler.withAlert {
                     try await viewModel.reportEvaluation(id, reason: reason)
@@ -149,7 +155,7 @@ public struct EvaluationHomeScene: View {
                 }
             },
             onSelectResult: { result in
-                viewModel.path.append(.lectureDetail(result.id))
+                viewModel.path.append(.lectureDetail(result.id, referrer: .search(query: searchViewModel.queryText)))
             },
             onResultAppear: { result in
                 Task {
@@ -164,12 +170,15 @@ public struct EvaluationHomeScene: View {
     @ViewBuilder
     private func destinationView(for destination: EvaluationDestination) -> some View {
         switch destination {
-        case .lectureDetail(let lectureID, let highlightedEvaluationID):
+        case .lectureDetail(let lectureID, let highlightedEvaluationID, let referrer):
             EvaluationLectureDetailScene(lectureID: lectureID, highlightedEvaluationID: highlightedEvaluationID)
+                .analyticsScreen(.reviewDetail(evLectureID: lectureID.rawValue, referrer: referrer))
         case .myEvaluations:
             MyEvaluationsScene()
+                .analyticsScreen(.myReviews)
         case .allEvaluations(let initialSort, let availableSorts):
             EvaluationSeeAllScene(initialSort: initialSort, availableSorts: availableSorts)
+                .analyticsScreen(.reviewAll(sort: initialSort.kind.rawValue))
         }
     }
 }

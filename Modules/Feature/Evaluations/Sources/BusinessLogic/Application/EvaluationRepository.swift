@@ -24,6 +24,7 @@ protocol EvaluationRepository: Sendable {
 
     func fetchWriteTarget(lectureID: EvaluationLectureID) async throws -> EvaluationWriteTarget
     func createEvaluation(_ submission: EvaluationSubmission) async throws -> EvaluationID
+    func updateEvaluation(id: EvaluationID, _ submission: EvaluationSubmission) async throws
     func deleteEvaluation(id: EvaluationID) async throws
     func setLiked(_ isLiked: Bool, evaluationID: EvaluationID) async throws
     func reportEvaluation(id: EvaluationID, reason: String) async throws

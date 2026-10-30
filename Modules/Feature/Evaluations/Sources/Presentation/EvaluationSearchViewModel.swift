@@ -5,6 +5,7 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AnalyticsInterface
 import Dependencies
 import Observation
 
@@ -41,6 +42,9 @@ final class EvaluationSearchViewModel {
     @Dependency(\.evaluationRepository) private var repository
 
     @ObservationIgnored
+    @Dependency(\.analyticsLogger) private var analyticsLogger
+
+    @ObservationIgnored
     @Dependency(\.evaluationSearchFilterStore) private var filterStore
 
     @ObservationIgnored
@@ -62,6 +66,7 @@ final class EvaluationSearchViewModel {
             return
         }
         resultState = .loading
+        analyticsLogger.logEvent(AnalyticsAction.searchReview(query))
         do {
             let page = try await repository.searchLectures(query: query, page: 0)
             guard currentQuery == query else { return }

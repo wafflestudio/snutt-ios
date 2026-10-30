@@ -11,7 +11,7 @@ struct EvaluationSort: Hashable, Identifiable, Sendable {
     let kind: Kind
 
     /// A supported ordering option for the main evaluation feed.
-    enum Kind: Equatable, Hashable, Sendable {
+    enum Kind: String, Hashable, Sendable {
         case recommended
         case latest
     }

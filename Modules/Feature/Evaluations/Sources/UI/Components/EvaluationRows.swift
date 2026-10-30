@@ -15,7 +15,7 @@ struct FeedEvaluationRow: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            NavigationLink(value: EvaluationDestination.lectureDetail(item.lecture.id)) {
+            NavigationLink(value: EvaluationDestination.lectureDetail(item.lecture.id, referrer: .feed)) {
                 VStack(alignment: .leading, spacing: 6) {
                     VStack(alignment: .leading, spacing: 2) {
                         Text(item.lecture.title)

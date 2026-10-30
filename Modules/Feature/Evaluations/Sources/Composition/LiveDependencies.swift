@@ -93,6 +93,10 @@ struct EvaluationPreviewRepository: EvaluationRepository {
         return EvaluationID(999)
     }
 
+    func updateEvaluation(id: EvaluationID, _ submission: EvaluationSubmission) async throws {
+        try await simulateNetworkDelay()
+    }
+
     func deleteEvaluation(id: EvaluationID) async throws {}
     func setLiked(_ isLiked: Bool, evaluationID: EvaluationID) async throws {}
     func reportEvaluation(id: EvaluationID, reason: String) async throws {}

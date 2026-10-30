@@ -26,8 +26,13 @@ struct MyEvaluationsScene: View {
             .background(Color(uiColor: .systemBackground))
             .navigationTitle(EvaluationsStrings.myEvaluationsTitle)
             .navigationBarTitleDisplayMode(.inline)
-            .evaluationMenuActionAlerts(
+            .evaluationMenuActions(
                 $menuAction,
+                onEdit: { _ in
+                    errorAlertHandler.withAlert {
+                        try await viewModel.load()
+                    }
+                },
                 onReport: { _, _ in },
                 onDelete: { id in
                     errorAlertHandler.withAlert {
@@ -176,7 +181,7 @@ private struct MyEvaluationRow: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            NavigationLink(value: EvaluationDestination.lectureDetail(item.lecture.id)) {
+            NavigationLink(value: EvaluationDestination.lectureDetail(item.lecture.id, referrer: .myReviews)) {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(item.lecture.title)
                         .font(.callout.weight(.semibold))

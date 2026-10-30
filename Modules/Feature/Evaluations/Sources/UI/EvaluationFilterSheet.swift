@@ -42,6 +42,7 @@ struct EvaluationFilterSheet: View {
                 }
         }
         .presentationDetents([.medium])
+        .analyticsScreen(.reviewFilter)
         .onLoad {
             // The skeleton has no failed state to recover from, so close the sheet and let the alert explain.
             if await errorAlertHandler.withAlert(operation: { try await viewModel.load() }) == nil {

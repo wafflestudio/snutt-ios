@@ -16,6 +16,17 @@ struct EvaluationDraft: Equatable, Sendable {
     var scores: [EvaluationCriterion: Double] = [:]
     var content = ""
 
+    init() {}
+
+    /// A draft filled in from an existing evaluation. Its semester is resolved once the offered semesters load.
+    init(editing evaluation: LectureEvaluation) {
+        rating = evaluation.rating
+        if let scores = evaluation.scores {
+            self.scores = Dictionary(uniqueKeysWithValues: EvaluationCriterion.allCases.map { ($0, scores[$0]) })
+        }
+        content = evaluation.content
+    }
+
     var contentLength: Int {
         content.trimmingCharacters(in: .whitespacesAndNewlines).count
     }

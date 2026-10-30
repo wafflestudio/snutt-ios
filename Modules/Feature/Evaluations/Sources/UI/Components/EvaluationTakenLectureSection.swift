@@ -92,7 +92,7 @@ struct TakenLectureCell: View {
 
     private var header: some View {
         HStack(alignment: .top, spacing: 12) {
-            NavigationLink(value: EvaluationDestination.lectureDetail(lecture.id)) {
+            NavigationLink(value: EvaluationDestination.lectureDetail(lecture.id, referrer: .takenLecture)) {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(lecture.info.brief.title)
                         .font(.callout.weight(.semibold))

@@ -72,6 +72,7 @@
 "content.more" = "더보기";
 "menu.more" = "옵션";
 "menu.report" = "신고하기";
+"menu.edit" = "수정하기";
 "menu.delete" = "삭제하기";
 "report.title" = "강의평 신고";
 "report.message" = "신고 사유를 입력해 주세요.";
@@ -81,6 +82,7 @@
 "delete.message" = "삭제한 강의평은 복구할 수 없어요.";
 "delete.confirm" = "삭제";
 "cancel" = "취소";
+"close" = "닫기";
 
 /* Taken Lectures */
 "write.button" = "강의평 작성";
@@ -120,6 +122,11 @@
 "write.discard.title" = "작성 중인 강의평을 삭제할까요?";
 "write.discard.confirm" = "삭제";
 "write.discard.keepEditing" = "계속 작성하기";
+"edit.title" = "강의평 수정";
+"edit.discard.title" = "수정한 내용을 저장하지 않고 나갈까요?";
+"edit.discard.confirm" = "나가기";
+"edit.discard.keepEditing" = "계속 수정하기";
+"edit.likeResetNotice" = "강의평을 수정하면 받은 추천 %d개가 초기화돼요.";
 
 /* Errors */
 "error.loadFailed" = "강의평을 불러오지 못했어요";
