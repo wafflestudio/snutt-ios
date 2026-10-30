@@ -92,23 +92,29 @@ struct EvaluationWriteScene: View {
 
     private func form(target: EvaluationWriteTarget) -> some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: 0) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text(target.lecture.title)
                         .font(.title3.weight(.bold))
                     Text(target.lecture.instructorDisplayText)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
-                .padding(.horizontal, 4)
                 .accessibilityElement(children: .combine)
+                .accessibilityAddTraits(.isHeader)
+                .padding(.horizontal, 20)
+                .padding(.top, 20)
+                .padding(.bottom, 24)
 
-                VStack(alignment: .leading, spacing: 28) {
-                    formSection(EvaluationsStrings.writeSemester) {
+                EvaluationDesignColor.sectionSeparator
+                    .frame(height: 8)
+
+                VStack(alignment: .leading, spacing: 32) {
+                    formGroup(EvaluationsStrings.writeSemester) {
                         semesterPicker(target: target)
                     }
 
-                    formSection(EvaluationsStrings.writeOverallSection) {
+                    formGroup(EvaluationsStrings.writeOverallSection) {
                         VStack(alignment: .leading, spacing: 20) {
                             ratingRow(
                                 title: EvaluationsStrings.writeOverall,
@@ -120,30 +126,26 @@ struct EvaluationWriteScene: View {
                             }
                         }
                     }
-
-                    Divider()
-
-                    formSection(EvaluationsStrings.writeContentSection) {
-                        contentEditor
-                    }
                 }
-                .padding(20)
-                .background(
-                    Color(uiColor: .secondarySystemGroupedBackground),
-                    in: .rect(cornerRadius: 16, style: .continuous)
-                )
+                .formSectionPadding()
+
+                EvaluationDesignColor.sectionSeparator
+                    .frame(height: 8)
+
+                formGroup(EvaluationsStrings.writeContentSection) {
+                    contentEditor
+                }
+                .formSectionPadding()
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 20)
         }
-        .background(Color(uiColor: .systemGroupedBackground))
+        .background(Color(uiColor: .systemBackground))
         .scrollDismissesKeyboard(.interactively)
     }
 
-    private func formSection(_ title: String, @ViewBuilder content: () -> some View) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
+    private func formGroup(_ title: String, @ViewBuilder content: () -> some View) -> some View {
+        VStack(alignment: .leading, spacing: 14) {
             Text(title)
-                .font(.subheadline.weight(.semibold))
+                .font(.callout.weight(.semibold))
                 .accessibilityAddTraits(.isHeader)
             content()
         }
@@ -159,13 +161,16 @@ struct EvaluationWriteScene: View {
             .font(.subheadline)
             .lineLimit(6...)
             .focused($isContentFocused)
-            .padding(12)
+            .padding(14)
+            .background(
+                Color(uiColor: .secondarySystemBackground),
+                in: .rect(cornerRadius: 12, style: .continuous)
+            )
             .overlay {
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .strokeBorder(
-                        isContentFocused ? EvaluationDesignColor.accent : Color(uiColor: .separator),
-                        lineWidth: isContentFocused ? 1.5 : 1
-                    )
+                if isContentFocused {
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .strokeBorder(EvaluationDesignColor.accent, lineWidth: 1.5)
+                }
             }
             .contentShape(.rect)
             .onTapGesture {
@@ -194,21 +199,40 @@ struct EvaluationWriteScene: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
         } else {
-            Picker(EvaluationsStrings.writeSemester, selection: $viewModel.draft.semesterLectureID) {
-                ForEach(target.semesterLectures) { semesterLecture in
-                    Text(semesterTitle(semesterLecture))
-                        .tag(Optional(semesterLecture.id))
-                        .selectionDisabled(semesterLecture.hasMyEvaluation)
+            Menu {
+                Picker(EvaluationsStrings.writeSemester, selection: $viewModel.draft.semesterLectureID) {
+                    ForEach(target.semesterLectures) { semesterLecture in
+                        Text(semesterTitle(semesterLecture))
+                            .tag(Optional(semesterLecture.id))
+                            .selectionDisabled(semesterLecture.hasMyEvaluation)
+                    }
                 }
+            } label: {
+                HStack(spacing: 6) {
+                    Text(selectedSemesterTitle(in: target))
+                    Image(systemName: "chevron.down")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.secondary)
+                }
+                .font(.subheadline.weight(.medium))
+                .foregroundStyle(.primary)
+                .padding(.horizontal, 14)
+                .frame(minHeight: 36)
+                .overlay {
+                    Capsule()
+                        .strokeBorder(Color(uiColor: .systemGray5))
+                }
+                .contentShape(.capsule)
             }
-            .pickerStyle(.menu)
-            .tint(.primary)
-            .padding(.vertical, 2)
-            .overlay {
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .strokeBorder(Color(uiColor: .separator))
-            }
+            .accessibilityLabel(EvaluationsStrings.writeSemester)
+            .accessibilityValue(selectedSemesterTitle(in: target))
         }
+    }
+
+    private func selectedSemesterTitle(in target: EvaluationWriteTarget) -> String {
+        target.semesterLectures
+            .first { $0.id == viewModel.draft.semesterLectureID }
+            .map(\.quarter.evaluationDisplayText) ?? ""
     }
 
     private func semesterTitle(_ semesterLecture: SemesterLecture) -> String {
@@ -230,6 +254,14 @@ struct EvaluationWriteScene: View {
             get: { viewModel.draft.scores[criterion] },
             set: { viewModel.draft.scores[criterion] = $0 }
         )
+    }
+}
+
+extension View {
+    fileprivate func formSectionPadding() -> some View {
+        frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 24)
     }
 }
 
