@@ -30,8 +30,9 @@ register-device:
     @cd fastlane && mise exec -- bundle exec fastlane add_device
 
 # Swift 코드 자동 포맷팅 (커밋 시 자동 실행)
+# git이 추적하거나 새로 추가된 파일만 포맷해서, gitignore된 생성 코드(**/Generated 등)는 건드리지 않음
 format:
-    swift-format format --recursive --in-place .
+    git ls-files -z --cached --others --exclude-standard -- '*.swift' | xargs -0 swift-format format --in-place
 
 # 코드 품질 검사 (의존성, import, 포맷 등)
 check:
