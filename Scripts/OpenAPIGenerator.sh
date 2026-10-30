@@ -66,7 +66,7 @@ generate_ev_for_config() {
     echo "  📝 Generating Types..."
     mint run apple/swift-openapi-generator \
         swift-openapi-generator generate \
-        --config OpenAPI/openapi-generator-config.yaml \
+        --config OpenAPI/openapi-ev-generator-config.yaml \
         --output-directory "$EV_OUTPUT_DIR" \
         --mode types \
         "$spec_file"
@@ -75,7 +75,7 @@ generate_ev_for_config() {
     echo "  🔧 Generating Client..."
     mint run apple/swift-openapi-generator \
         swift-openapi-generator generate \
-        --config OpenAPI/openapi-generator-config.yaml \
+        --config OpenAPI/openapi-ev-generator-config.yaml \
         --output-directory "$EV_OUTPUT_DIR" \
         --mode client \
         "$spec_file"

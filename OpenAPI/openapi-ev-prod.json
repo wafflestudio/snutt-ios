@@ -22,11 +22,11 @@
             "format" : "double",
             "type" : "number"
           },
-          "gradeSatisfaction" : {
+          "grade_satisfaction" : {
             "format" : "double",
             "type" : "number"
           },
-          "lifeBalance" : {
+          "life_balance" : {
             "format" : "double",
             "type" : "number"
           },
@@ -34,7 +34,7 @@
             "format" : "double",
             "type" : "number"
           },
-          "teachingSkill" : {
+          "teaching_skill" : {
             "format" : "double",
             "type" : "number"
           }
@@ -42,10 +42,10 @@
         "required" : [
           "content",
           "gains",
-          "gradeSatisfaction",
-          "lifeBalance",
+          "grade_satisfaction",
+          "life_balance",
           "rating",
-          "teachingSkill"
+          "teaching_skill"
         ],
         "type" : "object"
       },
@@ -67,7 +67,7 @@
             "format" : "int32",
             "type" : "integer"
           },
-          "totalCount" : {
+          "total_count" : {
             "format" : "int64",
             "type" : "integer"
           }
@@ -97,7 +97,7 @@
             "format" : "int32",
             "type" : "integer"
           },
-          "totalCount" : {
+          "total_count" : {
             "format" : "int64",
             "type" : "integer"
           }
@@ -145,23 +145,23 @@
             "format" : "int64",
             "type" : "integer"
           },
-          "isHidden" : {
+          "is_hidden" : {
             "type" : "boolean"
           },
-          "lectureEvaluationId" : {
+          "lecture_evaluation_id" : {
             "format" : "int64",
             "type" : "integer"
           },
-          "userId" : {
+          "user_id" : {
             "type" : "string"
           }
         },
         "required" : [
           "content",
           "id",
-          "isHidden",
-          "lectureEvaluationId",
-          "userId"
+          "is_hidden",
+          "lecture_evaluation_id",
+          "user_id"
         ],
         "type" : "object"
       },
@@ -184,14 +184,14 @@
           "content" : {
             "type" : "string"
           },
-          "fromSnuev" : {
+          "from_snuev" : {
             "type" : "boolean"
           },
           "gains" : {
             "format" : "double",
             "type" : "number"
           },
-          "gradeSatisfaction" : {
+          "grade_satisfaction" : {
             "format" : "double",
             "type" : "number"
           },
@@ -199,29 +199,29 @@
             "format" : "int64",
             "type" : "integer"
           },
-          "isHidden" : {
+          "is_hidden" : {
             "type" : "boolean"
           },
-          "isLiked" : {
+          "is_liked" : {
             "type" : "boolean"
           },
-          "isModifiable" : {
+          "is_modifiable" : {
             "type" : "boolean"
           },
-          "isReportable" : {
+          "is_reportable" : {
             "type" : "boolean"
           },
-          "isReported" : {
+          "is_reported" : {
             "type" : "boolean"
           },
           "lecture" : {
             "$ref" : "#/components/schemas/SimpleLectureDto"
           },
-          "lifeBalance" : {
+          "life_balance" : {
             "format" : "double",
             "type" : "number"
           },
-          "likeCount" : {
+          "like_count" : {
             "format" : "int64",
             "type" : "integer"
           },
@@ -233,11 +233,11 @@
             "format" : "int32",
             "type" : "integer"
           },
-          "teachingSkill" : {
+          "teaching_skill" : {
             "format" : "double",
             "type" : "number"
           },
-          "userId" : {
+          "user_id" : {
             "type" : "string"
           },
           "year" : {
@@ -247,18 +247,18 @@
         },
         "required" : [
           "content",
-          "fromSnuev",
+          "from_snuev",
           "id",
-          "isHidden",
-          "isLiked",
-          "isModifiable",
-          "isReportable",
-          "isReported",
+          "is_hidden",
+          "is_liked",
+          "is_modifiable",
+          "is_reportable",
+          "is_reported",
           "lecture",
-          "likeCount",
+          "like_count",
           "rating",
           "semester",
-          "userId",
+          "user_id",
           "year"
         ],
         "type" : "object"
@@ -268,14 +268,14 @@
           "content" : {
             "type" : "string"
           },
-          "fromSnuev" : {
+          "from_snuev" : {
             "type" : "boolean"
           },
           "gains" : {
             "format" : "double",
             "type" : "number"
           },
-          "gradeSatisfaction" : {
+          "grade_satisfaction" : {
             "format" : "double",
             "type" : "number"
           },
@@ -283,30 +283,30 @@
             "format" : "int64",
             "type" : "integer"
           },
-          "isHidden" : {
+          "is_hidden" : {
             "type" : "boolean"
           },
-          "isLiked" : {
+          "is_liked" : {
             "type" : "boolean"
           },
-          "isModifiable" : {
+          "is_modifiable" : {
             "type" : "boolean"
           },
-          "isReportable" : {
+          "is_reportable" : {
             "type" : "boolean"
           },
-          "isReported" : {
+          "is_reported" : {
             "type" : "boolean"
           },
-          "lectureId" : {
+          "lecture_id" : {
             "format" : "int64",
             "type" : "integer"
           },
-          "lifeBalance" : {
+          "life_balance" : {
             "format" : "double",
             "type" : "number"
           },
-          "likeCount" : {
+          "like_count" : {
             "format" : "int64",
             "type" : "integer"
           },
@@ -318,11 +318,11 @@
             "format" : "int32",
             "type" : "integer"
           },
-          "teachingSkill" : {
+          "teaching_skill" : {
             "format" : "double",
             "type" : "number"
           },
-          "userId" : {
+          "user_id" : {
             "type" : "string"
           },
           "year" : {
@@ -332,44 +332,34 @@
         },
         "required" : [
           "content",
-          "fromSnuev",
+          "from_snuev",
           "id",
-          "isHidden",
-          "isLiked",
-          "isModifiable",
-          "isReportable",
-          "isReported",
-          "lectureId",
-          "likeCount",
+          "is_hidden",
+          "is_liked",
+          "is_modifiable",
+          "is_reportable",
+          "is_reported",
+          "lecture_id",
+          "like_count",
           "rating",
           "semester",
-          "userId",
+          "user_id",
           "year"
         ],
         "type" : "object"
       },
       "LectureAndSemesterLecturesResponse" : {
         "properties" : {
-          "academicYear" : {
+          "academic_year" : {
             "type" : "string"
           },
           "category" : {
             "type" : "string"
           },
           "classification" : {
-            "enum" : [
-              "교양",
-              "전선",
-              "전필",
-              "일선",
-              "논문",
-              "교직",
-              "대학원",
-              "공통"
-            ],
             "type" : "string"
           },
-          "courseNumber" : {
+          "course_number" : {
             "type" : "string"
           },
           "credit" : {
@@ -386,7 +376,7 @@
           "instructor" : {
             "type" : "string"
           },
-          "semesterLectures" : {
+          "semester_lectures" : {
             "items" : {
               "$ref" : "#/components/schemas/SemesterLectureDto"
             },
@@ -398,32 +388,22 @@
         },
         "required" : [
           "id",
-          "semesterLectures"
+          "semester_lectures"
         ],
         "type" : "object"
       },
       "LectureDto" : {
         "properties" : {
-          "academicYear" : {
+          "academic_year" : {
             "type" : "string"
           },
           "category" : {
             "type" : "string"
           },
           "classification" : {
-            "enum" : [
-              "교양",
-              "전선",
-              "전필",
-              "일선",
-              "논문",
-              "교직",
-              "대학원",
-              "공통"
-            ],
             "type" : "string"
           },
-          "courseNumber" : {
+          "course_number" : {
             "type" : "string"
           },
           "credit" : {
@@ -458,14 +438,14 @@
           "content" : {
             "type" : "string"
           },
-          "fromSnuev" : {
+          "from_snuev" : {
             "type" : "boolean"
           },
           "gains" : {
             "format" : "double",
             "type" : "number"
           },
-          "gradeSatisfaction" : {
+          "grade_satisfaction" : {
             "format" : "double",
             "type" : "number"
           },
@@ -473,17 +453,17 @@
             "format" : "int64",
             "type" : "integer"
           },
-          "isHidden" : {
+          "is_hidden" : {
             "type" : "boolean"
           },
-          "isReported" : {
+          "is_reported" : {
             "type" : "boolean"
           },
-          "lifeBalance" : {
+          "life_balance" : {
             "format" : "double",
             "type" : "number"
           },
-          "likeCount" : {
+          "like_count" : {
             "format" : "int64",
             "type" : "integer"
           },
@@ -491,82 +471,80 @@
             "format" : "double",
             "type" : "number"
           },
-          "teachingSkill" : {
+          "teaching_skill" : {
             "format" : "double",
             "type" : "number"
           },
-          "userId" : {
+          "user_id" : {
             "type" : "string"
           }
         },
         "required" : [
           "content",
-          "fromSnuev",
+          "from_snuev",
           "id",
-          "isHidden",
-          "isReported",
-          "likeCount",
+          "is_hidden",
+          "is_reported",
+          "like_count",
           "rating",
-          "userId"
+          "user_id"
         ],
         "type" : "object"
       },
       "LectureEvaluationSimpleSummary" : {
         "properties" : {
-          "avgRating" : {
+          "avg_rating" : {
             "format" : "double",
             "type" : "number"
+          },
+          "evaluation_count" : {
+            "format" : "int64",
+            "type" : "integer"
           }
         },
         "type" : "object"
       },
       "LectureEvaluationSummary" : {
         "properties" : {
-          "avgGains" : {
+          "avg_gains" : {
             "format" : "double",
             "type" : "number"
           },
-          "avgGradeSatisfaction" : {
+          "avg_grade_satisfaction" : {
             "format" : "double",
             "type" : "number"
           },
-          "avgLifeBalance" : {
+          "avg_life_balance" : {
             "format" : "double",
             "type" : "number"
           },
-          "avgRating" : {
+          "avg_rating" : {
             "format" : "double",
             "type" : "number"
           },
-          "avgTeachingSkill" : {
+          "avg_teaching_skill" : {
             "format" : "double",
             "type" : "number"
+          },
+          "evaluation_count" : {
+            "format" : "int64",
+            "type" : "integer"
           }
         },
         "type" : "object"
       },
       "LectureEvaluationSummaryResponse" : {
         "properties" : {
-          "academicYear" : {
+          "academic_year" : {
             "type" : "string"
           },
           "category" : {
             "type" : "string"
           },
           "classification" : {
-            "enum" : [
-              "교양",
-              "전선",
-              "전필",
-              "일선",
-              "논문",
-              "교직",
-              "대학원",
-              "공통"
-            ],
             "type" : "string"
           },
-          "courseNumber" : {
+          "course_number" : {
             "type" : "string"
           },
           "credit" : {
@@ -604,20 +582,20 @@
             },
             "type" : "array"
           },
-          "totalCount" : {
+          "total_count" : {
             "format" : "int32",
             "type" : "integer"
           }
         },
         "required" : [
           "content",
-          "totalCount"
+          "total_count"
         ],
         "type" : "object"
       },
       "LectureIdResponse" : {
         "properties" : {
-          "evLectureId" : {
+          "ev_lecture_id" : {
             "format" : "int64",
             "type" : "integer"
           },
@@ -625,38 +603,28 @@
             "format" : "int64",
             "type" : "integer"
           },
-          "snuttId" : {
+          "snutt_id" : {
             "type" : "string"
           }
         },
         "required" : [
-          "evLectureId",
+          "ev_lecture_id",
           "id"
         ],
         "type" : "object"
       },
       "LectureTakenByUserResponse" : {
         "properties" : {
-          "academicYear" : {
+          "academic_year" : {
             "type" : "string"
           },
           "category" : {
             "type" : "string"
           },
           "classification" : {
-            "enum" : [
-              "교양",
-              "전선",
-              "전필",
-              "일선",
-              "논문",
-              "교직",
-              "대학원",
-              "공통"
-            ],
             "type" : "string"
           },
-          "courseNumber" : {
+          "course_number" : {
             "type" : "string"
           },
           "credit" : {
@@ -673,11 +641,11 @@
           "instructor" : {
             "type" : "string"
           },
-          "takenSemester" : {
+          "taken_semester" : {
             "format" : "int32",
             "type" : "integer"
           },
-          "takenYear" : {
+          "taken_year" : {
             "format" : "int32",
             "type" : "integer"
           },
@@ -687,8 +655,8 @@
         },
         "required" : [
           "id",
-          "takenSemester",
-          "takenYear"
+          "taken_semester",
+          "taken_year"
         ],
         "type" : "object"
       },
@@ -700,14 +668,14 @@
             },
             "type" : "array"
           },
-          "totalCount" : {
+          "total_count" : {
             "format" : "int32",
             "type" : "integer"
           }
         },
         "required" : [
           "content",
-          "totalCount"
+          "total_count"
         ],
         "type" : "object"
       },
@@ -730,7 +698,7 @@
             "format" : "int32",
             "type" : "integer"
           },
-          "totalCount" : {
+          "total_count" : {
             "format" : "int64",
             "type" : "integer"
           }
@@ -769,7 +737,7 @@
       },
       "SearchTagResponse" : {
         "properties" : {
-          "tagGroups" : {
+          "tag_groups" : {
             "items" : {
               "$ref" : "#/components/schemas/TagGroupDto"
             },
@@ -777,43 +745,33 @@
           }
         },
         "required" : [
-          "tagGroups"
+          "tag_groups"
         ],
         "type" : "object"
       },
       "SemesterLectureDto" : {
         "properties" : {
-          "academicYear" : {
+          "academic_year" : {
             "type" : "string"
           },
           "category" : {
             "type" : "string"
           },
           "classification" : {
-            "enum" : [
-              "교양",
-              "전선",
-              "전필",
-              "일선",
-              "논문",
-              "교직",
-              "대학원",
-              "공통"
-            ],
             "type" : "string"
           },
           "credit" : {
             "format" : "int32",
             "type" : "integer"
           },
-          "extraInfo" : {
+          "extra_info" : {
             "type" : "string"
           },
           "id" : {
             "format" : "int64",
             "type" : "integer"
           },
-          "myEvaluationExists" : {
+          "my_evaluation_exists" : {
             "type" : "boolean"
           },
           "semester" : {
@@ -826,13 +784,13 @@
           }
         },
         "required" : [
-          "academicYear",
+          "academic_year",
           "category",
           "classification",
           "credit",
-          "extraInfo",
+          "extra_info",
           "id",
-          "myEvaluationExists",
+          "my_evaluation_exists",
           "semester",
           "year"
         ],
@@ -922,11 +880,11 @@
             "format" : "double",
             "type" : "number"
           },
-          "gradeSatisfaction" : {
+          "grade_satisfaction" : {
             "format" : "double",
             "type" : "number"
           },
-          "lifeBalance" : {
+          "life_balance" : {
             "format" : "double",
             "type" : "number"
           },
@@ -934,11 +892,11 @@
             "format" : "double",
             "type" : "number"
           },
-          "semesterLectureId" : {
+          "semester_lecture_id" : {
             "format" : "int64",
             "type" : "integer"
           },
-          "teachingSkill" : {
+          "teaching_skill" : {
             "format" : "double",
             "type" : "number"
           }
@@ -1179,11 +1137,34 @@
         "parameters" : [
           {
             "in" : "query",
-            "name" : "params",
+            "name" : "query",
             "required" : true,
             "schema" : {
-              "$ref" : "#/components/schemas/SearchLectureRequest"
+              "type" : "string"
             }
+          },
+          {
+            "in" : "query",
+            "name" : "page",
+            "required" : true,
+            "schema" : {
+              "format" : "int32",
+              "type" : "integer"
+            }
+          },
+          {
+            "explode" : true,
+            "in" : "query",
+            "name" : "tags",
+            "required" : false,
+            "schema" : {
+              "items" : {
+                "format" : "int64",
+                "type" : "integer"
+              },
+              "type" : "array"
+            },
+            "style" : "form"
           }
         ],
         "responses" : {

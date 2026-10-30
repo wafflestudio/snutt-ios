@@ -111,6 +111,10 @@ struct OpenAPIDownloader: Sendable {
         case .ev:
             validatedObject.fixEvLectureSummaryParameterSchemaIfNeeded()
             validatedObject.replaceWildcardJsonContentTypesRecursively()
+            validatedObject.convertSchemaPropertyNamesToSnakeCase()
+            validatedObject.addEvaluationCountToLectureSummariesIfNeeded()
+            validatedObject.flattenEvLectureSearchParametersIfNeeded()
+            validatedObject.relaxEvClassificationEnums()
         }
         validatedObject.transformJsonEnumTypesRecursively()
         return validatedObject
@@ -205,6 +209,84 @@ extension Dictionary where Key == String, Value == Any {
         self["paths"] = paths
     }
 
+    /// The EV server serializes JSON with Jackson's snake_case naming strategy, which springdoc does not reflect.
+    mutating func convertSchemaPropertyNamesToSnakeCase() {
+        guard var components = self["components"] as? [String: Any],
+            var schemas = components["schemas"] as? [String: Any]
+        else {
+            return
+        }
+        for (name, value) in schemas {
+            guard var schema = value as? [String: Any] else { continue }
+            if let properties = schema["properties"] as? [String: Any] {
+                schema["properties"] = Dictionary(
+                    uniqueKeysWithValues: properties.map { ($0.key.snakeCased, $0.value) }
+                )
+            }
+            if let required = schema["required"] as? [String] {
+                schema["required"] = required.map(\.snakeCased)
+            }
+            schemas[name] = schema
+        }
+        components["schemas"] = schemas
+        self["components"] = components
+    }
+
+    /// The EV server returns `evaluation_count` in lecture summaries, but the spec omits it.
+    mutating func addEvaluationCountToLectureSummariesIfNeeded() {
+        for schemaName in ["LectureEvaluationSimpleSummary", "LectureEvaluationSummary"] {
+            updateValueRecursively(
+                keyPath: "components.schemas.\(schemaName).properties.evaluation_count",
+                value: ["type": "integer", "format": "int64"]
+            )
+        }
+    }
+
+    /// Lecture classifications are free-form on the server (e.g. an empty string), so a closed enum fails decoding.
+    mutating func relaxEvClassificationEnums() {
+        guard var components = self["components"] as? [String: Any],
+            var schemas = components["schemas"] as? [String: Any]
+        else {
+            return
+        }
+        for (name, value) in schemas {
+            guard var schema = value as? [String: Any],
+                var properties = schema["properties"] as? [String: Any],
+                var classification = properties["classification"] as? [String: Any]
+            else { continue }
+            classification.removeValue(forKey: "enum")
+            properties["classification"] = classification
+            schema["properties"] = properties
+            schemas[name] = schema
+        }
+        components["schemas"] = schemas
+        self["components"] = components
+    }
+
+    /// `GET /v1/lectures` binds its query parameters into a `SearchLectureRequest` object, which the generator
+    /// cannot encode because the object contains an array. Expose the fields as top-level query parameters instead.
+    mutating func flattenEvLectureSearchParametersIfNeeded() {
+        guard var paths = self["paths"] as? [String: Any],
+            var lectures = paths["/v1/lectures"] as? [String: Any],
+            var get = lectures["get"] as? [String: Any],
+            let parameters = get["parameters"] as? [[String: Any]],
+            parameters.contains(where: { $0["name"] as? String == "params" })
+        else {
+            return
+        }
+        get["parameters"] = [
+            ["name": "query", "in": "query", "required": true, "schema": ["type": "string"]],
+            ["name": "page", "in": "query", "required": true, "schema": ["type": "integer", "format": "int32"]],
+            [
+                "name": "tags", "in": "query", "required": false, "explode": true, "style": "form",
+                "schema": ["type": "array", "items": ["type": "integer", "format": "int64"]],
+            ],
+        ]
+        lectures["get"] = get
+        paths["/v1/lectures"] = lectures
+        self["paths"] = paths
+    }
+
     mutating func replaceWildcardJsonContentTypesRecursively() {
         for key in keys {
             if var nestedDict = self[key] as? [String: Any] {
@@ -271,6 +353,18 @@ extension Dictionary where Key == String, Value == Any {
             }
             nestedDict.updateValueRecursiveHelper(at: remainingKeys, value: value)
             self[firstKey] = nestedDict
+        }
+    }
+}
+
+extension String {
+    fileprivate var snakeCased: String {
+        reduce(into: "") { result, character in
+            if character.isUppercase {
+                result += "_" + character.lowercased()
+            } else {
+                result.append(character)
+            }
         }
     }
 }
