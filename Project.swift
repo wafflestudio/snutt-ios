@@ -31,6 +31,10 @@ let project = Project.app(
                 .target(name: "SharedUIMapKit"),
                 .external(name: "Dependencies"),
                 .external(name: "SnapKit"),
+                .external(name: "DependenciesAdditions"),
+                .external(name: "MemberwiseInit"),
+                .external(name: "Spyable"),
+                .external(name: "Tagged"),
             ]
         ),
         .module(
@@ -43,6 +47,7 @@ let project = Project.app(
                 .target(name: "FoundationUtility"),
                 .target(name: "SwiftUIUtility"),
                 .external(name: "MemberwiseInit"),
+                .external(name: "Dependencies"),
             ]
         ),
         .module(
@@ -56,6 +61,7 @@ let project = Project.app(
                 .target(name: "SharedUIWebKit"),
                 .target(name: "DependenciesUtility"),
                 .target(name: "FoundationUtility"),
+                .target(name: "SharedAppMetadata"),
                 .external(name: "Dependencies"),
                 .external(name: "DependenciesAdditions"),
                 .external(name: "MemberwiseInit"),
@@ -101,9 +107,11 @@ let project = Project.app(
                 .target(name: "FoundationUtility"),
                 .target(name: "SwiftUIUtility"),
                 .target(name: "SharedUIComponents"),
+                .target(name: "DependenciesUtility"),
                 .external(name: "Dependencies"),
                 .external(name: "MemberwiseInit"),
                 .external(name: "Spyable"),
+                .external(name: "OpenAPIURLSession"),
             ]
         ),
         .module(
@@ -117,9 +125,11 @@ let project = Project.app(
                 .target(name: "SharedUIComponents"),
                 .target(name: "FoundationUtility"),
                 .target(name: "SwiftUIUtility"),
+                .target(name: "DependenciesUtility"),
                 .external(name: "Dependencies"),
                 .external(name: "MemberwiseInit"),
                 .external(name: "Tagged"),
+                .external(name: "Spyable"),
             ]
         ),
         .module(
@@ -140,7 +150,10 @@ let project = Project.app(
                 .target(name: "SharedUIWebKit"),
                 .target(name: "SwiftUtility"),
                 .target(name: "DependenciesUtility"),
+                .target(name: "FoundationUtility"),
+                .target(name: "SharedAppMetadata"),
                 .external(name: "Dependencies"),
+                .external(name: "Spyable"),
             ]
         ),
         .module(
@@ -185,6 +198,7 @@ let project = Project.app(
                 .target(name: "SwiftUIUtility"),
                 .target(name: "SwiftUtility"),
                 .target(name: "DependenciesUtility"),
+                .target(name: "SharedAppMetadata"),
                 .external(name: "Dependencies"),
                 .external(name: "MemberwiseInit"),
             ]
@@ -195,6 +209,7 @@ let project = Project.app(
             previewable: false,
             dependencies: [
                 .target(name: "APIClientInterface"),
+                .target(name: "SharedAppMetadata"),
                 .external(name: "OpenAPIRuntime"),
                 .external(name: "OpenAPIURLSession"),
             ],
@@ -235,6 +250,7 @@ let project = Project.app(
                 .external(name: "KakaoSDKCommon"),
                 .external(name: "KakaoSDKShare"),
                 .external(name: "KakaoSDKTemplate"),
+                .external(name: "Spyable"),
             ]
         ),
         .module(
@@ -252,6 +268,7 @@ let project = Project.app(
                 .target(name: "FoundationUtility"),
                 .external(name: "Dependencies"),
                 .external(name: "MemberwiseInit"),
+                .external(name: "Spyable"),
             ]
         ),
         // FeatureInterface
@@ -323,6 +340,7 @@ let project = Project.app(
                 .external(name: "Dependencies"),
                 .external(name: "MemberwiseInit"),
                 .external(name: "Tagged"),
+                .external(name: "Spyable"),
             ]
         ),
         .module(
@@ -410,6 +428,7 @@ let project = Project.app(
             category: .shared(ui: false),
             dependencies: [
                 .external(name: "Dependencies"),
+                .external(name: "DependenciesAdditions"),
                 .target(name: "DependenciesUtility"),
             ]
         ),
@@ -445,14 +464,24 @@ let project = Project.app(
         .external(name: "FirebaseCore"),
         .external(name: "FirebaseMessaging"),
         .external(name: "FirebaseAnalytics"),
+        .external(name: "Dependencies"),
+        .external(name: "DependenciesAdditions"),
+        .external(name: "FacebookCore"),
+        .external(name: "GoogleSignIn"),
+        .external(name: "KakaoSDKAuth"),
+        .external(name: "KakaoSDKCommon"),
+        .external(name: "OpenAPIRuntime"),
+        .external(name: "OpenAPIURLSession"),
     ],
     widgetDependencies: [
         .target(name: "TimetableInterface"),
         .target(name: "TimetableUIComponents"),
+        .target(name: "ThemesInterface"),
         .target(name: "FoundationUtility"),
         .target(name: "DependenciesUtility"),
         .external(name: "Dependencies"),
         .external(name: "DependenciesAdditions"),
+        .external(name: "MemberwiseInit"),
     ],
     deploymentTargets: .iOS("17.0.0")
 )
