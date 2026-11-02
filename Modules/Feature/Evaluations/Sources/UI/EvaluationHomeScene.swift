@@ -40,11 +40,6 @@ public struct EvaluationHomeScene: View {
                 placement: .navigationBarDrawer(displayMode: .always),
                 prompt: EvaluationsStrings.searchPrompt
             )
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button(EvaluationsStrings.homeMyEvaluations, systemImage: "person.text.rectangle") {}
-                }
-            }
         }
     }
 
@@ -80,13 +75,6 @@ public struct EvaluationHomeScene: View {
             .onSubmit(of: .search) {
                 errorAlertHandler.withAlert {
                     try await searchViewModel.search()
-                }
-            }
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    NavigationLink(value: EvaluationDestination.myEvaluations) {
-                        Label(EvaluationsStrings.homeMyEvaluations, systemImage: "person.text.rectangle")
-                    }
                 }
             }
             .navigationDestination(for: EvaluationDestination.self) { destination in
@@ -251,13 +239,17 @@ struct EvaluationHomeFeed: View {
                 onOpenSeeAll: actions.openSeeAll
             )
 
-            ForEach(content.takenLectureGroups) { group in
-                EvaluationTakenLectureSection(
-                    group: group,
-                    onWriteEvaluation: actions.writeEvaluation,
-                    onToggleLike: actions.toggleLike,
-                    onSelectMenuAction: actions.selectMenuAction
-                )
+            if content.takenLectureGroups.isEmpty {
+                EvaluationTakenLectureEmptySection()
+            } else {
+                ForEach(content.takenLectureGroups) { group in
+                    EvaluationTakenLectureSection(
+                        group: group,
+                        onWriteEvaluation: actions.writeEvaluation,
+                        onToggleLike: actions.toggleLike,
+                        onSelectMenuAction: actions.selectMenuAction
+                    )
+                }
             }
         }
         .padding(.bottom, 24)

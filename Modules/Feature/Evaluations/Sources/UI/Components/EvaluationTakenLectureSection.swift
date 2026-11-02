@@ -37,8 +37,32 @@ struct EvaluationTakenLectureSection: View {
     }
 
     private var header: some View {
+        EvaluationTakenLectureHeader(
+            title: EvaluationsStrings.homeTakenLecturesTitle(group.quarter.evaluationDisplayText)
+        )
+    }
+}
+
+/// Stands in for the taken-lecture sections when there are none, so the way to the user's own evaluations stays.
+struct EvaluationTakenLectureEmptySection: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            EvaluationTakenLectureHeader(title: EvaluationsStrings.homeTakenLecturesEmptyTitle)
+
+            Text(EvaluationsStrings.homeTakenLecturesEmpty)
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, minHeight: 120)
+        }
+    }
+}
+
+private struct EvaluationTakenLectureHeader: View {
+    let title: String
+
+    var body: some View {
         HStack(spacing: 12) {
-            Text(EvaluationsStrings.homeTakenLecturesTitle(group.quarter.evaluationDisplayText))
+            Text(title)
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(EvaluationDesignColor.accent)
                 .lineLimit(1)

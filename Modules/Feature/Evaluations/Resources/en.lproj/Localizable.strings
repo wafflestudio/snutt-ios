@@ -28,6 +28,8 @@
 "home.seeAll" = "See All Reviews";
 "home.feed.empty" = "No reviews yet.";
 "home.takenLectures.title" = "Courses Taken in %@";
+"home.takenLectures.emptyTitle" = "Courses Taken";
+"home.takenLectures.empty" = "No courses taken yet.";
 "home.myEvaluations" = "My Reviews";
 
 /* Sort */

@@ -28,6 +28,8 @@
 "home.seeAll" = "강의평 전체보기";
 "home.feed.empty" = "아직 등록된 강의평이 없어요.";
 "home.takenLectures.title" = "%@ 수강한 강의";
+"home.takenLectures.emptyTitle" = "수강한 강의";
+"home.takenLectures.empty" = "아직 수강한 강의가 없어요.";
 "home.myEvaluations" = "나의 강의평";
 
 /* Sort */
