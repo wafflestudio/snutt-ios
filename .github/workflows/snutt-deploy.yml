@@ -8,11 +8,11 @@ on:
       - "testflight/dev/v*"
 
 env:
-  XCODE_VERSION: "26.2"
+  XCODE_VERSION: "27.1"
 
 jobs:
   deploy:
-    runs-on: macos-latest
+    runs-on: xcode-27
     timeout-minutes: 40
 
     steps:
