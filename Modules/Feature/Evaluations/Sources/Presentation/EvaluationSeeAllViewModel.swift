@@ -14,6 +14,8 @@ import Observation
 final class EvaluationSeeAllViewModel {
     private(set) var feedState: LoadState<PagedContent<EvaluationWithLecture>> = .loading
     private(set) var selectedSort: EvaluationSort
+    /// The sort `feedState` shows. It lags `selectedSort` while a new sort is loading.
+    private(set) var feedSort: EvaluationSort
     let availableSorts: [EvaluationSort]
 
     @ObservationIgnored
@@ -27,6 +29,7 @@ final class EvaluationSeeAllViewModel {
 
     init(initialSort: EvaluationSort, availableSorts: [EvaluationSort]) {
         self.selectedSort = initialSort
+        self.feedSort = initialSort
         self.availableSorts = availableSorts
     }
 
@@ -35,6 +38,7 @@ final class EvaluationSeeAllViewModel {
         let page = try await repository.fetchEvaluations(sort: sort, cursor: nil)
         guard selectedSort == sort else { return }
         feedState = .loaded(PagedContent(page))
+        feedSort = sort
     }
 
     /// Switches sorts optimistically, keeping the previous feed visible until the new one arrives.

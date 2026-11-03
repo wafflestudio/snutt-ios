@@ -34,6 +34,9 @@ struct EvaluationSeeAllScene: View {
             }
         }
         .withResponsiveTouch()
+        // A new ordering is a new list, so it starts from the top. A fresh scroll view also drops any
+        // momentum from a fling still in progress, which scrolling it to the top programmatically keeps.
+        .id(viewModel.feedSort)
         .refreshable {
             await errorAlertHandler.withAlert {
                 try await viewModel.load()
