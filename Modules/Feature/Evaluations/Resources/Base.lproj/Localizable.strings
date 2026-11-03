@@ -48,7 +48,6 @@
 "filter.apply" = "적용";
 "filter.remove.accessibility" = "%@ 필터 제거";
 "filter.active.accessibility" = "필터 %d개 적용됨";
-"filter.selectedCount" = "%d개 선택됨";
 
 /* Lecture */
 "lecture.instructor.unknown" = "교수 정보 없음";

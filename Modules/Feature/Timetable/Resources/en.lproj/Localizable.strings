@@ -52,7 +52,7 @@
 "search.filter.categoryPre2025" = "Category (~2024)";
 "search.filter.time" = "Time";
 "search.filter.etc" = "Others";
-"search.filter.apply" = "Apply";
+"search.filter.title" = "Filters";
 
 "search.input.placeholder" = "Enter search term";
 "search.result.empty.title" = "No search results found";

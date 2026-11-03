@@ -15,130 +15,101 @@ struct SearchFilterSheet: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.errorAlertHandler) private var errorAlertHandler
 
+    /// The selection when the sheet opened, restored unless the user applies.
+    @State private var initialPredicates: [SearchPredicate]?
+    @State private var isApplied = false
+
     var body: some View {
-        VStack(spacing: 0) {
-            HStack(alignment: .top) {
-                ScrollView {
-                    filterCategoryColumn
+        NavigationStack {
+            TwoColumnFilterPicker(
+                categories: viewModel.supportedCategories,
+                selectedCategory: viewModel.selectedCategory,
+                title: \.localizedDescription,
+                selectedCount: viewModel.selectedCount(in:),
+                accentColor: SharedUIComponentsAsset.cyanSecondary.swiftUIColor,
+                onSelectCategory: { category in
+                    viewModel.selectedCategory = category
+                },
+                detail: { category in
+                    switch category {
+                    case .time:
+                        TimeFilterOptionsView(viewModel: viewModel)
+                    default:
+                        filterOptions(in: category)
+                    }
                 }
-                .withResponsiveTouch()
-                .frame(width: 120)
-                Divider()
-                filterSelectionColumn
+            )
+            .navigationTitle(TimetableStrings.searchFilterTitle)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(SharedUIComponentsStrings.alertCancel, systemImage: "xmark") {
+                        dismiss()
+                    }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(SharedUIComponentsStrings.alertApply, systemImage: "checkmark") {
+                        apply()
+                    }
+                    .tint(SharedUIComponentsAsset.cyanSecondary.swiftUIColor)
+                }
             }
-            .frame(maxHeight: .infinity)
-            .padding(.horizontal, 5)
-            filterApplyButton
-                .padding(.vertical)
         }
-        .padding(.top, 30)
         .presentationDetents([.medium, .large])
+        // Scrolling a long list moves the list, not the sheet; only the grabber resizes it.
+        .presentationContentInteraction(.scrolls)
+        // The dimmed timetable behind shows through the translucent medium detent and washes out the options.
+        .presentationBackground(Color(.systemBackground))
         .presentationCompactAdaptation(horizontal: .sheet, vertical: .sheet)
         .analyticsScreen(.searchFilter)
-    }
-
-    private var filterCategoryColumn: some View {
-        VStack {
-            ForEach(viewModel.supportedCategories, id: \.rawValue) { category in
-                let isSelected = viewModel.selectedCategory == category
-                Button {
-                    viewModel.selectedCategory = category
-                } label: {
-                    Text(category.localizedDescription)
-                        .font(.system(size: 17, weight: .semibold))
-                        .foregroundStyle(isSelected ? Color(.label) : Color(.label).opacity(0.5))
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.vertical, 6)
-                        .padding(.horizontal, 8)
-                }
-                .buttonStyle(.animatable(scale: 0.95, backgroundHighlightColor: Color(.label).opacity(0.05)))
+        .onAppear {
+            if initialPredicates == nil {
+                initialPredicates = viewModel.selectedPredicates
+            }
+        }
+        .onDisappear {
+            if !isApplied, let initialPredicates {
+                viewModel.selectedPredicates = initialPredicates
             }
         }
     }
 
-    private var filterSelectionColumn: some View {
-        ScrollView {
-            LazyVStack(spacing: 0) {
-                switch viewModel.selectedCategory {
-                case .time:
-                    TimeFilterOptionsView(viewModel: viewModel)
-                default:
-                    defaultFilterOptions
-                }
-            }
-        }
-        .withResponsiveTouch()
-    }
-
-    @ViewBuilder
-    private var defaultFilterOptions: some View {
-        let predicates = viewModel.availablePredicates[viewModel.selectedCategory] ?? []
-        ForEach(predicates, id: \.localizedDescription) { predicate in
-            let isSelected = viewModel.selectedPredicates.contains(predicate)
+    private func filterOptions(in category: SearchFilterCategory) -> some View {
+        ForEach(viewModel.availablePredicates[category] ?? [], id: \.localizedDescription) { predicate in
             FilterOptionButton(
                 title: predicate.localizedDescription,
-                isSelected: isSelected
+                isSelected: viewModel.selectedPredicates.contains(predicate)
             ) {
                 viewModel.togglePredicate(predicate: predicate)
             }
         }
     }
 
-    private var filterApplyButton: some View {
-        RoundedRectButton(
-            label: TimetableStrings.searchFilterApply,
-            type: .max
-        ) {
-            dismiss()
-            errorAlertHandler.withAlert {
-                try await viewModel.fetchInitialSearchResult()
-            }
+    private func apply() {
+        isApplied = true
+        dismiss()
+        errorAlertHandler.withAlert {
+            try await viewModel.fetchInitialSearchResult()
         }
-        .padding(.horizontal)
     }
 }
 
+/// A ``FilterOptionRow`` tinted for lecture search.
 struct FilterOptionButton: View {
     let title: String
     let isSelected: Bool
     let action: () -> Void
 
     var body: some View {
-        Button {
+        FilterOptionRow(
+            title: title,
+            isSelected: isSelected,
+            accentColor: SharedUIComponentsAsset.cyanSecondary.swiftUIColor
+        ) {
             withAnimation(.defaultSpring) {
                 action()
             }
-        } label: {
-            HStack(spacing: 4) {
-                if #available(iOS 26.0, *) {
-                    Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
-                        .font(.system(size: 15, weight: .semibold))
-                        .symbolRenderingMode(.monochrome)
-                        .foregroundStyle(
-                            isSelected
-                                ? SharedUIComponentsAsset.cyanSecondary.swiftUIColor
-                                : Color(.secondaryLabel)
-                        )
-                        .contentTransition(
-                            .symbolEffect(.replace.magic(fallback: .downUp.byLayer), options: .nonRepeating)
-                        )
-                        .frame(width: 25, height: 25)
-                } else {
-                    Image(
-                        uiImage: isSelected
-                            ? TimetableAsset.checkmarkCircleTick.image
-                            : TimetableAsset.checkmarkCircleUntick.image
-                    )
-                }
-                Text(title)
-                    .font(.system(size: 14))
-            }
-            .foregroundStyle(Color(.label))
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.vertical, 6)
-            .padding(.horizontal, 8)
         }
-        .buttonStyle(.animatable(scale: 0.98))
     }
 }
 
@@ -182,7 +153,8 @@ struct TimeFilterOptionsView: View {
                 .foregroundStyle(.tertiary)
                 .underline()
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading, 32)
+                .padding(.leading, 36)
+                .listRowSeparator(.hidden, edges: .top)
         }
     }
 

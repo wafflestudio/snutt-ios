@@ -53,7 +53,7 @@
 "search.filter.categoryPre2025" = "구) 교양영역";
 "search.filter.time" = "시간";
 "search.filter.etc" = "기타";
-"search.filter.apply" = "필터 적용";
+"search.filter.title" = "필터";
 
 "search.input.placeholder" = "검색어를 입력하세요";
 "search.result.empty.title" = "검색 결과가 존재하지 않습니다";

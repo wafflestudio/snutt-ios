@@ -48,7 +48,6 @@
 "filter.apply" = "Apply";
 "filter.remove.accessibility" = "Remove %@ filter";
 "filter.active.accessibility" = "%d filters applied";
-"filter.selectedCount" = "%d selected";
 
 /* Lecture */
 "lecture.instructor.unknown" = "Unknown professor";

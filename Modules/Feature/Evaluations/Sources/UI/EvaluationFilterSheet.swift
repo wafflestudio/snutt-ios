@@ -68,112 +68,29 @@ struct EvaluationFilterSheet: View {
     }
 
     private func filterColumns(groups: [SearchTagGroup], selectedGroup: SearchTagGroup?) -> some View {
-        HStack(alignment: .top, spacing: 0) {
-            EvaluationFilterCategoryColumn(
-                groups: groups,
-                selectedGroupID: selectedGroup?.id,
-                selectedCount: viewModel.selectedCount(in:),
-                onSelect: { group in
-                    viewModel.selectedGroupID = group.id
-                }
-            )
-
-            Divider()
-                .ignoresSafeArea(edges: .bottom)
-
-            List(selectedGroup?.tags ?? []) { tag in
-                EvaluationFilterOptionRow(tag: tag, isSelected: viewModel.isSelected(tag)) {
-                    withAnimation(.defaultSpring) {
-                        viewModel.toggle(tag)
+        TwoColumnFilterPicker(
+            categories: groups,
+            selectedCategory: selectedGroup,
+            title: \.name,
+            selectedCount: viewModel.selectedCount(in:),
+            accentColor: EvaluationDesignColor.accent,
+            onSelectCategory: { group in
+                viewModel.selectedGroupID = group.id
+            },
+            detail: { group in
+                ForEach(group.tags) { tag in
+                    FilterOptionRow(
+                        title: tag.name,
+                        isSelected: viewModel.isSelected(tag),
+                        accentColor: EvaluationDesignColor.accent
+                    ) {
+                        withAnimation(.defaultSpring) {
+                            viewModel.toggle(tag)
+                        }
                     }
                 }
-                .listRowBackground(Color.clear)
             }
-            .listStyle(.plain)
-            .scrollContentBackground(.hidden)
-            .softTopScrollEdge()
-            .id(selectedGroup?.id)
-        }
-        .animation(.defaultSpring, value: selectedGroup?.id)
-    }
-}
-
-private struct EvaluationFilterCategoryColumn: View {
-    let groups: [SearchTagGroup]
-    let selectedGroupID: SearchTagGroup.ID?
-    let selectedCount: (SearchTagGroup) -> Int
-    let onSelect: (SearchTagGroup) -> Void
-
-    @ScaledMetric private var columnWidth = 112.0
-
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 4) {
-                ForEach(groups) { group in
-                    let isSelected = group.id == selectedGroupID
-                    let count = selectedCount(group)
-                    Button {
-                        onSelect(group)
-                    } label: {
-                        HStack(spacing: 6) {
-                            Text(group.name)
-                                .font(.callout.weight(isSelected ? .semibold : .regular))
-                                .foregroundStyle(isSelected ? AnyShapeStyle(.primary) : AnyShapeStyle(.secondary))
-                            if count > 0 {
-                                Text(count, format: .number)
-                                    .font(.caption2.weight(.bold))
-                                    .foregroundStyle(.white)
-                                    .padding(.horizontal, 6)
-                                    .frame(minWidth: 18, minHeight: 18)
-                                    .background(EvaluationDesignColor.accent, in: .capsule)
-                                    .transition(.scale.combined(with: .opacity))
-                            }
-                            Spacer(minLength: 0)
-                        }
-                        .padding(.horizontal, 12)
-                        .frame(minHeight: 44)
-                        .background {
-                            if isSelected {
-                                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                    .fill(Color(uiColor: .secondarySystemFill))
-                            }
-                        }
-                        .contentShape(.rect)
-                    }
-                    .buttonStyle(.animatable(scale: 0.97))
-                    .accessibilityAddTraits(isSelected ? .isSelected : [])
-                    .accessibilityValue(count > 0 ? EvaluationsStrings.filterSelectedCount(count) : "")
-                }
-            }
-            .padding(.horizontal, 8)
-            .padding(.vertical, 8)
-        }
-        .frame(width: columnWidth)
-        .scrollIndicators(.hidden)
-        .softTopScrollEdge()
-    }
-}
-
-private struct EvaluationFilterOptionRow: View {
-    let tag: SearchTag
-    let isSelected: Bool
-    let onToggle: () -> Void
-
-    var body: some View {
-        Button(action: onToggle) {
-            HStack(spacing: 12) {
-                Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
-                    .font(.title3)
-                    .foregroundStyle(isSelected ? EvaluationDesignColor.accent : Color(uiColor: .systemGray3))
-                    .contentTransition(.symbolEffect(.replace))
-                Text(tag.name)
-                    .font(.callout)
-                    .foregroundStyle(.primary)
-                Spacer(minLength: 0)
-            }
-            .contentShape(.rect)
-        }
-        .accessibilityAddTraits(isSelected ? .isSelected : [])
+        )
     }
 }
 
@@ -182,16 +99,4 @@ private struct EvaluationFilterOptionRow: View {
         .sheet(isPresented: .constant(true)) {
             EvaluationFilterSheet(selectedTags: [EvaluationPreviewFixtures.tagGroups[0].tags[0]], onApply: { _ in })
         }
-}
-
-extension View {
-    /// Both columns scroll on their own, and the automatic style draws each one as a hard edge on iOS 27.
-    @ViewBuilder
-    fileprivate func softTopScrollEdge() -> some View {
-        if #available(iOS 26, *) {
-            scrollEdgeEffectStyle(.soft, for: .top)
-        } else {
-            self
-        }
-    }
 }

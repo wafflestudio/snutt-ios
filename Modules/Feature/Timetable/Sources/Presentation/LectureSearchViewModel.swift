@@ -128,6 +128,14 @@ class LectureSearchViewModel {
             .filter { $0 == .time || availablePredicates.keys.contains($0) }
     }
 
+    /// The number of options checked in `category`, where each time option counts once however many ranges it holds.
+    func selectedCount(in category: SearchFilterCategory) -> Int {
+        if category == .time {
+            return [isTimeExcludeSelected, isTimeIncludeSelected].count(where: { $0 })
+        }
+        return selectedPredicates.count(where: { $0.category == category })
+    }
+
     func fetchAvailablePredicates(quarter: Quarter) async throws {
         let predicates = try await searchRepository.fetchSearchPredicates(quarter: quarter)
         availablePredicates = Dictionary(grouping: predicates, by: { $0.category })
@@ -349,7 +357,9 @@ public enum SearchDisplayMode: Equatable {
     }
 }
 
-enum SearchFilterCategory: String, Sendable, CaseIterable {
+enum SearchFilterCategory: String, Sendable, CaseIterable, Identifiable {
+    var id: String { rawValue }
+
     case sortCriteria
     case classification
     case department
