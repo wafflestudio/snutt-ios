@@ -46,7 +46,9 @@ struct EvaluationEmailVerificationGate<Content: View, Placeholder: View>: View {
             }
         }
         .animation(.smooth(duration: 0.25), value: viewModel.status)
-        .onLoad {
+        // Runs on every appearance until the status is known, so a check cut short by switching tabs resumes.
+        .task {
+            guard viewModel.status == .checking else { return }
             await viewModel.checkStatus()
         }
     }
@@ -192,28 +194,30 @@ struct EvaluationEmailVerificationScene: View {
     // MARK: Code
 
     private var codeSection: some View {
-        TimelineView(.periodic(from: .now, by: 1)) { context in
-            let isExpired = viewModel.isCodeExpired(at: context.date)
-            fieldGroup(EvaluationsStrings.verifyCode) {
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack(spacing: 8) {
-                        TextField(EvaluationsStrings.verifyCodePlaceholder, text: $viewModel.code)
-                            .textContentType(.oneTimeCode)
-                            .keyboardType(.numberPad)
-                            .focused($focusedField, equals: .code)
-                            .onChange(of: viewModel.code) { _, code in
-                                let digits = String(
-                                    code.filter(\.isNumber).prefix(EvaluationEmailVerificationViewModel.codeLength)
-                                )
-                                if digits != code {
-                                    viewModel.code = digits
-                                }
+        fieldGroup(EvaluationsStrings.verifyCode) {
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(spacing: 8) {
+                    TextField(EvaluationsStrings.verifyCodePlaceholder, text: $viewModel.code)
+                        .textContentType(.oneTimeCode)
+                        .keyboardType(.numberPad)
+                        .focused($focusedField, equals: .code)
+                        .onChange(of: viewModel.code) { _, code in
+                            let digits = String(
+                                code.filter(\.isNumber).prefix(EvaluationEmailVerificationViewModel.codeLength)
+                            )
+                            if digits != code {
+                                viewModel.code = digits
                             }
+                        }
+                    // Only the countdown redraws every second.
+                    TimelineView(.periodic(from: .now, by: 1)) { context in
                         remainingTime(viewModel.remainingCodeTime(at: context.date))
                     }
-                    .fieldStyle(isFocused: focusedField == .code)
+                }
+                .fieldStyle(isFocused: focusedField == .code)
 
-                    if isExpired {
+                TimelineView(expirationSchedule) { context in
+                    if viewModel.isCodeExpired(at: context.date) {
                         Label(EvaluationsStrings.verifyCodeExpired, systemImage: "exclamationmark.circle")
                             .foregroundStyle(.red)
                     } else if let recipient = viewModel.codeRecipient {
@@ -221,9 +225,14 @@ struct EvaluationEmailVerificationScene: View {
                             .foregroundStyle(.secondary)
                     }
                 }
-                .font(.footnote)
             }
+            .font(.footnote)
         }
+    }
+
+    /// Redraws now and once more when the code expires, for views that only change at expiry.
+    private var expirationSchedule: ExplicitTimelineSchedule<[Date]> {
+        .explicit(([Date.now] + [viewModel.codeExpiration].compactMap { $0 }).sorted())
     }
 
     private func remainingTime(_ remaining: TimeInterval) -> some View {
@@ -238,7 +247,7 @@ struct EvaluationEmailVerificationScene: View {
     // MARK: Submit
 
     private var submitButton: some View {
-        TimelineView(.periodic(from: .now, by: 1)) { context in
+        TimelineView(expirationSchedule) { context in
             Button {
                 focusedField = nil
                 errorAlertHandler.withAlert {

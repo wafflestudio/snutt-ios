@@ -183,10 +183,61 @@ import TimetableInterface
         #expect(viewModel.homeState.value?.selectedSort == latestSort)
         #expect(viewModel.homeState.value?.mainFeed == repository.feeds[.latest])
     }
+
+    @Test func failedFirstLoadOffersRetryThatRecovers() async throws {
+        let repository = StubEvaluationRepository()
+        repository.failingSortKinds.setValue([.recommended])
+        let viewModel = withDependencies {
+            $0.evaluationRepository = repository
+        } operation: {
+            EvaluationHomeViewModel()
+        }
+
+        await #expect(throws: StubError.self) {
+            try await viewModel.load()
+        }
+        #expect(viewModel.homeState == .failed)
+
+        repository.failingSortKinds.setValue([])
+        try await viewModel.load()
+        #expect(viewModel.homeState.value != nil)
+    }
+
+    @Test func failedReloadKeepsShownContent() async throws {
+        let repository = StubEvaluationRepository()
+        let viewModel = withDependencies {
+            $0.evaluationRepository = repository
+        } operation: {
+            EvaluationHomeViewModel()
+        }
+        try await viewModel.load()
+        let content = try #require(viewModel.homeState.value)
+        repository.failingSortKinds.setValue([.recommended])
+
+        await #expect(throws: StubError.self) {
+            try await viewModel.load()
+        }
+        #expect(viewModel.homeState.value == content)
+    }
 }
 
 @MainActor
 @Suite struct EvaluationLectureDetailViewModelTests {
+    @Test func clearingAnOlderHighlightKeepsTheNewerOne() async throws {
+        let viewModel = withDependencies {
+            $0.evaluationRepository = StubEvaluationRepository()
+        } operation: {
+            EvaluationLectureDetailViewModel(lectureID: 1, highlightedEvaluationID: 1)
+        }
+        try await viewModel.didSaveEvaluation(99)
+
+        viewModel.clearHighlight(1)
+        #expect(viewModel.highlightedEvaluationID == 99)
+
+        viewModel.clearHighlight(99)
+        #expect(viewModel.highlightedEvaluationID == nil)
+    }
+
     @Test func createdEvaluationIsHighlightedOnceReloaded() async throws {
         let viewModel = withDependencies {
             $0.evaluationRepository = StubEvaluationRepository()
@@ -290,7 +341,7 @@ import TimetableInterface
         #expect(!viewModel.hasUnsavedChanges)
         #expect(!viewModel.canSubmit)
 
-        viewModel.draft.rating = 5
+        viewModel.rating = 5
         let savedID = try await viewModel.submit()
 
         #expect(savedID == 42)

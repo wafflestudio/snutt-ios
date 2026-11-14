@@ -46,7 +46,13 @@ final class MyEvaluationsViewModel {
     }
 
     func load() async throws {
-        evaluationsState = .loaded(PagedContent(try await repository.fetchMyEvaluations(cursor: nil)))
+        if evaluationsState.isFailed { evaluationsState = .loading }
+        do {
+            evaluationsState = .loaded(PagedContent(try await repository.fetchMyEvaluations(cursor: nil)))
+        } catch {
+            evaluationsState = evaluationsState.afterFailedLoad()
+            throw error
+        }
     }
 
     /// Pagination is driven by scrolling, so failures stay silent and the next scroll retries.

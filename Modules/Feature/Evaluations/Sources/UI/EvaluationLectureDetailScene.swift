@@ -41,6 +41,9 @@ struct EvaluationLectureDetailScene: View {
                     .accessibilityHidden(true)
                 case .loaded(let content):
                     detailContent(content)
+                case .failed:
+                    EvaluationLoadFailedView(retry: retryLoad)
+                        .containerRelativeFrame(.vertical)
                 }
             }
             .withResponsiveTouch()
@@ -49,12 +52,10 @@ struct EvaluationLectureDetailScene: View {
                     try await viewModel.load()
                 }
             }
-            .onChange(of: viewModel.contentState.value != nil) { _, isLoaded in
-                guard isLoaded else { return }
-                revealHighlightedEvaluation(using: proxy)
-            }
-            .onChange(of: viewModel.highlightedEvaluationID) {
-                revealHighlightedEvaluation(using: proxy)
+            // A new highlight restarts the reveal, and leaving the screen stops it.
+            .task(id: revealableHighlightID) {
+                guard let id = revealableHighlightID else { return }
+                await revealHighlightedEvaluation(id, using: proxy)
             }
         }
         .animation(.defaultSpring, value: viewModel.contentState)
@@ -92,10 +93,18 @@ struct EvaluationLectureDetailScene: View {
                 }
             }
         )
-        .onLoad {
+        // Runs on every appearance until the content arrives, so a load cut short by leaving the screen resumes.
+        .task {
+            guard viewModel.contentState.value == nil else { return }
             await errorAlertHandler.withAlert {
                 try await viewModel.load()
             }
+        }
+    }
+
+    private func retryLoad() {
+        errorAlertHandler.withAlert {
+            try await viewModel.load()
         }
     }
 
@@ -146,21 +155,29 @@ struct EvaluationLectureDetailScene: View {
         }
     }
 
+    /// The highlight to reveal, once the evaluations it points into are on screen.
+    private var revealableHighlightID: EvaluationID? {
+        viewModel.contentState.value == nil ? nil : viewModel.highlightedEvaluationID
+    }
+
     /// Scrolls to the highlighted evaluation, then fades the highlight out.
-    private func revealHighlightedEvaluation(using proxy: ScrollViewProxy) {
-        guard let id = viewModel.highlightedEvaluationID, viewModel.contentState.value != nil else { return }
-        Task {
-            try? await Task.sleep(for: .milliseconds(300))
+    private func revealHighlightedEvaluation(_ id: EvaluationID, using proxy: ScrollViewProxy) async {
+        do {
+            try await Task.sleep(for: .milliseconds(300))
             withAnimation(.smooth) {
                 proxy.scrollTo(id, anchor: .center)
                 highlightOpacity = 1
             }
-            try? await Task.sleep(for: .seconds(1.6))
-            withAnimation(.smooth(duration: 0.8)) {
-                highlightOpacity = 0
-            } completion: {
-                viewModel.clearHighlight()
-            }
+            try await Task.sleep(for: .seconds(1.6))
+        } catch {
+            // Cancelled by a newer highlight or by leaving the screen.
+            highlightOpacity = 0
+            return
+        }
+        withAnimation(.smooth(duration: 0.8)) {
+            highlightOpacity = 0
+        } completion: {
+            viewModel.clearHighlight(id)
         }
     }
 }

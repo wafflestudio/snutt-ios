@@ -51,12 +51,13 @@ struct EvaluationStarRatingInput: View {
         .accessibilityLabel(accessibilityLabel)
         .accessibilityValue(rating.map { EvaluationsStrings.writeStarRatingAccessibility($0.ratingText) } ?? "")
         .accessibilityAdjustableAction { direction in
-            let current = rating ?? 0
             switch direction {
             case .increment:
-                rating = min(Self.range.upperBound, current + Self.step)
+                rating = min(Self.range.upperBound, (rating ?? 0) + Self.step)
             case .decrement:
-                rating = max(Self.range.lowerBound, current - Self.step)
+                // Nothing to lower before a rating is picked.
+                guard let rating else { return }
+                self.rating = max(Self.range.lowerBound, rating - Self.step)
             @unknown default:
                 break
             }

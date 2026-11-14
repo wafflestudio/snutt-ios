@@ -45,16 +45,22 @@ final class EvaluationLectureDetailViewModel {
     }
 
     func load() async throws {
+        if contentState.isFailed { contentState = .loading }
         async let summary = repository.fetchLectureSummary(lectureID: lectureID)
         async let myEvaluations = repository.fetchMyLectureEvaluations(lectureID: lectureID)
         async let firstPage = repository.fetchLectureEvaluations(lectureID: lectureID, cursor: nil)
-        contentState = .loaded(
-            Content(
-                summary: try await summary,
-                myEvaluations: try await myEvaluations,
-                evaluations: PagedContent(try await firstPage)
+        do {
+            contentState = .loaded(
+                Content(
+                    summary: try await summary,
+                    myEvaluations: try await myEvaluations,
+                    evaluations: PagedContent(try await firstPage)
+                )
             )
-        )
+        } catch {
+            contentState = contentState.afterFailedLoad()
+            throw error
+        }
     }
 
     /// Pagination is driven by scrolling, so failures stay silent and the next scroll retries.
@@ -107,7 +113,9 @@ final class EvaluationLectureDetailViewModel {
         highlightedEvaluationID = id
     }
 
-    func clearHighlight() {
+    /// Clears the highlight on `id`, leaving a newer highlight on another evaluation in place.
+    func clearHighlight(_ id: EvaluationID) {
+        guard highlightedEvaluationID == id else { return }
         highlightedEvaluationID = nil
     }
 

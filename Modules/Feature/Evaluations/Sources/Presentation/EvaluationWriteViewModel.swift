@@ -22,7 +22,11 @@ final class EvaluationWriteViewModel {
     let editedEvaluation: LectureEvaluation?
     private(set) var targetState: LoadState<EvaluationWriteTarget> = .loading
     private(set) var submissionState: SubmissionState = .editing
-    var draft: EvaluationDraft
+    // The form's fields are observed one by one, so typing the review updates only the views that read it.
+    var semesterLectureID: SemesterLectureID?
+    var rating: Double?
+    var scores: [EvaluationCriterion: Double]
+    var content: String
     /// The form as it was first filled in, to tell whether the user changed anything.
     private var initialDraft: EvaluationDraft
 
@@ -36,8 +40,20 @@ final class EvaluationWriteViewModel {
         self.lectureID = lectureID
         editedEvaluation = evaluation
         let draft = evaluation.map(EvaluationDraft.init(editing:)) ?? EvaluationDraft()
-        self.draft = draft
+        semesterLectureID = draft.semesterLectureID
+        rating = draft.rating
+        scores = draft.scores
+        content = draft.content
         initialDraft = draft
+    }
+
+    var draft: EvaluationDraft {
+        var draft = EvaluationDraft()
+        draft.semesterLectureID = semesterLectureID
+        draft.rating = rating
+        draft.scores = scores
+        draft.content = content
+        return draft
     }
 
     var canSubmit: Bool {
@@ -54,15 +70,22 @@ final class EvaluationWriteViewModel {
     }
 
     func load() async throws {
-        let target = try await repository.fetchWriteTarget(lectureID: lectureID)
-        if draft.semesterLectureID == nil {
+        if targetState.isFailed { targetState = .loading }
+        let target: EvaluationWriteTarget
+        do {
+            target = try await repository.fetchWriteTarget(lectureID: lectureID)
+        } catch {
+            targetState = targetState.afterFailedLoad()
+            throw error
+        }
+        if semesterLectureID == nil {
             let semesterLecture =
                 if let editedEvaluation {
                     target.semesterLectures.first { $0.quarter == editedEvaluation.quarter }
                 } else {
                     target.semesterLectures.first(where: isSelectable)
                 }
-            draft.semesterLectureID = semesterLecture?.id
+            semesterLectureID = semesterLecture?.id
             initialDraft.semesterLectureID = semesterLecture?.id
         }
         targetState = .loaded(target)

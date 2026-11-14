@@ -66,6 +66,8 @@ final class EvaluationEmailVerificationViewModel {
     func checkStatus() async {
         // A failed check falls through to the evaluations, whose own loading reports the error and can be retried.
         let isVerified = try? await authRepository.fetchIsEmailVerified()
+        // A cancelled check proves nothing, so the status stays unknown until the gate checks again.
+        guard !Task.isCancelled else { return }
         status = isVerified == false ? .unverified : .verified
     }
 

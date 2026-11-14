@@ -119,7 +119,9 @@ public struct EvaluationHomeScene: View {
                 }
             }
         )
-        .onLoad {
+        // Runs on every appearance until the home arrives, so a load cut short by switching tabs resumes.
+        .task {
+            guard viewModel.homeState.value == nil else { return }
             await errorAlertHandler.withAlert {
                 try await viewModel.load()
             }
@@ -135,6 +137,9 @@ public struct EvaluationHomeScene: View {
                 feedSkeleton
             case .loaded(let content):
                 EvaluationHomeFeed(content: content, actions: homeActions)
+            case .failed:
+                EvaluationLoadFailedView(retry: retryLoad)
+                    .containerRelativeFrame(.vertical)
             }
         }
         .withResponsiveTouch()
@@ -144,6 +149,12 @@ public struct EvaluationHomeScene: View {
             }
         }
         .animation(.defaultSpring, value: viewModel.homeState.value == nil)
+    }
+
+    private func retryLoad() {
+        errorAlertHandler.withAlert {
+            try await viewModel.load()
+        }
     }
 
     private var homeActions: EvaluationHomeFeed.Actions {

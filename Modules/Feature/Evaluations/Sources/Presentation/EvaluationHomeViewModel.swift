@@ -27,7 +27,13 @@ final class EvaluationHomeViewModel {
     }
 
     func load() async throws {
-        homeState = .loaded(try await useCase.loadHome())
+        if homeState.isFailed { homeState = .loading }
+        do {
+            homeState = .loaded(try await useCase.loadHome())
+        } catch {
+            homeState = homeState.afterFailedLoad()
+            throw error
+        }
     }
 
     func reloadTakenLectures() async throws {

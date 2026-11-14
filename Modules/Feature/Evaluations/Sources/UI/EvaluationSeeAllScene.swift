@@ -30,6 +30,9 @@ struct EvaluationSeeAllScene: View {
                         .accessibilityHidden(true)
                 case .loaded(let content):
                     rows(content.items)
+                case .failed:
+                    EvaluationLoadFailedView(retry: retryLoad)
+                        .containerRelativeFrame(.vertical)
                 }
             }
         }
@@ -60,10 +63,18 @@ struct EvaluationSeeAllScene: View {
         .background(Color(uiColor: .systemBackground))
         .navigationTitle(EvaluationsStrings.seeAllTitle)
         .navigationBarTitleDisplayMode(.inline)
-        .onLoad {
+        // Runs on every appearance until the feed arrives, so a load cut short by switching tabs resumes.
+        .task {
+            guard viewModel.feedState.value == nil else { return }
             await errorAlertHandler.withAlert {
                 try await viewModel.load()
             }
+        }
+    }
+
+    private func retryLoad() {
+        errorAlertHandler.withAlert {
+            try await viewModel.load()
         }
     }
 

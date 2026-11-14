@@ -5,20 +5,18 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import Observation
 import SharedUIComponents
 import SwiftUI
 import SwiftUIUtility
 
 struct MyEvaluationsScene: View {
+    private typealias Section = MyEvaluationsViewModel.Section
+
     @State private var viewModel = MyEvaluationsViewModel()
     @State private var menuAction: EvaluationMenuAction?
-    @State private var scrolledTarget: ScrollTarget?
+    @State private var scrollPosition = MyEvaluationsScrollPosition()
     @Environment(\.errorAlertHandler) private var errorAlertHandler
-
-    private enum ScrollTarget: Hashable {
-        case header(MyEvaluationsViewModel.Section.ID)
-        case row(EvaluationID)
-    }
 
     var body: some View {
         content
@@ -40,7 +38,9 @@ struct MyEvaluationsScene: View {
                     }
                 }
             )
-            .onLoad {
+            // Runs on every appearance until the evaluations arrive, so a load cut short by leaving the screen resumes.
+            .task {
+                guard viewModel.evaluationsState.value == nil else { return }
                 await errorAlertHandler.withAlert {
                     try await viewModel.load()
                 }
@@ -48,40 +48,40 @@ struct MyEvaluationsScene: View {
     }
 
     private var content: some View {
-        let sections = viewModel.sections
-        // The empty state stays inside the scroll view so pull to refresh still works.
+        let sections = displayedSections
+        // Every state stays inside the scroll view so pull to refresh still works.
         return ScrollView {
-            if let sections, sections.isEmpty {
+            switch viewModel.evaluationsState {
+            case .loading:
+                entryList(sections)
+                    .redacted(reason: .placeholder)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
+            case .loaded where sections.isEmpty:
                 ContentUnavailableView {
                     Label(EvaluationsStrings.myEvaluationsEmptyTitle, systemImage: "square.and.pencil")
                 } description: {
                     Text(EvaluationsStrings.myEvaluationsEmptyDescription)
                 }
                 .containerRelativeFrame(.vertical)
-            } else {
-                LazyVStack(alignment: .leading, spacing: 0) {
-                    if let sections {
-                        sectionList(sections)
-                    } else {
-                        sectionList(Self.placeholderSections)
-                            .redacted(reason: .placeholder)
-                            .allowsHitTesting(false)
-                            .accessibilityHidden(true)
-                    }
-                }
-                .scrollTargetLayout()
+            case .loaded:
+                entryList(sections)
+            case .failed:
+                EvaluationLoadFailedView(retry: retryLoad)
+                    .containerRelativeFrame(.vertical)
             }
         }
         .withResponsiveTouch()
-        .scrollPosition(id: $scrolledTarget, anchor: .top)
+        // Binds through the observable so only the top bar, which reads the position, updates while scrolling.
+        .scrollPosition(id: Bindable(scrollPosition).target, anchor: .top)
         // The current section's header sits in a top bar instead of a pinned header,
         // so it gets the same scroll edge effect as the navigation bar.
         .topBar {
-            if let current = currentSection(in: sections ?? Self.placeholderSections) {
-                sectionHeader(current)
-                    .redacted(reason: sections == nil ? .placeholder : [])
-                    .animation(nil, value: current.id)
-            }
+            MyEvaluationsCurrentSectionBar(
+                sections: sections,
+                scrollPosition: scrollPosition,
+                isPlaceholder: viewModel.evaluationsState.value == nil
+            )
         }
         .refreshable {
             await errorAlertHandler.withAlert {
@@ -90,10 +90,131 @@ struct MyEvaluationsScene: View {
         }
     }
 
-    /// The section whose rows sit at the top of the scroll view. While a section's own header is the topmost view,
-    /// the previous section stays current so the bar never repeats the header right below it.
-    private func currentSection(in sections: [MyEvaluationsViewModel.Section]) -> MyEvaluationsViewModel.Section? {
-        switch scrolledTarget {
+    /// The loaded sections, the skeleton's while loading, and none after a failure.
+    private var displayedSections: [Section] {
+        switch viewModel.evaluationsState {
+        case .loading: Self.placeholderSections
+        case .loaded: viewModel.sections ?? []
+        case .failed: []
+        }
+    }
+
+    private func entryList(_ sections: [Section]) -> some View {
+        LazyVStack(alignment: .leading, spacing: 0) {
+            ForEach(MyEvaluationsEntry.entries(in: sections)) { entry in
+                // One container per entry keeps the lazy stack at a single view per element.
+                VStack(spacing: 0) {
+                    switch entry {
+                    case .header(let section):
+                        MyEvaluationsSectionHeader(section: section)
+                            .overlay(alignment: .bottom) {
+                                Divider()
+                                    .padding(.horizontal, 20)
+                            }
+                    case .row(let item, let showsDivider):
+                        row(item, showsDivider: showsDivider)
+                    }
+                }
+            }
+        }
+        .scrollTargetLayout()
+    }
+
+    private func row(_ item: EvaluationWithLecture, showsDivider: Bool) -> some View {
+        MyEvaluationRow(
+            item: item,
+            onToggleLike: {
+                errorAlertHandler.withAlert {
+                    try await viewModel.toggleLike(item.evaluation)
+                }
+            },
+            onSelectMenuAction: { menuAction = $0 }
+        )
+        .padding(.horizontal, 20)
+        .padding(.vertical, 18)
+        .overlay(alignment: .bottom) {
+            if showsDivider {
+                Divider()
+                    .padding(.horizontal, 20)
+            }
+        }
+        .onAppear {
+            Task {
+                await viewModel.loadMoreIfNeeded(after: item)
+            }
+        }
+    }
+
+    private func retryLoad() {
+        errorAlertHandler.withAlert {
+            try await viewModel.load()
+        }
+    }
+
+    private static var placeholderSections: [Section] {
+        [
+            Section(
+                quarter: EvaluationPreviewFixtures.feed[0].evaluation.quarter,
+                items: EvaluationPreviewFixtures.feed
+            )
+        ]
+    }
+}
+
+/// The scroll view's topmost entry, kept in an observable so reading it invalidates only the views that do.
+@MainActor
+@Observable
+private final class MyEvaluationsScrollPosition {
+    var target: MyEvaluationsEntry.ID?
+}
+
+/// The list flattened into section headers and rows, so each is a direct child of the scroll target layout.
+private enum MyEvaluationsEntry: Identifiable {
+    enum ID: Hashable {
+        case header(MyEvaluationsViewModel.Section.ID)
+        case row(EvaluationID)
+    }
+
+    case header(MyEvaluationsViewModel.Section)
+    case row(EvaluationWithLecture, showsDivider: Bool)
+
+    var id: ID {
+        switch self {
+        case .header(let section): .header(section.id)
+        case .row(let item, _): .row(item.id)
+        }
+    }
+
+    /// The first section's header is left out, since the top bar shows it.
+    static func entries(in sections: [MyEvaluationsViewModel.Section]) -> [MyEvaluationsEntry] {
+        sections.enumerated().flatMap { index, section in
+            let header: [MyEvaluationsEntry] = index == 0 ? [] : [.header(section)]
+            let rows = section.items.map { item in
+                MyEvaluationsEntry.row(item, showsDivider: item.id != section.items.last?.id)
+            }
+            return header + rows
+        }
+    }
+}
+
+/// The header of the section whose rows sit at the top of the scroll view.
+private struct MyEvaluationsCurrentSectionBar: View {
+    let sections: [MyEvaluationsViewModel.Section]
+    let scrollPosition: MyEvaluationsScrollPosition
+    let isPlaceholder: Bool
+
+    var body: some View {
+        if let current = currentSection {
+            MyEvaluationsSectionHeader(section: current)
+                .redacted(reason: isPlaceholder ? .placeholder : [])
+                .animation(nil, value: current.id)
+        }
+    }
+
+    /// While a section's own header is the topmost view, the previous section stays current
+    /// so the bar never repeats the header right below it.
+    private var currentSection: MyEvaluationsViewModel.Section? {
+        switch scrollPosition.target {
         case .row(let id):
             sections.first { section in section.items.contains { $0.id == id } } ?? sections.first
         case .header(let sectionID):
@@ -102,50 +223,12 @@ struct MyEvaluationsScene: View {
             sections.first
         }
     }
+}
 
-    private func sectionList(_ sections: [MyEvaluationsViewModel.Section]) -> some View {
-        ForEach(sections) { section in
-            // The first section's header is shown by the top bar alone.
-            if section.id != sections.first?.id {
-                sectionHeader(section)
-                    .overlay(alignment: .bottom) {
-                        Divider()
-                            .padding(.horizontal, 20)
-                    }
-                    .id(ScrollTarget.header(section.id))
-            }
-            Section {
-                ForEach(section.items) { item in
-                    MyEvaluationRow(
-                        item: item,
-                        onToggleLike: {
-                            errorAlertHandler.withAlert {
-                                try await viewModel.toggleLike(item.evaluation)
-                            }
-                        },
-                        onSelectMenuAction: { menuAction = $0 }
-                    )
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 18)
-                    // An overlay keeps one view per element, which lazy stacks need for stable identity.
-                    .overlay(alignment: .bottom) {
-                        if item.id != section.items.last?.id {
-                            Divider()
-                                .padding(.horizontal, 20)
-                        }
-                    }
-                    .onAppear {
-                        Task {
-                            await viewModel.loadMoreIfNeeded(after: item)
-                        }
-                    }
-                    .id(ScrollTarget.row(item.id))
-                }
-            }
-        }
-    }
+private struct MyEvaluationsSectionHeader: View {
+    let section: MyEvaluationsViewModel.Section
 
-    private func sectionHeader(_ section: MyEvaluationsViewModel.Section) -> some View {
+    var body: some View {
         HStack(spacing: 6) {
             Text(section.quarter.evaluationDisplayText)
                 .font(.subheadline.weight(.semibold))
@@ -162,15 +245,6 @@ struct MyEvaluationsScene: View {
         .frame(minHeight: 44)
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(.isHeader)
-    }
-
-    private static var placeholderSections: [MyEvaluationsViewModel.Section] {
-        [
-            MyEvaluationsViewModel.Section(
-                quarter: EvaluationPreviewFixtures.feed[0].evaluation.quarter,
-                items: EvaluationPreviewFixtures.feed
-            )
-        ]
     }
 }
 

@@ -28,11 +28,20 @@ struct EvaluationDraft: Equatable, Sendable {
     }
 
     var contentLength: Int {
-        content.trimmingCharacters(in: .whitespacesAndNewlines).count
+        Self.contentLength(of: content)
     }
 
     var meetsMinimumContentLength: Bool {
-        contentLength >= Self.minimumContentLength
+        Self.meetsMinimumContentLength(content)
+    }
+
+    /// The length the server counts, which leaves out surrounding whitespace.
+    static func contentLength(of content: String) -> Int {
+        content.trimmingCharacters(in: .whitespacesAndNewlines).count
+    }
+
+    static func meetsMinimumContentLength(_ content: String) -> Bool {
+        contentLength(of: content) >= minimumContentLength
     }
 
     /// A validated request, or `nil` while any required field is missing.

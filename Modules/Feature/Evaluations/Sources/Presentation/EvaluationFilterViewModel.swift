@@ -28,10 +28,16 @@ final class EvaluationFilterViewModel {
     }
 
     func load() async throws {
-        let groups = try await repository.fetchSearchTagGroups()
-        groupsState = .loaded(groups)
-        if selectedGroupID == nil {
-            selectedGroupID = groups.first?.id
+        if groupsState.isFailed { groupsState = .loading }
+        do {
+            let groups = try await repository.fetchSearchTagGroups()
+            groupsState = .loaded(groups)
+            if selectedGroupID == nil {
+                selectedGroupID = groups.first?.id
+            }
+        } catch {
+            groupsState = groupsState.afterFailedLoad()
+            throw error
         }
     }
 

@@ -43,10 +43,11 @@ struct EvaluationFilterSheet: View {
         }
         .presentationDetents([.medium])
         .analyticsScreen(.reviewFilter)
-        .onLoad {
-            // The skeleton has no failed state to recover from, so close the sheet and let the alert explain.
-            if await errorAlertHandler.withAlert(operation: { try await viewModel.load() }) == nil {
-                dismiss()
+        // Runs on every appearance until the tags arrive, so a load cut short resumes.
+        .task {
+            guard viewModel.groupsState.value == nil else { return }
+            await errorAlertHandler.withAlert {
+                try await viewModel.load()
             }
         }
     }
@@ -64,6 +65,12 @@ struct EvaluationFilterSheet: View {
             .accessibilityHidden(true)
         case .loaded(let groups):
             filterColumns(groups: groups, selectedGroup: viewModel.selectedGroup)
+        case .failed:
+            EvaluationLoadFailedView {
+                errorAlertHandler.withAlert {
+                    try await viewModel.load()
+                }
+            }
         }
     }
 

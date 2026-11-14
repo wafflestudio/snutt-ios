@@ -34,11 +34,17 @@ final class EvaluationSeeAllViewModel {
     }
 
     func load() async throws {
+        if feedState.isFailed { feedState = .loading }
         let sort = selectedSort
-        let page = try await repository.fetchEvaluations(sort: sort, cursor: nil)
-        guard selectedSort == sort else { return }
-        feedState = .loaded(PagedContent(page))
-        feedSort = sort
+        do {
+            let page = try await repository.fetchEvaluations(sort: sort, cursor: nil)
+            guard selectedSort == sort else { return }
+            feedState = .loaded(PagedContent(page))
+            feedSort = sort
+        } catch {
+            feedState = feedState.afterFailedLoad()
+            throw error
+        }
     }
 
     /// Switches sorts optimistically, keeping the previous feed visible until the new one arrives.
