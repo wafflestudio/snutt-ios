@@ -36,6 +36,24 @@ public enum Semester: Int, Sendable, Codable, Equatable {
     case summer, second, winter
 }
 
+extension Semester {
+    /// Parses the `semester` query parameter of a deeplink.
+    ///
+    /// The server sends the semester name (`SPRING`, `SUMMER`, `AUTUMN`, `WINTER`).
+    /// Numeric values (`1`...`4`) are still accepted for notifications stored before the server switched to names.
+    public init?(deeplinkValue value: String) {
+        switch value.uppercased() {
+        case "SPRING": self = .first
+        case "SUMMER": self = .summer
+        case "AUTUMN": self = .second
+        case "WINTER": self = .winter
+        default:
+            guard let semester = Int(value).flatMap(Semester.init(rawValue:)) else { return nil }
+            self = semester
+        }
+    }
+}
+
 public struct Quarter: Sendable, Codable, Equatable, Comparable, Identifiable, Hashable {
     public var id: String {
         "\(year)-\(semester.rawValue)"
