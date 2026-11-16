@@ -68,8 +68,7 @@ extension MainContentViewModel {
             let semesterString = parameters?["semester"],
             let lectureID = parameters?["lectureId"],
             let year = Int(yearString),
-            let semesterInt = Int(semesterString),
-            let semester = Semester(rawValue: semesterInt)
+            let semester = Semester(deeplinkValue: semesterString)
         else {
             notificationCenter.post(.toast(.init(message: TimetableStrings.navigationErrorUnknown)))
             return

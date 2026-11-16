@@ -52,7 +52,7 @@ struct NotificationRepositoryKey: DependencyKey {
                 createdAt: .now,
                 type: .lectureUpdate,
                 userID: nil,
-                deeplink: URL(string: "snutt-dev://bookmarks?year=2024&semester=1&lectureId=6597a421ae212d3ea4c8e2ca")
+                deeplink: URL(string: "snutt-dev://bookmarks?year=2024&semester=SPRING&lectureId=6597a421ae212d3ea4c8e2ca")
             ),
             .init(
                 id: "4",
