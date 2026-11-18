@@ -5,6 +5,8 @@
 //  Copyright © 2026 wafflestudio.com. All rights reserved.
 //
 
+import AnalyticsInterface
+import Dependencies
 import Firebase
 import UIKit
 import os.log
@@ -98,6 +100,9 @@ extension AppDelegate: @MainActor UNUserNotificationCenterDelegate {
     /// - User taps notification body or action button
     /// - App can be in any state (foreground/background/not running)
     ///
+    /// ## Analytics
+    /// Logs `push_open` for every tap.
+    ///
     /// ## Navigation
     /// Extracts `url_scheme` from userInfo and opens it.
     /// SceneDelegate receives the URL and routes to appropriate screen.
@@ -107,6 +112,7 @@ extension AppDelegate: @MainActor UNUserNotificationCenterDelegate {
     ) async {
         let userInfo = response.notification.request.content.userInfo
         Firebase.Messaging.messaging().appDidReceiveMessage(userInfo)
+        Dependency(\.analyticsLogger).wrappedValue.logEvent(PushOpenEvent(userInfo: userInfo))
         await openURLScheme(from: response.notification)
     }
 

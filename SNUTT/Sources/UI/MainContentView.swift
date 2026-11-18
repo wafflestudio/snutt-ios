@@ -76,7 +76,7 @@ struct MainContentView: View {
         .overlayADPopup()
         #if FEATURE_LECTURE_DIARY
         .overlayLectureDiarySheet(
-            $viewModel.diaryTargetLecture,
+            $viewModel.diaryWriteRoute,
             onDismiss: {
                 viewModel.notificationCenter.post(RefreshLectureDiaryListMessage())
             }

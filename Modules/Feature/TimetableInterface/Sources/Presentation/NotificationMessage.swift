@@ -22,6 +22,12 @@ public struct NavigateToSearchMessage: NotificationCenter.TypedMessage {
     public init() {}
 }
 
+public struct NavigateToReviewMessage: NotificationCenter.TypedMessage {
+    public static let name = Notification.Name("navigateToReview")
+
+    public init() {}
+}
+
 public struct NavigateToLectureMessage: NotificationCenter.TypedMessage {
     public static let name = Notification.Name("navigateToLecture")
 

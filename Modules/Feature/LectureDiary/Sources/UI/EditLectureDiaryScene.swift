@@ -13,15 +13,29 @@ import SharedUIComponents
 import SwiftUI
 import TimetableInterface
 
+public struct LectureDiaryWriteRoute: Sendable, Identifiable {
+    public let id = UUID()
+    public let lectureID: LectureID
+    public let lectureTitle: String
+    public let referrer: DiaryWriteReferrer
+
+    public init(lectureID: LectureID, lectureTitle: String, referrer: DiaryWriteReferrer) {
+        self.lectureID = lectureID
+        self.lectureTitle = lectureTitle
+        self.referrer = referrer
+    }
+}
+
 extension View {
     public func overlayLectureDiarySheet(
-        _ item: Binding<DiaryTargetLecture?>,
+        _ item: Binding<LectureDiaryWriteRoute?>,
         onDismiss: @escaping () -> Void = {}
     ) -> some View {
-        fullScreenCover(item: item, onDismiss: onDismiss) { context in
+        fullScreenCover(item: item, onDismiss: onDismiss) { route in
             EditLectureDiaryScene(
-                lectureID: context.lectureID,
-                lectureTitle: context.lectureTitle
+                lectureID: route.lectureID,
+                lectureTitle: route.lectureTitle,
+                referrer: route.referrer
             )
         }
     }
@@ -37,14 +51,16 @@ struct EditLectureDiaryScene: View {
     @State private var viewModel: EditLectureDiaryViewModel
     @State private var showCancelAlert = false
     @State private var showConfirmView = false
+    @State private var actionAfterConfirm: ActionAfterConfirm?
     @State private var showNextSection = false
     @State private var detailQuestionPosition: Int?
 
-    public init(lectureID: LectureID, lectureTitle: String) {
+    public init(lectureID: LectureID, lectureTitle: String, referrer: DiaryWriteReferrer) {
         _viewModel = State(
             initialValue: EditLectureDiaryViewModel(
                 lectureID: lectureID,
-                lectureTitle: lectureTitle
+                lectureTitle: lectureTitle,
+                referrer: referrer
             )
         )
     }
@@ -88,15 +104,38 @@ struct EditLectureDiaryScene: View {
                 }
             }
         }
-        .analyticsScreen(.diaryWrite)
+        .analyticsScreen(.diaryWrite(referrer: viewModel.referrer))
         .task {
             getClassTypes()
         }
         .fullScreenCover(isPresented: $showConfirmView) {
-            LectureDiaryConfirmView(displayMode: .reviewDone)
+            confirmView
         }
         .onChange(of: showConfirmView) { _, isShowing in
-            if !isShowing { dismiss() }
+            guard !isShowing else { return }
+            dismiss()
+            switch actionAfterConfirm {
+            case .writeNext(let nextLecture):
+                notificationCenter.post(
+                    NavigateToLectureDiaryMessage(
+                        lectureID: LectureID(rawValue: nextLecture.id),
+                        lectureTitle: nextLecture.title,
+                        referrer: .next
+                    )
+                )
+            case .writeReview:
+                notificationCenter.post(NavigateToReviewMessage())
+            case nil:
+                break
+            }
+        }
+    }
+
+    /// Like Android: offer the next lecture's diary if the server returned one, otherwise a course review.
+    private var confirmView: some View {
+        let nextLecture = viewModel.nextLecture
+        return LectureDiaryConfirmView(displayMode: nextLecture == nil ? .semesterEnd : .reviewMore) {
+            actionAfterConfirm = nextLecture.map { .writeNext($0) } ?? .writeReview
         }
     }
 
@@ -136,6 +175,7 @@ struct EditLectureDiaryScene: View {
         ) {
             Button(LectureDiaryStrings.lectureDiaryCancel, role: .cancel) {}
             Button(LectureDiaryStrings.lectureDiaryConfirm, role: .destructive) {
+                viewModel.logExitWithoutSubmit()
                 dismiss()
             }
         }
@@ -249,6 +289,7 @@ struct EditLectureDiaryScene: View {
                 .font(.systemFont(ofSize: 13), lineHeightMultiple: 1.45)
                 .multilineTextAlignment(.center)
             Button {
+                viewModel.logExitWithoutSubmit()
                 notificationCenter.post(NavigateToPushNotificationSettingsMessage())
                 dismiss()
             } label: {
@@ -280,7 +321,14 @@ struct EditLectureDiaryScene: View {
     }
 }
 
+extension EditLectureDiaryScene {
+    private enum ActionAfterConfirm {
+        case writeNext(NextLecture)
+        case writeReview
+    }
+}
+
 #Preview {
-    EditLectureDiaryScene(lectureID: "1", lectureTitle: "컴퓨터의 개념 및 실습")
+    EditLectureDiaryScene(lectureID: "1", lectureTitle: "컴퓨터의 개념 및 실습", referrer: .push)
 }
 #endif

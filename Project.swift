@@ -269,6 +269,9 @@ let project = Project.app(
                 .external(name: "Dependencies"),
                 .external(name: "MemberwiseInit"),
                 .external(name: "Spyable"),
+            ],
+            testDependencies: [
+                .external(name: "Dependencies")
             ]
         ),
         // FeatureInterface
