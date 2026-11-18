@@ -51,6 +51,7 @@ struct EditLectureDiaryScene: View {
     @State private var viewModel: EditLectureDiaryViewModel
     @State private var showCancelAlert = false
     @State private var showConfirmView = false
+    @State private var actionAfterConfirm: ActionAfterConfirm?
     @State private var showNextSection = false
     @State private var detailQuestionPosition: Int?
 
@@ -111,10 +112,33 @@ struct EditLectureDiaryScene: View {
             getClassTypes()
         }
         .fullScreenCover(isPresented: $showConfirmView) {
-            LectureDiaryConfirmView(displayMode: .reviewDone)
+            confirmView
         }
         .onChange(of: showConfirmView) { _, isShowing in
-            if !isShowing { dismiss() }
+            guard !isShowing else { return }
+            dismiss()
+            switch actionAfterConfirm {
+            case .writeNext(let nextLecture):
+                notificationCenter.post(
+                    NavigateToLectureDiaryMessage(
+                        lectureID: LectureID(rawValue: nextLecture.id),
+                        lectureTitle: nextLecture.title,
+                        referrer: .next
+                    )
+                )
+            case .writeReview:
+                notificationCenter.post(NavigateToReviewMessage())
+            case nil:
+                break
+            }
+        }
+    }
+
+    /// Like Android: offer the next lecture's diary if the server returned one, otherwise a course review.
+    private var confirmView: some View {
+        let nextLecture = viewModel.nextLecture
+        return LectureDiaryConfirmView(displayMode: nextLecture == nil ? .semesterEnd : .reviewMore) {
+            actionAfterConfirm = nextLecture.map { .writeNext($0) } ?? .writeReview
         }
     }
 
@@ -297,6 +321,13 @@ struct EditLectureDiaryScene: View {
             try await viewModel.submitDiary()
             showConfirmView = true
         }
+    }
+}
+
+extension EditLectureDiaryScene {
+    private enum ActionAfterConfirm {
+        case writeNext(NextLecture)
+        case writeReview
     }
 }
 

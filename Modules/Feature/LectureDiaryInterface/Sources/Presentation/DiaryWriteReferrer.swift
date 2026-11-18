@@ -12,5 +12,7 @@ public enum DiaryWriteReferrer: String, Sendable {
     case push
     /// The diary history screen.
     case history
+    /// "더 기록하기" on the completion screen of the previous diary.
+    case next
 }
 #endif

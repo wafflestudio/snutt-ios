@@ -17,9 +17,12 @@ public struct LectureDiaryConfirmView: View {
     @Dependency(\.analyticsLogger) private var analyticsLogger
 
     let displayMode: DisplayMode
+    /// Called when the outlined button ("더 기록하기" / "강의평 작성하기") is tapped, before dismissing.
+    let onSecondaryAction: () -> Void
 
-    public init(displayMode: DisplayMode) {
+    public init(displayMode: DisplayMode, onSecondaryAction: @escaping () -> Void = {}) {
         self.displayMode = displayMode
+        self.onSecondaryAction = onSecondaryAction
     }
 
     public var body: some View {
@@ -42,6 +45,7 @@ public struct LectureDiaryConfirmView: View {
                 Button {
                     let action: DiaryAfterSubmitParameter = .init(action: displayMode == .reviewMore ? .next : .review)
                     analyticsLogger.logEvent(AnalyticsAction.diaryAfterSubmit(action))
+                    onSecondaryAction()
                     dismiss()
                 } label: {
                     HStack(spacing: 4) {
