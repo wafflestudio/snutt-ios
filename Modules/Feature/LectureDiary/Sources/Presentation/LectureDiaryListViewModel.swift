@@ -89,7 +89,11 @@ public final class LectureDiaryListViewModel {
         do {
             let context = try await diaryRepository.fetchTargetLecture()
             notificationCenter.post(
-                NavigateToLectureDiaryMessage(lectureID: context.lectureID, lectureTitle: context.lectureTitle)
+                NavigateToLectureDiaryMessage(
+                    lectureID: context.lectureID,
+                    lectureTitle: context.lectureTitle,
+                    referrer: .history
+                )
             )
             return true
         } catch {

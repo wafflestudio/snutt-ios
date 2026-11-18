@@ -34,6 +34,7 @@ public struct LectureDiaryListView: View {
             }
         }
         .navigationTitle(LectureDiaryStrings.lectureDiaryTitle)
+        .analyticsScreen(.diaryHistory)
         .navigationBarTitleDisplayMode(.inline)
         .task {
             await viewModel.loadDiaryList()

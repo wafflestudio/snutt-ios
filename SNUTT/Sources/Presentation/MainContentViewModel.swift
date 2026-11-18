@@ -35,7 +35,7 @@ final class MainContentViewModel {
     private var cancellables: Set<AnyCancellable> = []
 
     #if FEATURE_LECTURE_DIARY
-    var diaryTargetLecture: DiaryTargetLecture?
+    var diaryWriteRoute: LectureDiaryWriteRoute?
     #endif
 
     let themeViewModel: ThemeViewModel
@@ -107,10 +107,11 @@ final class MainContentViewModel {
         Task.scoped(
             to: self,
             subscribing: notificationCenter.messages(of: NavigateToLectureDiaryMessage.self)
-        ) { @MainActor viewModel, nextLecture in
-            viewModel.diaryTargetLecture = .init(
-                lectureID: nextLecture.lectureID,
-                lectureTitle: nextLecture.lectureTitle
+        ) { @MainActor viewModel, message in
+            viewModel.diaryWriteRoute = .init(
+                lectureID: message.lectureID,
+                lectureTitle: message.lectureTitle,
+                referrer: message.referrer
             )
         }
         #endif

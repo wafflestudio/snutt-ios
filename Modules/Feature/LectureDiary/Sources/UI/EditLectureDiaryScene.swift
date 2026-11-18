@@ -13,15 +13,29 @@ import SharedUIComponents
 import SwiftUI
 import TimetableInterface
 
+public struct LectureDiaryWriteRoute: Sendable, Identifiable {
+    public let id = UUID()
+    public let lectureID: LectureID
+    public let lectureTitle: String
+    public let referrer: DiaryWriteReferrer
+
+    public init(lectureID: LectureID, lectureTitle: String, referrer: DiaryWriteReferrer) {
+        self.lectureID = lectureID
+        self.lectureTitle = lectureTitle
+        self.referrer = referrer
+    }
+}
+
 extension View {
     public func overlayLectureDiarySheet(
-        _ item: Binding<DiaryTargetLecture?>,
+        _ item: Binding<LectureDiaryWriteRoute?>,
         onDismiss: @escaping () -> Void = {}
     ) -> some View {
-        fullScreenCover(item: item, onDismiss: onDismiss) { context in
+        fullScreenCover(item: item, onDismiss: onDismiss) { route in
             EditLectureDiaryScene(
-                lectureID: context.lectureID,
-                lectureTitle: context.lectureTitle
+                lectureID: route.lectureID,
+                lectureTitle: route.lectureTitle,
+                referrer: route.referrer
             )
         }
     }
@@ -40,11 +54,12 @@ struct EditLectureDiaryScene: View {
     @State private var showNextSection = false
     @State private var detailQuestionPosition: Int?
 
-    public init(lectureID: LectureID, lectureTitle: String) {
+    public init(lectureID: LectureID, lectureTitle: String, referrer: DiaryWriteReferrer) {
         _viewModel = State(
             initialValue: EditLectureDiaryViewModel(
                 lectureID: lectureID,
-                lectureTitle: lectureTitle
+                lectureTitle: lectureTitle,
+                referrer: referrer
             )
         )
     }
@@ -88,7 +103,10 @@ struct EditLectureDiaryScene: View {
                 }
             }
         }
-        .analyticsScreen(.diaryWrite)
+        .analyticsScreen(.diaryWrite(referrer: viewModel.referrer))
+        .onAppear {
+            viewModel.markEntered()
+        }
         .task {
             getClassTypes()
         }
@@ -136,6 +154,7 @@ struct EditLectureDiaryScene: View {
         ) {
             Button(LectureDiaryStrings.lectureDiaryCancel, role: .cancel) {}
             Button(LectureDiaryStrings.lectureDiaryConfirm, role: .destructive) {
+                viewModel.logExitWithoutSubmit()
                 dismiss()
             }
         }
@@ -249,6 +268,7 @@ struct EditLectureDiaryScene: View {
                 .font(.systemFont(ofSize: 13), lineHeightMultiple: 1.45)
                 .multilineTextAlignment(.center)
             Button {
+                viewModel.logExitWithoutSubmit()
                 notificationCenter.post(NavigateToPushNotificationSettingsMessage())
                 dismiss()
             } label: {
@@ -281,6 +301,6 @@ struct EditLectureDiaryScene: View {
 }
 
 #Preview {
-    EditLectureDiaryScene(lectureID: "1", lectureTitle: "컴퓨터의 개념 및 실습")
+    EditLectureDiaryScene(lectureID: "1", lectureTitle: "컴퓨터의 개념 및 실습", referrer: .push)
 }
 #endif

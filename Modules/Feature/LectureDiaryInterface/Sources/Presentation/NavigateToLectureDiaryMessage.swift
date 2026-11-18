@@ -15,10 +15,12 @@ public struct NavigateToLectureDiaryMessage: NotificationCenter.TypedMessage {
 
     public let lectureID: LectureID
     public let lectureTitle: String
+    public let referrer: DiaryWriteReferrer
 
-    public init(lectureID: LectureID, lectureTitle: String) {
+    public init(lectureID: LectureID, lectureTitle: String, referrer: DiaryWriteReferrer) {
         self.lectureID = lectureID
         self.lectureTitle = lectureTitle
+        self.referrer = referrer
     }
 }
 #endif
