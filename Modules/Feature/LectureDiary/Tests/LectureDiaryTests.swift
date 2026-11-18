@@ -1,6 +1,5 @@
 #if FEATURE_LECTURE_DIARY
 import AnalyticsInterface
-import ConcurrencyExtras
 import Dependencies
 import Foundation
 import Testing
@@ -14,11 +13,10 @@ struct EditLectureDiaryViewModelAnalyticsTests {
     private let logger = AnalyticsLoggerSpy()
     private let repository = LectureDiaryRepositorySpy()
 
-    private func makeViewModel(now: @escaping @Sendable () -> Date) -> EditLectureDiaryViewModel {
+    private func makeViewModel() -> EditLectureDiaryViewModel {
         withDependencies {
             $0.analyticsLogger = logger
             $0.lectureDiaryRepository = repository
-            $0.date = DateGenerator(now)
         } operation: {
             EditLectureDiaryViewModel(lectureID: "lecture", lectureTitle: "title", referrer: .history)
         }
@@ -29,13 +27,10 @@ struct EditLectureDiaryViewModelAnalyticsTests {
     }
 
     @Test func submitLogsDiarySubmittedAfterServerSuccess() async throws {
-        let clock = LockIsolated(Date(timeIntervalSince1970: 0))
-        let viewModel = makeViewModel { clock.value }
+        let viewModel = makeViewModel()
         viewModel.classTypes = [.init(id: "id-lecture", content: "강의"), .init(id: "id-exam", content: "시험")]
         viewModel.selectedClassTypes = .init(selected: ["시험"])
         viewModel.extraComment = "좋았어요"
-        viewModel.markEntered()
-        clock.setValue(Date(timeIntervalSince1970: 42))
 
         try await viewModel.submitDiary()
 
@@ -49,7 +44,6 @@ struct EditLectureDiaryViewModelAnalyticsTests {
                 == DiarySubmittedParameter(
                     activityTypeIDs: ["id-exam"],
                     hasComment: true,
-                    elapsedSeconds: 42,
                     referrer: .history
                 )
         )
@@ -57,7 +51,7 @@ struct EditLectureDiaryViewModelAnalyticsTests {
     }
 
     @Test func submitFailureDoesNotLogDiarySubmitted() async {
-        let viewModel = makeViewModel { Date(timeIntervalSince1970: 0) }
+        let viewModel = makeViewModel()
         repository.submitDiaryThrowableError = SubmitFailure()
 
         await #expect(throws: SubmitFailure.self) {
@@ -68,7 +62,7 @@ struct EditLectureDiaryViewModelAnalyticsTests {
     }
 
     @Test func secondSubmitAfterSuccessIsRejected() async throws {
-        let viewModel = makeViewModel { Date(timeIntervalSince1970: 0) }
+        let viewModel = makeViewModel()
         try await viewModel.submitDiary()
 
         await #expect(throws: CancellationError.self) {
@@ -78,28 +72,23 @@ struct EditLectureDiaryViewModelAnalyticsTests {
     }
 
     @Test func exitBeforeQuestionsLogsActivityStepOnce() {
-        let clock = LockIsolated(Date(timeIntervalSince1970: 0))
-        let viewModel = makeViewModel { clock.value }
-        viewModel.markEntered()
-        clock.setValue(Date(timeIntervalSince1970: 5))
+        let viewModel = makeViewModel()
 
         viewModel.logExitWithoutSubmit()
         viewModel.logExitWithoutSubmit()
 
         let exits = loggedEvents.compactMap { $0 as? AnalyticsAction }.filter { $0.eventName == "diary_write_exit" }
         #expect(exits.count == 1)
-        #expect(exits.first?.parameters == ["step": "activity", "elapsed_sec": "5", "referrer": "history"])
+        #expect(exits.first?.parameters == ["step": "activity", "referrer": "history"])
     }
 
     @Test func exitAfterQuestionsLogsQuestionsStep() async {
-        let viewModel = makeViewModel { Date(timeIntervalSince1970: 0) }
+        let viewModel = makeViewModel()
         repository.fetchQuestionnaireForWithReturnValue = QuestionnaireItem(
             lectureTitle: "title",
             questions: [],
             nextLecture: nil
         )
-        viewModel.markEntered()
-
         await viewModel.loadQuestionnaire()
         viewModel.logExitWithoutSubmit()
 

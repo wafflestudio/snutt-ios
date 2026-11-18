@@ -105,9 +105,6 @@ struct EditLectureDiaryScene: View {
             }
         }
         .analyticsScreen(.diaryWrite(referrer: viewModel.referrer))
-        .onAppear {
-            viewModel.markEntered()
-        }
         .task {
             getClassTypes()
         }

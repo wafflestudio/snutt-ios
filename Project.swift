@@ -271,8 +271,7 @@ let project = Project.app(
                 .external(name: "Spyable"),
             ],
             testDependencies: [
-                .external(name: "ConcurrencyExtras"),
-                .external(name: "Dependencies"),
+                .external(name: "Dependencies")
             ]
         ),
         // FeatureInterface

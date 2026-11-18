@@ -22,9 +22,6 @@ public final class EditLectureDiaryViewModel {
     @ObservationIgnored
     @Dependency(\.analyticsLogger) private var analyticsLogger
 
-    @ObservationIgnored
-    @Dependency(\.date) private var date
-
     private(set) var questionnaireState: QuestionnaireState = .loading
     var classTypes: [AnswerOption] = []
     var selectedClassTypes: ClassTypeSelection = .init()
@@ -35,7 +32,6 @@ public final class EditLectureDiaryViewModel {
     let lectureTitle: String
     let referrer: DiaryWriteReferrer
 
-    @ObservationIgnored private var enteredAt: Date?
     @ObservationIgnored private var hasReachedQuestions = false
     @ObservationIgnored private var isExitLogged = false
     private(set) var isSubmitting = false
@@ -57,12 +53,6 @@ public final class EditLectureDiaryViewModel {
         self.lectureID = lectureID
         self.lectureTitle = lectureTitle
         self.referrer = referrer
-    }
-
-    /// Starts the clock for `elapsed_sec`. Called when the write screen appears.
-    func markEntered() {
-        guard enteredAt == nil else { return }
-        enteredAt = date.now
     }
 
     func getClassTypes() async throws {
@@ -130,7 +120,6 @@ public final class EditLectureDiaryViewModel {
                 .init(
                     activityTypeIDs: selectedClassTypeIDs,
                     hasComment: submission.comment != nil,
-                    elapsedSeconds: elapsedSeconds(),
                     referrer: referrer
                 )
             )
@@ -145,16 +134,10 @@ public final class EditLectureDiaryViewModel {
             AnalyticsAction.diaryWriteExit(
                 .init(
                     step: hasReachedQuestions ? .questions : .activity,
-                    elapsedSeconds: elapsedSeconds(),
                     referrer: referrer
                 )
             )
         )
-    }
-
-    private func elapsedSeconds() -> Int {
-        guard let enteredAt else { return 0 }
-        return max(0, Int(date.now.timeIntervalSince(enteredAt)))
     }
 }
 

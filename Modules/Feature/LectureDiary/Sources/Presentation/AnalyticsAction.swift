@@ -58,8 +58,6 @@ struct DiarySubmittedParameter: Sendable, Equatable {
     let activityTypeIDs: [String]
     /// The comment body itself is never recorded.
     let hasComment: Bool
-    /// Seconds from entering the write screen to a successful submission.
-    let elapsedSeconds: Int
     let referrer: DiaryWriteReferrer
 
     var parameters: [String: String] {
@@ -67,7 +65,6 @@ struct DiarySubmittedParameter: Sendable, Equatable {
             "activity_types": activityTypeIDs.joined(separator: ","),
             "activity_count": String(activityTypeIDs.count),
             "has_comment": String(hasComment),
-            "elapsed_sec": String(elapsedSeconds),
             "referrer": referrer.rawValue,
         ]
     }
@@ -82,14 +79,11 @@ struct DiaryWriteExitParameter: Sendable, Equatable {
     }
 
     let step: Step
-    /// Seconds from entering the write screen to leaving it.
-    let elapsedSeconds: Int
     let referrer: DiaryWriteReferrer
 
     var parameters: [String: String] {
         [
             "step": step.rawValue,
-            "elapsed_sec": String(elapsedSeconds),
             "referrer": referrer.rawValue,
         ]
     }
